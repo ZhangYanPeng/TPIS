@@ -5,8 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPIS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="1080" Width="1920"
+        ResizeMode="CanResizeWithGrip">
     <Grid>
-        
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="设备管理" >
+                    <MenuItem Header="新建工程" />
+                    <MenuItem Header="打开工程" />
+                    <MenuItem Header="关闭工程" />
+                    <Separator />
+                    <MenuItem Header="存储" InputGestureText="Ctrl+S">
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_save.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="另存为" />
+                    <MenuItem Header="全部存储" InputGestureText="Ctrl+Shift+S"/>
+                    <Separator />
+                    <MenuItem Header="打印" />
+                    <Separator />
+                    <MenuItem Header="最近使用过的工程" />
+                    <Separator />
+                    <MenuItem Header="退出" InputGestureText="Alt+F4">
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_close.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="设置" />
+                <MenuItem Header="帮助" />
+                <MenuItem Header="关于" />   
+            </Menu>
+            <ToolBar DockPanel.Dock="Top" Height="30">
+                <Button>
+                    <Image ></Image>
+                </Button>
+            </ToolBar>
+            <StatusBar DockPanel.Dock="Bottom" >
+                <StatusBarItem Width="100" HorizontalAlignment="Right">
+                    -100,100
+                </StatusBarItem>
+            </StatusBar>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" MinWidth="300"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0">
+                    <TextBox Width="300">
+                        aaaaaaaaaaaaa
+                    </TextBox>
+                </DockPanel>
+                <TabControl Grid.Column="2" BorderBrush="Gray" Margin="12,12,0,0" Name="tab_project">
+                    <TabItem Header="project.tpis" Name="tabItem1">
+                        <Canvas Name="MainCanvas" Background="Gray">
+                            <Rectangle Stroke="White" Width="80.6" Canvas.Top="50" Canvas.Left="50" Height="80.6" Name="DisplayRectangle"/>
+                        </Canvas>
+                    </TabItem>
+                </TabControl>
+                <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="5" Background="Gray" ShowsPreview="True"/>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>
