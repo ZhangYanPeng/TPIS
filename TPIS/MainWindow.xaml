@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPIS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920"
-        ResizeMode="CanResizeWithGrip">
+        Title="热力系统仿真" Height="1080" Width="1920"
+        ResizeMode="CanResizeWithGrip" Icon="res/icon/icon_app.png">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="设备管理" >
+                <MenuItem Header="设备管理(M)" >
                     <MenuItem Header="新建工程" />
                     <MenuItem Header="打开工程" />
                     <MenuItem Header="关闭工程">
@@ -41,9 +41,9 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="设置" />
-                <MenuItem Header="帮助" />
-                <MenuItem Header="关于" />   
+                <MenuItem Header="设置(S)" />
+                <MenuItem Header="帮助(H)" />
+                <MenuItem Header="关于(A)" />   
             </Menu>
             <ToolBar DockPanel.Dock="Top" Height="30">
                 <Button>
