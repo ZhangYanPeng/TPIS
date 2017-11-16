@@ -8,6 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/save.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_close.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_print.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_save.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_signout.png")]
 
 
