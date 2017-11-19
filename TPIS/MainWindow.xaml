@@ -11,8 +11,16 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="设备管理(M)" >
-                    <MenuItem Header="新建工程" />
-                    <MenuItem Header="打开工程" />
+                    <MenuItem Header="新建工程" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_new.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="打开工程" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_open.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="关闭工程">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_close.png" />
@@ -24,7 +32,11 @@
                             <Image Source="res/icon/icon_save.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="另存为" />
+                    <MenuItem Header="另存为" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_saveAs.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="全部存储" InputGestureText="Ctrl+Shift+S"/>
                     <Separator />
                     <MenuItem Header="打印">
@@ -41,6 +53,57 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Header="编辑(E)" >
+                    <MenuItem Header="撤销(U)" InputGestureText="Ctrl+Z" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_undo.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="重做(R)" InputGestureText="Ctrl+Y" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_redo.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="剪切(T)" InputGestureText="Ctrl+X" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_cut.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="复制(C)" InputGestureText="Ctrl+C" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_copy.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="粘贴(P)" InputGestureText="Ctrl+V" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_paste.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="删除(D)" InputGestureText="Del" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_delete.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="全选(A)" InputGestureText="Ctrl+A" />
+                    <Separator />
+                    <MenuItem Header="选择(S)" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_selection.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="自由图形选择(F)" >
+                        <MenuItem.Icon>
+                            <Image Source="res/icon/icon_freehandSelection.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                </MenuItem>
+                <MenuItem Header="视图(V)" >
+                    <MenuItem Header="网格线" InputGestureText="F1" />
+                    <Separator />
+                </MenuItem>
                 <MenuItem Header="设置(S)" />
                 <MenuItem Header="帮助(H)" />
                 <MenuItem Header="关于(A)" />   
@@ -51,7 +114,7 @@
                 </Button>
             </ToolBar>
             <StatusBar DockPanel.Dock="Bottom" >
-                <StatusBarItem Width="100" HorizontalAlignment="Right">
+                <StatusBarItem Width="100" HorizontalAlignment="Right" Focusable="False">
                     -100,100
                 </StatusBarItem>
             </StatusBar>

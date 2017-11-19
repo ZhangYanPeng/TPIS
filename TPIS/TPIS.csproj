@@ -102,5 +102,20 @@
     <Resource Include="res\icon\icon_save.png" />
     <Resource Include="res\icon\icon_signout.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\icon_new.png" />
+    <Resource Include="res\icon\icon_open.png" />
+    <Resource Include="res\icon\icon_saveAs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\icon_copy.png" />
+    <Resource Include="res\icon\icon_cut.png" />
+    <Resource Include="res\icon\icon_delete.png" />
+    <Resource Include="res\icon\icon_freehandSelection.png" />
+    <Resource Include="res\icon\icon_paste.png" />
+    <Resource Include="res\icon\icon_redo.png" />
+    <Resource Include="res\icon\icon_selection.png" />
+    <Resource Include="res\icon\icon_undo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,9 +8,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_close.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_print.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_save.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_signout.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_copy.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_cut.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_delete.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_frehandselection.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_paste.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_redo.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_selection.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("res/icon/icon_undo.png")]
 
 
