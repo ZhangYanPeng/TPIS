@@ -117,10 +117,58 @@
                 <MenuItem Header="关于(A)" />   
             </Menu>
             <ToolBar DockPanel.Dock="Top" Height="30">
-                <Button AutomationProperties.Name="tsbNew" >
-                    <Image Source="res/icon/icon_new.png" />
+                <Button AutomationProperties.Name="tsbNew"  ToolTip="新建工程">
+                    <Image Source="res/icon/activeIcon/icon_activeNew.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbOpen" ToolTip="打开工程">
+                    <Image Source="res/icon/activeIcon/icon_cativeOpen.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbClose" ToolTip="关闭工程">
+                    <Image Source="res/icon/activeIcon/icon_activeClose.png" Stretch="None" />
                 </Button>
                 <Separator />
+
+                <Button AutomationProperties.Name="tsbSave" ToolTip="存储(Ctrl+S)">
+                    <Image Source="res/icon/activeIcon/icon_activeSave.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbSaveAs" ToolTip="另存为">
+                    <Image Source="res/icon/activeIcon/icon_activeSaveAs .png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbSaveAll" ToolTip="另存为(Ctrl+Shift+S)">
+                    <Image Source="res/icon/activeIcon/icon_activeSaveAll.png" Stretch="None" />
+                </Button>
+                <Separator />
+
+                <Button AutomationProperties.Name="tsbCut" ToolTip="剪切(Ctrl+X)">
+                    <Image Source="res/icon/activeIcon/icon_activeCut.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbCopy" ToolTip="复制(Ctrl+C)">
+                    <Image Source="res/icon/activeIcon/icon_activeCopy.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbPaste" ToolTip="粘贴(Ctrl+V)">
+                    <Image Source="res/icon/activeIcon/icon_activePaste.png" Stretch="None" />
+                </Button>
+                <Separator />
+                <Button AutomationProperties.Name="tsbUndo" ToolTip="撤销(Ctrl+Z)">
+                    <Image Source="res/icon/activeIcon/icon_activeUndo.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbRedo" ToolTip="重做(Ctrl+Y)">
+                    <Image Source="res/icon/activeIcon/icon_activeRedo.png" Stretch="None" />
+                </Button>
+                <Separator />
+                <Button AutomationProperties.Name="tsbDelete" ToolTip="删除(Del)">
+                    <Image Source="res/icon/activeIcon/icon_activeDelete.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbAllSelection" ToolTip="全选(Ctrl+A)">
+                    <Image Source="res/icon/activeIcon/icon_activeAllSelection.png" Stretch="None" />
+                </Button>
+                <Separator />
+                <Button AutomationProperties.Name="tsbSelection" ToolTip="选择">
+                    <Image Source="res/icon/activeIcon/icon_activeSelection.png" Stretch="None" />
+                </Button>
+                <Button AutomationProperties.Name="tsbFreehandSelection" ToolTip="自由图形选择">
+                    <Image Source="res/icon/activeIcon/icon_activeFreehandSelection.png" Stretch="None" />
+                </Button>
             </ToolBar>
             <StatusBar DockPanel.Dock="Bottom" >
                 <StatusBarItem Width="100" HorizontalAlignment="Right" Focusable="False">
