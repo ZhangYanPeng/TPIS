@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPIS"
         mc:Ignorable="d"
-        Title="热力系统仿真" Height="1080" Width="1920"
-        ResizeMode="CanResizeWithGrip" Icon="res/icon/icon_app.png">
+        Title="热力系统仿真"
+        ResizeMode="CanResizeWithGrip" Icon="res/icon/icon_app.png" d:DesignWidth="1920" d:DesignHeight="1080" Width="Auto">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
