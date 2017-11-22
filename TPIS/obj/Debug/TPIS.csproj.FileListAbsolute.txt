@@ -40,3 +40,6 @@ C:\Users\Administrator\Source\Repos\TPIS\TPIS\obj\Debug\MainWindow.baml
 C:\Users\Administrator\Source\Repos\TPIS\TPIS\obj\Debug\TPIS.g.resources
 C:\Users\Administrator\Source\Repos\TPIS\TPIS\obj\Debug\TPIS.Properties.Resources.resources
 C:\Users\Administrator\Source\Repos\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateResource.Cache
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\NewProject.g.cs
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\NewProject.baml

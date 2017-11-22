@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TPIS.Project;
 
 namespace TPIS
 {
@@ -20,9 +21,20 @@ namespace TPIS
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ProjectControl projectList;
+
         public MainWindow()
         {
             InitializeComponent();
+            projectList = new ProjectControl();
         }
+
+        private void New_Project(object sender, RoutedEventArgs e)
+        {
+            Window new_project = new NewProject();
+            new_project.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            new_project.ShowDialog();
+        }
+        
     }
 }

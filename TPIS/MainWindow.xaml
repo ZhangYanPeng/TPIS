@@ -11,7 +11,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="设备管理(M)" >
-                    <MenuItem Header="新建工程" >
+                    <MenuItem Header="新建工程" Click="New_Project">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_new.png" />
                         </MenuItem.Icon>
@@ -190,6 +190,11 @@
                     <TabItem Header="project.tpis" Name="tabItem1">
                         <Canvas Name="MainCanvas" Background="Gray">
                             <Rectangle Stroke="White" Width="80.6" Canvas.Top="50" Canvas.Left="50" Height="80.6" Name="DisplayRectangle"/>
+                        </Canvas>
+                    </TabItem>
+                    <TabItem Header="project.tpis" Name="tabItem2">
+                        <Canvas Name="MainCanvas1" Background="Gray">
+                            <Rectangle Stroke="White" Width="80.6" Canvas.Top="50" Canvas.Left="50" Height="80.6" Name="DisplayRectangle1"/>
                         </Canvas>
                     </TabItem>
                 </TabControl>
