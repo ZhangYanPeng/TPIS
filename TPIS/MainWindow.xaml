@@ -187,16 +187,6 @@
                     </TextBox>
                 </DockPanel>
                 <TabControl Grid.Column="2" BorderBrush="Gray" Margin="12,12,0,0" Name="tab_project">
-                    <TabItem Header="project.tpis" Name="tabItem1">
-                        <Canvas Name="MainCanvas" Background="Gray">
-                            <Rectangle Stroke="White" Width="80.6" Canvas.Top="50" Canvas.Left="50" Height="80.6" Name="DisplayRectangle"/>
-                        </Canvas>
-                    </TabItem>
-                    <TabItem Header="project.tpis" Name="tabItem2">
-                        <Canvas Name="MainCanvas1" Background="Gray">
-                            <Rectangle Stroke="White" Width="80.6" Canvas.Top="50" Canvas.Left="50" Height="80.6" Name="DisplayRectangle1"/>
-                        </Canvas>
-                    </TabItem>
                 </TabControl>
                 <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="5" Background="Gray" ShowsPreview="True"/>
             </Grid>

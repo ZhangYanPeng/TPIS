@@ -153,5 +153,8 @@
   <ItemGroup>
     <Resource Include="res\conponent\component-1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\tab_close.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
