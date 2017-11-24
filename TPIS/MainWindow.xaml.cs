@@ -31,6 +31,10 @@ namespace TPIS
             tab_project.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
         }
 
-        
+        public void Test(object sender, RoutedEventArgs e)
+        {
+            currentPoject.canvas.Height = currentPoject.canvas.Height + 100;
+            currentPoject.canvas.Width = currentPoject.canvas.Width + 100;
+        }
     }
 }

@@ -51,7 +51,7 @@
                     <Separator />
                     <MenuItem Header="最近使用过的工程" />
                     <Separator />
-                    <MenuItem Header="退出" InputGestureText="Alt+F4">
+                    <MenuItem Header="退出" InputGestureText="Alt+F4" Click="Test">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_signout.png" />
                         </MenuItem.Icon>

@@ -24,6 +24,10 @@ namespace TPIS.Project
             return;
         }
 
+        public void Draw()
+        {
+            canvas.Draw();
+        }
 
     }
 }
