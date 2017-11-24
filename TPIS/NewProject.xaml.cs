@@ -63,6 +63,9 @@ namespace TPIS
 
             TextBlock tb = new TextBlock();
             tb.Text = project.name;
+
+            tb.TextTrimming = TextTrimming.CharacterEllipsis;//TextBlock...显示
+
             Button bt = new Button();
             Image img = new Image();
             img.Source = new BitmapImage(new Uri("res/icon/tab_close.png", UriKind.Relative));

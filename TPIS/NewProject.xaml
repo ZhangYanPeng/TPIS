@@ -5,38 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPIS"
         mc:Ignorable="d"
-        Title="新建项目" Height="170" Width="300" MinHeight="170" MinWidth="300"  MaxHeight="170" MaxWidth="300" ResizeMode="NoResize">
+        Title="新建项目" Height="200" Width="300" MinHeight="200" MinWidth="300"  MaxHeight="200" MaxWidth="300" ResizeMode="NoResize">
     <Grid>
         <GroupBox Margin="10" BorderBrush="Gray">
             <GroupBox.Header>
                 项目设置
             </GroupBox.Header>
-            <Grid Height="127" VerticalAlignment="Top">
+            <Grid Height="125" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-3,9,-3,-4" Width="268">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="83"/>
+                    <ColumnDefinition Width="61"/>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="auto" MinWidth="8"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="20"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="38"/>
+                    <RowDefinition Height="18"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="图像高度" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBlock Text="图像宽度" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBlock Text="工程名称" Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox Name="canvas_height" Grid.Column="1" Grid.Row="0" Margin="1"/>
-                <TextBox Name="canvas_width" Grid.Column="1" Grid.Row="1" Margin="1"/>
-                <TextBox Name="project_name" Grid.Column="1" Grid.Row="3" Margin="1" Grid.ColumnSpan="4"/>
-                <TextBlock Text="像素" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="像素" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Button Content="新建" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Click="Create"></Button>
-                <Button Content="取消" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Click="Cancel"></Button>
+                <TextBlock Text="图像高度" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,2,5,3" Height="16" Width="48"/>
+                <TextBlock Text="图像宽度" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Margin="6,3,7,2" Width="48"/>
+                <TextBlock Text="工程名称" Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Margin="6,2,7,3" Width="48"/>
+                <TextBox Name="canvas_height" Grid.Column="1" Grid.Row="0" Margin="1" VerticalContentAlignment="Center" FontSize="11"/>
+                <TextBox Name="canvas_width" Grid.Column="1" Grid.Row="1" Margin="1" FontSize="11"/>
+                <TextBox Name="project_name" Grid.Column="1" Grid.Row="3" Margin="1,1,0,1" Grid.ColumnSpan="3" FontSize="11"/>
+                <TextBlock Text="像素" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Margin="18,2,19,3" Width="24"/>
+                <TextBlock Text="像素" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Margin="18,3,19,2" Width="24"/>
+                <Button Content="新建" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="44" Click="Create" Margin="7,11,10,7" Height="20"/>
+                <Button Content="取消" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="44" Click="Cancel" Margin="5,11,6,7" Height="20"/>
             </Grid>
 
         </GroupBox>
