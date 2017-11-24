@@ -80,13 +80,38 @@ namespace TPIS
             dp.Width = 90;
             ti.Header = dp;
 
+           
             Canvas cs = new Canvas();//< Canvas Name = "MainCanvas" Background = "Gray" ></ Canvas >
             cs.Name = "canvas" + num.ToString();
             cs.Background = new SolidColorBrush(Colors.Gray);
-            ti.Content = cs;
-            
+            cs.MinHeight = project.canvas.Whole_height;
+            cs.MinWidth = project.canvas.Whole_width;
+            cs.VerticalAlignment = VerticalAlignment.Stretch;
+
+            Rectangle rect = new Rectangle();
+            rect.Fill = new SolidColorBrush(Colors.White);
+            rect.Stroke = new SolidColorBrush(Colors.White);
+            rect.SetValue(Canvas.LeftProperty, (double)0);
+            rect.SetValue(Canvas.TopProperty, (double)0);
+            rect.Height = project.canvas.V_height;
+            rect.Width = project.canvas.V_width;
+            cs.Children.Add(rect);
+
+            mainwin.CanvasBinding(project.canvas, cs, rect);
+
+            DockPanel sp = new DockPanel();
+            sp.Children.Add(cs);
+
+            ScrollViewer sv = new ScrollViewer();
+            sv.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            sv.Content = sp;
+
+            ti.Content = sv;
+
             return ti;
         }
 
+        
     }
 }
