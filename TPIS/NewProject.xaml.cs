@@ -51,10 +51,11 @@ namespace TPIS
             TabItem ti = AddTab(mainwin.projectList.projects.Last(), mainwin.projectList.projects.Count-1);
             mainwin.tab_project.Items.Add(ti);
 
-            mainwin.Active_Project(mainwin.projectList.projects.Count-1);
+            mainwin.ActiveProject(mainwin.projectList.projects.Count-1);
             this.Close();
         }
 
+        //新增 工程tab
         private TabItem AddTab(ProjectItem project, int num)
         {
             TabItem ti = new TabItem();//< TabItem Header = "project.tpis" Name = "tabItem1" >

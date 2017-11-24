@@ -78,9 +78,17 @@
     <Compile Include="NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OperationRoute.xaml.cs" >
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Project\ProjectItem.cs" />
     <Compile Include="Canvas\ProjectCanvas.cs" />
-    <Compile Include="Project\ProjectControl.cs" />
+    <Compile Include="ProjectControl.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Project\ProjectSpace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

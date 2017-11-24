@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TPIS.Project
 {
-    public class ProjectControl
+    public class ProjectSpace
     {
         public List<ProjectItem> projects;
 
-        public ProjectControl()
+        public ProjectSpace()
         {
             projects = new List<ProjectItem>();
         }
