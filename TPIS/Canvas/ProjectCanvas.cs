@@ -9,7 +9,7 @@ namespace TPIS.Project
 {
     public class ProjectCanvas : INotifyPropertyChanged
     {
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
         private int height;
         private int width;
@@ -19,12 +19,15 @@ namespace TPIS.Project
         private double whole_width;
         private double whole_height;
 
-        public int Height { get => height; set
+        public int Height
+        {
+            get { return height; }
+            set
             {
                 this.height = value;
                 this.v_height = height * this.rate;
                 this.whole_height = this.v_height + 200;
-                if(this.PropertyChanged !=null)
+                if (this.PropertyChanged != null)
                 {
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Whole_height"));
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
@@ -34,7 +37,8 @@ namespace TPIS.Project
 
         public int Width
         {
-            get => width; set
+            get { return width; }
+            set
             {
                 this.width = value;
                 this.v_width = width * this.rate;
@@ -47,7 +51,10 @@ namespace TPIS.Project
             }
         }
 
-        public double Rate { get => rate; set
+        public double Rate
+        {
+            get { return rate; }
+            set
             {
                 this.rate = value;
                 this.v_height = height * this.rate;
@@ -66,10 +73,10 @@ namespace TPIS.Project
             }
         }
 
-        public double V_height { get => v_height; set => v_height = value; }
-        public double V_width { get => v_width; set => v_width = value; }
-        public double Whole_width { get => whole_width; set => whole_width = value; }
-        public double Whole_height { get => whole_height; set => whole_height = value; }
+        public double V_height { get { return v_height; } set { v_height = value; } }
+        public double V_width { get { return v_width; } set { v_width = value; } }
+        public double Whole_width { get { return whole_width; } set { whole_width = value; } }
+        public double Whole_height { get { return whole_height; } set { whole_height = value; } }
 
         public ProjectCanvas(int height, int width)
         {

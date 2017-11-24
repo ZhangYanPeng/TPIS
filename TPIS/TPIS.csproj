@@ -78,7 +78,7 @@
     <Compile Include="NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OperationRoute.xaml.cs" >
+    <Compile Include="OperationRoute.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -163,6 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\icon\tab_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\activeIcon\icon_activeRect.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

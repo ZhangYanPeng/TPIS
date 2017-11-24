@@ -169,6 +169,10 @@
                 <Button AutomationProperties.Name="tsbFreehandSelection" ToolTip="自由图形选择">
                     <Image Source="res/icon/activeIcon/icon_activeFreehandSelection.png" Stretch="None" />
                 </Button>
+                <Separator />
+                <Button AutomationProperties.Name="tsbRect" ToolTip="矩形" Click="Rect">
+                    <Image Source="res/icon/activeIcon/icon_activeRect.png" Stretch="None" />
+                </Button>
             </ToolBar>
             <StatusBar DockPanel.Dock="Bottom" >
                 <StatusBarItem Width="100" HorizontalAlignment="Right" Focusable="False">
@@ -182,12 +186,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <DockPanel Grid.Column="0">
-                    <TextBox Width="300">
+                    <TextBox Width="298">
                         aaaaaaaaaaaaa
                     </TextBox>
                 </DockPanel>
-                <TabControl Grid.Column="2" BorderBrush="Gray" Margin="12,12,0,0" Name="tab_project">
-                </TabControl>
+                <TabControl Grid.Column="2" BorderBrush="#FF171313" Margin="10" Name="tab_project" Background="#FF7E7A7A"/>
                 <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="5" Background="Gray" ShowsPreview="True"/>
             </Grid>
         </DockPanel>

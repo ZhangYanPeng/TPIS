@@ -58,7 +58,8 @@ namespace TPIS
         //新增 工程tab
         private TabItem AddTab(ProjectItem project, int num)
         {
-            TabItem ti = new TabItem();//< TabItem Header = "project.tpis" Name = "tabItem1" >
+            //TabItem ti = new TabItem();//< TabItem Header = "project.tpis" Name = "tabItem1" >
+            TabItem ti = new TabItem();
             ti.Name = "tabItem" + num.ToString();
 
             TextBlock tb = new TextBlock();
@@ -83,33 +84,23 @@ namespace TPIS
             dp.Width = 90;
             ti.Header = dp;
 
-           
-            Canvas cs = new Canvas();//< Canvas Name = "MainCanvas" Background = "Gray" ></ Canvas >
-            cs.Name = "canvas" + num.ToString();
-            cs.Background = new SolidColorBrush(Colors.Gray);
-            cs.MinHeight = project.canvas.Whole_height;
-            cs.MinWidth = project.canvas.Whole_width;
-            cs.VerticalAlignment = VerticalAlignment.Stretch;
 
-            Rectangle rect = new Rectangle();
-            rect.Fill = new SolidColorBrush(Colors.White);
-            rect.Stroke = new SolidColorBrush(Colors.White);
-            rect.SetValue(Canvas.LeftProperty, (double)0);
-            rect.SetValue(Canvas.TopProperty, (double)0);
-            rect.Height = project.canvas.V_height;
-            rect.Width = project.canvas.V_width;
-            cs.Children.Add(rect);
 
-            mainwin.CanvasBinding(project.canvas, cs, rect);
+            mainwin.cs = new Canvas();//< Canvas Name = "MainCanvas" Background = "Gray" ></ Canvas >
+            mainwin.cs.Name = "canvas" + num.ToString();
+            mainwin.cs.Background = new SolidColorBrush(Colors.White);
+            mainwin.cs.Height = project.canvas.V_height;
+            mainwin.cs.Width = project.canvas.V_width;
 
-            DockPanel sp = new DockPanel();
-            sp.Children.Add(cs);
+            mainwin.CanvasBinding(project.canvas, mainwin.cs);
 
             ScrollViewer sv = new ScrollViewer();
             sv.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-            sv.Content = sp;
-
+            sv.HorizontalAlignment = HorizontalAlignment.Left;
+            sv.VerticalAlignment = VerticalAlignment.Top;
+            sv.Content = mainwin.cs;
+           
             ti.Content = sv;
 
             return ti;

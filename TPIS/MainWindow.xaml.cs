@@ -23,6 +23,7 @@ namespace TPIS
     {
         public ProjectSpace projectList;//工程列表
         public ProjectItem currentPoject;//当前激活工程
+        public Canvas cs;
 
         public MainWindow()
         {
@@ -35,6 +36,14 @@ namespace TPIS
         {
             currentPoject.canvas.Height = currentPoject.canvas.Height + 100;
             currentPoject.canvas.Width = currentPoject.canvas.Width + 100;
+        }
+        public void Rect(object sender, RoutedEventArgs e)  //*提示修改测试
+        {
+            Rectangle rect = new Rectangle();
+            rect.Width = 50;
+            rect.Height = 50;
+            rect.Stroke = Brushes.Black;
+            cs.Children.Add(rect);
         }
     }
 }

@@ -72,27 +72,17 @@ namespace TPIS
         }
 
         //binding 画布
-        public void CanvasBinding(ProjectCanvas pc, Canvas canvas, Rectangle rect)
+        public void CanvasBinding(ProjectCanvas pc, Canvas canvas)
         {
             Binding binding_cw = new Binding();
             binding_cw.Source = pc;
-            binding_cw.Path = new PropertyPath("Whole_width");
-            BindingOperations.SetBinding(canvas, Canvas.MinWidthProperty, binding_cw);
+            binding_cw.Path = new PropertyPath("V_width");
+            BindingOperations.SetBinding(canvas, Canvas.WidthProperty, binding_cw);
 
             Binding binding_ch = new Binding();
             binding_ch.Source = pc;
-            binding_ch.Path = new PropertyPath("Whole_height");
-            BindingOperations.SetBinding(canvas, Canvas.MinHeightProperty, binding_ch);
-
-            Binding binding_vw = new Binding();
-            binding_vw.Source = pc;
-            binding_vw.Path = new PropertyPath("V_width");
-            BindingOperations.SetBinding(rect, Rectangle.WidthProperty, binding_vw);
-
-            Binding binding_vh = new Binding();
-            binding_vh.Source = pc;
-            binding_vh.Path = new PropertyPath("V_height");
-            BindingOperations.SetBinding(rect, Rectangle.HeightProperty, binding_vh);
+            binding_ch.Path = new PropertyPath("V_height");
+            BindingOperations.SetBinding(canvas, Canvas.HeightProperty, binding_ch);
 
         }
     }
