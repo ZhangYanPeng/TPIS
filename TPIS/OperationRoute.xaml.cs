@@ -17,20 +17,16 @@ using TPIS.Project;
 namespace TPIS
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// REST的操作调用
+    /// 所有操作在此路由
+    /// 所有操作都必须定义逆操作方法
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ProjectSpace projectList;//工程列表
-        public ProjectItem currentPoject;//当前激活工程
-
-        public MainWindow()
+        public void OperationRequest()
         {
-            InitializeComponent();
-            projectList = new ProjectSpace();
-            tab_project.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
+
         }
 
-        
     }
 }

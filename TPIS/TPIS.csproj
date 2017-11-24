@@ -66,8 +66,29 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Canvas\Choosen.cs" />
+    <Compile Include="Model\Component.cs" />
+    <Compile Include="Model\Link.cs" />
+    <Compile Include="NewProject.xaml.cs">
+      <DependentUpon>NewProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OperationRoute.xaml.cs" >
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Project\ProjectItem.cs" />
+    <Compile Include="Canvas\ProjectCanvas.cs" />
+    <Compile Include="ProjectControl.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Project\ProjectSpace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,7 +115,54 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Requirement Analysis\" />
+    <Resource Include="res\icon\icon_app.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\activeIcon\icon_activeAllSelection.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeClose.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeCopy.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeCut.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeDelete.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeFreehandSelection.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeNew.png" />
+    <Resource Include="res\icon\activeIcon\icon_activePaste.png" />
+    <Resource Include="res\icon\activeIcon\icon_activePrint.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeRedo.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeSave.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeSaveAll.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeSaveAs .png" />
+    <Resource Include="res\icon\activeIcon\icon_activeSelection.png" />
+    <Resource Include="res\icon\activeIcon\icon_activeUndo.png" />
+    <Resource Include="res\icon\activeIcon\icon_cativeOpen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\icon_close.png" />
+    <Resource Include="res\icon\icon_copy.png" />
+    <Resource Include="res\icon\icon_cut.png" />
+    <Resource Include="res\icon\icon_delete.png" />
+    <Resource Include="res\icon\icon_freehandSelection.png" />
+    <Resource Include="res\icon\icon_new.png" />
+    <Resource Include="res\icon\icon_open.png" />
+    <Resource Include="res\icon\icon_paste.png" />
+    <Resource Include="res\icon\icon_print.png" />
+    <Resource Include="res\icon\icon_redo.png" />
+    <Resource Include="res\icon\icon_save.png" />
+    <Resource Include="res\icon\icon_saveAll.png" />
+    <Resource Include="res\icon\icon_saveAs.png" />
+    <Resource Include="res\icon\icon_selection.png" />
+    <Resource Include="res\icon\icon_undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\icon_signout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\icon_allSelection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\conponent\component-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\icon\tab_close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
