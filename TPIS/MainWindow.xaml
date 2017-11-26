@@ -11,47 +11,47 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="设备管理(M)" >
-                    <MenuItem Header="新建工程" Click="NewProject">
+                    <MenuItem Header="新建工程(N)" Click="NewProject">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_new.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="打开工程" >
+                    <MenuItem Header="打开工程(O)" >
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_open.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="关闭工程">
+                    <MenuItem Header="关闭工程(C)">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_close.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="存储" InputGestureText="Ctrl+S">
+                    <MenuItem Header="存储(S)" InputGestureText="Ctrl+S">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_save.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="另存为" >
+                    <MenuItem Header="另存为(A)" >
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_saveAs.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="全部存储" InputGestureText="Ctrl+Shift+S">
+                    <MenuItem Header="全部存储(L)" InputGestureText="Ctrl+Shift+S">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_saveAll.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="打印">
+                    <MenuItem Header="打印(P)">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_print.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="最近使用过的工程" />
+                    <MenuItem Header="最近使用过的工程(F)" />
                     <Separator />
-                    <MenuItem Header="退出" InputGestureText="Alt+F4" Click="Test">
+                    <MenuItem Header="退出(X)" InputGestureText="Alt+F4" Click="Test">
                         <MenuItem.Icon>
                             <Image Source="res/icon/icon_signout.png" />
                         </MenuItem.Icon>
@@ -110,6 +110,7 @@
                 </MenuItem>
                 <MenuItem Header="视图(V)" >
                     <MenuItem Header="网格线" InputGestureText="F1" />
+                    <MenuItem Header="工具箱(X)" Click="ControlTool" />
                     <Separator />
                 </MenuItem>
                 <MenuItem Header="设置(S)" />
