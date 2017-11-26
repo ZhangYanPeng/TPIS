@@ -47,6 +47,7 @@ namespace TPIS
                         {
                             //非选中tab
                             ((Button)child).Visibility = Visibility.Hidden;
+                            
                         }
                     }
                 }

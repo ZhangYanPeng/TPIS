@@ -73,7 +73,7 @@ namespace TPIS
             img.Width = 10;
             img.Height = 10;
             bt.Content = img;
-            bt.Visibility = Visibility.Hidden;
+            //bt.Visibility = Visibility.Hidden;
 
             DockPanel dp = new DockPanel();
             dp.Name = "project_header" + num.ToString();

@@ -32,6 +32,7 @@ namespace TPIS
             rect.Width = 50;
             rect.Height = 50;
             rect.Stroke = Brushes.Black;
+
             mainwin.cs.Children.Add(rect);
         }
     }

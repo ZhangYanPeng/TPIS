@@ -8,7 +8,7 @@
         Title="ControlTool" Height="441.066" Width="221.943">
     <Grid>
         <Grid HorizontalAlignment="Left" Height="411" VerticalAlignment="Top" Width="214">
-            <GroupBox x:Name="groupBox" Header="GroupBox" HorizontalAlignment="Center" Height="411" VerticalAlignment="Center" Width="214">
+            <GroupBox x:Name="groupBox" Header="工具箱" HorizontalAlignment="Center" Height="411" VerticalAlignment="Center" Width="214">
                 <Grid HorizontalAlignment="Center" Height="371" Margin="10,7,8,11" VerticalAlignment="Center" Width="184">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="46*"/>
