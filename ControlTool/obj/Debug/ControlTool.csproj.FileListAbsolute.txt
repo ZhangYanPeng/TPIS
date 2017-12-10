@@ -1,9 +1,0 @@
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\ControlTool.csprojResolveAssemblyReference.cache
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\Rect.g.cs
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\App.g.cs
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\ControlTool_MarkupCompile.cache
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\ControlTool_MarkupCompile.lref
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\Rect.baml
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\ControlTool.exe
-C:\Users\xjtu_lw\Source\Repos\TPIS\ControlTool\obj\Debug\ControlTool.pdb

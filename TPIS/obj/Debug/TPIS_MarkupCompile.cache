@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\xjtu_lw\Source\Repos\TPIS\TPIS\obj\Debug\
+C:\VS1\TPIS\TPIS\obj\Debug\
 TPIS
 none
 false
 DEBUG;TRACE
-C:\Users\xjtu_lw\Source\Repos\TPIS\TPIS\App.xaml
-3-1306161762
+C:\VS1\TPIS\TPIS\App.xaml
+81428269614
 
-16-2050728635
-131569487696
-ControlTool.xaml;MainWindow.xaml;NewProject.xaml;
+141150740589
+14-1175798665
+Views\NewProject.xaml;Views\Modules\TPISElementPanel.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISProjectTab.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Window1.xaml;
 
 False
 
