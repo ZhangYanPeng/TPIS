@@ -7,25 +7,29 @@
 
     <DockPanel x:Key="TPISResManagementBox">
         <!--输入输出模块-->
-        <Button DockPanel.Dock="Top" Content="I/O"></Button>
         <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Gray">
-            <StackPanel Margin="0" Height="Auto" MinHeight="200" MinWidth="250">
-                <TextBox>输入输出</TextBox>
-            </StackPanel>
+            <GroupBox Header="I/O"  Margin="3,0,0,0">
+                <ScrollViewer  Height="200" Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
+                    <DockPanel Margin="3">
+                        <TextBox TextWrapping="Wrap" AcceptsReturn="True"/>
+                    </DockPanel>
+                </ScrollViewer>
+            </GroupBox>
         </Border>
-        
+
         <!--元件模块-->
-        <Button DockPanel.Dock="Top" Content="元件"></Button>
-        <Border DockPanel.Dock="Bottom" BorderThickness="1" BorderBrush="Gray">
-            <ScrollViewer>
-                <StackPanel Margin="0" Height="Auto" MinWidth="250">
-                    <Expander Header="燃料类" Content="{StaticResource FuelElementPanel}" IsExpanded="True"/>
-                    <Expander Header="汽水链接件" Content="{StaticResource SteamWaterLinkElementPanel}" IsExpanded="True"/>
-                    <Expander Header="汽水设备" Content="{StaticResource SteamWaterElementPanel}" IsExpanded="True"/>
-                    <Expander Header="烟气模块" Content="{StaticResource SomkeGasElementPanel}" IsExpanded="True"/>
-                    <Expander Header="其他模块" Content="{StaticResource OtherElementPanel}" IsExpanded="True"/>
-                </StackPanel>
-            </ScrollViewer>
+        <Border BorderThickness="1" BorderBrush="Gray">
+            <GroupBox Header="元件" Margin="3,0,0,0">
+                <ScrollViewer Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="3">
+                        <Expander Header="燃料类" Content="{StaticResource FuelElementPanel}" IsExpanded="True"/>
+                        <Expander Header="汽水链接件" Content="{StaticResource SteamWaterLinkElementPanel}" IsExpanded="True"/>
+                        <Expander Header="汽水设备" Content="{StaticResource SteamWaterElementPanel}" IsExpanded="True"/>
+                        <Expander Header="烟气模块" Content="{StaticResource SomkeGasElementPanel}" IsExpanded="True"/>
+                        <Expander Header="其他模块" Content="{StaticResource OtherElementPanel}" IsExpanded="True"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
         </Border>
     </DockPanel>
 </ResourceDictionary>

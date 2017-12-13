@@ -1,11 +1,26 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <StackPanel x:Key="FuelElementPanel" HorizontalAlignment="Left">
+    <WrapPanel x:Key="FuelElementPanel" HorizontalAlignment="Left">
         <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
             <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
         </Button>
-    </StackPanel>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+    </WrapPanel>
     <StackPanel x:Key="SteamWaterLinkElementPanel" HorizontalAlignment="Left">
         <Button ToolTip="三通阀" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
             <Image Source="pack://application:,,,/Images/element/WaterValve.png"/>

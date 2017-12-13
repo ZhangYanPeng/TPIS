@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using TPIS.Project;
 using WinForms = System.Windows.Forms;
+using TPIS.Project;
+using TPIS.TPISCanvas;
+using System.Windows.Media;
 
 namespace TPIS
 {
@@ -33,26 +27,23 @@ namespace TPIS
         /// </summary>
         private void Create(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("a"+(string)FindName("tab_project")+"b");
-            //mainwin. projectTab = FindName("tab_project") as TabControl;
-            //MessageBox.Show(mainwin.projectTab.Name);
-            //    try
-            //    {
-            //        int.Parse(canvas_height.Text);
-            //        int.Parse(canvas_width.Text);
-            //    }
-            //    catch (Exception exp)
-            //    {
-            //        MessageBoxResult dr = MessageBox.Show("高度和宽度只能为整数", "提示", MessageBoxButton.OKCancel);
-            //        return;
-            //    }
-
-            //    mainwin.projectList.projects.Add(new ProjectItem(int.Parse(canvas_height.Text), int.Parse(canvas_width.Text), project_name.Text + ".tpis"));
-            //    //插入tab
-            //    TabItem ti = AddTab(mainwin.projectList.projects.Last(), mainwin.projectList.projects.Count-1);
-            //    mainwin.projectTab.Items.Add(ti);
-            //    //mainwin.ActiveProject(mainwin.projectList.projects.Count-1);
-            //    this.Close();
+            if (string.IsNullOrWhiteSpace(proj_name.Text) && string.IsNullOrWhiteSpace(proj_location.Text))
+                MessageBox.Show("项目名和储位置不能为空！", "提示", MessageBoxButton.OKCancel);
+            else if (string.IsNullOrWhiteSpace(proj_name.Text))
+                MessageBox.Show("项目名不能为空！", "提示", MessageBoxButton.OKCancel);
+            else if (string.IsNullOrWhiteSpace(proj_location.Text))
+                MessageBox.Show("存储位置不能为空！", "提示", MessageBoxButton.OKCancel);
+            else
+            {
+                string[] temp = proj_dpi.Text.Split('X');
+                int projectCanvasWidth = int.Parse(temp[0]);
+                int projectCanvasHeight = int.Parse(temp[1]);
+                mainwin.projectList.projects.Add(new ProjectItem(proj_name.Text + ".tpis"));
+                TabItem projecTabItem = AddTab(mainwin.projectList.projects.Last(), mainwin.projectList.projects.Count - 1, projectCanvasWidth, projectCanvasHeight);
+                mainwin.projectTab.Items.Add(projecTabItem);
+                Close();
+            }
+            //mainwin.ActiveProject(mainwin.projectList.projects.Count-1);
         }
 
         /// <summary>
@@ -66,54 +57,78 @@ namespace TPIS
         /// <summary>
         /// 新增
         /// </summary>
-        private TabItem AddTab(ProjectItem project, int num)
+        private TabItem AddTab(ProjectItem project, int num, int width, int height)
         {
-            //TabItem ti = new TabItem();//< TabItem Header = "project.tpis" Name = "tabItem1" >
-            TabItem ti = new TabItem();
-            ti.Name = "tabItem" + num.ToString();
+            //工作区项目标签名（项目名）
+            TextBlock textBlock = new TextBlock
+            {
+                Text = project.name,
+                TextTrimming = TextTrimming.CharacterEllipsis//TextBlock...显示
+            };
 
-            TextBlock tb = new TextBlock();
-            tb.Text = project.name;
+            //工作区项目标签关闭按钮
+            Button closeButton = new Button();
+            Image closeImg = new Image
+            {
+                Source = new BitmapImage(new Uri("Images/icon/tab_close.png", UriKind.Relative)),
+                Width = 10,
+                Height = 10
+            };
+            closeButton.Content = closeImg;
 
-            tb.TextTrimming = TextTrimming.CharacterEllipsis;//TextBlock...显示
-
-            Button bt = new Button();
-            Image img = new Image();
-            img.Source = new BitmapImage(new Uri("res/icon/tab_close.png", UriKind.Relative));
-            img.Width = 10;
-            img.Height = 10;
-            bt.Content = img;
-            //bt.Visibility = Visibility.Hidden;
-
-            DockPanel dp = new DockPanel();
-            dp.Name = "project_header" + num.ToString();
-            DockPanel.SetDock(bt, Dock.Right);
-            dp.Children.Add(bt);
-            dp.Children.Add(tb);
-            dp.MinWidth = 30;
-            dp.Width = 90;
-            ti.Header = dp;
-
+            //工作区项目标签面板
+            DockPanel projectPanel = new DockPanel
+            {
+                Name = "project_header" + num.ToString(),
+                MinWidth = 30,
+                Width = 90
+            };
+            DockPanel.SetDock(closeButton, Dock.Right);
+            projectPanel.Children.Add(closeButton);
+            projectPanel.Children.Add(textBlock);
 
 
-            mainwin.cs = new Canvas();//< Canvas Name = "MainCanvas" Background = "Gray" ></ Canvas >
-            mainwin.cs.Name = "canvas" + num.ToString();
-            mainwin.cs.Background = new SolidColorBrush(Colors.White);
-            mainwin.cs.Height = project.canvas.V_height;
-            mainwin.cs.Width = project.canvas.V_width;
+            //工作区< TabItem Header = "project.tpis" Name = "tabItem1" >
+            TabItem projectTabItem = new TabItem
+            {
+                Name = "tabItem" + num.ToString(),
+                Header = projectPanel
+            };
 
-           // mainwin.CanvasBinding(project.canvas, mainwin.cs);
 
-            ScrollViewer sv = new ScrollViewer();
-            sv.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-            sv.HorizontalAlignment = HorizontalAlignment.Left;
-            sv.VerticalAlignment = VerticalAlignment.Top;
-            sv.Content = mainwin.cs;
-           
-            ti.Content = sv;
+            //工作区画布< Canvas Name = "MainCanvas" Background = "Gray" ></ Canvas >
+            //Canvas projectCanvas = new Canvas
+            //{
+            //    Name = "canvas" + num.ToString(),
+            //    Background = new SolidColorBrush(Colors.White),
 
-            return ti;
+
+            //    //MinWidth = mainwin.projectTab.Width,//auto
+            //    //MinHeight = mainwin.projectTab.Height
+            //    //MinWidth = SystemParameters.WorkArea.Width,
+            //    //MinHeight= SystemParameters.WorkArea.Height
+            //};
+            ProjectDesignerCanvas projectCanvas = new ProjectDesignerCanvas
+            {
+                Focusable = true,
+                Background = new SolidColorBrush(Colors.White),
+                Width = width,
+                Height = height
+            };
+            // mainwin.CanvasBinding(project.canvas, mainwin.cs);
+
+            //工作区附加滚动条
+            ScrollViewer projectScroll = new ScrollViewer
+            {
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Content = projectCanvas
+            };
+
+            projectTabItem.Content = projectScroll;
+            return projectTabItem;
         }
 
         /// <summary>

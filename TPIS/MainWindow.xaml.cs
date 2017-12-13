@@ -23,17 +23,24 @@ namespace TPIS
     {
         public ProjectSpace projectList;//工程列表
         public ProjectItem currentPoject;//当前激活工程
-        //public TabControl projectTab;
         public Canvas cs;
 
         public MainWindow()
         {
             InitializeComponent();
+            Window_Loaded();
             projectList = new ProjectSpace();
-            //MessageBox.Show((string)tab.FindName("tab_project"));
-            //MessageBox.Show(tab.Content.ToString());
+
             //projectTab.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
         }
 
+        /// <summary>
+        /// 窗体自适应电脑工作区大小
+        /// </summary>
+        private void Window_Loaded()
+        {
+            Width = SystemParameters.WorkArea.Width;
+            Height = SystemParameters.WorkArea.Height;
+        }
     }
 }

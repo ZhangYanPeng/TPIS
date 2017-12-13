@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPIS.Model;
 
-namespace TPIS.Model
+namespace TPIS.TPISCanvas
 {
     public class Choosen
     {

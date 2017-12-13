@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPIS"
         mc:Ignorable="d"
-        Title="TPIS" WindowStartupLocation="CenterScreen"
-        Height="980" Width="1500" MinHeight="600" MinWidth="800">
+        Title="TPIS" WindowStartupLocation="CenterScreen" ResizeMode="CanResize"
+        MinHeight="600" MinWidth="800">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Modules/TPISMenu.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISToolBar.xaml"/>
-                <ResourceDictionary Source="Views/Modules/TPISProjectTab.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISResManagementBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -21,7 +20,16 @@
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{StaticResource TPISToolBar}"/>
         <ContentControl DockPanel.Dock="Left" Content="{StaticResource TPISResManagementBox}"/>
-        <ContentControl Name="tab" Content="{StaticResource TPISProjectTab}"/>
+        <Grid>
+            <Border BorderThickness="1" BorderBrush="Black" Margin="2">
+                <DockPanel>
+                    <StatusBar DockPanel.Dock="Bottom" Background="SkyBlue" MaxHeight="30">
+                        <StatusBarItem Name="statusBar" Content="状态栏" HorizontalAlignment="Right" Focusable="False"/>
+                    </StatusBar>
+                    <TabControl x:Name="projectTab" Background="#FF7E7A7A"/>
+                </DockPanel>
+            </Border>
+        </Grid>
     </DockPanel>
-    
+
 </Window>

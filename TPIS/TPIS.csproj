@@ -56,6 +56,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\Connection.cs" />
+    <Compile Include="Command\ConnectionAdorner.cs" />
+    <Compile Include="Command\Connector.cs" />
+    <Compile Include="Command\ConnectorAdorner.cs" />
+    <Compile Include="Command\PathFinder.cs" />
+    <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
+    <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
+    <Compile Include="Command\Controls\DragThumb.cs" />
+    <Compile Include="Command\IGroupable.cs" />
+    <Compile Include="Command\ISelectable.cs" />
+    <Compile Include="Command\Controls\RelativePositionPanel.cs" />
+    <Compile Include="Command\Controls\ResizeThumb.cs" />
+    <Compile Include="Command\RubberbandAdorner.cs" />
+    <Compile Include="Command\SelectionService.cs" />
+    <Compile Include="Command\ToolboxItem.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -64,9 +79,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Command\TPISCommand.cs" />
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
     <Page Include="Views\NewProject.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,10 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Modules\TPISMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Modules\TPISProjectTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -95,20 +103,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Window1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Canvas\Choosen.cs" />
+    <Compile Include="TPISCanvas\Choosen.cs" />
     <Compile Include="Model\Component.cs" />
     <Compile Include="Model\Link.cs" />
     <Compile Include="Views\NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project\ProjectItem.cs" />
-    <Compile Include="Canvas\ProjectCanvas.cs" />
+    <Compile Include="TPISCanvas\ProjectCanvas.cs" />
     <Compile Include="Project\ProjectSpace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

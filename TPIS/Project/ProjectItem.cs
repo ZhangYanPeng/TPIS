@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TPIS.TPISCanvas;
 using TPIS.Model;
 
 namespace TPIS.Project
@@ -15,10 +13,10 @@ namespace TPIS.Project
         public List<Link> link;
         public ProjectCanvas canvas;
 
-        public ProjectItem(int height, int width, string name)
+        public ProjectItem(string name)
         {
             this.name = name;
-            this.canvas = new ProjectCanvas(height, width);
+            this.canvas = new ProjectCanvas();
             this.components = null;
             this.link = null;
             return;

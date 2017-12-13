@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace TPIS.Project
+namespace TPIS.TPISCanvas
 {
     public class ProjectCanvas : INotifyPropertyChanged
     {
@@ -78,15 +78,9 @@ namespace TPIS.Project
         public double Whole_width { get { return whole_width; } set { whole_width = value; } }
         public double Whole_height { get { return whole_height; } set { whole_height = value; } }
 
-        public ProjectCanvas(int height, int width)
+        public ProjectCanvas()
         {
-            this.height = height;
-            this.width = width;
-            rate = 1.0;
-            this.v_height = height * rate;
-            this.v_width = width * rate;
-            this.whole_width = height * rate + 200;
-            this.whole_height = width * rate + 200;
+            
         }
 
 
