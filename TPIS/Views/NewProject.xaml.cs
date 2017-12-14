@@ -76,5 +76,10 @@ namespace TPIS
             string m_Dir = m_Dialog.SelectedPath.Trim();
             proj_location.Text = m_Dir;
         }
+
+        private void canvas_width_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
