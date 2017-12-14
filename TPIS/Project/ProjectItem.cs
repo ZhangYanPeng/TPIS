@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using TPIS.TPISCanvas;
 using TPIS.Model;
 
 namespace TPIS.Project
 {
     public class ProjectItem
     {
-        public String name;
+        public String Name { get; set; }
+        public String V_name { get; set; }
 
         public List<Component> components;
         public List<Link> link;
-        public ProjectCanvas canvas;
+        public ProjectCanvas Canvas { get; set; }
 
-        public ProjectItem(string name)
+        public ProjectItem(string name, ProjectCanvas pCanvas)
         {
-            this.name = name;
-            this.canvas = new ProjectCanvas();
+            this.Name = name +".tpis";
+            this.Canvas = pCanvas;
             this.components = null;
             this.link = null;
             return;
@@ -24,7 +24,6 @@ namespace TPIS.Project
 
         public void Draw()
         {
-            canvas.Draw();
         }
 
     }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPIS"
+        xmlns:s="clr-namespace:TPIS.TPISCanvas"
         mc:Ignorable="d"
         Title="TPIS" WindowStartupLocation="CenterScreen" ResizeMode="CanResize"
         MinHeight="600" MinWidth="800">
@@ -26,7 +27,25 @@
                     <StatusBar DockPanel.Dock="Bottom" Background="SkyBlue" MaxHeight="30">
                         <StatusBarItem Name="statusBar" Content="状态栏" HorizontalAlignment="Right" Focusable="False"/>
                     </StatusBar>
-                    <TabControl x:Name="projectTab" Background="#FF7E7A7A"/>
+                    <TabControl x:Name="projectTab" Background="#FF7E7A7A" >
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Width="90" MinWidth="30">
+                                    <Button DockPanel.Dock="Right">
+                                        <Image Source="Images/icon/tab_close.png" Width="10" Height="10"/>
+                                    </Button>
+                                    <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"></TextBlock>
+                                </DockPanel>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}"></s:ProjectDesignerCanvas>
+                                </ScrollViewer>
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
                 </DockPanel>
             </Border>
         </Grid>

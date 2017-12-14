@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="新建项目" Height="300" Width="600" ResizeMode="NoResize">
+        Title="新建项目" Height="340" Width="600" ResizeMode="NoResize">
     <Grid>
         <GroupBox Margin="10" BorderBrush="Gray" FontSize="20">
             <GroupBox.Header>
@@ -14,31 +14,28 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
-                    <RowDefinition Height="79"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="118"/>
                     <ColumnDefinition Width="167"/>
-                    <ColumnDefinition Width="137"/>
-                    <ColumnDefinition Width="137"/>
+                    <ColumnDefinition Width="167"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="项目名称(N)" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                <TextBlock Text="项目位置(L)" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                <TextBox Name="proj_name" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,15,10,15"  FontSize="18"/>
-                <TextBox Name="proj_location" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,15,10,15" FontSize="18"/>
+                <TextBlock Text="项目名称" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                <TextBlock Text="项目位置" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+                <TextBox Name="proj_name" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,15,10,15"  FontSize="18" VerticalAlignment="Center"/>
+                <TextBox Name="proj_location" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,15,10,15" FontSize="18" VerticalAlignment="Center"/>
                 <TextBlock Text=".tpis" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
                 <Button Content="浏览" Grid.Row="1" Grid.Column="3" Click="FolderBrowse" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="90"/>
-                <TextBlock Text="分辨率(N)" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-                <ComboBox Name="proj_dpi" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="120" >
-                    <ComboBoxItem>640X480</ComboBoxItem>
-                    <ComboBoxItem IsSelected="True">800X600</ComboBoxItem>
-                    <ComboBoxItem>1024X768</ComboBoxItem>
-                    <ComboBoxItem>1280X960</ComboBoxItem>
-                    <ComboBoxItem>1600X1200</ComboBoxItem>
-                    <ComboBoxItem>2048X1536</ComboBoxItem>
-                </ComboBox>
-                <Button Content="新建" Grid.Row="2" Grid.Column="2" Click="Create" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="90"/>
-                <Button Content="取消" Grid.Row="2" Grid.Column="3" Click="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="90"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="画布尺寸"/>
+                <TextBox Name="canvas_width" Grid.Row="2" Grid.Column="1"  Margin="10,15,10,15" FontSize="18" VerticalAlignment="Center"/>
+                <TextBox Name="canvas_height" Grid.Row="2" Grid.Column="2"  Margin="10,15,10,15" FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="(像素)"/>
+                
+                <Button Content="新建" Grid.Row="3" Grid.Column="2" Click="Create" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="90"/>
+                <Button Content="取消" Grid.Row="3" Grid.Column="3" Click="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="90"/>
             </Grid>
         </GroupBox>
     </Grid>

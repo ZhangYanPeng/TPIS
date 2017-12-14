@@ -22,8 +22,7 @@ namespace TPIS
     public partial class MainWindow : Window
     {
         public ProjectSpace projectList;//工程列表
-        public ProjectItem currentPoject;//当前激活工程
-        public Canvas cs;
+        public ProjectItem currentPoject;//当前激活工程W
 
         public MainWindow()
         {
@@ -41,6 +40,15 @@ namespace TPIS
         {
             Width = SystemParameters.WorkArea.Width;
             Height = SystemParameters.WorkArea.Height;
+        }
+
+        public void AddProject( string pName, int width, int height)
+        {
+            ProjectCanvas pCanvas = new ProjectCanvas(width, height);
+            ProjectItem project = new ProjectItem(pName, pCanvas);
+            this.projectList.projects.Add(project);
+            this.projectTab.ItemsSource = projectList.projects;
+            this.projectTab.Items.Refresh();
         }
     }
 }
