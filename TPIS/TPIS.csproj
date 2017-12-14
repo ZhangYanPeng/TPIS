@@ -61,6 +61,7 @@
     <Compile Include="Command\Connector.cs" />
     <Compile Include="Command\ConnectorAdorner.cs" />
     <Compile Include="Command\PathFinder.cs" />
+    <Compile Include="Model\Components\Turbin.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="Command\Controls\DragThumb.cs" />
@@ -182,9 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\icon_allSelection.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\conponent\component-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\tab_close.png" />

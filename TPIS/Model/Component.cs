@@ -25,35 +25,14 @@ namespace TPIS.Model
 
     public class Component
     {
-        public Position position;
-        public List<Port> ports;
+        public Position Position { get; set; }
+        public List<Port> Ports { get; set; }
+        public 
 
-        public virtual void Draw()
+        public Component(int tx, int ty)
         {
-            //绘图函数
-            return;
-        }
-
-        public virtual void Calculate()
-        {
-            //计算函数
-            return;
-        }
-        
-        /**
-         * type: 0:左上 1:左下 2:右上 3:右下
-         * x,y: 拖动长度
-         * */
-        public void Stretch(int type, int x, int y)
-        {
-            //改变大小
-            return;
-        }
-
-        public void Move(int x, int y) //x,y: 拖动长度
-        {
-            //移动位置
-            return;
+            this.Position = new Position { x = tx, y = ty, angle = 0, width = 0, height = 0 };
+            this.Ports = new List<Port>();
         }
     }
 

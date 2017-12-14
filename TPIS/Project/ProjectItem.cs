@@ -9,7 +9,7 @@ namespace TPIS.Project
         public String Name { get; set; }
         public String V_name { get; set; }
 
-        public List<Component> components;
+        public List<Component> Components { get; set; }
         public List<Link> link;
         public ProjectCanvas Canvas { get; set; }
 
@@ -17,7 +17,7 @@ namespace TPIS.Project
         {
             this.Name = name +".tpis";
             this.Canvas = pCanvas;
-            this.components = null;
+            this.Components = null;
             this.link = null;
             return;
         }
