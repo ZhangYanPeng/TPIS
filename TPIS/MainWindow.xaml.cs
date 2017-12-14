@@ -10,31 +10,37 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TPIS.Project;
+
 
 namespace TPIS
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Window2.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : Window
     {
         public ProjectSpace projectList;//工程列表
         public ProjectItem currentPoject;//当前激活工程
+        public Canvas cs;
 
         public MainWindow()
         {
             InitializeComponent();
+            Window_Loaded();
             projectList = new ProjectSpace();
-            tab_project.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
+
+            //projectTab.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
         }
 
-        public void Test(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 窗体自适应电脑工作区大小
+        /// </summary>
+        private void Window_Loaded()
         {
-            currentPoject.canvas.Height = currentPoject.canvas.Height + 100;
-            currentPoject.canvas.Width = currentPoject.canvas.Width + 100;
+            Width = SystemParameters.WorkArea.Width;
+            Height = SystemParameters.WorkArea.Height;
         }
     }
 }

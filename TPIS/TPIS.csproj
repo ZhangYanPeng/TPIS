@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,40 +56,63 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Command\Connection.cs" />
+    <Compile Include="Command\ConnectionAdorner.cs" />
+    <Compile Include="Command\Connector.cs" />
+    <Compile Include="Command\ConnectorAdorner.cs" />
+    <Compile Include="Command\PathFinder.cs" />
+    <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
+    <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
+    <Compile Include="Command\Controls\DragThumb.cs" />
+    <Compile Include="Command\IGroupable.cs" />
+    <Compile Include="Command\ISelectable.cs" />
+    <Compile Include="Command\Controls\RelativePositionPanel.cs" />
+    <Compile Include="Command\Controls\ResizeThumb.cs" />
+    <Compile Include="Command\RubberbandAdorner.cs" />
+    <Compile Include="Command\SelectionService.cs" />
+    <Compile Include="Command\ToolboxItem.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="NewProject.xaml">
+    <Compile Include="Command\TPISCommand.cs" />
+    <Page Include="Views\NewProject.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Modules\TPISElementPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Modules\TPISMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Modules\TPISResManagementBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Modules\TPISToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Canvas\Choosen.cs" />
+    <Compile Include="TPISCanvas\Choosen.cs" />
     <Compile Include="Model\Component.cs" />
     <Compile Include="Model\Link.cs" />
-    <Compile Include="NewProject.xaml.cs">
+    <Compile Include="Views\NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OperationRoute.xaml.cs" >
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Project\ProjectItem.cs" />
-    <Compile Include="Canvas\ProjectCanvas.cs" />
-    <Compile Include="ProjectControl.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="TPISCanvas\ProjectCanvas.cs" />
     <Compile Include="Project\ProjectSpace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -115,54 +140,136 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\icon\icon_app.png" />
+    <Resource Include="Images\icon\icon_app.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\icon\activeIcon\icon_activeAllSelection.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeClose.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeCopy.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeCut.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeDelete.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeFreehandSelection.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeNew.png" />
-    <Resource Include="res\icon\activeIcon\icon_activePaste.png" />
-    <Resource Include="res\icon\activeIcon\icon_activePrint.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeRedo.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeSave.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeSaveAll.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeSaveAs .png" />
-    <Resource Include="res\icon\activeIcon\icon_activeSelection.png" />
-    <Resource Include="res\icon\activeIcon\icon_activeUndo.png" />
-    <Resource Include="res\icon\activeIcon\icon_cativeOpen.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeAllSelection.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeClose.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeCopy.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeCut.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeDelete.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeFreehandSelection.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeNew.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activePaste.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activePrint.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeRedo.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeSave.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeSaveAll.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeSaveAs .png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeSelection.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeUndo.png" />
+    <Resource Include="Images\icon\activeIcon\icon_cativeOpen.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\icon\icon_close.png" />
-    <Resource Include="res\icon\icon_copy.png" />
-    <Resource Include="res\icon\icon_cut.png" />
-    <Resource Include="res\icon\icon_delete.png" />
-    <Resource Include="res\icon\icon_freehandSelection.png" />
-    <Resource Include="res\icon\icon_new.png" />
-    <Resource Include="res\icon\icon_open.png" />
-    <Resource Include="res\icon\icon_paste.png" />
-    <Resource Include="res\icon\icon_print.png" />
-    <Resource Include="res\icon\icon_redo.png" />
-    <Resource Include="res\icon\icon_save.png" />
-    <Resource Include="res\icon\icon_saveAll.png" />
-    <Resource Include="res\icon\icon_saveAs.png" />
-    <Resource Include="res\icon\icon_selection.png" />
-    <Resource Include="res\icon\icon_undo.png" />
+    <Resource Include="Images\icon\icon_close.png" />
+    <Resource Include="Images\icon\icon_copy.png" />
+    <Resource Include="Images\icon\icon_cut.png" />
+    <Resource Include="Images\icon\icon_delete.png" />
+    <Resource Include="Images\icon\icon_freehandSelection.png" />
+    <Resource Include="Images\icon\icon_new.png" />
+    <Resource Include="Images\icon\icon_open.png" />
+    <Resource Include="Images\icon\icon_paste.png" />
+    <Resource Include="Images\icon\icon_print.png" />
+    <Resource Include="Images\icon\icon_redo.png" />
+    <Resource Include="Images\icon\icon_save.png" />
+    <Resource Include="Images\icon\icon_saveAll.png" />
+    <Resource Include="Images\icon\icon_saveAs.png" />
+    <Resource Include="Images\icon\icon_selection.png" />
+    <Resource Include="Images\icon\icon_undo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\icon\icon_signout.png" />
+    <Resource Include="Images\icon\icon_exit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\icon\icon_allSelection.png" />
+    <Resource Include="Images\icon\icon_allSelection.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\conponent\component-1.png" />
+    <Resource Include="Images\conponent\component-1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\icon\tab_close.png" />
+    <Resource Include="Images\icon\tab_close.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeRect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\element\AbsorbHeatPump.png" />
+    <Resource Include="Images\element\AbsorbHeatPump1.png" />
+    <Resource Include="Images\element\Airisland.png" />
+    <Resource Include="Images\element\Airisland1.png" />
+    <Resource Include="Images\element\Auxiload.png" />
+    <Resource Include="Images\element\ButtonVertical.png" />
+    <Resource Include="Images\element\Calorifier.png" />
+    <Resource Include="Images\element\Calorifier1.png" />
+    <Resource Include="Images\element\Chimney.png" />
+    <Resource Include="Images\element\Compressor.png" />
+    <Resource Include="Images\element\Compressor1.png" />
+    <Resource Include="Images\element\Compressor2.png" />
+    <Resource Include="Images\element\Compressor3.png" />
+    <Resource Include="Images\element\Compressor4.png" />
+    <Resource Include="Images\element\Condenser.png" />
+    <Resource Include="Images\element\ConTank.png" />
+    <Resource Include="Images\element\ControlDot.png" />
+    <Resource Include="Images\element\Controllingstage.png" />
+    <Resource Include="Images\element\ControlValve.png" />
+    <Resource Include="Images\element\Deaerator.png" />
+    <Resource Include="Images\element\Ejector.png" />
+    <Resource Include="Images\element\Ejector1.png" />
+    <Resource Include="Images\element\GasBoiler.png" />
+    <Resource Include="Images\element\GasControlDot.png" />
+    <Resource Include="Images\element\GasHeater.png" />
+    <Resource Include="Images\element\GasHeater1.png" />
+    <Resource Include="Images\element\GasLastTurbin.png" />
+    <Resource Include="Images\element\GasMidTurbin.png" />
+    <Resource Include="Images\element\GasMidTurbin0.png" />
+    <Resource Include="Images\element\GasTurbin.png" />
+    <Resource Include="Images\element\GasTurbin0.png" />
+    <Resource Include="Images\element\GasTurbin1.png" />
+    <Resource Include="Images\element\GasTurbin2.png" />
+    <Resource Include="Images\element\GasTurbin3.png" />
+    <Resource Include="Images\element\GasTurbin4.png" />
+    <Resource Include="Images\element\HeatSupply.png" />
+    <Resource Include="Images\element\HeatSupply1.png" />
+    <Resource Include="Images\element\IterateDot.png" />
+    <Resource Include="Images\element\IterateDots.png" />
+    <Resource Include="Images\element\LastTurbin1.png" />
+    <Resource Include="Images\element\LastTurbin2.png" />
+    <Resource Include="Images\element\LastTurbin3.png" />
+    <Resource Include="Images\element\LastTurbin4.png" />
+    <Resource Include="Images\element\LastTurbin5.png" />
+    <Resource Include="Images\element\LastTurbin6.png" />
+    <Resource Include="Images\element\MixedHeatExchanger.png" />
+    <Resource Include="Images\element\Monitor.png" />
+    <Resource Include="Images\element\Motor.png" />
+    <Resource Include="Images\element\Motor1.png" />
+    <Resource Include="Images\element\PipeEle.png" />
+    <Resource Include="Images\element\PipeEle1.png" />
+    <Resource Include="Images\element\POneTrain.png" />
+    <Resource Include="Images\element\POneTrain1.png" />
+    <Resource Include="Images\element\ShaftSeal.png" />
+    <Resource Include="Images\element\ShaftSealshow.png" />
+    <Resource Include="Images\element\ShowTextBlock.png" />
+    <Resource Include="Images\element\SmallTurbin.png" />
+    <Resource Include="Images\element\SteamHeader.png" />
+    <Resource Include="Images\element\SteamHeader1.png" />
+    <Resource Include="Images\element\SurfaceHeatExchanger.png" />
+    <Resource Include="Images\element\TeeGas.png" />
+    <Resource Include="Images\element\TeePower.png" />
+    <Resource Include="Images\element\TeePower1.png" />
+    <Resource Include="Images\element\TeeValve.png" />
+    <Resource Include="Images\element\TeeWater.png" />
+    <Resource Include="Images\element\Thionizer.png" />
+    <Resource Include="Images\element\Thionizer1.png" />
+    <Resource Include="Images\element\Turbin1.png" />
+    <Resource Include="Images\element\Turbin2.png" />
+    <Resource Include="Images\element\Turbin3.png" />
+    <Resource Include="Images\element\Turbin4.png" />
+    <Resource Include="Images\element\Turbin5.png" />
+    <Resource Include="Images\element\Turbin6.png" />
+    <Resource Include="Images\element\Turbin7.png" />
+    <Resource Include="Images\element\WaterHeater.png" />
+    <Resource Include="Images\element\WaterValve.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

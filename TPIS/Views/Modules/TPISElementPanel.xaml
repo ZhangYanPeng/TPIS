@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <WrapPanel x:Key="FuelElementPanel" HorizontalAlignment="Left">
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+        <Button ToolTip="AbsorbHeatPump" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
+        </Button>
+    </WrapPanel>
+    <StackPanel x:Key="SteamWaterLinkElementPanel" HorizontalAlignment="Left">
+        <Button ToolTip="三通阀" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/WaterValve.png"/>
+        </Button>
+    </StackPanel>
+    <StackPanel x:Key="SteamWaterElementPanel" HorizontalAlignment="Left">
+        <Button ToolTip="电动机" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/Compressor.png"/>
+        </Button>
+    </StackPanel>
+    <StackPanel x:Key="SomkeGasElementPanel" HorizontalAlignment="Left">
+        <Button ToolTip="Auxiload" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/Compressor.png"/>
+        </Button>
+    </StackPanel>
+    <StackPanel x:Key="OtherElementPanel" HorizontalAlignment="Left">
+        <Button ToolTip="Chimney" MaxHeight="60" MaxWidth="60" Margin="5" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="pack://application:,,,/Images/element/Compressor.png"/>
+        </Button>
+    </StackPanel>
+</ResourceDictionary>
