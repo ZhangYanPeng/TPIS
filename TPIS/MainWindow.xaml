@@ -20,7 +20,7 @@
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{StaticResource TPISToolBar}"/>
-        <ContentControl DockPanel.Dock="Left" Content="{StaticResource TPISResManagementBox}"/>
+        <ContentControl DockPanel.Dock="Left" Content="{StaticResource TPISResManagementBox}" Style="{DynamicResource TPISComponent}"/>
         <Grid>
             <Border BorderThickness="1" BorderBrush="Black" Margin="2">
                 <DockPanel>
@@ -41,7 +41,8 @@
                         <TabControl.ContentTemplate>
                             <DataTemplate>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
-                                    <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}"></s:ProjectDesignerCanvas>
+                                    <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
+                                    </s:ProjectDesignerCanvas>
                                 </ScrollViewer>
                             </DataTemplate>
                         </TabControl.ContentTemplate>

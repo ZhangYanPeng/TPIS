@@ -23,16 +23,7 @@ namespace TPIS.TPISCanvas
 
             foreach (Component c in components)
             {
-                //移动组件
-                c.Move(x, y);
-                foreach(Port p in c.ports)
-                {
-                    if( !links.Contains(p.link))//连接线是否已经整体移动
-                    {
-                        //移动连接线的一端
-                        p.link.Move(p.node, x, y);
-                    }
-                }
+                
             }
         }
     }
