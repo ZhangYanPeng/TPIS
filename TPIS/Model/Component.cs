@@ -27,7 +27,6 @@ namespace TPIS.Model
     {
         public Position Position { get; set; }
         public List<Port> Ports { get; set; }
-        public 
 
         public Component(int tx, int ty)
         {
