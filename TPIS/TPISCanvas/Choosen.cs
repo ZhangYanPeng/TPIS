@@ -9,7 +9,7 @@ namespace TPIS.TPISCanvas
 {
     public class Choosen
     {
-        public List<Component> components;
+        public List<TPISComponent> components;
         public List<Link> links;
         public Position position;
 
@@ -21,7 +21,7 @@ namespace TPIS.TPISCanvas
                 l.Move(x, y);
             }
 
-            foreach (Component c in components)
+            foreach (TPISComponent c in components)
             {
                 
             }

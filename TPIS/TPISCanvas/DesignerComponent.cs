@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace TPIS.TPISCanvas
 {
-    class TPISComponent : ContentControl
+    class DesignerComponent : ContentControl
     {
     }
 }

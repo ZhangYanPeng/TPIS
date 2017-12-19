@@ -45,6 +45,9 @@ C:\VS2\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateResource.Cache
 C:\VS2\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\VS2\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\VS2\TPIS\TPIS\obj\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISElementPanel.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
@@ -56,9 +59,6 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\App.g.cs
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS_MarkupCompile.cache
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS_MarkupCompile.lref
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISMenu.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\MainWindow.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.g.resources
@@ -67,4 +67,4 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.Generate
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\App.baml
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

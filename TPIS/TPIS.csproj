@@ -62,7 +62,6 @@
     <Compile Include="Command\Connector.cs" />
     <Compile Include="Command\ConnectorAdorner.cs" />
     <Compile Include="Command\PathFinder.cs" />
-    <Compile Include="Model\Components\Turbin.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="Command\Controls\DragThumb.cs" />
@@ -108,9 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TPISCanvas\Choosen.cs" />
-    <Compile Include="Model\Component.cs" />
+    <Compile Include="Model\TPISComponent.cs" />
     <Compile Include="Model\Link.cs" />
-    <Compile Include="TPISCanvas\TPISComponent.cs" />
+    <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="Views\NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>

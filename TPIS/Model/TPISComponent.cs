@@ -1,0 +1,177 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Data;
+
+namespace TPIS.Model
+{
+    public class Position : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int x;//中心横坐标
+        private int y;//中心纵坐标
+        private int angle;//旋转角度 0 90 180 270
+        private int scale_x;//水平翻转
+        private int scale_y;//垂直翻转
+        private int width;//宽度
+        private int height;//高度
+
+        private int v_x;
+        private int v_y;
+        private int v_width;
+        private int v_height;
+        private double rate;
+
+        public double Rate { get => rate;  set
+            {
+                rate = value;
+                this.v_x = (int)(value * this.x);
+                this.v_y = (int)(value * this.y);
+                this.v_width = (int)(value * this.width);
+                this.v_height = (int)(value * this.height);
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_x"));
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_y"));
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_width"));
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
+                }
+            }
+        }
+
+        public int X { get => x; set
+            {
+                x = value;
+                this.v_x = (int)(value * this.Rate);
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_x"));
+                }
+            }
+        }
+        public int Y { get => y; set
+            {
+                y = value;
+                this.v_y = (int)(value * this.Rate);
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_y"));
+                }
+            }
+        }
+        public int Angle { get => angle; set
+            {
+                angle = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Angle"));
+                }
+            }
+        }
+        public int Width { get => width; set
+            {
+                width = value;
+                this.v_width = (int)(value * this.Rate);
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_width"));
+                }
+            }
+        }
+        public int Height { get => height; set
+            {
+                height = value;
+                this.v_height = (int)(value * this.Rate);
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
+                }
+            }
+        }
+
+        public int V_x { get => v_x; set
+            {
+                v_x = value;
+                this.X = (int)(value / this.Rate);
+            }
+        }
+        public int V_y { get => v_y; set
+            {
+                v_y = value;
+                this.Y = (int)(value / this.Rate);
+            }
+        }
+        public int V_width { get => v_width; set
+            {
+                v_width = value;
+                this.Width = (int)(value / this.Rate);
+            }
+        }
+        public int V_height { get => v_height; set
+            {
+                v_height = value;
+                this.Height = (int)(value / this.Rate);
+            }
+        }
+
+        public int Scale_x { get => scale_x; set
+            {
+                scale_x = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Scale_x"));
+                }
+            }
+        }
+
+        public int Scale_y { get => scale_y; set
+            {
+                scale_y = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Scale_y"));
+                }
+            }
+        }
+    }
+
+    public struct Port
+    {
+        public int x;//横坐标比例（0~1）
+        public int y;//纵坐标比例（0~1)
+        public Node node;
+        public Link link;
+    }
+
+    public class TPISComponent
+    {
+        public Position Position { get; set; }
+        public List<Port> Ports { get; set; }
+        public long id;
+        public string Pic { get; set; }
+
+
+        public TPISComponent(int tx, int ty, long id)
+        {
+            this.Position = new Position { X = tx, Y = ty, Angle = 0, Width = 0, Height = 0 };
+            this.Ports = new List<Port>();
+            if(id == 1)
+            {
+                this.Position.Width = 10;
+                this.Position.Height = 20;
+                this.Pic = "Images/element/Turbin1.png";
+            }
+            else
+            {
+                this.Position.Width = 100;
+                this.Position.Height = 100;
+                this.Pic = "Images/element/TeeValve.png";
+            }
+        }
+    }
+}

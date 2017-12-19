@@ -6,16 +6,5 @@
              xmlns:m="clr-namespace:TPIS.Model"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
-        <Style x:Key="TPISComponentControl" TargetType="{x:Type p:TPISComponent}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ContentControl}">
-                        <ContentPresenter/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
     </Application.Resources>
 </Application>

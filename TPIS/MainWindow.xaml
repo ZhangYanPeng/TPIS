@@ -41,7 +41,26 @@
                         <TabControl.ContentTemplate>
                             <DataTemplate>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
-                                    <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
+                                    <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}" >
+                                        <ItemsControl ItemsSource="{Binding Path=Components}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <s:DesignerComponent InkCanvas.Left="{Binding Position.V_x}" InkCanvas.Top="{Binding Position.V_y}">
+                                                        <s:DesignerComponent.Background>
+                                                            <ImageBrush ImageSource="{Binding Pic}">
+                                                            </ImageBrush>
+                                                        </s:DesignerComponent.Background>
+                                                        <Canvas>
+                                                            <ItemsControl ItemsSource="{Binding Ports}">
+                                                                <DataTemplate >
+                                                                    <Ellipse Width="2" Height="2" InkCanvas.Left="0" InkCanvas.Top="0"></Ellipse>
+                                                                </DataTemplate>
+                                                            </ItemsControl>
+                                                        </Canvas>
+                                                    </s:DesignerComponent>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
                                     </s:ProjectDesignerCanvas>
                                 </ScrollViewer>
                             </DataTemplate>

@@ -26,7 +26,6 @@ namespace TPIS.Project
                 this.v_height = height * this.rate;
                 if (this.PropertyChanged != null)
                 {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Whole_height"));
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
                 }
             }
@@ -41,7 +40,6 @@ namespace TPIS.Project
                 this.v_width = width * this.rate;
                 if (this.PropertyChanged != null)
                 {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Whole_width"));
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_width"));
                 }
             }
@@ -57,9 +55,7 @@ namespace TPIS.Project
                 this.v_width = width * this.rate;
                 if (this.PropertyChanged != null)
                 {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Whole_width"));
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_width"));
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Whole_height"));
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
                 }
                 //更改所有component 和 link 的rate
