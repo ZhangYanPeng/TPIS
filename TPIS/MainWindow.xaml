@@ -41,22 +41,23 @@
                         <TabControl.ContentTemplate>
                             <DataTemplate>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <!-- 画布-->
                                     <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}" >
                                         <ItemsControl ItemsSource="{Binding Path=Components}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <s:DesignerComponent InkCanvas.Left="{Binding Position.V_x}" InkCanvas.Top="{Binding Position.V_y}">
+                                                    <!--控件的画布:控件图片和进出口-->
+                                                    <s:DesignerComponent InkCanvas.Left="{Binding Position.V_x}" InkCanvas.Top="{Binding Position.V_y}" Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+                                                        <!--控件图片-->
                                                         <s:DesignerComponent.Background>
-                                                            <ImageBrush ImageSource="{Binding Pic}">
+                                                            <ImageBrush ImageSource="{Binding Pic}" Stretch="UniformToFill" TileMode="None">
                                                             </ImageBrush>
                                                         </s:DesignerComponent.Background>
-                                                        <Canvas>
-                                                            <ItemsControl ItemsSource="{Binding Ports}">
-                                                                <DataTemplate >
-                                                                    <Ellipse Width="2" Height="2" InkCanvas.Left="0" InkCanvas.Top="0"></Ellipse>
-                                                                </DataTemplate>
-                                                            </ItemsControl>
-                                                        </Canvas>
+                                                        <!--进出口-->
+                                                        <ItemsControl>
+                                                            <DataTemplate>
+                                                            </DataTemplate>
+                                                        </ItemsControl>
                                                     </s:DesignerComponent>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>

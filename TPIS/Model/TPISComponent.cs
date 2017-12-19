@@ -148,8 +148,10 @@ namespace TPIS.Model
         public Link link;
     }
 
-    public class TPISComponent
+    public class TPISComponent : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Position Position { get; set; }
         public List<Port> Ports { get; set; }
         public long id;
@@ -158,19 +160,27 @@ namespace TPIS.Model
 
         public TPISComponent(int tx, int ty, long id)
         {
-            this.Position = new Position { X = tx, Y = ty, Angle = 0, Width = 0, Height = 0 };
+            this.Position = new Position { Rate = 1 };
             this.Ports = new List<Port>();
             if(id == 1)
             {
+                this.Position.X = tx;
+                this.Position.Y = ty;
                 this.Position.Width = 10;
                 this.Position.Height = 20;
                 this.Pic = "Images/element/Turbin1.png";
             }
             else
             {
+                this.Position.X = tx;
+                this.Position.Y = ty;
                 this.Position.Width = 100;
                 this.Position.Height = 100;
                 this.Pic = "Images/element/TeeValve.png";
+            }
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Pic"));
             }
         }
     }

@@ -48,7 +48,7 @@ namespace TPIS
                 MessageBox.Show("存储位置不能为空！", "提示", MessageBoxButton.OKCancel);
             else
             {
-                mainwin.AddProject(proj_name.Text + ".tpis", int.Parse(canvas_width.Text), int.Parse(canvas_height.Text));
+                mainwin.AddProject(proj_name.Text, int.Parse(canvas_width.Text), int.Parse(canvas_height.Text));
                 Close();
             }
             //mainwin.ActiveProject(mainwin.projectList.projects.Count-1);
