@@ -59,10 +59,10 @@ namespace TPIS
 
         public void Test(ProjectItem p)
         {
-            TPISComponent c = new TPISComponent(10,20,1);
+            TPISComponent c = new TPISComponent(100,200,1);
             TPISComponent c1 = new TPISComponent(200, 300, 2);
             p.Components.Add(c);
-            p.Components.Add(c1);
+            //p.Components.Add(c1);
         }
     }
 }

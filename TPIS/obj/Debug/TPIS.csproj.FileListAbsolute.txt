@@ -67,7 +67,6 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.Generate
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
 F:\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
 F:\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
 F:\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb

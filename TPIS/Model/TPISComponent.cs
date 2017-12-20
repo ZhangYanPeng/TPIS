@@ -26,6 +26,15 @@ namespace TPIS.Model
         private int v_width;
         private int v_height;
         private double rate;
+        
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         public double Rate { get => rate;  set
             {
@@ -34,13 +43,10 @@ namespace TPIS.Model
                 this.v_y = (int)(value * this.y);
                 this.v_width = (int)(value * this.width);
                 this.v_height = (int)(value * this.height);
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_x"));
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_y"));
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_width"));
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
-                }
+                OnPropertyChanged("V_x");
+                OnPropertyChanged("V_y");
+                OnPropertyChanged("V_width");
+                OnPropertyChanged("V_height");
             }
         }
 
@@ -48,84 +54,71 @@ namespace TPIS.Model
             {
                 x = value;
                 this.v_x = (int)(value * this.Rate);
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_x"));
-                }
+                OnPropertyChanged("V_x");
             }
         }
         public int Y { get => y; set
             {
                 y = value;
                 this.v_y = (int)(value * this.Rate);
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_y"));
-                }
+                OnPropertyChanged("V_y");
             }
         }
         public int Angle { get => angle; set
             {
                 angle = value;
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Angle"));
-                }
+                OnPropertyChanged("Angle");
             }
         }
         public int Width { get => width; set
             {
                 width = value;
                 this.v_width = (int)(value * this.Rate);
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_width"));
-                }
+                OnPropertyChanged("V_width");
             }
         }
         public int Height { get => height; set
             {
                 height = value;
                 this.v_height = (int)(value * this.Rate);
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
-                }
+                OnPropertyChanged("V_height");
             }
         }
 
         public int V_x { get => v_x; set
             {
                 v_x = value;
-                this.X = (int)(value / this.Rate);
+                x = (int)(value / this.Rate);
+                Console.WriteLine("***************");
+                OnPropertyChanged("V_x");
             }
         }
         public int V_y { get => v_y; set
             {
                 v_y = value;
-                this.Y = (int)(value / this.Rate);
+                y = (int)(value / this.Rate);
+                OnPropertyChanged("V_y");
             }
         }
         public int V_width { get => v_width; set
             {
                 v_width = value;
                 this.Width = (int)(value / this.Rate);
+                OnPropertyChanged("V_width");
             }
         }
         public int V_height { get => v_height; set
             {
                 v_height = value;
                 this.Height = (int)(value / this.Rate);
+                OnPropertyChanged("V_height");
             }
         }
 
         public int Scale_x { get => scale_x; set
             {
                 scale_x = value;
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Scale_x"));
-                }
+                OnPropertyChanged("Scale_x");
             }
         }
 
@@ -133,9 +126,7 @@ namespace TPIS.Model
             {
                 scale_y = value;
                 if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Scale_y"));
-                }
+                OnPropertyChanged("Scale_y");
             }
         }
     }

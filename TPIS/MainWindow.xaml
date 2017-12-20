@@ -43,24 +43,30 @@
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <!-- 画布-->
                                     <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}" >
-                                        <ItemsControl ItemsSource="{Binding Path=Components}">
+                                        <ItemsControl ItemsSource="{Binding Components}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <Canvas IsItemsHost="True" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <!--控件的画布:控件图片和进出口-->
-                                                    <s:DesignerComponent InkCanvas.Left="{Binding Position.V_x}" InkCanvas.Top="{Binding Position.V_y}" Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+                                                    <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
                                                         <!--控件图片-->
                                                         <s:DesignerComponent.Background>
-                                                            <ImageBrush ImageSource="{Binding Pic}" Stretch="UniformToFill" TileMode="None">
+                                                            <ImageBrush ImageSource="{Binding Pic}">
                                                             </ImageBrush>
                                                         </s:DesignerComponent.Background>
-                                                        <!--进出口-->
-                                                        <ItemsControl>
-                                                            <DataTemplate>
-                                                            </DataTemplate>
-                                                        </ItemsControl>
                                                     </s:DesignerComponent>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Canvas.Left" Value="{Binding Position.V_x}" />
+                                                    <Setter Property="Canvas.Top" Value="{Binding Position.V_y}" />
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
                                         </ItemsControl>
                                     </s:ProjectDesignerCanvas>
                                 </ScrollViewer>
