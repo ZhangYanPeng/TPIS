@@ -7,3 +7,7 @@ TPIS/bin/Debug/TPIS.exe
 TPIS/obj/Debug/TPIS.exe
 *.resources
 *.exe
+.vs/TPIS/v15/Server/sqlite3/storage.ide-wal
+*.ide-shm
+.vs/TPIS/v15/Server/sqlite3/storage.ide
+.vs/TPIS/v15/Server/sqlite3/storage.ide-shm
