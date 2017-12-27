@@ -36,7 +36,7 @@ namespace TPIS.TPISCanvas
                 ((TPISComponent)currEle.DataContext).Position.V_x = (int)xPos;
                 ((TPISComponent)currEle.DataContext).Position.V_y = (int)yPos;
                 ((TPISComponent)currEle.DataContext).Position.Width = ((TPISComponent)currEle.DataContext).Position.Width +(int) (e.GetPosition(null).X - pos.X);
-                pos = e.GetPosition(null);
+
             }
         }
 

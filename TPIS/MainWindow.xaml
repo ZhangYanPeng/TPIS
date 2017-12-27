@@ -15,6 +15,38 @@
                 <ResourceDictionary Source="Views/Modules/TPISToolBar.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISResManagementBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="ComponentItemsControlStyle" TargetType="ItemsControl">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding Position.V_x}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Position.V_y}" />
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate >
+                            <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+                                <!--控件图片-->
+                                <s:DesignerComponent.Background>
+                                    <ImageBrush ImageSource="{Binding Pic}">
+                                    </ImageBrush>
+                                </s:DesignerComponent.Background>
+                            </s:DesignerComponent>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -43,30 +75,7 @@
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <!-- 画布-->
                                     <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}" >
-                                        <ItemsControl ItemsSource="{Binding Components}">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <Canvas IsItemsHost="True" />
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <!--控件的画布:控件图片和进出口-->
-                                                    <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
-                                                        <!--控件图片-->
-                                                        <s:DesignerComponent.Background>
-                                                            <ImageBrush ImageSource="{Binding Pic}">
-                                                            </ImageBrush>
-                                                        </s:DesignerComponent.Background>
-                                                    </s:DesignerComponent>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                            <ItemsControl.ItemContainerStyle>
-                                                <Style TargetType="ContentPresenter">
-                                                    <Setter Property="Canvas.Left" Value="{Binding Position.V_x}" />
-                                                    <Setter Property="Canvas.Top" Value="{Binding Position.V_y}" />
-                                                </Style>
-                                            </ItemsControl.ItemContainerStyle>
+                                        <ItemsControl ItemsSource="{Binding Components}" Style="{StaticResource ComponentItemsControlStyle}">
                                         </ItemsControl>
                                     </s:ProjectDesignerCanvas>
                                 </ScrollViewer>

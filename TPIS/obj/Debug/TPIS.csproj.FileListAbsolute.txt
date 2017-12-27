@@ -90,3 +90,4 @@ F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateResource.Cache
 F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

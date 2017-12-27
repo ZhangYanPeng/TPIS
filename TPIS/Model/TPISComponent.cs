@@ -89,7 +89,7 @@ namespace TPIS.Model
             {
                 v_x = value;
                 x = (int)(value / this.Rate);
-                Console.WriteLine("***************");
+                Console.WriteLine(this.V_x);
                 OnPropertyChanged("V_x");
             }
         }
