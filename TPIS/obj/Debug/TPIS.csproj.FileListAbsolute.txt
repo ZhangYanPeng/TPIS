@@ -142,3 +142,4 @@ C:\Users\xjtu_lw\Source\Repos\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.
 C:\Users\xjtu_lw\Source\Repos\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\xjtu_lw\Source\Repos\TPIS\TPIS\obj\Debug\TPIS.pdb
 >>>>>>> refs/remotes/origin/Liu
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\App.baml

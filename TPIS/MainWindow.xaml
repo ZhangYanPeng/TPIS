@@ -41,6 +41,7 @@
                                     <ImageBrush ImageSource="{Binding Pic}">
                                     </ImageBrush>
                                 </s:DesignerComponent.Background>
+                                <Ellipse Canvas.Left="0" Canvas.Top="0" Width="3" Height="3" Fill="White" Opacity="0.5" Stroke="Black" StrokeThickness="1"/>
                             </s:DesignerComponent>
                         </DataTemplate>
                     </Setter.Value>
