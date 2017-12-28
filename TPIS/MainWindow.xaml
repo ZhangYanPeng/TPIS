@@ -52,18 +52,18 @@
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{StaticResource TPISToolBar}"/>
-        <ContentControl DockPanel.Dock="Left" Content="{StaticResource TPISResManagementBox}" Style="{DynamicResource TPISComponent}"/>
+        <ContentControl DockPanel.Dock="Left" Content="{StaticResource TPISResManagementBox}"/>
         <Grid>
             <Border BorderThickness="1" BorderBrush="Black" Margin="2">
                 <DockPanel>
                     <StatusBar DockPanel.Dock="Bottom" Background="SkyBlue" MaxHeight="30">
                         <StatusBarItem Name="statusBar" Content="状态栏" HorizontalAlignment="Right" Focusable="False"/>
                     </StatusBar>
-                    <TabControl x:Name="projectTab" Background="#FF7E7A7A" >
+                    <TabControl x:Name="projectTab" Background="#FF7E7A7A" SelectionChanged="ProjectTab_SelectionChanged" >
                         <TabControl.ItemTemplate>
                             <DataTemplate>
-                                <DockPanel Width="90" MinWidth="30">
-                                    <Button DockPanel.Dock="Right">
+                                <DockPanel Width="90" MinWidth="30" Background="AliceBlue">
+                                    <Button Tag="{Binding Name}" DockPanel.Dock="Right" Click="ProjectItem_Close" >
                                         <Image Source="Images/icon/tab_close.png" Width="10" Height="10"/>
                                     </Button>
                                     <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"></TextBlock>

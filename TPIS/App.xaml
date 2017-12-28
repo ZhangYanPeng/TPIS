@@ -6,5 +6,12 @@
              xmlns:m="clr-namespace:TPIS.Model"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Views/Modules/TPISMenu.xaml"/>
+                <ResourceDictionary Source="Views/Modules/TPISToolBar.xaml"/>
+                <ResourceDictionary Source="Views/Modules/TPISResManagementBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

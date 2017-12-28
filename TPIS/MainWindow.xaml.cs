@@ -51,7 +51,7 @@ namespace TPIS
             this.projectList.projects.Add(project);
             this.projectTab.ItemsSource = projectList.projects;
             this.projectTab.Items.Refresh();
-            foreach(ProjectItem pi in projectList.projects)
+            foreach(ProjectItem pi in projectTab.Items)
             {
                 Test(pi);
             }
@@ -63,6 +63,42 @@ namespace TPIS
             TPISComponent c1 = new TPISComponent(200, 300, 2);
             p.Components.Add(c);
             //p.Components.Add(c1);
+        }
+
+        /// <summary>
+        /// 获取当前工程
+        /// </summary>
+        private void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index= projectTab.SelectedIndex;//当前工程索引
+            foreach (ProjectItem item in projectTab.Items)
+            {
+                if (item == projectTab.Items[index])
+                {
+                    MessageBox.Show("当前工程索引： " + index.ToString());//当前工程为item
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 关闭工程（当前或其他工程）
+        /// </summary>
+        private void ProjectItem_Close(object sender, RoutedEventArgs e)
+        {
+            Button closeButton = sender as Button;
+            string name = closeButton.Tag.ToString();
+            foreach (ProjectItem item in projectTab.Items)
+            {
+                if (item.Name.ToString() == name)
+                {
+                    MessageBox.Show(name);//所点击关闭按钮对应工程为item
+                    projectList.projects.Remove(item);
+                    projectTab.ItemsSource = projectList.projects;
+                    projectTab.Items.Refresh();
+                    break;
+                }
+            }  
         }
     }
 }
