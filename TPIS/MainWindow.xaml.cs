@@ -59,7 +59,7 @@ namespace TPIS
 
         public void Test(ProjectItem p)
         {
-            TPISComponent c = new TPISComponent(100,200,1);
+            TPISComponent c = new TPISComponent(100,-100,1);
             TPISComponent c1 = new TPISComponent(200, 300, 2);
             p.Components.Add(c);
             //p.Components.Add(c1);
@@ -101,4 +101,38 @@ namespace TPIS
             }  
         }
     }
+
+    public class SelectionOrComponentSelector : DataTemplateSelector
+    {
+        private DataTemplate _componentTemplate = null;
+
+        public DataTemplate ComponentTemplate
+        {
+            get { return _componentTemplate; }
+            set { _componentTemplate = value; }
+        }
+
+        private DataTemplate _selectionTemplate = null;
+        public DataTemplate SelectionTemplate
+        {
+            get { return _selectionTemplate; }
+            set { _selectionTemplate = value; }
+        }
+
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+            if (item is TPISComponent)
+            {
+                return _componentTemplate;
+            }
+            else
+            {
+                return _selectionTemplate;
+            }
+
+            return base.SelectTemplate(item, container);
+        }
+    }
 }
+
+

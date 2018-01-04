@@ -32,22 +32,32 @@
                         </Style>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="ItemTemplate">
-                    <Setter.Value>
-                        <DataTemplate >
-                            <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
-                                <!--控件图片-->
-                                <s:DesignerComponent.Background>
-                                    <ImageBrush ImageSource="{Binding Pic}">
-                                    </ImageBrush>
-                                </s:DesignerComponent.Background>
-                                <Ellipse Canvas.Left="0" Canvas.Top="0" Width="3" Height="3" Fill="White" Opacity="0.5" Stroke="Black" StrokeThickness="1"/>
-                            </s:DesignerComponent>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
             </Style>
 
+            <DataTemplate x:Key="template_component">
+                <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+                    <!--控件图片-->
+                    <s:DesignerComponent.Background>
+                        <ImageBrush ImageSource="{Binding Pic}">
+                        </ImageBrush>
+                    </s:DesignerComponent.Background>
+                </s:DesignerComponent>
+            </DataTemplate>
+
+            <DataTemplate x:Key="template_selection">
+                <s:DesignerComponent Width="{Binding Position.V_height}" Height="{Binding Position.V_width}">
+                    <!--控件图片-->
+                    <s:DesignerComponent.Background>
+                        <ImageBrush ImageSource="{Binding Pic}">
+                        </ImageBrush>
+                    </s:DesignerComponent.Background>
+                </s:DesignerComponent>
+            </DataTemplate>
+
+            <local:SelectionOrComponentSelector x:Key="SelectionOrComponent"
+                ComponentTemplate="{StaticResource template_component}"
+                SelectionTemplate="{StaticResource template_selection}"
+                />
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -76,7 +86,7 @@
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <!-- 画布-->
                                     <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}" >
-                                        <ItemsControl ItemsSource="{Binding Components}" Style="{StaticResource ComponentItemsControlStyle}">
+                                        <ItemsControl ItemsSource="{Binding Components}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrComponent}">
                                         </ItemsControl>
                                     </s:ProjectDesignerCanvas>
                                 </ScrollViewer>

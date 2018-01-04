@@ -89,7 +89,6 @@ namespace TPIS.Model
             {
                 v_x = value;
                 x = (int)(value / this.Rate);
-                Console.WriteLine(this.V_x);
                 OnPropertyChanged("V_x");
             }
         }
@@ -157,8 +156,8 @@ namespace TPIS.Model
             {
                 this.Position.X = tx;
                 this.Position.Y = ty;
-                this.Position.Width = 10;
-                this.Position.Height = 20;
+                this.Position.Width = 100;
+                this.Position.Height = 200;
                 this.Pic = "Images/element/Turbin1.png";
             }
             else
@@ -166,13 +165,19 @@ namespace TPIS.Model
                 this.Position.X = tx;
                 this.Position.Y = ty;
                 this.Position.Width = 100;
-                this.Position.Height = 100;
+                this.Position.Height = 200;
                 this.Pic = "Images/element/TeeValve.png";
             }
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Pic"));
             }
+        }
+
+        internal void RePos()
+        {
+            //发生位移或者形变，需要改变相连线段
+            //throw new NotImplementedException();
         }
     }
 }

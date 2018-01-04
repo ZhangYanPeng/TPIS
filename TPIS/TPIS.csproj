@@ -61,17 +61,19 @@
     <Compile Include="Command\ConnectionAdorner.cs" />
     <Compile Include="Command\Connector.cs" />
     <Compile Include="Command\ConnectorAdorner.cs" />
-    <Compile Include="Command\PathFinder.cs" />
-    <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
-    <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="Command\Controls\DragThumb.cs" />
-    <Compile Include="Command\IGroupable.cs" />
-    <Compile Include="Command\ISelectable.cs" />
     <Compile Include="Command\Controls\RelativePositionPanel.cs" />
     <Compile Include="Command\Controls\ResizeThumb.cs" />
+    <Compile Include="Command\IGroupable.cs" />
+    <Compile Include="Command\PathFinder.cs" />
     <Compile Include="Command\RubberbandAdorner.cs" />
     <Compile Include="Command\SelectionService.cs" />
     <Compile Include="Command\ToolboxItem.cs" />
+    <Compile Include="Command\TPISCommand.cs" />
+    <Compile Include="TPISCanvas\AnchorPoint.cs" />
+    <Compile Include="TPISCanvas\ISelectable.cs" />
+    <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
+    <Compile Include="Command\ISelectable.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -79,7 +81,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Command\TPISCommand.cs" />
     <Page Include="Views\NewProject.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,6 +111,7 @@
     <Compile Include="Model\TPISComponent.cs" />
     <Compile Include="Model\Link.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
+    <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="Views\NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
