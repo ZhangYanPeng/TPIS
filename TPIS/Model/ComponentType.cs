@@ -10,5 +10,6 @@ namespace TPIS.Model
     {
         public int Id { get; set;  }
         public String PicPath { get; set; }
+        public String Name { get; set; }
     }
 }

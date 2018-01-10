@@ -48,20 +48,25 @@ namespace TPIS
 
         private void loadComponentType()
         {
-            ComponentType ct = new ComponentType { Id = 1, PicPath = "Images/element/Turbin1.png" };
-            ComponentType ct1 = new ComponentType { Id = 2, PicPath = "Images/element/TeeValve.png" };
+            ComponentType ct = new ComponentType { Id = 1, PicPath = "Images/element/Turbin1.png" , Name="元件1"};
+            ComponentType ct1 = new ComponentType { Id = 2, PicPath = "Images/element/TeeValve.png", Name = "元件2" };
             BaseType bt = new BaseType( );
             bt.Name = "元件簇1";
             bt.ComponentTypeList.Add(ct);
             bt.ComponentTypeList.Add(ct1);
 
-            ComponentType ct2 = new ComponentType { Id = 3, PicPath = "Images/element/Calorifier.png" };
-            ComponentType ct3 = new ComponentType { Id = 4, PicPath = "Images/element/Chimeney.png" };
+            ComponentType ct2 = new ComponentType { Id = 3, PicPath = "Images/element/Calorifier.png", Name = "元件3" };
+            ComponentType ct3 = new ComponentType { Id = 4, PicPath = "Images/element/Chimney.png", Name = "元件4" };
             BaseType bt1 = new BaseType();
-            bt.Name = "元件簇2";
-            bt.ComponentTypeList.Add(ct2);
-            bt.ComponentTypeList.Add(ct3);
-            
+            bt1.Name = "元件簇2";
+            bt1.ComponentTypeList.Add(ct2);
+            bt1.ComponentTypeList.Add(ct3);
+
+            TypeList = new List<BaseType>();
+            TypeList.Add(bt);
+            TypeList.Add(bt1);
+            this.ElementList.ItemsSource = TypeList;
+            this.ElementList.Items.Refresh();
         }
 
         /// <summary>
