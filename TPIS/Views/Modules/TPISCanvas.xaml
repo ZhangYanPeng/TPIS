@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TPIS"
+                    xmlns:s="clr-namespace:TPIS.TPISCanvas">    
+
+    <Style x:Key="ComponentItemsControlStyle" TargetType="ItemsControl">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding Position.V_x}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Position.V_y}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="template_component">
+        <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+            <!--控件图片-->
+            <s:DesignerComponent.Background>
+                <ImageBrush ImageSource="{Binding Pic}">
+                </ImageBrush>
+            </s:DesignerComponent.Background>
+        </s:DesignerComponent>
+    </DataTemplate>
+
+    <DataTemplate x:Key="template_selection">
+        <s:DesignerComponent Width="{Binding Position.V_height}" Height="{Binding Position.V_width}">
+            <!--控件图片-->
+            <s:DesignerComponent.Background>
+                <ImageBrush ImageSource="{Binding Pic}">
+                </ImageBrush>
+            </s:DesignerComponent.Background>
+        </s:DesignerComponent>
+    </DataTemplate>
+
+    <local:SelectionOrComponentSelector x:Key="SelectionOrComponent"
+                ComponentTemplate="{StaticResource template_component}"
+                SelectionTemplate="{StaticResource template_selection}"
+                />
+</ResourceDictionary>

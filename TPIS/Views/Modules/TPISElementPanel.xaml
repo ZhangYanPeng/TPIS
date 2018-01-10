@@ -2,55 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--元件样式-->
-    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-        <Setter Property="MaxHeight" Value="60"/>
-        <Setter Property="MaxWidth" Value="60"/>
-        <Setter Property="Margin" Value="5"/>
-    </Style>
-
-    <!--元件池-->
-    <WrapPanel x:Key="FuelElementPanel" HorizontalAlignment="Left">
-        <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
-        </Button>
-        <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
-        </Button>
-        <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
-        </Button>
-        <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
-        </Button>
-        <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
-        </Button>
-        <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/AbsorbHeatPump.png"/>
-        </Button>
-    </WrapPanel>
-    <WrapPanel x:Key="SteamWaterLinkElementPanel" HorizontalAlignment="Left">
-        <Button ToolTip="三通阀" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/WaterValve.png"/>
-        </Button>
-    </WrapPanel>
-    <WrapPanel x:Key="SteamWaterElementPanel" HorizontalAlignment="Left">
-        <Button ToolTip="电动机" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/Compressor.png"/>
-        </Button>
-    </WrapPanel>
-    <WrapPanel x:Key="SomkeGasElementPanel" HorizontalAlignment="Left">
-        <Button ToolTip="Auxiload" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/Compressor.png"/>
-        </Button>
-    </WrapPanel>
-    <WrapPanel x:Key="OtherElementPanel" HorizontalAlignment="Left">
-        <Button ToolTip="Chimney" Style="{DynamicResource ButtonStyle}">
-            <Image Source="pack://application:,,,/Images/element/Compressor.png"/>
-        </Button>
-    </WrapPanel>
+  
 </ResourceDictionary>

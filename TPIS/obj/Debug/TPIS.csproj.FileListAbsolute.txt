@@ -71,6 +71,7 @@ F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\Xceed.Wpf.Toolkit.dll
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISElementPanel.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
@@ -91,4 +92,4 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.Generate
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml

@@ -79,7 +79,6 @@ namespace TPIS.Command
             {
                 Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
                 Rect itemBounds = item.TransformToAncestor(designerCanvas).TransformBounds(itemRect);
-
                 if (rubberBand.Contains(itemBounds))
                 {
                     if (item is Connection)
@@ -87,8 +86,8 @@ namespace TPIS.Command
                     else
                     {
                         ProjectDesignerItem di = item as ProjectDesignerItem;
-                        if (di.ParentID == Guid.Empty)
-                            designerCanvas.SelectionService.AddToSelection(di);
+                        if (di.ParentID == Guid.Empty) { }
+                            //designerCanvas.SelectionService.AddToSelection(di);
                     }
                 }
             }
