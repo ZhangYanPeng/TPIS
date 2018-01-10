@@ -105,7 +105,7 @@ namespace TPIS.TPISCanvas
                     SetConnectorDecoratorTemplate(newItem);
 
                     //update selection
-                    this.SelectionService.SelectItem(newItem);
+                    //this.SelectionService.SelectItem(newItem);
                     newItem.Focus();
                 }
 

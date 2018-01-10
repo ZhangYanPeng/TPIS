@@ -141,15 +141,15 @@ namespace TPIS.TPISCanvas
                 if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
                     if (this.IsSelected)
                     {
-                        designer.SelectionService.RemoveFromSelection(this);
+                       // designer.SelectionService.RemoveFromSelection(this);
                     }
                     else
                     {
-                        designer.SelectionService.AddToSelection(this);
+                       // designer.SelectionService.AddToSelection(this);
                     }
                 else if (!this.IsSelected)
                 {
-                    designer.SelectionService.SelectItem(this);
+                    //designer.SelectionService.SelectItem(this);
                 }
                 Focus();
             }

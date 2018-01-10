@@ -23,16 +23,45 @@ namespace TPIS
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ProjectSpace projectList;//工程列表
-        public ProjectItem currentPoject;//当前激活工程
+        public List<BaseType> TypeList { get; set;  } //所有元件列表
+        public ProjectSpace ProjectList { get; set; } //工程列表
+        public ProjectItem CurrentPoject { get; set; } //当前激活工程
+
+        /// <summary>
+        /// 光标操作
+        /// 0：默认操作
+        /// 1：绘制元件
+        /// </summary>
+        public int OperationType { get; set; }
+
+
 
         public MainWindow()
         {
             InitializeComponent();
             Window_Loaded();
-            projectList = new ProjectSpace();
+            ProjectList = new ProjectSpace();
+            loadComponentType();
 
             //projectTab.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
+        }
+
+        private void loadComponentType()
+        {
+            ComponentType ct = new ComponentType { Id = 1, PicPath = "Images/element/Turbin1.png" };
+            ComponentType ct1 = new ComponentType { Id = 2, PicPath = "Images/element/TeeValve.png" };
+            BaseType bt = new BaseType( );
+            bt.Name = "元件簇1";
+            bt.ComponentTypeList.Add(ct);
+            bt.ComponentTypeList.Add(ct1);
+
+            ComponentType ct2 = new ComponentType { Id = 3, PicPath = "Images/element/Calorifier.png" };
+            ComponentType ct3 = new ComponentType { Id = 4, PicPath = "Images/element/Chimeney.png" };
+            BaseType bt1 = new BaseType();
+            bt.Name = "元件簇2";
+            bt.ComponentTypeList.Add(ct2);
+            bt.ComponentTypeList.Add(ct3);
+            
         }
 
         /// <summary>
@@ -48,8 +77,8 @@ namespace TPIS
         {
             ProjectCanvas pCanvas = new ProjectCanvas(width, height);
             ProjectItem project = new ProjectItem(pName, pCanvas);
-            this.projectList.projects.Add(project);
-            this.projectTab.ItemsSource = projectList.projects;
+            this.ProjectList.projects.Add(project);
+            this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
             foreach(ProjectItem pi in projectTab.Items)
             {
@@ -93,8 +122,8 @@ namespace TPIS
                 if (item.Name.ToString() == name)
                 {
                     MessageBox.Show(name);//所点击关闭按钮对应工程为item
-                    projectList.projects.Remove(item);
-                    projectTab.ItemsSource = projectList.projects;
+                    ProjectList.projects.Remove(item);
+                    projectTab.ItemsSource = ProjectList.projects;
                     projectTab.Items.Refresh();
                     break;
                 }
@@ -102,6 +131,10 @@ namespace TPIS
         }
     }
 
+
+    /// <summary>
+    /// 模板选择器
+    /// </summary>
     public class SelectionOrComponentSelector : DataTemplateSelector
     {
         private DataTemplate _componentTemplate = null;
@@ -129,8 +162,6 @@ namespace TPIS
             {
                 return _selectionTemplate;
             }
-
-            return base.SelectTemplate(item, container);
         }
     }
 }

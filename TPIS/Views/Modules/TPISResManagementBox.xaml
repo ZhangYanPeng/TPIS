@@ -5,6 +5,19 @@
         <ResourceDictionary Source="TPISElementPanel.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="MaxHeight" Value="60"/>
+        <Setter Property="MaxWidth" Value="60"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+
+    
+
     <DockPanel x:Key="TPISResManagementBox">
         <!--输入输出模块-->
         <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Gray">
@@ -21,12 +34,25 @@
         <Border BorderThickness="1" BorderBrush="Gray">
             <GroupBox Header="元件" Margin="3,0,0,0">
                 <ScrollViewer Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="3">
-                        <Expander Header="燃料类" Content="{StaticResource FuelElementPanel}" IsExpanded="True"/>
-                        <Expander Header="汽水链接件" Content="{StaticResource SteamWaterLinkElementPanel}" IsExpanded="True"/>
-                        <Expander Header="汽水设备" Content="{StaticResource SteamWaterElementPanel}" IsExpanded="True"/>
-                        <Expander Header="烟气模块" Content="{StaticResource SomkeGasElementPanel}" IsExpanded="True"/>
-                        <Expander Header="其他模块" Content="{StaticResource OtherElementPanel}" IsExpanded="True"/>
+                    <StackPanel Margin="3" >
+                        <ItemsControl Name="ElementList">
+                            <DataTemplate>
+                                <Expander Header="{Binding Name}" IsExpanded="True">
+                                    <Expander.Content>
+                                        <!--元件池-->
+                                        <WrapPanel HorizontalAlignment="Left">
+                                            <ItemsControl ItemsSource="{Binding ComponentTypeList}">
+                                                <DataTemplate>
+                                                    <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
+                                                        <Image Source="{Binding PicPath}"/>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl>
+                                        </WrapPanel>
+                                    </Expander.Content>
+                                </Expander>
+                            </DataTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </ScrollViewer>
             </GroupBox>

@@ -10,66 +10,45 @@
         MinHeight="600" MinWidth="800">
     <Window.Resources>
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Modules/TPISMenu.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISToolBar.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISResManagementBox.xaml"/>
+                <ResourceDictionary Source="Views/Modules/TPISCanvas.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <Style x:Key="ComponentItemsControlStyle" TargetType="ItemsControl">
-                <Setter Property="ItemsPanel">
-                    <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <Canvas />
-                        </ItemsPanelTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="ItemContainerStyle">
-                    <Setter.Value>
-                        <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding Position.V_x}" />
-                            <Setter Property="Canvas.Top" Value="{Binding Position.V_y}" />
-                        </Style>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <DataTemplate x:Key="template_component">
-                <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
-                    <!--控件图片-->
-                    <s:DesignerComponent.Background>
-                        <ImageBrush ImageSource="{Binding Pic}">
-                        </ImageBrush>
-                    </s:DesignerComponent.Background>
-                </s:DesignerComponent>
-            </DataTemplate>
-
-            <DataTemplate x:Key="template_selection">
-                <s:DesignerComponent Width="{Binding Position.V_height}" Height="{Binding Position.V_width}">
-                    <!--控件图片-->
-                    <s:DesignerComponent.Background>
-                        <ImageBrush ImageSource="{Binding Pic}">
-                        </ImageBrush>
-                    </s:DesignerComponent.Background>
-                </s:DesignerComponent>
-            </DataTemplate>
-
-            <local:SelectionOrComponentSelector x:Key="SelectionOrComponent"
-                ComponentTemplate="{StaticResource template_component}"
-                SelectionTemplate="{StaticResource template_selection}"
-                />
+            
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{StaticResource TPISToolBar}"/>
         <ContentControl DockPanel.Dock="Left" Content="{StaticResource TPISResManagementBox}"/>
+        <ContentControl DockPanel.Dock="right" >
+            <DockPanel>
+                <!--元件模块-->
+                <Border BorderThickness="1" BorderBrush="Gray">
+                    <GroupBox Header="属性" Margin="3,0,0,0">
+                        <ListView HorizontalAlignment="Left" MinWidth="300">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="属性" Width="100"></GridViewColumn>
+                                    <GridViewColumn Header="值" Width="100"></GridViewColumn>
+                                    <GridViewColumn Header="单位" Width="40"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+                </Border>
+            </DockPanel>
+        </ContentControl>
         <Grid>
             <Border BorderThickness="1" BorderBrush="Black" Margin="2">
                 <DockPanel>
                     <StatusBar DockPanel.Dock="Bottom" Background="SkyBlue" MaxHeight="30">
                         <StatusBarItem Name="statusBar" Content="状态栏" HorizontalAlignment="Right" Focusable="False"/>
                     </StatusBar>
+
                     <TabControl x:Name="projectTab" Background="#FF7E7A7A" SelectionChanged="ProjectTab_SelectionChanged" >
                         <TabControl.ItemTemplate>
                             <DataTemplate>
@@ -83,13 +62,15 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
-                                    <!-- 画布-->
-                                    <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}" >
-                                        <ItemsControl ItemsSource="{Binding Components}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrComponent}">
-                                        </ItemsControl>
-                                    </s:ProjectDesignerCanvas>
-                                </ScrollViewer>
+                                <Grid>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                        <!-- 画布-->
+                                        <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}" >
+                                            <ItemsControl ItemsSource="{Binding Components}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrComponent}">
+                                            </ItemsControl>
+                                        </s:ProjectDesignerCanvas>
+                                    </ScrollViewer>
+                                </Grid>
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
