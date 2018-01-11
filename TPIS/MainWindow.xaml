@@ -55,7 +55,7 @@
                                                         </ItemsControl.ItemsPanel>
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate>
-                                                                <cmd:TPISCompentView ToolTip="{Binding Name}" Style="{DynamicResource ToggleButtonStyle}">
+                                                                <cmd:TPISCompentView ToolTip="{Binding Name}" Style="{DynamicResource ToggleButtonStyle}" IsChecked="{Binding IsChecked}" Checked="TPISComponentTypeSelected" Unchecked="TPISComponentTypeUnSelected" Tag="{Binding Id}">
                                                                     <UserControl>
                                                                         <DockPanel>
                                                                             <TextBlock Text="{Binding Name}" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>

@@ -25,25 +25,17 @@ namespace TPIS
     {
         public List<BaseType> TypeList { get; set;  } //所有元件列表
         public ProjectSpace ProjectList { get; set; } //工程列表
-        public ProjectItem CurrentPoject { get; set; } //当前激活工程
-
-        /// <summary>
-        /// 光标操作
-        /// 0：默认操作
-        /// 1：绘制元件
-        /// </summary>
-        public int OperationType { get; set; }
-
-
+        public int CurrentPojectIndex { get; set; } //当前激活工程
 
         public MainWindow()
         {
             InitializeComponent();
             Window_Loaded();
-            ProjectList = new ProjectSpace();
-            loadComponentType();
-
+            ProjectList = new ProjectSpace();//初始化工作空间
+            loadComponentType();//初始化元件类型
+            InitializeMessage();//初始化主窗口事件
             //projectTab.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
+
         }
 
         private void loadComponentType()
@@ -85,19 +77,8 @@ namespace TPIS
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
-            foreach(ProjectItem pi in projectTab.Items)
-            {
-                Test(pi);
-            }
         }
-
-        public void Test(ProjectItem p)
-        {
-            TPISComponent c = new TPISComponent(100,-100,1);
-            TPISComponent c1 = new TPISComponent(200, 300, 2);
-            p.Components.Add(c);
-            //p.Components.Add(c1);
-        }
+        
 
         /// <summary>
         /// 获取当前工程
@@ -105,14 +86,7 @@ namespace TPIS
         private void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index= projectTab.SelectedIndex;//当前工程索引
-            foreach (ProjectItem item in projectTab.Items)
-            {
-                if (item == projectTab.Items[index])
-                {
-                    MessageBox.Show("当前工程索引： " + index.ToString());//当前工程为item
-                    break;
-                }
-            }
+            CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
         }
 
         /// <summary>
@@ -134,6 +108,7 @@ namespace TPIS
                 }
             }  
         }
+        
     }
 
 
