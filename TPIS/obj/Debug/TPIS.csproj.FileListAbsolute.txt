@@ -93,3 +93,5 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreComp
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml
+F:\Workspace\TPIS\TPIS\obj\Debug\App.baml
+F:\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml
