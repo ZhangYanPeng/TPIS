@@ -5,7 +5,11 @@ winexe
 C#
 .cs
 <<<<<<< HEAD
+<<<<<<< HEAD
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\
+=======
+C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\obj\Debug\
+>>>>>>> parent of 99c4bab... tmp
 =======
 C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\obj\Debug\
 >>>>>>> parent of 99c4bab... tmp
@@ -14,11 +18,19 @@ none
 false
 DEBUG;TRACE
 <<<<<<< HEAD
+<<<<<<< HEAD
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\App.xaml
 7-371809066
 
 33-115277954
 16441275215
+=======
+C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\App.xaml
+7-371809066
+
+33-115277954
+16800839272
+>>>>>>> parent of 99c4bab... tmp
 =======
 C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\App.xaml
 7-371809066
