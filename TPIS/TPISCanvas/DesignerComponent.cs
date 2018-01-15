@@ -10,7 +10,7 @@ using TPIS.Model;
 
 namespace TPIS.TPISCanvas
 {
-    enum MoveType
+    public enum MoveType
     {
         pos,
         size
@@ -38,6 +38,14 @@ namespace TPIS.TPISCanvas
             base.MouseMove += new MouseEventHandler(Element_MouseMove);
             base.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
             base.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
+
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            //添加port
+            InitPort();
         }
 
         public void Element_Move(int x, int y)
@@ -58,11 +66,13 @@ namespace TPIS.TPISCanvas
                 double y = e.GetPosition(null).Y - pos.Y ;
                 if (this.moveType == MoveType.pos)
                 {
+                    //移动位置
                     this.Element_Move((int)x, (int)y);
 
                 }
                 if (this.moveType == MoveType.size)
                 {
+                    //改变大小
                     if(this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.DL || this.sizeType == AnchorPointType.DR)
                     {
                         if (this.cheight + (int)y >= 5)
@@ -96,6 +106,7 @@ namespace TPIS.TPISCanvas
                         ((TPISComponent)currEle.DataContext).Position.V_y = (int)yPos;
                     }
                     RePosAnchorPoints();
+                    RePosPorts();
                 }
                 ((TPISComponent)currEle.DataContext).RePos();
             }
@@ -103,31 +114,39 @@ namespace TPIS.TPISCanvas
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            {
+                return;
+            }
             FrameworkElement fEle = sender as FrameworkElement;
             pos = e.GetPosition(null);
             
             this.moveType = MoveType.pos;
             if (this.IsSelected == true)
             {
-                foreach(AnchorPoint ap in this.Children)
+                foreach(UIElement uie in this.Children)
                 {
-                    if (ap.IsMouseOver)
-                    {
-                        this.moveType = MoveType.size;
-                        this.sizeType = ap.Type;
-                        switch (ap.Type)
+                    if(uie is AnchorPoint) {
+                        AnchorPoint ap = uie as AnchorPoint;
+                        if (ap.IsMouseOver)
                         {
-                            case AnchorPointType.U:
-                            case AnchorPointType.D: fEle.Cursor = Cursors.SizeNS; break;
-                            case AnchorPointType.L:
-                            case AnchorPointType.R: fEle.Cursor = Cursors.SizeWE; break;
-                            case AnchorPointType.UL:
-                            case AnchorPointType.DR: fEle.Cursor = Cursors.SizeNWSE; break;
-                            case AnchorPointType.UR:
-                            case AnchorPointType.DL: fEle.Cursor = Cursors.SizeNESW; break;
+                            this.moveType = MoveType.size;
+                            this.sizeType = ap.Type;
+                            switch (ap.Type)
+                            {
+                                case AnchorPointType.U:
+                                case AnchorPointType.D: fEle.Cursor = Cursors.SizeNS; break;
+                                case AnchorPointType.L:
+                                case AnchorPointType.R: fEle.Cursor = Cursors.SizeWE; break;
+                                case AnchorPointType.UL:
+                                case AnchorPointType.DR: fEle.Cursor = Cursors.SizeNWSE; break;
+                                case AnchorPointType.UR:
+                                case AnchorPointType.DL: fEle.Cursor = Cursors.SizeNESW; break;
+                            }
+                            Mouse.OverrideCursor = null;
+                            break;
                         }
-                        Mouse.OverrideCursor = null;
-                        break;
                     }
                 }
             }
@@ -137,6 +156,7 @@ namespace TPIS.TPISCanvas
 
             Component_Select();
             isDragDropInEffect = true;
+            e.Handled = true;
         }
 
         void Element_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

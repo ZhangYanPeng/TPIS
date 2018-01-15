@@ -9,12 +9,21 @@ TPIS
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 F:\Workspace\TPIS\TPIS\App.xaml
 7-371809066
 
 33-115277954
 16-1621297741
 Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISElementPanel.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;
+=======
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\App.xaml
+6-8637698
+
+38-325742998
+16441275215
+Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;
+>>>>>>> 1c8c7152350d79124ae1b75d7a17fd5fb663f8f7
 
 False
 
