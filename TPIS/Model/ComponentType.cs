@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace TPIS.Model
 {
+    public struct port
+    {
+        double x, y;
+    }
+
     public class ComponentType : System.ComponentModel.INotifyPropertyChanged
     {
         public int Id { get; set;  }
         public String PicPath { get; set; }
         public String Name { get; set; }
+
+        public List<port> inPort { get; set; }
+        public List<port> outPort { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -22,6 +30,7 @@ namespace TPIS.Model
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
         /// <summary>
         /// 判定按钮是否按下
         /// </summary>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -38,6 +39,7 @@ namespace TPIS
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.ADD_COMPONENT;
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Add("type", (int)currEle.Tag);
+                this.AddLine.IsChecked = false;
                 //取消其他选中
                 foreach(BaseType bt in this.TypeList)
                 {
@@ -68,6 +70,8 @@ namespace TPIS
             TPISCompentView currEle = sender as TPISCompentView;
             try
             {
+                if (this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation != OperationType.ADD_COMPONENT)
+                    return;
                 foreach (BaseType bt in this.TypeList)
                 {
                     foreach (ComponentType ct in bt.ComponentTypeList)
@@ -84,7 +88,46 @@ namespace TPIS
                 currEle.IsChecked = false;
                 return;
             }
+        }
 
+        private void TPISLineTypeSelected(object sender, RoutedEventArgs e)
+        {
+            ToggleButton currEle = sender as ToggleButton;
+            try
+            {
+                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.ADD_LINE;
+                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
+                foreach (BaseType bt in this.TypeList)
+                {
+                    foreach (ComponentType ct in bt.ComponentTypeList)
+                    {
+                        ct.IsChecked = false;
+                    }
+                }
+            }
+            catch (Exception exp)
+            {
+                currEle.IsChecked = false;
+                return;
+            }
+        }
+
+        private void TPISLineTypeUnSelected(object sender, RoutedEventArgs e)
+        {
+            ToggleButton currEle = sender as ToggleButton;
+            try
+            {
+                if( this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation == OperationType.ADD_LINE )
+                {
+                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.SELECT;
+                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
+                }
+            }
+            catch (Exception exp)
+            {
+                currEle.IsChecked = false;
+                return;
+            }
         }
     }
 }

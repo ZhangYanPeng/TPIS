@@ -83,13 +83,9 @@ namespace TPIS.TPISCanvas
             // without a background the OnMouseMove event would not be fired!
             // Alternative: implement a Canvas as a child of this adorner, like
             // the ConnectionAdorner does.
-            //ImageBrush brush = new ImageBrush();
-            //brush.ImageSource = new BitmapImage(new Uri("../"+targetType.PicPath,UriKind.Absolute));
-            //dc.DrawImage(new BitmapImage(new Uri("pack://application:,,,/" + targetType.PicPath, UriKind.Absolute)), new Rect(RenderSize));
             dc.DrawRectangle(Brushes.Transparent, null, new Rect(RenderSize));
 
             if (this.startPoint.HasValue && this.endPoint.HasValue)
-                //dc.DrawRectangle(brush, rubberbandPen, new Rect(this.startPoint.Value, this.endPoint.Value));
                 dc.DrawImage(new BitmapImage(new Uri("pack://application:,,,/" + targetType.PicPath, UriKind.Absolute)), new Rect(this.startPoint.Value, this.endPoint.Value));
         }
     }

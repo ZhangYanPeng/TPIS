@@ -82,6 +82,7 @@
     <Compile Include="TPISCanvas\AnchorPoint.cs" />
     <Compile Include="TPISCanvas\CanvasComponentOperation.cs" />
     <Compile Include="TPISCanvas\ISelectable.cs" />
+    <Compile Include="TPISCanvas\PortsOperation.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
     <Compile Include="Command\ISelectable.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -282,6 +283,8 @@
     <Resource Include="Images\element\WaterHeater.png" />
     <Resource Include="Images\element\WaterValve.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\element\Line.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

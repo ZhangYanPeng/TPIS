@@ -132,8 +132,9 @@ namespace TPIS.Model
 
     public struct Port
     {
-        public int x;//横坐标比例（0~1）
-        public int y;//纵坐标比例（0~1)
+        public double x;//横坐标比例（0~1）
+        public double y;//纵坐标比例（0~1)
+        public bool type; // true : in  false: out
         public Node node;
         public Link link;
     }
@@ -150,8 +151,15 @@ namespace TPIS.Model
 
         public TPISComponent(int tx, int ty, int width , int height, long id)
         {
-            this.Position = new Position { Rate = 1 };
             this.Ports = new List<Port>();
+            Port p = new Port { x = 0, y = 0.3, type = true };
+            Port p1 = new Port { x = 1, y = 0.5, type = true };
+            Port p2 = new Port { x = 0, y = 0.6, type = false };
+            this.Ports.Add(p);
+            this.Ports.Add(p1);
+            this.Ports.Add(p2);
+
+            this.Position = new Position { Rate = 1 };
             if(id == 1)
             {
                 this.Position.V_x = tx;

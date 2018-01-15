@@ -11,7 +11,7 @@ namespace TPIS.Project
     {
         ADD_COMPONENT,
         SELECT,
-        ADD_LINK
+        ADD_LINE
     }
 
     public class ProjectCanvas : INotifyPropertyChanged
