@@ -103,6 +103,11 @@ namespace TPIS.TPISCanvas
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            {
+                return;
+            }
             FrameworkElement fEle = sender as FrameworkElement;
             pos = e.GetPosition(null);
             
@@ -137,6 +142,7 @@ namespace TPIS.TPISCanvas
 
             Component_Select();
             isDragDropInEffect = true;
+            e.Handled = true;
         }
 
         void Element_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
