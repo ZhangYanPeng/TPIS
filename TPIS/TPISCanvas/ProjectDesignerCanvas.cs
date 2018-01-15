@@ -154,15 +154,25 @@ namespace TPIS.TPISCanvas
         //    }
         //}
 
-        public ProjectDesignerCanvas()
+
+        /// <summary>
+        /// 初始化函数，添加画布事件
+        /// 进入离开画布形状事件
+        /// </summary>
+        public ProjectDesignerCanvas() : base()
         {
+            base.MouseEnter += new MouseEventHandler(CanvasMouseEnter);
+            base.MouseLeave += new MouseEventHandler(CanvasMouseLeave);
+            base.MouseLeftButtonDown += new MouseButtonEventHandler(ComponentMouseLButtonDown);
+            base.MouseMove += new MouseEventHandler(ComponentMouseMove);
+
             checkBox = new CheckBox();
             checkBox.Content = "画线";
             this.Children.Add(checkBox);
 
             plines = new List<Polyline>();
-
         }
+        
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
