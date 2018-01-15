@@ -7,13 +7,6 @@ using System.ComponentModel;
 
 namespace TPIS.Project
 {
-    public enum OperationType
-    {
-        ADD_COMPONENT,
-        SELECT,
-        ADD_LINK
-    }
-
     public class ProjectCanvas : INotifyPropertyChanged
     {
 
@@ -23,10 +16,6 @@ namespace TPIS.Project
         private double rate;
         private double v_height;
         private double v_width;
-
-        //光标操作
-        public OperationType Operation { get; set; } // 类型
-        public Dictionary<String,int> OperationParam { get; set; } //参数
 
         public int Height
         {
@@ -84,8 +73,6 @@ namespace TPIS.Project
             this.height = h;
             this.v_height = h;
             this.rate = 1;
-            this.Operation = OperationType.SELECT;
-            this.OperationParam = new Dictionary<String, int>();
         }
 
     }

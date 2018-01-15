@@ -148,22 +148,22 @@ namespace TPIS.Model
         public string Pic { get; set; }
 
 
-        public TPISComponent(int tx, int ty, int width , int height, long id)
+        public TPISComponent(int tx, int ty, long id)
         {
             this.Position = new Position { Rate = 1 };
             this.Ports = new List<Port>();
             if(id == 1)
             {
-                this.Position.V_x = tx;
-                this.Position.V_y = ty;
-                this.Position.V_width = width;
-                this.Position.V_height = height;
+                this.Position.X = tx;
+                this.Position.Y = ty;
+                this.Position.Width = 100;
+                this.Position.Height = 200;
                 this.Pic = "Images/element/Turbin1.png";
             }
             else
             {
-                this.Position.V_x = tx;
-                this.Position.V_y = ty;
+                this.Position.X = tx;
+                this.Position.Y = ty;
                 this.Position.Width = 100;
                 this.Position.Height = 200;
                 this.Pic = "Images/element/TeeValve.png";

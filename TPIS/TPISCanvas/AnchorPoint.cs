@@ -118,10 +118,5 @@ namespace TPIS.TPISCanvas
             this.cheight = ((TPISComponent)this.DataContext).Position.V_height;
             this.cwidth = ((TPISComponent)this.DataContext).Position.V_width;
         }
-
-        public void Component_UnSelect()
-        {
-            this.Children.Clear();
-        }
     }
 }
