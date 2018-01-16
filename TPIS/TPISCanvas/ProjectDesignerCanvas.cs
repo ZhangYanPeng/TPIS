@@ -40,7 +40,15 @@ namespace TPIS.TPISCanvas
             base.MouseLeave += new MouseEventHandler(CanvasMouseLeave);
             base.MouseLeftButtonDown += new MouseButtonEventHandler(ComponentMouseLButtonDown);
             base.MouseMove += new MouseEventHandler(ComponentMouseMove);
-            
-        }
+            checkBox = new CheckBox();
+            checkBox.Content = "画线";
+            this.Children.Add(checkBox);
+
+            polyLineCB = new CheckBox();
+            polyLineCB.Content = "画斜线";
+            this.Children.Add(polyLineCB);
+
+            plines = new List<Polyline>();
+        }  
     }
 }

@@ -87,7 +87,10 @@ namespace TPIS
         private void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index= projectTab.SelectedIndex;//当前工程索引
-            CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
+            if (projectTab.Items.Count == 0)
+                CurrentPojectIndex = 0;
+            else
+                CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
         }
 
         /// <summary>
