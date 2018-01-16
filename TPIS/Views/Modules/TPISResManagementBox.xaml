@@ -2,60 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="TPISElementPanel.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-        <Setter Property="MaxHeight" Value="60"/>
-        <Setter Property="MaxWidth" Value="60"/>
+        <Setter Property="Height" Value="80"/>
+        <Setter Property="Width" Value="60"/>
         <Setter Property="Margin" Value="5"/>
     </Style>
 
-
-    
-
-    <DockPanel x:Key="TPISResManagementBox">
-        <!--输入输出模块-->
-        <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Gray">
-            <GroupBox Header="I/O"  Margin="3,0,0,0">
-                <ScrollViewer  Height="200" Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
-                    <DockPanel Margin="3">
-                        <TextBox TextWrapping="Wrap" AcceptsReturn="True"/>
-                    </DockPanel>
-                </ScrollViewer>
-            </GroupBox>
-        </Border>
-
-        <!--元件模块-->
-        <Border BorderThickness="1" BorderBrush="Gray">
-            <GroupBox Header="元件" Margin="3,0,0,0">
-                <ScrollViewer Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="3" >
-                        <ItemsControl Name="ElementList">
-                            <DataTemplate>
-                                <Expander Header="{Binding Name}" IsExpanded="True">
-                                    <Expander.Content>
-                                        <!--元件池-->
-                                        <WrapPanel HorizontalAlignment="Left">
-                                            <ItemsControl ItemsSource="{Binding ComponentTypeList}">
-                                                <DataTemplate>
-                                                    <Button ToolTip="AbsorbHeatPump" Style="{DynamicResource ButtonStyle}">
-                                                        <Image Source="{Binding PicPath}"/>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </ItemsControl>
-                                        </WrapPanel>
-                                    </Expander.Content>
-                                </Expander>
-                            </DataTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </ScrollViewer>
-            </GroupBox>
-        </Border>
-    </DockPanel>
 </ResourceDictionary>

@@ -26,43 +26,40 @@ namespace TPIS
     {
         public List<BaseType> TypeList { get; set;  } //所有元件列表
         public ProjectSpace ProjectList { get; set; } //工程列表
-        public ProjectItem CurrentPoject { get; set; } //当前激活工程
-
-        /// <summary>
-        /// 光标操作
-        /// 0：默认操作
-        /// 1：绘制元件
-        /// </summary>
-        public int OperationType { get; set; }
-
-
+        public int CurrentPojectIndex { get; set; } //当前激活工程
 
         public MainWindow()
         {
             InitializeComponent();
             Window_Loaded();
-            ProjectList = new ProjectSpace();
-            loadComponentType();
-
+            ProjectList = new ProjectSpace();//初始化工作空间
+            loadComponentType();//初始化元件类型
+            InitializeMessage();//初始化主窗口事件
             //projectTab.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
+
         }
 
         private void loadComponentType()
         {
-            ComponentType ct = new ComponentType { Id = 1, PicPath = "Images/element/Turbin1.png" };
-            ComponentType ct1 = new ComponentType { Id = 2, PicPath = "Images/element/TeeValve.png" };
+            ComponentType ct = new ComponentType { Id = 1, PicPath = "Images/element/Turbin1.png" , Name="元件1"};
+            ComponentType ct1 = new ComponentType { Id = 2, PicPath = "Images/element/TeeValve.png", Name = "元件2" };
             BaseType bt = new BaseType( );
             bt.Name = "元件簇1";
             bt.ComponentTypeList.Add(ct);
             bt.ComponentTypeList.Add(ct1);
 
-            ComponentType ct2 = new ComponentType { Id = 3, PicPath = "Images/element/Calorifier.png" };
-            ComponentType ct3 = new ComponentType { Id = 4, PicPath = "Images/element/Chimeney.png" };
+            ComponentType ct2 = new ComponentType { Id = 3, PicPath = "Images/element/Calorifier.png", Name = "元件3" };
+            ComponentType ct3 = new ComponentType { Id = 4, PicPath = "Images/element/Chimney.png", Name = "元件4" };
             BaseType bt1 = new BaseType();
-            bt.Name = "元件簇2";
-            bt.ComponentTypeList.Add(ct2);
-            bt.ComponentTypeList.Add(ct3);
-            
+            bt1.Name = "元件簇2";
+            bt1.ComponentTypeList.Add(ct2);
+            bt1.ComponentTypeList.Add(ct3);
+
+            TypeList = new List<BaseType>();
+            TypeList.Add(bt);
+            TypeList.Add(bt1);
+            this.ElementList.ItemsSource = TypeList;
+            this.ElementList.Items.Refresh();
         }
 
         /// <summary>
@@ -81,19 +78,8 @@ namespace TPIS
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
-            foreach(ProjectItem pi in projectTab.Items)
-            {
-                Test(pi);
-            }
         }
-
-        public void Test(ProjectItem p)
-        {
-            TPISComponent c = new TPISComponent(100,-100,1);
-            TPISComponent c1 = new TPISComponent(200, 300, 2);
-            p.Components.Add(c);
-            //p.Components.Add(c1);
-        }
+        
 
         /// <summary>
         /// 获取当前工程
@@ -101,14 +87,10 @@ namespace TPIS
         private void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index= projectTab.SelectedIndex;//当前工程索引
-            foreach (ProjectItem item in projectTab.Items)
-            {
-                if (item == projectTab.Items[index])
-                {
-                    MessageBox.Show("当前工程索引： " + index.ToString());//当前工程为item
-                    break;
-                }
-            }
+            if (projectTab.Items.Count == 0)
+                CurrentPojectIndex = 0;
+            else
+                CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
         }
 
         /// <summary>
@@ -130,6 +112,7 @@ namespace TPIS
                 }
             }  
         }
+        
     }
 
 

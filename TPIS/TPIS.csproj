@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>TPIS</RootNamespace>
     <AssemblyName>TPIS</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MainWindow.xaml.Message.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Command\Connection.cs" />
     <Compile Include="Command\ConnectionAdorner.cs" />
     <Compile Include="Command\Connector.cs" />
@@ -75,7 +78,10 @@
     <Compile Include="Command\TPISCommand.cs" />
     <Compile Include="Model\BaseType.cs" />
     <Compile Include="Model\ComponentType.cs" />
+    <Compile Include="TPISCanvas\AddComponentAdorner.cs" />
+    <Compile Include="TPISCanvas\AddLines.cs" />
     <Compile Include="TPISCanvas\AnchorPoint.cs" />
+    <Compile Include="TPISCanvas\CanvasComponentOperation.cs" />
     <Compile Include="TPISCanvas\ISelectable.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
     <Compile Include="Command\ISelectable.cs" />
@@ -93,10 +99,6 @@
     <Page Include="Views\NewProject.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Modules\TPISElementPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Modules\TPISMenu.xaml">
       <SubType>Designer</SubType>
@@ -121,6 +123,7 @@
     <Compile Include="Model\Link.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
+    <Compile Include="TPISCommand\TPISCompentView.cs" />
     <Compile Include="Views\NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>

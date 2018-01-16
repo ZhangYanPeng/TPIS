@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TPIS"
         xmlns:s="clr-namespace:TPIS.TPISCanvas"
+        xmlns:cmd="clr-namespace:TPIS.TPISCommand"
         mc:Ignorable="d"
         Title="TPIS" WindowStartupLocation="CenterScreen" ResizeMode="CanResize"
         MinHeight="600" MinWidth="800">
@@ -14,16 +15,68 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Modules/TPISMenu.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISToolBar.xaml"/>
-                <ResourceDictionary Source="Views/Modules/TPISResManagementBox.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISCanvas.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{StaticResource TPISToolBar}"/>
-        <ContentControl DockPanel.Dock="Left" Content="{StaticResource TPISResManagementBox}"/>
+        <ContentControl DockPanel.Dock="Left">
+            <DockPanel >
+                <!--输入输出模块-->
+                <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Gray">
+                    <GroupBox Header="I/O"  Margin="3,0,0,0">
+                        <ScrollViewer  Height="200" Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
+                            <DockPanel Margin="3">
+                                <TextBox TextWrapping="Wrap" AcceptsReturn="True"/>
+                            </DockPanel>
+                        </ScrollViewer>
+                    </GroupBox>
+                </Border>
+
+                <!--元件模块-->
+                <Border BorderThickness="1" BorderBrush="Gray">
+                    <GroupBox Header="元件" Margin="3,0,0,0">
+                        <ScrollViewer Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
+                            <StackPanel Margin="3" >
+                                <ItemsControl Name="ElementList">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Expander Header="{Binding Name}" IsExpanded="True">
+                                                <Expander.Content>
+                                                    <!--元件池-->
+                                                    <ItemsControl ItemsSource="{Binding ComponentTypeList}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel Orientation="Horizontal"></WrapPanel>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <cmd:TPISCompentView ToolTip="{Binding Name}" Style="{DynamicResource ToggleButtonStyle}" IsChecked="{Binding IsChecked}" Checked="TPISComponentTypeSelected" Unchecked="TPISComponentTypeUnSelected" Tag="{Binding Id}">
+                                                                    <UserControl>
+                                                                        <DockPanel>
+                                                                            <TextBlock Text="{Binding Name}" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
+                                                                            <Image Source="{Binding PicPath}" MaxHeight="60" MaxWidth="60" />
+                                                                        </DockPanel>
+                                                                    </UserControl>
+                                                                </cmd:TPISCompentView>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </Expander.Content>
+                                            </Expander>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </GroupBox>
+                </Border>
+            </DockPanel>
+        </ContentControl>
         <ContentControl DockPanel.Dock="right" >
             <DockPanel>
                 <!--元件模块-->
@@ -65,7 +118,7 @@
                                 <Grid>
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                         <!-- 画布-->
-                                        <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
+                                        <s:ProjectDesignerCanvas Visibility="Visible" Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
                                             <ItemsControl ItemsSource="{Binding Components}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrComponent}">
                                             </ItemsControl>
                                         </s:ProjectDesignerCanvas>
