@@ -39,9 +39,11 @@ namespace TPIS
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.ADD_COMPONENT;
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Add("type", (int)currEle.Tag);
+
                 this.AddLine.IsChecked = false;
+                this.AddStraightLine.IsChecked = false;
                 //取消其他选中
-                foreach(BaseType bt in this.TypeList)
+                foreach (BaseType bt in this.TypeList)
                 {
                     foreach(ComponentType ct in bt.ComponentTypeList){
                         if(ct.Id != (int)currEle.Tag)
@@ -90,6 +92,11 @@ namespace TPIS
             }
         }
 
+        /// <summary>
+        /// 画线
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TPISLineTypeSelected(object sender, RoutedEventArgs e)
         {
             ToggleButton currEle = sender as ToggleButton;
@@ -97,6 +104,17 @@ namespace TPIS
             {
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.ADD_LINE;
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
+                if (currEle.Name == "AddLine")
+                {
+                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Add("type", 1);
+                    this.AddStraightLine.IsChecked = false;
+                }
+                else
+                {
+                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Add("type", 0);
+
+                    this.AddLine.IsChecked = false;
+                }
                 foreach (BaseType bt in this.TypeList)
                 {
                     foreach (ComponentType ct in bt.ComponentTypeList)
@@ -117,7 +135,7 @@ namespace TPIS
             ToggleButton currEle = sender as ToggleButton;
             try
             {
-                if( this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation == OperationType.ADD_LINE )
+                if( this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
                 {
                     this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.SELECT;
                     this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();

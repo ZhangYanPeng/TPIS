@@ -18,7 +18,8 @@ namespace TPIS.TPISCanvas
         /// 
 
         bool flag = false;
-        public CheckBox checkBox, polyLineCB;//是否画线
+
+        public bool IsStraight { get; set; } //是否直线
         public List<Polyline> plines;//画多条折线
         private int count = -1;
         Point p1, p2, tmp;
@@ -27,8 +28,14 @@ namespace TPIS.TPISCanvas
         {
             base.OnMouseLeftButtonDown(e);
             //base.MouseLeftButtonDown += new MouseButtonEventHandler(Canvas_MouseLeftButtonDown);//会出现线性进入问题
-            if (checkBox.IsChecked == true)
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if ( mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
             {
+                if(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"] == 0)
+                    this.IsStraight = true;
+                else
+                    this.IsStraight = false;
+
                 /*首击左键确定起点*/
                 if (flag == false)
                 {
@@ -53,7 +60,7 @@ namespace TPIS.TPISCanvas
                 return;
             /*移动中确定拐点和终点*/
             p2 = e.GetPosition(this);
-            if (polyLineCB.IsChecked==false || (Forms.Control.ModifierKeys & Forms.Keys.Shift) == Forms.Keys.Shift)
+            if ( IsStraight || (Forms.Control.ModifierKeys & Forms.Keys.Shift) == Forms.Keys.Shift)
             {
                 if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
                 else p2.X = p1.X;
@@ -67,6 +74,7 @@ namespace TPIS.TPISCanvas
             base.OnMouseRightButtonDown(e);
             flag = false;//结束画线
         }
+
         private void InitalLine(MouseButtonEventArgs e)
         {
             count++;
