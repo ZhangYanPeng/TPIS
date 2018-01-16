@@ -9,6 +9,7 @@ using System.Windows.Data;
 
 namespace TPIS.Model
 {
+    //位置，宽高
     public class Position : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,7 +27,7 @@ namespace TPIS.Model
         private int v_width;
         private int v_height;
         private double rate;
-        
+
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
@@ -36,7 +37,9 @@ namespace TPIS.Model
             }
         }
 
-        public double Rate { get => rate;  set
+        public double Rate
+        {
+            get => rate; set
             {
                 rate = value;
                 this.v_x = (int)(value * this.x);
@@ -50,34 +53,36 @@ namespace TPIS.Model
             }
         }
 
-        public int X { get => x; set
+        public int X
+        {
+            get => x; set
             {
                 x = value;
                 this.v_x = (int)(value * this.Rate);
                 OnPropertyChanged("V_x");
             }
         }
-        public int Y { get => y; set
+        public int Y
+        {
+            get => y; set
             {
                 y = value;
                 this.v_y = (int)(value * this.Rate);
                 OnPropertyChanged("V_y");
             }
         }
-        public int Angle { get => angle; set
-            {
-                angle = value;
-                OnPropertyChanged("Angle");
-            }
-        }
-        public int Width { get => width; set
+        public int Width
+        {
+            get => width; set
             {
                 width = value;
                 this.v_width = (int)(value * this.Rate);
                 OnPropertyChanged("V_width");
             }
         }
-        public int Height { get => height; set
+        public int Height
+        {
+            get => height; set
             {
                 height = value;
                 this.v_height = (int)(value * this.Rate);
@@ -85,58 +90,83 @@ namespace TPIS.Model
             }
         }
 
-        public int V_x { get => v_x; set
+        public int V_x
+        {
+            get => v_x; set
             {
                 v_x = value;
                 x = (int)(value / this.Rate);
                 OnPropertyChanged("V_x");
             }
         }
-        public int V_y { get => v_y; set
+        public int V_y
+        {
+            get => v_y; set
             {
                 v_y = value;
                 y = (int)(value / this.Rate);
                 OnPropertyChanged("V_y");
             }
         }
-        public int V_width { get => v_width; set
+        public int V_width
+        {
+            get => v_width; set
             {
                 v_width = value;
                 this.Width = (int)(value / this.Rate);
                 OnPropertyChanged("V_width");
             }
         }
-        public int V_height { get => v_height; set
+        public int V_height
+        {
+            get => v_height; set
             {
                 v_height = value;
                 this.Height = (int)(value / this.Rate);
                 OnPropertyChanged("V_height");
             }
         }
-
-        public int Scale_x { get => scale_x; set
-            {
-                scale_x = value;
-                OnPropertyChanged("Scale_x");
-            }
-        }
-
-        public int Scale_y { get => scale_y; set
-            {
-                scale_y = value;
-                if (this.PropertyChanged != null)
-                OnPropertyChanged("Scale_y");
-            }
-        }
     }
 
-    public struct Port
+    public class Port : INotifyPropertyChanged
     {
-        public double x;//横坐标比例（0~1）
-        public double y;//纵坐标比例（0~1)
+        public double x;
+        public double p_x;
+        public double P_x
+        {
+            get => p_x;
+            set
+            {
+                p_x = value;
+                OnPropertyChanged("P_x");
+            }
+        }//横坐标比例（0~1）
+
+        public double y;
+        public double p_y;
+        public double P_y
+        {
+            get => p_y;
+            set
+            {
+                p_y = value;
+                OnPropertyChanged("P_y");
+            }
+        }//纵坐标比例（0~1)
         public bool type; // true : in  false: out
         public Node node;
         public Link link;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 
     public class TPISComponent : INotifyPropertyChanged
@@ -149,7 +179,28 @@ namespace TPIS.Model
         public string Pic { get; set; }
 
 
-        public TPISComponent(int tx, int ty, int width , int height, long id)
+        public int Angel
+        {
+            get => Angel;
+            set
+            {
+                if (Angel == 90 || Angel == 270)
+                {
+                    //交换宽高
+                    int tmp = this.Position.Width;
+                    this.Position.Width = this.Position.Height;
+                    this.Position.Height = tmp;
+                }
+                //更新port 位置
+            }
+
+        } //旋转角度
+        public bool IsVerticalReversed { get; set; }//垂直翻转
+        public bool IsHorizontalReversed { get; set; } //水平翻转
+
+
+
+        public TPISComponent(int tx, int ty, int width, int height, long id)
         {
             this.Ports = new List<Port>();
             Port p = new Port { x = 0, y = 0.3, type = true };
@@ -160,7 +211,7 @@ namespace TPIS.Model
             this.Ports.Add(p2);
 
             this.Position = new Position { Rate = 1 };
-            if(id == 1)
+            if (id == 1)
             {
                 this.Position.V_x = tx;
                 this.Position.V_y = ty;
@@ -168,17 +219,23 @@ namespace TPIS.Model
                 this.Position.V_height = height;
                 this.Pic = "Images/element/Turbin1.png";
             }
-            else
-            {
-                this.Position.V_x = tx;
-                this.Position.V_y = ty;
-                this.Position.Width = 100;
-                this.Position.Height = 200;
-                this.Pic = "Images/element/TeeValve.png";
-            }
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Pic"));
+            }
+
+            RePosPort();
+        }
+
+        /// <summary>
+        /// 在改变大小、反转后，重新定位Port
+        /// </summary>
+        private void RePosPort()
+        {
+            foreach (Port p in this.Ports)
+            {
+                p.P_x = this.Position.V_width * p.x - 5;
+                p.P_y = this.Position.V_height * p.y - 5;
             }
         }
 
@@ -186,6 +243,31 @@ namespace TPIS.Model
         {
             //发生位移或者形变，需要改变相连线段
             //throw new NotImplementedException();
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        /// <summary>
+        /// 大小改变
+        /// </summary>
+        /// <param name="cwidth">原有实际高度</param>
+        /// <param name="width">视觉宽度变量</param>
+        /// <param name="cheight">原有实际宽度</param>
+        /// <param name="height">视觉高度增量</param>
+        internal void SizeChange(int cwidth, int? width, int cheight, int? height)
+        {
+            if (width.HasValue)
+                this.Position.V_width = cwidth + width.Value > 0 ? cwidth + width.Value : 1;
+            if (height.HasValue)
+                this.Position.V_height = cheight + height.Value > 0 ? cheight + height.Value : 1;
+            RePosPort();
         }
     }
 }

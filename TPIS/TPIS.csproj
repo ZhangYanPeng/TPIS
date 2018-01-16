@@ -82,7 +82,6 @@
     <Compile Include="TPISCanvas\AnchorPoint.cs" />
     <Compile Include="TPISCanvas\CanvasComponentOperation.cs" />
     <Compile Include="TPISCanvas\ISelectable.cs" />
-    <Compile Include="TPISCanvas\PortsOperation.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
     <Compile Include="Command\ISelectable.cs" />
     <Compile Include="MainWindow.xaml.cs">
