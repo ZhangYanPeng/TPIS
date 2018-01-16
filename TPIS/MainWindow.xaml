@@ -43,7 +43,7 @@
                             <ToggleButton ToolTip="直接连接线" Style="{DynamicResource ToggleButtonStyle}"  HorizontalAlignment="Left" Checked="TPISLineTypeSelected" Unchecked="TPISLineTypeUnSelected" Name="AddLine">
                                 <UserControl>
                                     <DockPanel>
-                                        <TextBlock Text="直接连接线" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="直接连接" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
                                         <Image Source="Images/element/Line.png" MaxHeight="60" MaxWidth="60" />
                                     </DockPanel>
                                 </UserControl>
@@ -51,7 +51,7 @@
                             <ToggleButton ToolTip="直角连接线" Style="{DynamicResource ToggleButtonStyle}"  HorizontalAlignment="Left" Checked="TPISLineTypeSelected" Unchecked="TPISLineTypeUnSelected" Name="AddStraightLine">
                                 <UserControl>
                                     <DockPanel>
-                                        <TextBlock Text="直角连接线" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="直角连接" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
                                         <Image Source="Images/element/StraightLine.png" MaxHeight="60" MaxWidth="60" />
                                     </DockPanel>
                                 </UserControl>
