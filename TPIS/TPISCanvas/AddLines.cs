@@ -39,7 +39,7 @@ namespace TPIS.TPISCanvas
                 /*再击左键续线*/
                 else
                 {
-                    p1 = p2;
+                    p1 = p2;//衔接
                     InitalLine(e);
                 }
             }
@@ -52,14 +52,14 @@ namespace TPIS.TPISCanvas
             if (flag == false)
                 return;
             /*移动中确定拐点和终点*/
-            if ( || (Forms.Control.ModifierKeys & Forms.Keys.Shift) == Forms.Keys.Shift )
+            p2 = e.GetPosition(this);
+            if (polyLineCB.IsChecked==false || (Forms.Control.ModifierKeys & Forms.Keys.Shift) == Forms.Keys.Shift)
             {
-                DrawLine(e);//Shift直线
+                if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
+                else p2.X = p1.X;
+                //plines[count].Points.Add(p2);
             }
-            else
-            {
-                //DrawPolyLine(e);
-            }
+            plines[count].Points[plines[count].Points.Count - 1] = p2;
         }
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
@@ -67,8 +67,6 @@ namespace TPIS.TPISCanvas
             base.OnMouseRightButtonDown(e);
             flag = false;//结束画线
         }
-
-        /*初始化线段*/
         private void InitalLine(MouseButtonEventArgs e)
         {
             count++;
@@ -80,10 +78,26 @@ namespace TPIS.TPISCanvas
             this.Children.Add(plines[count]);
 
             plines[count].Points.Add(p1);//起点
-            plines[count].Points.Add(p1);//初始化折线（四个点）
-            plines[count].Points.Add(p1);
-            plines[count].Points.Add(p1);
+            if (pline.Points.Count  == 1)
+                pline.Points.Add(p1);
         }
+
+        /*初始化线段*/
+        //private void InitalLine(MouseButtonEventArgs e)
+        //{
+        //    count++;
+        //    Polyline pline = new Polyline();
+        //    pline.Stroke = Brushes.Black;
+        //    pline.StrokeThickness = 2;
+
+        //    plines.Add(pline);
+        //    this.Children.Add(plines[count]);
+
+        //    plines[count].Points.Add(p1);//起点
+        //    plines[count].Points.Add(p1);//初始化折线（四个点）
+        //    plines[count].Points.Add(p1);
+        //    plines[count].Points.Add(p1);
+        //}
 
         /*折线*/
         //private void DrawPolyLine(MouseEventArgs e)
@@ -98,14 +112,14 @@ namespace TPIS.TPISCanvas
         //}
 
         /*直线*/
-        private void DrawLine(MouseEventArgs e)
-        {
-            p2 = e.GetPosition(this);
-            if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
-            else p2.X = p1.X;
-            plines[count].Points[1] = p2;//拐点1
-            plines[count].Points[2] = p2;//拐点2
-            plines[count].Points[3] = p2;//终点
-        }
+        //private void DrawLine(MouseEventArgs e)
+        //{
+        //    p2 = e.GetPosition(this);
+        //    if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
+        //    else p2.X = p1.X;
+        //    plines[count].Points[1] = p2;//拐点1
+        //    plines[count].Points[2] = p2;//拐点2
+        //    plines[count].Points[3] = p2;//终点
+        //}
     }
 }
