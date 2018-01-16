@@ -120,7 +120,7 @@
   <ItemGroup>
     <Compile Include="TPISCanvas\Choosen.cs" />
     <Compile Include="Model\TPISComponent.cs" />
-    <Compile Include="Model\Link.cs" />
+    <Compile Include="Model\Line.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="TPISCommand\TPISCompentView.cs" />

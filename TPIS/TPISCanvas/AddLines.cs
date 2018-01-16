@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using static System.Math;
 using System;
 using Forms = System.Windows.Forms;
+using TPIS.Model;
+using TPIS.Project;
 
 namespace TPIS.TPISCanvas
 {
@@ -16,39 +18,40 @@ namespace TPIS.TPISCanvas
         /// 画折线
         /// </summary>
         /// 
-
         bool flag = false;
         public CheckBox checkBox, polyLineCB;//是否画线
         public List<Polyline> plines;//画多条折线
-        private int count = -1;
-        Point p1, p2, tmp;
+        Point p1, p2;
+
+        public TPISLine line;
+        public Polyline pline;
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            //base.MouseLeftButtonDown += new MouseButtonEventHandler(Canvas_MouseLeftButtonDown);//会出现线性进入问题
             if (checkBox.IsChecked == true)
             {
                 /*首击左键确定起点*/
                 if (flag == false)
                 {
                     flag = true;//开始画线
+                    pline = new Polyline();
+                    pline.Stroke = Brushes.Black;
+                    pline.StrokeThickness = 2;
+                    this.Children.Add(pline);
                     p1 = e.GetPosition(this);
-                    InitalLine(e);
+                    pline.Points.Add(p1);
                 }
                 /*再击左键续线*/
                 else
-                {
                     p1 = p2;//衔接
-                    InitalLine(e);
-                }
+                pline.Points.Add(p1);
             }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            //base.MouseMove += new MouseEventHandler(Canvas_MouseMove);
             if (flag == false)
                 return;
             /*移动中确定拐点和终点*/
@@ -57,30 +60,40 @@ namespace TPIS.TPISCanvas
             {
                 if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
                 else p2.X = p1.X;
-                //plines[count].Points.Add(p2);
             }
-            plines[count].Points[plines[count].Points.Count - 1] = p2;
+            pline.Points[pline.Points.Count - 1] = p2;
         }
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseRightButtonDown(e);
             flag = false;//结束画线
+            RemoveLines();
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(line);
         }
-        private void InitalLine(MouseButtonEventArgs e)
+
+        private void RemoveLines()
         {
-            count++;
-            Polyline pline = new Polyline();
-            pline.Stroke = Brushes.Black;
-            pline.StrokeThickness = 2;
-
-            plines.Add(pline);
-            this.Children.Add(plines[count]);
-
-            plines[count].Points.Add(p1);//起点
-            if (pline.Points.Count  == 1)
-                pline.Points.Add(p1);
+            line = new TPISLine();
+            line.Points = pline.Points;
+            line.polyLine.Points = pline.Points;
+            pline.Points.Clear();
         }
+        //private void InitalLine(MouseButtonEventArgs e)
+        //{
+        //    count++;
+        //    Polyline pline = new Polyline();
+        //    pline.Stroke = Brushes.Black;
+        //    pline.StrokeThickness = 2;
+
+        //    plines.Add(pline);
+        //    this.Children.Add(plines[count]);
+
+        //    plines[count].Points.Add(p1);//起点
+        //    if (pline.Points.Count  == 1)
+        //        pline.Points.Add(p1);
+        //}
 
         /*初始化线段*/
         //private void InitalLine(MouseButtonEventArgs e)

@@ -10,21 +10,12 @@ namespace TPIS.TPISCanvas
     public class Choosen
     {
         public List<TPISComponent> components;
-        public List<Link> links;
+        public List<TPISLine> links;
         public Position position;
 
         public void Move(int x, int y)
         {
-            foreach (Link l in links)
-            {
-                //选中区域连接线移动
-                l.Move(x, y);
-            }
-
-            foreach (TPISComponent c in components)
-            {
-                
-            }
+            
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using TPIS.Project;
 
 namespace TPIS.Model
 {
@@ -135,10 +136,10 @@ namespace TPIS.Model
         public int x;//横坐标比例（0~1）
         public int y;//纵坐标比例（0~1)
         public Node node;
-        public Link link;
+        public TPISLine link;
     }
 
-    public class TPISComponent : INotifyPropertyChanged
+    public class TPISComponent : ObjectBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

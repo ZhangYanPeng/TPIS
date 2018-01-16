@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Command;
+using TPIS.Model;
+using TPIS.Project;
 
 namespace TPIS.TPISCanvas
 {
@@ -42,7 +47,7 @@ namespace TPIS.TPISCanvas
             polyLineCB.Content = "画斜线";
             SetTop(polyLineCB, 100.0);
             this.Children.Add(polyLineCB);
-
+            
             plines = new List<Polyline>();
         }  
     }
