@@ -4,17 +4,54 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\
+=======
+C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\obj\Debug\
+>>>>>>> parent of 99c4bab... tmp
+=======
+C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\obj\Debug\
+>>>>>>> parent of 99c4bab... tmp
+=======
 C:\Users\xjtu_lw\Source\Repos\TPIS7\TPIS\obj\Debug\
+>>>>>>> origin/Liu
 TPIS
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\App.xaml
+7-371809066
+
+33-115277954
+16441275215
+=======
+C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\App.xaml
+7-371809066
+
+33-115277954
+16800839272
+>>>>>>> parent of 99c4bab... tmp
+=======
+C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\App.xaml
+7-371809066
+
+33-115277954
+16800839272
+>>>>>>> parent of 99c4bab... tmp
+Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISElementPanel.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;
+=======
 C:\Users\xjtu_lw\Source\Repos\TPIS7\TPIS\App.xaml
 6-8637698
 
 381545531902
 16124512242
 Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;
+>>>>>>> origin/Liu
 
-True
+False
 

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Xml;
 using TPIS.Command;
 
 namespace TPIS.TPISCanvas
@@ -46,6 +39,7 @@ namespace TPIS.TPISCanvas
 
             polyLineCB = new CheckBox();
             polyLineCB.Content = "画斜线";
+            SetTop(polyLineCB, 100.0);
             this.Children.Add(polyLineCB);
 
             plines = new List<Polyline>();
