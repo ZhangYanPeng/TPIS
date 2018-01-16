@@ -45,6 +45,10 @@ namespace TPIS.TPISCanvas
             checkBox.Content = "画线";
             this.Children.Add(checkBox);
 
+            polyLineCB = new CheckBox();
+            polyLineCB.Content = "画斜线";
+            this.Children.Add(polyLineCB);
+
             plines = new List<Polyline>();
         }  
     }
