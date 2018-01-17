@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\VS1\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\VS1\TPIS\TPIS\obj\Debug\Views\Modules\TPISElementPanel.baml
 C:\VS1\TPIS\TPIS\obj\Debug\Views\Modules\TPISProjectTab.baml
@@ -67,6 +68,8 @@ F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateResource.Cache
 F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 F:\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
+=======
+>>>>>>> bde4ab5c51ebebaddfab6206329a8aa773353820
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb
@@ -90,5 +93,9 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.Generate
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
+<<<<<<< HEAD
 F:\Workspace\TPIS\TPIS\obj\Debug\App.baml
 F:\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml
+=======
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
+>>>>>>> bde4ab5c51ebebaddfab6206329a8aa773353820

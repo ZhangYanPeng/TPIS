@@ -39,12 +39,20 @@
                 <!--元件模块-->
                 <Border BorderThickness="1" BorderBrush="Gray" DockPanel.Dock="Top">
                     <GroupBox Header="连接线" Margin="3,0,0,0">
-                        <StackPanel Margin="3" >
-                            <ToggleButton ToolTip="连接线" Style="{DynamicResource ToggleButtonStyle}"  HorizontalAlignment="Left" Checked="TPISLineTypeSelected" Unchecked="TPISLineTypeUnSelected" Name="AddLine">
+                        <StackPanel Margin="3" Orientation="Horizontal">
+                            <ToggleButton ToolTip="直接连接线" Style="{DynamicResource ToggleButtonStyle}"  HorizontalAlignment="Left" Checked="TPISLineTypeSelected" Unchecked="TPISLineTypeUnSelected" Name="AddLine">
                                 <UserControl>
                                     <DockPanel>
-                                        <TextBlock Text="连接线" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="直接连接" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
                                         <Image Source="Images/element/Line.png" MaxHeight="60" MaxWidth="60" />
+                                    </DockPanel>
+                                </UserControl>
+                            </ToggleButton>
+                            <ToggleButton ToolTip="直角连接线" Style="{DynamicResource ToggleButtonStyle}"  HorizontalAlignment="Left" Checked="TPISLineTypeSelected" Unchecked="TPISLineTypeUnSelected" Name="AddStraightLine">
+                                <UserControl>
+                                    <DockPanel>
+                                        <TextBlock Text="直角连接" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
+                                        <Image Source="Images/element/StraightLine.png" MaxHeight="60" MaxWidth="60" />
                                     </DockPanel>
                                 </UserControl>
                             </ToggleButton>
@@ -132,7 +140,7 @@
                                 <Grid>
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                         <!-- 画布-->
-                                        <s:ProjectDesignerCanvas Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
+                                        <s:ProjectDesignerCanvas Visibility="Visible" Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
                                             <ItemsControl ItemsSource="{Binding Components}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrComponent}">
                                             </ItemsControl>
                                         </s:ProjectDesignerCanvas>

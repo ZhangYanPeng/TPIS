@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Xml;
 using TPIS.Command;
 
 namespace TPIS.TPISCanvas
@@ -40,7 +33,8 @@ namespace TPIS.TPISCanvas
             base.MouseLeave += new MouseEventHandler(CanvasMouseLeave);
             base.MouseLeftButtonDown += new MouseButtonEventHandler(ComponentMouseLButtonDown);
             base.MouseMove += new MouseEventHandler(ComponentMouseMove);
-            
-        }
+
+            plines = new List<Polyline>();
+        }  
     }
 }

@@ -21,13 +21,44 @@
         </Setter>
     </Style>
 
+    <Style x:Key="PortItemsControlStyle" TargetType="ItemsControl">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding P_x}" />
+                    <Setter Property="Canvas.Top" Value="{Binding P_y}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Ellipse Width="10" Height="10" Fill="Black">
+                    </Ellipse>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <DataTemplate x:Key="template_component">
         <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}" >
             <!--控件图片-->
             <s:DesignerComponent.Background>
                 <ImageBrush ImageSource="{Binding Pic}">
+                    <ImageBrush.RelativeTransform>
+                        <RotateTransform Angle="{Binding Angle}" CenterX="0.5" CenterY="0.5"></RotateTransform>
+                    </ImageBrush.RelativeTransform>
                 </ImageBrush>
             </s:DesignerComponent.Background>
+            <ItemsControl ItemsSource="{Binding Ports}" Style="{StaticResource PortItemsControlStyle}">
+            </ItemsControl>
         </s:DesignerComponent>
     </DataTemplate>
 

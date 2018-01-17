@@ -4,16 +4,24 @@
 winexe
 C#
 .cs
-F:\Workspace\TPIS\TPIS\obj\Debug\
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\
 TPIS
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 F:\Workspace\TPIS\TPIS\App.xaml
 6-8637698
 
 38-325742998
 16-1621297741
+=======
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\App.xaml
+6-8637698
+
+381545531902
+16441275215
+>>>>>>> bde4ab5c51ebebaddfab6206329a8aa773353820
 Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;
 
 False
