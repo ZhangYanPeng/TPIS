@@ -132,6 +132,11 @@ namespace TPIS
             }
         }
 
+        /// <summary>
+        /// 取消画线
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TPISLineTypeUnSelected(object sender, RoutedEventArgs e)
         {
             ToggleButton currEle = sender as ToggleButton;
@@ -149,5 +154,7 @@ namespace TPIS
                 return;
             }
         }
+
+        
     }
 }

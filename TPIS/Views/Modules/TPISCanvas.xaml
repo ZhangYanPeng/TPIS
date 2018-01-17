@@ -53,8 +53,13 @@
             <s:DesignerComponent.Background>
                 <ImageBrush ImageSource="{Binding Pic}">
                     <ImageBrush.RelativeTransform>
-                        <RotateTransform Angle="{Binding Angle}" CenterX="0.5" CenterY="0.5"></RotateTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="{Binding Position.Angle}" CenterX="0.5" CenterY="0.5"></RotateTransform>
+                            <ScaleTransform ScaleY="{Binding Position.IsHorizentalReversed}" CenterX="0.5" CenterY="0.5"></ScaleTransform>
+                            <ScaleTransform ScaleX="{Binding Position.IsVerticalReversed}" CenterX="0.5" CenterY="0.5"></ScaleTransform>
+                        </TransformGroup>
                     </ImageBrush.RelativeTransform>
+                    
                 </ImageBrush>
             </s:DesignerComponent.Background>
             <ItemsControl ItemsSource="{Binding Ports}" Style="{StaticResource PortItemsControlStyle}">

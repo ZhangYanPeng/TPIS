@@ -17,9 +17,6 @@ namespace TPIS.Model
 
         private int x;//中心横坐标
         private int y;//中心纵坐标
-        private int angle;//旋转角度 0 90 180 270
-        private int scale_x;//水平翻转
-        private int scale_y;//垂直翻转
         private int width;//宽度
         private int height;//高度
 
@@ -28,6 +25,48 @@ namespace TPIS.Model
         private int v_width;
         private int v_height;
         private double rate;
+
+        public int angle;
+        public int Angle
+        {
+            get
+            {
+                return angle;
+            }
+            set
+            {
+                angle = value;
+                //宽高
+                //更新port 位置
+                OnPropertyChanged("Angle");
+            }
+
+        } //旋转角度
+
+        public int isVerticalReversed;
+        public int IsVerticalReversed { get
+            {
+                return isVerticalReversed;
+            }
+            set
+            {
+                isVerticalReversed = value;
+                OnPropertyChanged("IsVerticalReversed");
+            }
+        }//垂直翻转
+        public int isHorizontalReversed;
+        public int IsHorizontalReversed
+        {
+            get
+            {
+                return isHorizontalReversed;
+            }
+            set
+            {
+                isHorizontalReversed = value;
+                OnPropertyChanged("IsHorizontalReversed");
+            }
+        } //水平翻转
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -168,7 +207,7 @@ namespace TPIS.Model
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        
+
     }
 
     public class TPISComponent : ObjectBase, INotifyPropertyChanged
@@ -179,28 +218,6 @@ namespace TPIS.Model
         public List<Port> Ports { get; set; }
         public long id;
         public string Pic { get; set; }
-
-
-        public int Angel
-        {
-            get => Angel;
-            set
-            {
-                if (Angel == 90 || Angel == 270)
-                {
-                    //交换宽高
-                    int tmp = this.Position.Width;
-                    this.Position.Width = this.Position.Height;
-                    this.Position.Height = tmp;
-                }
-                //更新port 位置
-            }
-
-        } //旋转角度
-        public bool IsVerticalReversed { get; set; }//垂直翻转
-        public bool IsHorizontalReversed { get; set; } //水平翻转
-
-
 
         public TPISComponent(int tx, int ty, int width, int height, long id)
         {
@@ -219,6 +236,9 @@ namespace TPIS.Model
                 this.Position.V_y = ty;
                 this.Position.V_width = width;
                 this.Position.V_height = height;
+                this.Position.IsVerticalReversed = 1;
+                this.Position.IsHorizontalReversed = 1;
+                this.Position.Angle = 0;
                 this.Pic = "Images/element/Turbin1.png";
             }
             if (this.PropertyChanged != null)
@@ -226,6 +246,32 @@ namespace TPIS.Model
                 this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Pic"));
             }
 
+            RePosPort();
+        }
+
+        /// <summary>
+        /// 水平和垂直翻转\旋转
+        /// </summary>
+        internal void VerticalReverse()
+        {
+            if ( Position.IsVerticalReversed == 1)
+                Position.IsVerticalReversed = -1;
+            else
+                Position.IsVerticalReversed = 1;
+            RePosPort();
+        }
+        internal void HorizentalReverse()
+        {
+            if (Position.IsHorizontalReversed == 1)
+                Position.IsHorizontalReversed = -1;
+            else
+                Position.IsHorizontalReversed = 1;
+            RePosPort();
+        }
+        internal void Rotate(int v)
+        {
+            int tmp = Position.Angle + v * 90;
+            this.Position.Angle = tmp % 360;
             RePosPort();
         }
 
@@ -271,5 +317,7 @@ namespace TPIS.Model
                 this.Position.V_height = cheight + height.Value > 0 ? cheight + height.Value : 1;
             RePosPort();
         }
+
+
     }
 }

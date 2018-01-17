@@ -124,6 +124,9 @@
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="TPISCommand\TPISCompentView.cs" />
+    <Compile Include="Views\Modules\TPISToolBar.xaml.cs">
+      <DependentUpon>TPISToolBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
@@ -174,7 +177,7 @@
     <Resource Include="Images\icon\activeIcon\icon_activeSaveAs .png" />
     <Resource Include="Images\icon\activeIcon\icon_activeSelection.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeUndo.png" />
-    <Resource Include="Images\icon\activeIcon\icon_cativeOpen.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeOpen.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\icon_close.png" />
@@ -288,6 +291,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\element\StraightLine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeRotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeVerticalReversed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeHorizentalReversed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -75,7 +75,7 @@ namespace TPIS.TPISCanvas
             SubstitutionLine();
         }
 
-        private void InitalLine(MouseButtonEventArgs e)
+        private void SubstitutionLine()
         {
             TPISLine line = new TPISLine();
             line.LNum = count;
