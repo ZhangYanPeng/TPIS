@@ -32,7 +32,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="template_line">
-        <Polyline Points="{Binding Points}" Stroke="Black" StrokeThickness="2" >
+        <Polyline Uid="{Binding LNum}" Points="{Binding Points}" Stroke="Black" StrokeThickness="2" >
         </Polyline>
     </DataTemplate>
     

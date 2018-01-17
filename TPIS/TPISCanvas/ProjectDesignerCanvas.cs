@@ -47,8 +47,12 @@ namespace TPIS.TPISCanvas
             polyLineCB.Content = "画斜线";
             SetTop(polyLineCB, 100.0);
             this.Children.Add(polyLineCB);
-            
-            plines = new List<Polyline>();
+
+
+            pline = new Polyline();
+            pline.Stroke = Brushes.Red;
+            pline.StrokeThickness = 2;
+            this.Children.Add(pline);
         }  
     }
 }

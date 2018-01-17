@@ -22,9 +22,8 @@ namespace TPIS.TPISCanvas
         public CheckBox checkBox, polyLineCB;//是否画线
         public List<Polyline> plines;//画多条折线
         Point p1, p2;
-
-        public TPISLine line;
         public Polyline pline;
+        public long count=0;
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
@@ -34,11 +33,8 @@ namespace TPIS.TPISCanvas
                 /*首击左键确定起点*/
                 if (flag == false)
                 {
+                    count++;
                     flag = true;//开始画线
-                    pline = new Polyline();
-                    pline.Stroke = Brushes.Black;
-                    pline.StrokeThickness = 2;
-                    this.Children.Add(pline);
                     p1 = e.GetPosition(this);
                     pline.Points.Add(p1);
                 }
@@ -68,18 +64,21 @@ namespace TPIS.TPISCanvas
         {
             base.OnMouseRightButtonDown(e);
             flag = false;//结束画线
-            RemoveLines();
+            SubstitutionLine();
+        }
+
+        private void SubstitutionLine()
+        {
+            TPISLine line = new TPISLine();
+            line.LNum = count;
+            foreach (Point p in pline.Points)
+                line.Points.Add(p);
+            //line.Points = pline.Points;
+            pline.Points.Clear();
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(line);
         }
 
-        private void RemoveLines()
-        {
-            line = new TPISLine();
-            line.Points = pline.Points;
-            line.polyLine.Points = pline.Points;
-            pline.Points.Clear();
-        }
         //private void InitalLine(MouseButtonEventArgs e)
         //{
         //    count++;

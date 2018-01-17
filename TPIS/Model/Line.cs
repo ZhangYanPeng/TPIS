@@ -18,8 +18,16 @@ namespace TPIS.Model
     public class TPISLine : ObjectBase, INotifyPropertyChanged
     {
         public bool IsCompleted { get; set; }
-
-        public Polyline polyLine;
+        public long lNum;
+        public long LNum {
+            get {
+                return lNum;
+            }
+            set {
+                this.lNum = value;
+                OnPropertyChanged("LNum");
+            }
+        }
         public PointCollection points;
         public PointCollection Points{
             get
@@ -35,7 +43,6 @@ namespace TPIS.Model
         public TPISLine()
         {
             points = new PointCollection();
-            polyLine = new Polyline();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
