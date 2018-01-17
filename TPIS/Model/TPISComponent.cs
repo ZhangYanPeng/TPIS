@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using TPIS.Project;
 
 namespace TPIS.Model
 {
@@ -155,7 +156,7 @@ namespace TPIS.Model
         }//纵坐标比例（0~1)
         public bool type; // true : in  false: out
         public Node node;
-        public Link link;
+        public TPISLine link;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -167,9 +168,10 @@ namespace TPIS.Model
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        
     }
 
-    public class TPISComponent : INotifyPropertyChanged
+    public class TPISComponent : ObjectBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

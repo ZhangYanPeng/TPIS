@@ -62,6 +62,11 @@
         </s:DesignerComponent>
     </DataTemplate>
 
+    <DataTemplate x:Key="template_line">
+        <Polyline Uid="{Binding LNum}" Points="{Binding Points}" Stroke="Black" StrokeThickness="2" >
+        </Polyline>
+    </DataTemplate>
+    
     <DataTemplate x:Key="template_selection">
         <s:DesignerComponent Width="{Binding Position.V_height}" Height="{Binding Position.V_width}">
             <!--控件图片-->
@@ -72,8 +77,9 @@
         </s:DesignerComponent>
     </DataTemplate>
 
-    <local:SelectionOrComponentSelector x:Key="SelectionOrComponent"
+    <local:SelectionOrComponentSelector x:Key="SelectionOrLineOrComponent"
                 ComponentTemplate="{StaticResource template_component}"
                 SelectionTemplate="{StaticResource template_selection}"
+                LineTemplate="{StaticResource template_line}"
                 />
 </ResourceDictionary>

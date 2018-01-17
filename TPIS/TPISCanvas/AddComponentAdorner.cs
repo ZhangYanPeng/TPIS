@@ -70,7 +70,7 @@ namespace TPIS.TPISCanvas
                     int height = (int)(ep.Y - sp.Y) > 5 ? (int)(ep.Y - sp.Y) : 5;
                     TPISComponent c = new TPISComponent((int)sp.X, (int)sp.Y, width, height, 1);
                     //添加元件
-                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Components.Add(c);
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(c);
                 }
                 e.Handled = true;
             }
