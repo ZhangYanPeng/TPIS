@@ -31,23 +31,82 @@ namespace TPIS.Project
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
-            //TPISLine l = new TPISLine();
-            //PointCollection pc = new PointCollection();
-            //Point p1 = new Point(10.3333333, 100);
-            //Point p2 = new Point(50, 200);
-            //Point p3 = new Point(70, 900);
-            //pc.Add(p1);
-            //pc.Add(p2);
-            //pc.Add(p3);
-            //l.Points = pc;
-            //Objects.Add(l);
             return;
         }
 
-        public void Draw()
+        /// <summary>
+        /// 翻转选中
+        /// </summary>
+        public void VerticalReversedSelection()
         {
-
+            for( int i=0; i<Objects.Count; i++ )
+            {
+                ObjectBase obj = Objects[i];
+                if (true)//选中，切不含连接关系
+                {
+                    if(obj is TPISComponent)
+                    {
+                        ((TPISComponent)Objects[i]).VerticalReverse();
+                    }
+                }
+            }
         }
 
+        /// <summary>
+        /// 翻转选中
+        /// </summary>
+        public void HorizentalReversedSelection()
+        {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
+                if (true)//选中，切不含连接关系
+                {
+                    if (obj is TPISComponent)
+                    {
+                        ((TPISComponent)Objects[i]).HorizentalReverse();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 旋转选中
+        /// </summary>
+        /// <param name="n">n*90 为顺时针旋转角度</param>
+        public void RotateSelection(int n)
+        {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
+                if (true)//选中，切不含连接关系
+                {
+                    if (obj is TPISComponent)
+                    {
+                        ((TPISComponent)Objects[i]).Rotate(n);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 水平和垂直方向移动
+        /// </summary>
+        /// <param name="d_vx"></param>
+        /// <param name="d_vy"></param>
+        public void MoveSelection(int d_vx, int d_vy)
+        {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
+                if (true)//选中
+                {
+                    if (obj is TPISComponent)
+                    {
+                        ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
+                    }
+                }
+            }
+        }
     }
 }

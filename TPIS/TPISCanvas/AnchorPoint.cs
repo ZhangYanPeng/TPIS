@@ -113,10 +113,6 @@ namespace TPIS.TPISCanvas
         public void Component_Select()
         {
             InitAnchorPoints();
-            location.X = ((TPISComponent)this.DataContext).Position.V_x;
-            location.Y = ((TPISComponent)this.DataContext).Position.V_y;
-            this.cheight = ((TPISComponent)this.DataContext).Position.V_height;
-            this.cwidth = ((TPISComponent)this.DataContext).Position.V_width;
         }
 
         public void Component_UnSelect()

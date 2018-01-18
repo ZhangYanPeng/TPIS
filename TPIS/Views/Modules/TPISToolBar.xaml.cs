@@ -18,16 +18,7 @@ namespace TPIS.Views.Modules
         private void TPISVerReversed(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            for (int i = 0; i < mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Count; i++)
-            {
-                if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects[i] is TPISComponent)
-                {
-                    if (true)
-                    {
-                        ((TPISComponent)mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects[i]).VerticalReverse();
-                    }
-                }
-            }
+            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].VerticalReversedSelection();
         }
 
         /// <summary>
@@ -38,16 +29,7 @@ namespace TPIS.Views.Modules
         private void TPISHorReversed(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            for (int i = 0; i < mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Count; i++)
-            {
-                if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects[i] is TPISComponent)
-                {
-                    if (true)
-                    {
-                        ((TPISComponent)mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects[i]).HorizentalReverse();
-                    }
-                }
-            }
+            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].HorizentalReversedSelection();
         }
 
         /// <summary>
@@ -58,16 +40,7 @@ namespace TPIS.Views.Modules
         private void TPISRotate(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            for (int i = 0; i < mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Count; i++)
-            {
-                if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects[i] is TPISComponent)
-                {
-                    if (true)
-                    {
-                        ((TPISComponent)mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects[i]).Rotate(1);
-                    }
-                }
-            }
+            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].RotateSelection(1);
         }
     }
 }

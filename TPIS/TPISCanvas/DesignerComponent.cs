@@ -23,11 +23,8 @@ namespace TPIS.TPISCanvas
         public MoveType moveType;
 
         Point pos = new Point();
-        Point location = new Point();
 
         AnchorPointType sizeType;
-        int cheight;
-        int cwidth;
 
         #region
         public bool IsSelected { get; set; }
@@ -42,20 +39,6 @@ namespace TPIS.TPISCanvas
         }
 
         /// <summary>
-        /// 元件整体移动
-        /// </summary>
-        /// <param name="x">横向</param>
-        /// <param name="y">纵向</param>
-        public void Element_Move(int x, int y)
-        {
-            double xPos = x + location.X;
-            double yPos = y + location.Y;
-            ((TPISComponent)this.DataContext).Position.V_x = (int)xPos;
-            ((TPISComponent)this.DataContext).Position.V_y = (int)yPos;
-            return;
-        }
-
-        /// <summary>
         /// 鼠标移动
         /// </summary>
         /// <param name="sender"></param>
@@ -65,13 +48,14 @@ namespace TPIS.TPISCanvas
             if (isDragDropInEffect)
             {
                 FrameworkElement currEle = sender as FrameworkElement;
-                double x = e.GetPosition(null).X - pos.X;
-                double y = e.GetPosition(null).Y - pos.Y;
+                Point tmp = e.GetPosition(null);
+                double x = tmp.X - pos.X;
+                double y = tmp.Y - pos.Y;
+                pos = tmp;
                 //移动位置
                 if (this.moveType == MoveType.pos)
                 {
-                    this.Element_Move((int)x, (int)y);
-
+                    ((TPISComponent)currEle.DataContext).PosChange((int)x, (int)y);
                 }
 
                 //改变大小
@@ -79,23 +63,21 @@ namespace TPIS.TPISCanvas
                 {
                     if (this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.DL || this.sizeType == AnchorPointType.DR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(this.cwidth, null, this.cheight, (int)y);
+                        ((TPISComponent)currEle.DataContext).SizeChange(null, (int)y);
                     }
                     if (this.sizeType == AnchorPointType.UR || this.sizeType == AnchorPointType.R || this.sizeType == AnchorPointType.DR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(this.cwidth, (int)x, this.cheight, null);
+                        ((TPISComponent)currEle.DataContext).SizeChange((int)x, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.L || this.sizeType == AnchorPointType.DL)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(this.cwidth, -(int)x, this.cheight, null);
-                        double xPos = x + location.X;
-                        ((TPISComponent)currEle.DataContext).Position.V_x = (int)xPos;
+                        ((TPISComponent)currEle.DataContext).SizeChange(-(int)x, null);
+                        ((TPISComponent)currEle.DataContext).PosChange((int)x, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.U || this.sizeType == AnchorPointType.UR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(this.cwidth, null, this.cheight, -(int)y);
-                        double yPos = y + location.Y;
-                        ((TPISComponent)currEle.DataContext).Position.V_y = (int)yPos;
+                        ((TPISComponent)currEle.DataContext).SizeChange(null, -(int)y);
+                        ((TPISComponent)currEle.DataContext).PosChange(null, (int)y);
                     }
                     RePosAnchorPoints();
                 }

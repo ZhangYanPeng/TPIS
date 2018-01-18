@@ -55,8 +55,8 @@
                     <ImageBrush.RelativeTransform>
                         <TransformGroup>
                             <RotateTransform Angle="{Binding Position.Angle}" CenterX="0.5" CenterY="0.5"></RotateTransform>
-                            <ScaleTransform ScaleY="{Binding Position.IsHorizentalReversed}" CenterX="0.5" CenterY="0.5"></ScaleTransform>
-                            <ScaleTransform ScaleX="{Binding Position.IsVerticalReversed}" CenterX="0.5" CenterY="0.5"></ScaleTransform>
+                            <ScaleTransform ScaleX="{Binding Position.IsHorizentalReversed}" CenterX="0.5" CenterY="0.5"></ScaleTransform>
+                            <ScaleTransform ScaleY="{Binding Position.IsVerticalReversed}" CenterX="0.5" CenterY="0.5"></ScaleTransform>
                         </TransformGroup>
                     </ImageBrush.RelativeTransform>
                     

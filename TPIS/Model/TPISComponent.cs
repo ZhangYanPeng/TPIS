@@ -10,209 +10,17 @@ using TPIS.Project;
 
 namespace TPIS.Model
 {
-    //位置，宽高
-    public class Position : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private int x;//中心横坐标
-        private int y;//中心纵坐标
-        private int width;//宽度
-        private int height;//高度
-
-        private int v_x;
-        private int v_y;
-        private int v_width;
-        private int v_height;
-        private double rate;
-
-        public int angle;
-        public int Angle
-        {
-            get
-            {
-                return angle;
-            }
-            set
-            {
-                angle = value;
-                //宽高
-                //更新port 位置
-                OnPropertyChanged("Angle");
-            }
-
-        } //旋转角度
-
-        public int isVerticalReversed;
-        public int IsVerticalReversed { get
-            {
-                return isVerticalReversed;
-            }
-            set
-            {
-                isVerticalReversed = value;
-                OnPropertyChanged("IsVerticalReversed");
-            }
-        }//垂直翻转
-        public int isHorizontalReversed;
-        public int IsHorizontalReversed
-        {
-            get
-            {
-                return isHorizontalReversed;
-            }
-            set
-            {
-                isHorizontalReversed = value;
-                OnPropertyChanged("IsHorizontalReversed");
-            }
-        } //水平翻转
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public double Rate
-        {
-            get => rate; set
-            {
-                rate = value;
-                this.v_x = (int)(value * this.x);
-                this.v_y = (int)(value * this.y);
-                this.v_width = (int)(value * this.width);
-                this.v_height = (int)(value * this.height);
-                OnPropertyChanged("V_x");
-                OnPropertyChanged("V_y");
-                OnPropertyChanged("V_width");
-                OnPropertyChanged("V_height");
-            }
-        }
-
-        public int X
-        {
-            get => x; set
-            {
-                x = value;
-                this.v_x = (int)(value * this.Rate);
-                OnPropertyChanged("V_x");
-            }
-        }
-        public int Y
-        {
-            get => y; set
-            {
-                y = value;
-                this.v_y = (int)(value * this.Rate);
-                OnPropertyChanged("V_y");
-            }
-        }
-        public int Width
-        {
-            get => width; set
-            {
-                width = value;
-                this.v_width = (int)(value * this.Rate);
-                OnPropertyChanged("V_width");
-            }
-        }
-        public int Height
-        {
-            get => height; set
-            {
-                height = value;
-                this.v_height = (int)(value * this.Rate);
-                OnPropertyChanged("V_height");
-            }
-        }
-
-        public int V_x
-        {
-            get => v_x; set
-            {
-                v_x = value;
-                x = (int)(value / this.Rate);
-                OnPropertyChanged("V_x");
-            }
-        }
-        public int V_y
-        {
-            get => v_y; set
-            {
-                v_y = value;
-                y = (int)(value / this.Rate);
-                OnPropertyChanged("V_y");
-            }
-        }
-        public int V_width
-        {
-            get => v_width; set
-            {
-                v_width = value;
-                this.Width = (int)(value / this.Rate);
-                OnPropertyChanged("V_width");
-            }
-        }
-        public int V_height
-        {
-            get => v_height; set
-            {
-                v_height = value;
-                this.Height = (int)(value / this.Rate);
-                OnPropertyChanged("V_height");
-            }
-        }
-    }
-
-    public class Port : INotifyPropertyChanged
-    {
-        public double x;
-        public double p_x;
-        public double P_x
-        {
-            get => p_x;
-            set
-            {
-                p_x = value;
-                OnPropertyChanged("P_x");
-            }
-        }//横坐标比例（0~1）
-
-        public double y;
-        public double p_y;
-        public double P_y
-        {
-            get => p_y;
-            set
-            {
-                p_y = value;
-                OnPropertyChanged("P_y");
-            }
-        }//纵坐标比例（0~1)
-        public bool type; // true : in  false: out
-        public Node node;
-        public TPISLine link;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-    }
-
     public class TPISComponent : ObjectBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         public Position Position { get; set; }
         public List<Port> Ports { get; set; }
@@ -237,7 +45,7 @@ namespace TPIS.Model
                 this.Position.V_width = width;
                 this.Position.V_height = height;
                 this.Position.IsVerticalReversed = 1;
-                this.Position.IsHorizontalReversed = 1;
+                this.Position.IsHorizentalReversed = 1;
                 this.Position.Angle = 0;
                 this.Pic = "Images/element/Turbin1.png";
             }
@@ -254,7 +62,7 @@ namespace TPIS.Model
         /// </summary>
         internal void VerticalReverse()
         {
-            if ( Position.IsVerticalReversed == 1)
+            if (Position.IsVerticalReversed == 1)
                 Position.IsVerticalReversed = -1;
             else
                 Position.IsVerticalReversed = 1;
@@ -262,10 +70,10 @@ namespace TPIS.Model
         }
         internal void HorizentalReverse()
         {
-            if (Position.IsHorizontalReversed == 1)
-                Position.IsHorizontalReversed = -1;
+            if (Position.IsHorizentalReversed == 1)
+                Position.IsHorizentalReversed = -1;
             else
-                Position.IsHorizontalReversed = 1;
+                Position.IsHorizentalReversed = 1;
             RePosPort();
         }
         internal void Rotate(int v)
@@ -276,14 +84,85 @@ namespace TPIS.Model
         }
 
         /// <summary>
+        /// 大小改变
+        /// </summary>
+        /// <param name="cwidth">原有实际高度</param>
+        /// <param name="width">视觉宽度变量</param>
+        /// <param name="cheight">原有实际宽度</param>
+        /// <param name="height">视觉高度增量</param>
+        internal void SizeChange(int? width, int? height)
+        {
+            if (width.HasValue)
+                Position.V_width = Position.V_width + width.Value > 0 ? Position.V_width + width.Value : 1;
+            if (height.HasValue)
+                Position.V_height = Position.V_height + height.Value > 0 ? Position.V_height + height.Value : 1;
+            RePosPort();
+        }
+
+        /// <summary>
+        /// 图片水平垂直方向移动
+        /// </summary>
+        /// <param name="d_vx"></param>
+        /// <param name="d_vy"></param>
+        internal void PosChange(int? x, int? y)
+        {
+            if( x.HasValue)
+                Position.V_x += x.Value;
+            if (y.HasValue)
+                Position.V_y += y.Value;
+        }
+
+        /// <summary>
         /// 在改变大小、反转后，重新定位Port
         /// </summary>
         private void RePosPort()
         {
             foreach (Port p in this.Ports)
             {
-                p.P_x = this.Position.V_width * p.x - 5;
-                p.P_y = this.Position.V_height * p.y - 5;
+                double tx = 0;
+                double ty = 0;
+                //考虑旋转
+                switch (Position.Angle)
+                {
+                    case 0:
+                        {
+                            tx = Position.V_width * p.x;
+                            ty = Position.V_height * p.y;
+                        }
+                        break;
+                    case 90:
+                        {
+                            ty = Position.V_height * p.x;
+                            tx = Position.V_width * (1 - p.y);
+                        }
+                        break;
+                    case 180:
+                        {
+                            ty = Position.V_height * (1 - p.y);
+                            tx = Position.V_width * (1 - p.x);
+                        }
+                        break;
+                    case 270:
+                        {
+                            double t = ty;
+                            ty = Position.V_height * (1 - p.x);
+                            tx = Position.V_width * p.y;
+                        }
+                        break;
+                    default: break;
+                }
+                //考虑翻转
+                if (Position.IsHorizentalReversed == -1)
+                {
+                    tx = Position.V_width - tx;
+                }
+                if (Position.isVerticalReversed == -1)
+                {
+                    ty = Position.V_height - ty;
+                }
+                //修正偏移
+                p.P_x = tx - 5;
+                p.P_y = ty - 5;
             }
         }
 
@@ -292,32 +171,5 @@ namespace TPIS.Model
             //发生位移或者形变，需要改变相连线段
             //throw new NotImplementedException();
         }
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        /// <summary>
-        /// 大小改变
-        /// </summary>
-        /// <param name="cwidth">原有实际高度</param>
-        /// <param name="width">视觉宽度变量</param>
-        /// <param name="cheight">原有实际宽度</param>
-        /// <param name="height">视觉高度增量</param>
-        internal void SizeChange(int cwidth, int? width, int cheight, int? height)
-        {
-            if (width.HasValue)
-                this.Position.V_width = cwidth + width.Value > 0 ? cwidth + width.Value : 1;
-            if (height.HasValue)
-                this.Position.V_height = cheight + height.Value > 0 ? cheight + height.Value : 1;
-            RePosPort();
-        }
-
-
     }
 }
