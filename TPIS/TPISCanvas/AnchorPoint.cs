@@ -63,7 +63,7 @@ namespace TPIS.TPISCanvas
     { 
         public void InitAnchorPoints()
         {
-            if(!this.IsSelected)
+            if(!((TPISComponent)this.DataContext).IsSelected)
             {
                 this.Children.Add( new AnchorPoint(AnchorPointType.UL) );
                 this.Children.Add(new AnchorPoint(AnchorPointType.U));
@@ -73,7 +73,6 @@ namespace TPIS.TPISCanvas
                 this.Children.Add(new AnchorPoint(AnchorPointType.DL));
                 this.Children.Add(new AnchorPoint(AnchorPointType.D));
                 this.Children.Add(new AnchorPoint(AnchorPointType.DR));
-                this.IsSelected = true;
             }
             RePosAnchorPoints();
         }
@@ -113,6 +112,7 @@ namespace TPIS.TPISCanvas
         public void Component_Select()
         {
             InitAnchorPoints();
+            ((TPISComponent)this.DataContext).IsSelected = true;
         }
 
         public void Component_UnSelect()

@@ -11,6 +11,7 @@ namespace TPIS.Project
 {
     public class ObjectBase
     {
+        public bool IsSelected { get; set; }
     }
 
     public class ProjectItem : INotifyPropertyChanged
@@ -42,7 +43,7 @@ namespace TPIS.Project
             for( int i=0; i<Objects.Count; i++ )
             {
                 ObjectBase obj = Objects[i];
-                if (true)//选中，切不含连接关系
+                if (obj.IsSelected && true)//选中，切不含连接关系
                 {
                     if(obj is TPISComponent)
                     {
@@ -60,7 +61,7 @@ namespace TPIS.Project
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
-                if (true)//选中，切不含连接关系
+                if (obj.IsSelected && true)//选中，切不含连接关系
                 {
                     if (obj is TPISComponent)
                     {
@@ -79,7 +80,7 @@ namespace TPIS.Project
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
-                if (true)//选中，切不含连接关系
+                if (obj.IsSelected && true)//选中，切不含连接关系
                 {
                     if (obj is TPISComponent)
                     {
@@ -99,7 +100,7 @@ namespace TPIS.Project
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
-                if (true)//选中
+                if (obj.IsSelected && true)//选中
                 {
                     if (obj is TPISComponent)
                     {

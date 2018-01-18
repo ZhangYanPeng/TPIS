@@ -16,7 +16,7 @@ namespace TPIS.TPISCanvas
         size
     }
 
-    partial class DesignerComponent : Canvas, ISelectable
+    partial class DesignerComponent : Canvas
     {
 
         bool isDragDropInEffect = false;
@@ -25,10 +25,6 @@ namespace TPIS.TPISCanvas
         Point pos = new Point();
 
         AnchorPointType sizeType;
-
-        #region
-        public bool IsSelected { get; set; }
-        #endregion
 
         public DesignerComponent()
         {
@@ -96,7 +92,7 @@ namespace TPIS.TPISCanvas
             pos = e.GetPosition(null);
 
             this.moveType = MoveType.pos;
-            if (this.IsSelected == true)
+            if (((TPISComponent)this.DataContext).IsSelected )
             {
                 foreach (UIElement uie in this.Children)
                 {

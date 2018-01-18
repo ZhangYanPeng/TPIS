@@ -48,7 +48,7 @@
     </Style>
 
     <DataTemplate x:Key="template_component">
-        <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}" >
+        <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
             <!--控件图片-->
             <s:DesignerComponent.Background>
                 <ImageBrush ImageSource="{Binding Pic}">
@@ -59,7 +59,6 @@
                             <ScaleTransform ScaleY="{Binding Position.IsVerticalReversed}" CenterX="0.5" CenterY="0.5"></ScaleTransform>
                         </TransformGroup>
                     </ImageBrush.RelativeTransform>
-                    
                 </ImageBrush>
             </s:DesignerComponent.Background>
             <ItemsControl ItemsSource="{Binding Ports}" Style="{StaticResource PortItemsControlStyle}">
