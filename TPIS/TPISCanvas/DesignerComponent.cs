@@ -31,7 +31,7 @@ namespace TPIS.TPISCanvas
             base.MouseMove += new MouseEventHandler(Element_MouseMove);
             base.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
             base.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
-
+            base.Loaded += new RoutedEventHandler(InitAnchorPoints);
         }
 
         /// <summary>

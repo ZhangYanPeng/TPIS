@@ -84,7 +84,6 @@
     <Compile Include="TPISCanvas\AddLines.cs" />
     <Compile Include="TPISCanvas\AnchorPoint.cs" />
     <Compile Include="TPISCanvas\CanvasComponentOperation.cs" />
-    <Compile Include="TPISCanvas\ISelectable.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerCanvas.cs" />
     <Compile Include="Command\ISelectable.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -125,6 +124,7 @@
     <Compile Include="Model\Line.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
+    <Compile Include="TPISCanvas\SelectService.cs" />
     <Compile Include="TPISCommand\TPISCompentView.cs" />
     <Compile Include="Views\Modules\TPISToolBar.xaml.cs">
       <DependentUpon>TPISToolBar.xaml</DependentUpon>

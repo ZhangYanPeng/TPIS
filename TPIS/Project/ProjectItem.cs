@@ -9,9 +9,9 @@ using TPIS.Model;
 
 namespace TPIS.Project
 {
-    public class ObjectBase
+    public class ObjectBase 
     {
-        public bool IsSelected { get; set; }
+        public bool isSelected;
     }
 
     public class ProjectItem : INotifyPropertyChanged
@@ -43,11 +43,14 @@ namespace TPIS.Project
             for( int i=0; i<Objects.Count; i++ )
             {
                 ObjectBase obj = Objects[i];
-                if (obj.IsSelected && true)//选中，切不含连接关系
+                if (obj is TPISComponent)
                 {
-                    if(obj is TPISComponent)
+                    if (((TPISComponent)obj).IsSelected && true)//选中，切不含连接关系
                     {
-                        ((TPISComponent)Objects[i]).VerticalReverse();
+                        if (obj is TPISComponent)
+                        {
+                            ((TPISComponent)Objects[i]).VerticalReverse();
+                        }
                     }
                 }
             }
@@ -61,11 +64,14 @@ namespace TPIS.Project
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
-                if (obj.IsSelected && true)//选中，切不含连接关系
+                if (obj is TPISComponent)
                 {
-                    if (obj is TPISComponent)
+                    if (((TPISComponent)obj).IsSelected && true)//选中，切不含连接关系
                     {
-                        ((TPISComponent)Objects[i]).HorizentalReverse();
+                        if (obj is TPISComponent)
+                        {
+                            ((TPISComponent)Objects[i]).HorizentalReverse();
+                        }
                     }
                 }
             }
@@ -80,11 +86,14 @@ namespace TPIS.Project
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
-                if (obj.IsSelected && true)//选中，切不含连接关系
+                if (obj is TPISComponent)
                 {
-                    if (obj is TPISComponent)
+                    if (((TPISComponent)obj).IsSelected && true)//选中，切不含连接关系
                     {
-                        ((TPISComponent)Objects[i]).Rotate(n);
+                        if (obj is TPISComponent)
+                        {
+                            ((TPISComponent)Objects[i]).Rotate(n);
+                        }
                     }
                 }
             }
@@ -100,11 +109,32 @@ namespace TPIS.Project
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
-                if (obj.IsSelected && true)//选中
+                if (obj is TPISComponent)
                 {
-                    if (obj is TPISComponent)
+                    if (((TPISComponent)obj).IsSelected && true)//选中
                     {
-                        ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
+                        if (obj is TPISComponent)
+                        {
+                            ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 选中
+        /// </summary>
+        /// <param name="components"></param>
+        internal void Select(List<TPISComponent> components)
+        {
+            if(components == null)
+            {
+                foreach( ObjectBase obj in Objects)
+                {
+                    if(obj is TPISComponent)
+                    {
+                        ((TPISComponent)obj).IsSelected = false;
                     }
                 }
             }

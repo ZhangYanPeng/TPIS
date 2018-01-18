@@ -22,6 +22,16 @@ namespace TPIS.Model
             }
         }
 
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                isSelected = value;
+                OnPropertyChanged("IsSelected");
+            }
+        }
+
         public Position Position { get; set; }
         public List<Port> Ports { get; set; }
         public long id;
