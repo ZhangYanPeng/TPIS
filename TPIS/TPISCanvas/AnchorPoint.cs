@@ -32,7 +32,6 @@ namespace TPIS.TPISCanvas
         {
             if (value == null)
                 return DependencyProperty.UnsetValue;
-            Console.WriteLine(value);
             if ((bool)value)
                 return Visibility.Visible;
             else
@@ -143,16 +142,6 @@ namespace TPIS.TPISCanvas
                     ap.SetBinding(AnchorPoint.VisibilityProperty, binding);
                 }
             }
-        }
-
-        public void Component_Select()
-        {
-            ((TPISComponent)this.DataContext).IsSelected = true;
-        }
-
-        public void Component_UnSelect()
-        {
-            ((TPISComponent)this.DataContext).IsSelected = false;
         }
     }
 }

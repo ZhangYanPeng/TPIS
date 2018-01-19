@@ -39,6 +39,7 @@ namespace TPIS.TPISCanvas
             base.MouseLeftButtonDown += new MouseButtonEventHandler(ComponentMouseLButtonDown);
             base.MouseMove += new MouseEventHandler(ComponentMouseMove);
             base.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLBtnClickEmpty);
+            base.MouseMove += new MouseEventHandler(MouseLBtnSelectMove);
 
             plines = new List<Polyline>();
         }  

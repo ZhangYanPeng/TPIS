@@ -51,7 +51,8 @@ namespace TPIS.TPISCanvas
                 //移动位置
                 if (this.moveType == MoveType.pos)
                 {
-                    ((TPISComponent)currEle.DataContext).PosChange((int)x, (int)y);
+                    MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].MoveSelection((int)x, (int)y);
                 }
 
                 //改变大小
@@ -94,6 +95,7 @@ namespace TPIS.TPISCanvas
             this.moveType = MoveType.pos;
             if (((TPISComponent)this.DataContext).IsSelected )
             {
+                //已被选中，不改变选择范围
                 foreach (UIElement uie in this.Children)
                 {
                     if (uie is AnchorPoint)
@@ -120,11 +122,14 @@ namespace TPIS.TPISCanvas
                     }
                 }
             }
+            if ( !((TPISComponent)this.DataContext).IsSelected || this.moveType != MoveType.pos)
+            {
+                //之前未被选中，或改为改变大小操作，单独选中该元件
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select((TPISComponent)this.DataContext);
+            }
             if (this.moveType == MoveType.pos)
                 fEle.Cursor = Cursors.SizeAll;
             fEle.CaptureMouse();
-
-            Component_Select();
             isDragDropInEffect = true;
             e.Handled = true;
         }

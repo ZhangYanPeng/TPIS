@@ -9,7 +9,7 @@ using TPIS.Model;
 
 namespace TPIS.Project
 {
-    public class ObjectBase 
+    public class ObjectBase
     {
         public bool isSelected;
     }
@@ -21,14 +21,14 @@ namespace TPIS.Project
         public String Name { get; set; }
         public String V_name { get; set; }
         public long Num { get; set; }
-        
+
         public ObservableCollection<ObjectBase> Objects { get; set; }
 
         public ProjectCanvas Canvas { get; set; }
 
-        public ProjectItem(string name, ProjectCanvas pCanvas,long num)
+        public ProjectItem(string name, ProjectCanvas pCanvas, long num)
         {
-            this.Name = name +".tpis";
+            this.Name = name + ".tpis";
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
@@ -40,7 +40,7 @@ namespace TPIS.Project
         /// </summary>
         public void VerticalReversedSelection()
         {
-            for( int i=0; i<Objects.Count; i++ )
+            for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
                 if (obj is TPISComponent)
@@ -128,14 +128,49 @@ namespace TPIS.Project
         /// <param name="components"></param>
         internal void Select(List<TPISComponent> components)
         {
-            if(components == null)
+            foreach (ObjectBase obj in Objects)
             {
-                foreach( ObjectBase obj in Objects)
+                if (obj is TPISComponent)
                 {
-                    if(obj is TPISComponent)
+                    if (components.Contains(obj as TPISComponent) )
+                    {
+                        ((TPISComponent)obj).IsSelected = true;
+                    }
+                    else
                     {
                         ((TPISComponent)obj).IsSelected = false;
                     }
+                }
+            }
+        }
+        /// <summary>
+        /// 重载
+        /// </summary>
+        /// <param name="component"></param>
+        internal void Select(TPISComponent component)
+        {
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    if( component == obj as TPISComponent)
+                    {
+                        ((TPISComponent)obj).IsSelected = true;
+                    }
+                    else
+                    {
+                        ((TPISComponent)obj).IsSelected = false;
+                    }
+                }
+            }
+        }
+        internal void Select()
+        {
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    ((TPISComponent)obj).IsSelected = false;
                 }
             }
         }

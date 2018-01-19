@@ -80,6 +80,7 @@
     <Compile Include="Model\ComponentType.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\Position.cs" />
+    <Compile Include="TPISCanvas\SelectAdorner.cs" />
     <Compile Include="TPISCanvas\AddComponentAdorner.cs" />
     <Compile Include="TPISCanvas\AddLines.cs" />
     <Compile Include="TPISCanvas\AnchorPoint.cs" />
