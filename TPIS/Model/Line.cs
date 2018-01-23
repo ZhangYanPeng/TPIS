@@ -18,6 +18,17 @@ namespace TPIS.Model
     public class TPISLine : ObjectBase, INotifyPropertyChanged
     {
         public bool IsCompleted { get; set; }
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                isSelected = value;
+                OnPropertyChanged("IsSelected");
+            }
+        }
+
         public long lNum;
         public long LNum {
             get {

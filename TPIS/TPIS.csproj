@@ -93,6 +93,8 @@
     <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Property.cs" />
     <Compile Include="Model\PropertyGroup.cs" />
+    <Compile Include="TPISCanvas\ChangeLine.cs" />
+    <Compile Include="TPISCanvas\LineAnchorPoint.cs" />
     <Compile Include="TPISCanvas\SelectAdorner.cs" />
     <Compile Include="TPISCanvas\AddComponentAdorner.cs" />
     <Compile Include="TPISCanvas\AddLines.cs" />

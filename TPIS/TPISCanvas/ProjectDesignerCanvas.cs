@@ -45,6 +45,8 @@ namespace TPIS.TPISCanvas
             pline.Stroke = Brushes.Red;
             pline.StrokeThickness = 2;
             this.Children.Add(pline);
+
+            
         }  
     }
 }
