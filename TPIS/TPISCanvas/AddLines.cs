@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using static System.Math;
-using System;
 using Forms = System.Windows.Forms;
 using TPIS.Model;
-using TPIS.Project;
 
 namespace TPIS.TPISCanvas
 {
@@ -19,17 +16,15 @@ namespace TPIS.TPISCanvas
         /// </summary>
         /// 
         bool flag = false;
-
         public bool IsStraight { get; set; } //是否直线
-        public List<Polyline> plines;//画多条折线
         Point p1, p2;
         public Polyline pline;
         public long count=0;
 
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             
-            //base.MouseLeftButtonDown += new MouseButtonEventHandler(Canvas_MouseLeftButtonDown);//会出现线性进入问题
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if ( mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
             {

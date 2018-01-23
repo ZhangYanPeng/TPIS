@@ -41,7 +41,10 @@ namespace TPIS.TPISCanvas
             base.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLBtnClickEmpty);
             base.MouseMove += new MouseEventHandler(MouseLBtnSelectMove);
 
-            plines = new List<Polyline>();
+            pline = new Polyline();
+            pline.Stroke = Brushes.Red;
+            pline.StrokeThickness = 2;
+            this.Children.Add(pline);
         }  
     }
 }
