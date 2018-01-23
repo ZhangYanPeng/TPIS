@@ -147,13 +147,13 @@ namespace TPIS.Project
         /// 重载
         /// </summary>
         /// <param name="component"></param>
-        internal void Select(TPISComponent component)
+        internal void Select(ObjectBase objectBase)
         {
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is TPISComponent)
                 {
-                    if( component == obj as TPISComponent)
+                    if(objectBase == obj )
                     {
                         ((TPISComponent)obj).IsSelected = true;
                     }
@@ -161,6 +161,11 @@ namespace TPIS.Project
                     {
                         ((TPISComponent)obj).IsSelected = false;
                     }
+                }
+                else
+                {
+                    //是连线，同上
+
                 }
             }
         }

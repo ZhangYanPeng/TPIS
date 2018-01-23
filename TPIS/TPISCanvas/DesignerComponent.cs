@@ -78,7 +78,6 @@ namespace TPIS.TPISCanvas
                     }
                     RePosAnchorPoints();
                 }
-                ((TPISComponent)currEle.DataContext).RePos();
             }
         }
 

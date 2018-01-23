@@ -18,9 +18,6 @@ namespace TPIS.Model
         public String PicPath { get; set; }
         public String Name { get; set; }
 
-        public List<port> inPort { get; set; }
-        public List<port> outPort { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {

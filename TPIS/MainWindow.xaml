@@ -103,17 +103,29 @@
             <DockPanel>
                 <!--元件模块-->
                 <Border BorderThickness="1" BorderBrush="Gray">
-                    <GroupBox Header="属性" Margin="3,0,0,0">
-                        <ListView HorizontalAlignment="Left" MinWidth="300">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="属性" Width="100"></GridViewColumn>
-                                    <GridViewColumn Header="值" Width="100"></GridViewColumn>
-                                    <GridViewColumn Header="单位" Width="40"></GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </GroupBox>
+                    <ListBox>
+                        <ListBoxItem>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding DPropetyGroups}">
+                                    <ListBoxItem>
+                                        <DataTemplate>
+                                            <GroupBox Header="{Binding Key}">
+                                                <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Value.DProperty}">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="属性" Width="100"></GridViewColumn>
+                                                            <GridViewColumn Header="值" Width="100"></GridViewColumn>
+                                                            <GridViewColumn Header="单位" Width="40"></GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </GroupBox>
+                                        </DataTemplate>
+                                    </ListBoxItem>
+                                </ListBox>
+                            </DataTemplate>
+                        </ListBoxItem>
+                    </ListBox>
                 </Border>
             </DockPanel>
         </ContentControl>

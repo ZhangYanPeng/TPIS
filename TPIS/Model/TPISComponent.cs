@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using TPIS.Model.Common;
 using TPIS.Project;
 
 namespace TPIS.Model
@@ -33,38 +35,31 @@ namespace TPIS.Model
         }
 
         public Position Position { get; set; }
-        public List<Port> Ports { get; set; }
-        public long id;
+        public ObservableCollection<Port> Ports { get; set; }
+        public long Id { get; set; }
         public string Pic { get; set; }
 
-        public TPISComponent(int tx, int ty, int width, int height, long id)
+        public TPISComponent(int tx, int ty, int width, int height, ComponentType ct)
         {
-            this.Ports = new List<Port>();
-            Port p = new Port { x = 0, y = 0.3, type = true };
-            Port p1 = new Port { x = 1, y = 0.5, type = true };
-            Port p2 = new Port { x = 0, y = 0.6, type = false };
-            this.Ports.Add(p);
-            this.Ports.Add(p1);
-            this.Ports.Add(p2);
-
             this.Position = new Position { Rate = 1 };
-            if (id == 1)
-            {
-                this.Position.V_x = tx;
-                this.Position.V_y = ty;
-                this.Position.V_width = width;
-                this.Position.V_height = height;
-                this.Position.IsVerticalReversed = 1;
-                this.Position.IsHorizentalReversed = 1;
-                this.Position.Angle = 0;
-                this.Pic = "Images/element/Turbin1.png";
-            }
+            this.Position.V_x = tx;
+            this.Position.V_y = ty;
+            this.Position.V_width = width;
+            this.Position.V_height = height;
+            this.Position.IsVerticalReversed = 1;
+            this.Position.IsHorizentalReversed = 1;
+            this.Position.Angle = 0;
+            this.Pic = ct.PicPath;
+
+            Ports = new ObservableCollection<Port>();
+
+            PropertyGroups = new ObservableCollection<PropertyGroup>();
+
+            RePosPort();
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Pic"));
             }
-
-            RePosPort();
         }
 
         /// <summary>
@@ -116,7 +111,7 @@ namespace TPIS.Model
         /// <param name="d_vy"></param>
         internal void PosChange(int? x, int? y)
         {
-            if( x.HasValue)
+            if (x.HasValue)
                 Position.V_x += x.Value;
             if (y.HasValue)
                 Position.V_y += y.Value;
@@ -176,10 +171,22 @@ namespace TPIS.Model
             }
         }
 
-        internal void RePos()
+        public ObservableCollection<PropertyGroup> PropertyGroups { get; set; }
+        public EleType eleType { get; set; }
+
+        public void AddPropetry(Property property, string flag)
         {
-            //发生位移或者形变，需要改变相连线段
-            //throw new NotImplementedException();
+            foreach(PropertyGroup pg in PropertyGroups)
+            {
+                if(pg.Flag == flag)
+                {
+                    pg.Add(property);
+                    return;
+                }
+            }
+            PropertyGroup new_pg = new PropertyGroup() { Flag = flag };
+            new_pg.Add(property);
+            PropertyGroups.Add(new_pg);
         }
     }
 }

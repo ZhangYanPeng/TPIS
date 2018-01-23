@@ -68,7 +68,7 @@ namespace TPIS.TPISCanvas
                     Point ep = endPoint.Value;
                     int width = (int)(ep.X - sp.X) > 5 ? (int)(ep.X - sp.X) : 5;
                     int height = (int)(ep.Y - sp.Y) > 5 ? (int)(ep.Y - sp.Y) : 5;
-                    TPISComponent c = new TPISComponent((int)sp.X, (int)sp.Y, width, height, 1);
+                    TPISComponent c = CommonFunction.NewTPISComponent((int)sp.X, (int)sp.Y, width, height, targetType);
                     c.IsSelected = false;
                     //添加元件
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(c);
@@ -87,7 +87,7 @@ namespace TPIS.TPISCanvas
             dc.DrawRectangle(Brushes.Transparent, null, new Rect(RenderSize));
 
             if (this.startPoint.HasValue && this.endPoint.HasValue)
-                dc.DrawImage(new BitmapImage(new Uri("pack://application:,,,/" + targetType.PicPath, UriKind.Absolute)), new Rect(this.startPoint.Value, this.endPoint.Value));
+                dc.DrawImage(new BitmapImage(new Uri("pack://application:,,," + targetType.PicPath, UriKind.Absolute)), new Rect(this.startPoint.Value, this.endPoint.Value));
         }
     }
 }
