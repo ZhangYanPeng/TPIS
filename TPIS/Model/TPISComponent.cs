@@ -73,6 +73,7 @@ namespace TPIS.Model
                 Position.IsVerticalReversed = 1;
             RePosPort();
         }
+
         internal void HorizentalReverse()
         {
             if (Position.IsHorizentalReversed == 1)
@@ -81,6 +82,7 @@ namespace TPIS.Model
                 Position.IsHorizentalReversed = 1;
             RePosPort();
         }
+
         internal void Rotate(int v)
         {
             int tmp = Position.Angle + v * 90;
@@ -176,9 +178,9 @@ namespace TPIS.Model
 
         public void AddPropetry(Property property, string flag)
         {
-            foreach(PropertyGroup pg in PropertyGroups)
+            foreach (PropertyGroup pg in PropertyGroups)
             {
-                if(pg.Flag == flag)
+                if (pg.Flag == flag)
                 {
                     pg.Add(property);
                     return;

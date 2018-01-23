@@ -76,7 +76,6 @@ namespace TPIS.TPISCanvas
                         ((TPISComponent)currEle.DataContext).SizeChange(null, -(int)y);
                         ((TPISComponent)currEle.DataContext).PosChange(null, (int)y);
                     }
-                    RePosAnchorPoints();
                 }
             }
         }
@@ -125,6 +124,7 @@ namespace TPIS.TPISCanvas
             {
                 //之前未被选中，或改为改变大小操作，单独选中该元件
                 mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select((TPISComponent)this.DataContext);
+                BindingAnchorPoints();
             }
             if (this.moveType == MoveType.pos)
                 fEle.Cursor = Cursors.SizeAll;

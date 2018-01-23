@@ -74,3 +74,4 @@ C:\Users\xjtu_lw\TPIS1\TPIS\obj\Debug\TPIS.csproj.GenerateResource.Cache
 C:\Users\xjtu_lw\TPIS1\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\xjtu_lw\TPIS1\TPIS\obj\Debug\TPIS.exe
 C:\Users\xjtu_lw\TPIS1\TPIS\obj\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
