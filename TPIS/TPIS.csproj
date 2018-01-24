@@ -137,7 +137,7 @@
   <ItemGroup>
     <Compile Include="TPISCanvas\Choosen.cs" />
     <Compile Include="Model\TPISComponent.cs" />
-    <Compile Include="Model\Line.cs" />
+    <Compile Include="Model\TPISLine.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="TPISCanvas\SelectService.cs" />

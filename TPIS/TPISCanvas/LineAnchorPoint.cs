@@ -72,6 +72,7 @@ namespace TPIS.TPISCanvas
             {
                 laps.Add(new LineAnchorPoint(lID));
                 this.Children.Add(laps[i]);
+                
             }
             RePosLineAnchorPoints();
         }
@@ -99,6 +100,13 @@ namespace TPIS.TPISCanvas
                     binding.Converter = new AnchorPosConverter();
                     binding.Mode = BindingMode.OneWay;
                     lap.SetBinding(Canvas.LeftProperty, binding);
+                }
+                {
+                    Binding binding = new Binding();
+                    binding.Source = line;
+                    binding.Path = new PropertyPath("IsSelected");
+                    binding.Converter = new SelectConverter();
+                    lap.SetBinding(AnchorPoint.VisibilityProperty, binding);
                 }
             }
             //foreach (UIElement uil in this.Children)

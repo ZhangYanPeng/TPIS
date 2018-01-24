@@ -71,7 +71,7 @@
         <Polyline Uid="{Binding LNum}" Points="{Binding Points}" Stroke="Black" StrokeThickness="2" MouseLeftButtonDown="LineSelect">
         </Polyline>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="template_selection">
         <s:DesignerComponent Width="{Binding Position.V_height}" Height="{Binding Position.V_width}">
             <!--控件图片-->

@@ -46,7 +46,7 @@ namespace TPIS.TPISCanvas
             pline.StrokeThickness = 2;
             this.Children.Add(pline);
 
-            
+            mainwin = (MainWindow)Application.Current.MainWindow;
         }  
     }
 }

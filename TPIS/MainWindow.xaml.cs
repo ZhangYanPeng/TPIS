@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Project;
+using TPIS.TPISCanvas;
 // TPIS.TPISCanvas;
 
 
@@ -141,7 +142,7 @@ namespace TPIS
             {
                 return _componentTemplate;
             }
-            if(item is Model.TPISLine)
+            if(item is TPISLine)
             {
                 return _lineTemplate;
             }

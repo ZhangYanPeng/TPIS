@@ -23,7 +23,6 @@ namespace TPIS.TPISCanvas
             line = (TPISLine)polyLine.DataContext;
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select((ObjectBase)polyLine.DataContext);
-            //Console.WriteLine(polyLine.DataContext);
             e.Handled = true;
         }
 

@@ -52,6 +52,36 @@ namespace TPIS.TPISCanvas
         }
     }
 
+    public class HalfConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return DependencyProperty.UnsetValue;
+            return (int)value / 2 - 4;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class TotalConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return DependencyProperty.UnsetValue;
+            return (int)value - 8;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
     public class AnchorPoint : Canvas
     {
         public AnchorPointType Type { get; set; }
@@ -92,7 +122,7 @@ namespace TPIS.TPISCanvas
 
     partial class DesignerComponent : Canvas
     {
-        public void InitAnchorPoints(object sender,  RoutedEventArgs e)
+        public void InitAnchorPoints(object sender, RoutedEventArgs e)
         {
 
             this.Children.Add(new AnchorPoint(AnchorPointType.UL));
@@ -103,10 +133,10 @@ namespace TPIS.TPISCanvas
             this.Children.Add(new AnchorPoint(AnchorPointType.DL));
             this.Children.Add(new AnchorPoint(AnchorPointType.D));
             this.Children.Add(new AnchorPoint(AnchorPointType.DR));
-            RePosAnchorPoints();
+            BindingAnchorPoints();
         }
 
-        public void RePosAnchorPoints()
+        public void BindingAnchorPoints()
         {
             foreach (UIElement uie in this.Children)
             {
@@ -117,22 +147,42 @@ namespace TPIS.TPISCanvas
                         ap.SetValue(Canvas.TopProperty, 0.0);
                     else if (ap.Type == AnchorPointType.L || ap.Type == AnchorPointType.R)
                     {
-                        ap.SetValue(Canvas.TopProperty, this.Height / 2 - 4);
+                        Binding posbinding = new Binding();
+                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        posbinding.Path = new PropertyPath("V_height");
+                        posbinding.Converter = new HalfConverter();
+                        posbinding.Mode = BindingMode.OneWay;
+                        ap.SetBinding(Canvas.TopProperty, posbinding);
                     }
                     else
                     {
-                        ap.SetValue(Canvas.TopProperty, this.Height - 8);
+                        Binding posbinding = new Binding();
+                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        posbinding.Path = new PropertyPath("V_height");
+                        posbinding.Converter = new TotalConverter();
+                        posbinding.Mode = BindingMode.OneWay;
+                        ap.SetBinding(Canvas.TopProperty, posbinding);
                     }
 
                     if (ap.Type == AnchorPointType.UL || ap.Type == AnchorPointType.L || ap.Type == AnchorPointType.DL)
                         ap.SetValue(Canvas.LeftProperty, 0.0);
                     else if (ap.Type == AnchorPointType.U || ap.Type == AnchorPointType.D)
                     {
-                        ap.SetValue(Canvas.LeftProperty, this.Width / 2 - 4);
+                        Binding posbinding = new Binding();
+                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        posbinding.Path = new PropertyPath("V_width");
+                        posbinding.Converter = new HalfConverter();
+                        posbinding.Mode = BindingMode.OneWay;
+                        ap.SetBinding(Canvas.LeftProperty, posbinding);
                     }
                     else
                     {
-                        ap.SetValue(Canvas.LeftProperty, this.Width - 8);
+                        Binding posbinding = new Binding();
+                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        posbinding.Path = new PropertyPath("V_width");
+                        posbinding.Converter = new TotalConverter();
+                        posbinding.Mode = BindingMode.OneWay;
+                        ap.SetBinding(Canvas.LeftProperty, posbinding);
                     }
 
                     Binding binding = new Binding();
