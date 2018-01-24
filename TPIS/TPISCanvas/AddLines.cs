@@ -19,7 +19,6 @@ namespace TPIS.TPISCanvas
         public bool IsStraight { get; set; } //是否直线
         Point p1, p2;
         public Polyline pline;
-        public TPISLine line;
         public long count=0;
         public MainWindow mainwin;
 
@@ -72,7 +71,7 @@ namespace TPIS.TPISCanvas
 
         private void SubstitutionLine()
         {
-            line = new TPISLine();
+            TPISLine line = new TPISLine();
             line.LNum = count;
             line.isSelected = false;
             foreach (Point p in pline.Points)
@@ -80,7 +79,7 @@ namespace TPIS.TPISCanvas
             //line.Points = pline.Points;
             pline.Points.Clear();
             mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(line);
-            InitLineAnchorPoints(line.LNum);//初始化锚点
+            InitLineAnchorPoints(line.LNum, line);//初始化锚点
         }
 
         //private void InitalLine(MouseButtonEventArgs e)

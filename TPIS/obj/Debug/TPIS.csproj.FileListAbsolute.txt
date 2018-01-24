@@ -103,7 +103,6 @@ C:\Users\xjtu_lw\Source\Repos\TPIS11\TPIS\obj\Debug\Views\Modules\TPISCanvas.g.c
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\bin\Debug\TPIS.exe.config
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\bin\Debug\TPIS.exe
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\bin\Debug\TPIS.pdb
-C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\Views\Modules\TPISToolBar.baml

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -35,12 +37,15 @@ namespace TPIS.TPISCanvas
         }
     }
 
-    public class LineAnchorPoint : UserControl
+    public partial class LineAnchorPoint : UserControl
     {
         long lineID;
-        public LineAnchorPoint(long lID)
+        int LineAnchorPointID;
+        bool IsDrag { get; set; }
+        public LineAnchorPoint(long lID, int apID)
         {
             lineID = lID;
+            LineAnchorPointID = apID;
             Rectangle rect = new Rectangle()
             {
                 Width = 8,
@@ -53,6 +58,9 @@ namespace TPIS.TPISCanvas
             this.Height = 8;
             this.Content = rect;
             base.MouseEnter += new MouseEventHandler(Element_MouseEnter);
+            base.MouseLeftButtonDown += new MouseButtonEventHandler(Anchor_MouseLeftDown);
+            base.MouseMove += new MouseEventHandler(Anchor_MouseMove);
+            base.MouseUp += new MouseButtonEventHandler(Anchor_MouseUp);
         }
 
         void Element_MouseEnter(object sender, MouseEventArgs e)
@@ -60,24 +68,64 @@ namespace TPIS.TPISCanvas
             this.Cursor = Cursors.SizeAll;
             Mouse.OverrideCursor = null;
         }
+
+        void Anchor_MouseLeftDown(object sender, MouseButtonEventArgs e)
+        {
+            IsDrag = true;
+            this.CaptureMouse();
+            e.Handled =true;
+        }
+
+        void Anchor_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (!this.IsMouseCaptured)
+                    this.CaptureMouse();
+                if (!IsDrag)
+                    return;
+                Point endPoint = e.GetPosition((ProjectDesignerCanvas)this.Parent);
+                if (this.IsMouseCaptured) this.ReleaseMouseCapture();
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                foreach (TPISLine line in mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects)
+                {
+                    if (this.lineID == line.LNum)//确定线
+                    {
+                        line.PointTo(0, endPoint);
+                    }
+                }
+            }
+            else
+            {
+                if (this.IsMouseCaptured) this.ReleaseMouseCapture();
+            }
+
+            e.Handled = true;
+        }
+
+        void Anchor_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.IsMouseCaptured) this.ReleaseMouseCapture();
+            IsDrag = false;
+            e.Handled = true;
+        }
     }
 
     partial class ProjectDesignerCanvas : Canvas
     {
         public List<LineAnchorPoint> laps;
-        public void InitLineAnchorPoints(long lID)
+        public void InitLineAnchorPoints(long lID, TPISLine line)
         {
             laps = new List<LineAnchorPoint>();
             for (int i = 0; i < line.Points.Count - 2; i++)
             {
-                laps.Add(new LineAnchorPoint(lID));
+                laps.Add(new LineAnchorPoint(lID,i));
                 this.Children.Add(laps[i]);
-                
             }
-            RePosLineAnchorPoints();
+            RePosLineAnchorPoints(line);
         }
 
-        public void RePosLineAnchorPoints()
+        public void RePosLineAnchorPoints(TPISLine line)
         {//重置锚点
             int i = 0;
             foreach (LineAnchorPoint lap in laps)

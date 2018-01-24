@@ -1,15 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Project;
 
 namespace TPIS.Model
 {
+    /// <summary>
+    /// polyline更改
+    /// </summary>
+    public class LinePosConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return DependencyProperty.UnsetValue;
+            else
+            {
+                PointCollection pc = new PointCollection();
+                ObservableCollection<Point> points = value as ObservableCollection<Point>;
+                foreach (Point p in points)
+                {
+                    pc.Add(p);
+                }
+                return pc;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
     public struct Node
     {
         public int x;
@@ -39,8 +71,11 @@ namespace TPIS.Model
                 OnPropertyChanged("LNum");
             }
         }
-        public PointCollection points;
-        public PointCollection Points{
+
+        public ObservableCollection<Point> points { get; set; }
+        
+        public ObservableCollection<Point> Points
+        {
             get
             {
                 return points;
@@ -51,9 +86,15 @@ namespace TPIS.Model
             }
         }
 
+        public void PointTo(int pn, Point p)
+        {
+            Points[pn] = p;
+            OnPropertyChanged("Points");
+        }
+
         public TPISLine()
         {
-            points = new PointCollection();
+            points = new ObservableCollection<Point>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

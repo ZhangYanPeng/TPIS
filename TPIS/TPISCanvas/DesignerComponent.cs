@@ -76,7 +76,7 @@ namespace TPIS.TPISCanvas
                         ((TPISComponent)currEle.DataContext).SizeChange(null, -(int)y);
                         ((TPISComponent)currEle.DataContext).PosChange(null, (int)y);
                     }
-                    RePosAnchorPoints();
+                    BindingAnchorPoints();
                 }
             }
         }
