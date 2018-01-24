@@ -65,5 +65,7 @@
         <Button Name="tsbHorReverse" ToolTip="水平翻转" Click="TPISHorReversed">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeHorizentalReversed.png" Stretch="None" />
         </Button>
+        <Separator />
+        <TextBox ></TextBox>
     </ToolBar>
 </ResourceDictionary>

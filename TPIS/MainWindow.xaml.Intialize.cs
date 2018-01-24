@@ -5,41 +5,50 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TPIS.Model;
-using TPISNet;
+using TPIS.Model.Common;
 
 namespace TPIS
 {
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 加载所有元件类型
+        /// </summary>
         private void loadComponentType()
         {
-
-            BaseType bt = new BaseType();
-            bt.Name = "元件簇";
-
+            TypeList = new List<BaseType>();
             int id = 0;
             foreach (EleType eleType in Enum.GetValues(typeof(EleType)))
             {
-                Element e = CommonFunction.NewOriginElement(eleType, 0);
                 id++;
-                if (e == null)
+                string[] info = CommonTypeService.GetComponentType(eleType);//元件簇名，图片路径，元件名
+                if (info == null)
                     continue;
-                Console.WriteLine(e.PNGstr[0]);
-                ComponentType ct = new ComponentType { Id = id, PicPath = e.PNGstr[0], Name = e.DProperty["Name"].data_string };
-                
-                bt.ComponentTypeList.Add(ct);
+
+                ComponentType ct = new ComponentType { Id = id, PicPath = info[1], Name = info[2], Type = eleType, IsChecked = false };
+
+                bool check = true;
+                foreach (BaseType bt in TypeList)
+                {
+                    if (!check)
+                        break;
+                    if (bt.Name == info[0])
+                    {
+                        check = false;
+                        bt.ComponentTypeList.Add(ct);
+                        break;
+                    }
+                }
+                if (check)
+                {
+                    BaseType bt = new BaseType();
+                    bt.Name = info[0];
+                    bt.ComponentTypeList.Add(ct);
+                    TypeList.Add(bt);
+                }
             }
-            
-
-            TypeList = new List<BaseType>();
-            TypeList.Add(bt);
-
             this.ElementList.ItemsSource = TypeList;
             this.ElementList.Items.Refresh();
         }
-        
     }
-
-    
-
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using TPIS.Model;
 
 namespace TPIS.Views.Modules
@@ -41,6 +42,12 @@ namespace TPIS.Views.Modules
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].RotateSelection(1);
+        }
+
+        private void Rate_Selected(object sender, RoutedEventArgs e)
+        {
+            ComboBox cBox = sender as ComboBox;
+            cBox.SelectedIndex;
         }
     }
 }

@@ -16,10 +16,5 @@ namespace TPIS.Model
         {
             Properties = new ObservableCollection<Property>();
         }
-
-        public void Add(Property property)
-        {
-            Properties.Add(property);
-        }
     }
 }

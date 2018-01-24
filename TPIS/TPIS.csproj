@@ -85,9 +85,11 @@
     <Compile Include="Command\TPISCommand.cs" />
     <Compile Include="Model\BaseType.cs" />
     <Compile Include="Model\Common\EleType.cs" />
+    <Compile Include="Model\Common\InitComponentPort.cs" />
+    <Compile Include="Model\Common\InitComponentResult.cs" />
+    <Compile Include="Model\Common\InitComponentProperty.cs" />
+    <Compile Include="Model\Common\PortParam.cs" />
     <Compile Include="Model\Common\Unit.cs" />
-    <Compile Include="Model\ComponentDetail\CommonComponentService.cs" />
-    <Compile Include="Model\ComponentDetail\Turbin.cs" />
     <Compile Include="Model\ComponentType.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\Position.cs" />

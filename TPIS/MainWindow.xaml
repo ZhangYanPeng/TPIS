@@ -103,28 +103,40 @@
             <DockPanel>
                 <!--元件模块-->
                 <Border BorderThickness="1" BorderBrush="Gray">
-                    <ListBox>
-                        <ListBoxItem>
+                    <ListBox Name="PropertyWindow">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <ListBox ItemsSource="{Binding DPropetyGroups}">
-                                    <ListBoxItem>
-                                        <DataTemplate>
-                                            <GroupBox Header="{Binding Key}">
-                                                <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Value.DProperty}">
-                                                    <ListView.View>
-                                                        <GridView>
-                                                            <GridViewColumn Header="属性" Width="100"></GridViewColumn>
-                                                            <GridViewColumn Header="值" Width="100"></GridViewColumn>
-                                                            <GridViewColumn Header="单位" Width="40"></GridViewColumn>
-                                                        </GridView>
-                                                    </ListView.View>
-                                                </ListView>
-                                            </GroupBox>
-                                        </DataTemplate>
-                                    </ListBoxItem>
-                                </ListBox>
+                                <GroupBox Header="{Binding Flag}">
+                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                <GridViewColumn Header="值" Width="112" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Value}" Width="100"></TextBox>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn Header="单位" Width="70" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding }"></TextBlock>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </GroupBox>
                             </DataTemplate>
-                        </ListBoxItem>
+                        </ItemsControl.ItemTemplate>
                     </ListBox>
                 </Border>
             </DockPanel>
