@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using static System.Math;
 using Forms = System.Windows.Forms;
 using TPIS.Model;
+using static TPIS.Model.TPISLine;
 
 namespace TPIS.TPISCanvas
 {
@@ -73,6 +74,10 @@ namespace TPIS.TPISCanvas
         {
             TPISLine line = new TPISLine();
             line.LNum = count;
+            if (IsStraight)
+                line.LType = LineType.Straight;
+            else
+                line.LType = LineType.Slash;
             line.isSelected = false;
             foreach (Point p in pline.Points)
                 line.Points.Add(p);

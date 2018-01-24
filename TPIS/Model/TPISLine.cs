@@ -51,6 +51,19 @@ namespace TPIS.Model
     {
         public bool IsCompleted { get; set; }
 
+        public enum LineType
+        {
+            Straight,
+            Slash
+        }
+        public LineType lType;
+        public LineType LType
+        {
+            get => lType;
+            set {
+                lType = value;
+            }
+        }
         public bool IsSelected
         {
             get => isSelected;

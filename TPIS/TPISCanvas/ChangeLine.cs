@@ -22,16 +22,13 @@ namespace TPIS.TPISCanvas
         public void LineSelect(object sender, MouseButtonEventArgs e)
         {
             Polyline polyLine = sender as Polyline;
-            TPISLine line = new TPISLine();
-            line = (TPISLine)polyLine.DataContext;
-            //line.PointTo(0, new Point(1000, 1000));
+            //TPISLine line = new TPISLine();
+            //line = (TPISLine)polyLine.DataContext;
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select((ObjectBase)polyLine.DataContext);
             e.Handled = true;
         }
     }
-
-    
 
     public partial class LineAnchorPoint
     {

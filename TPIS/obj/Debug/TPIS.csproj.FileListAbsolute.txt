@@ -125,3 +125,4 @@ C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\TPIS.csproj.GenerateResource
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\TPIS.exe
 C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\TPIS.pdb
+C:\Users\xjtu_lw\Source\Repos\TPIS12\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
