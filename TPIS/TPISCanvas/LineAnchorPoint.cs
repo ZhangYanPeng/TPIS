@@ -121,7 +121,7 @@ namespace TPIS.TPISCanvas
                             {
                                 Point tmp = new Point();
                                 tmp = line.Points[1];
-                                if (line.Points[0].Y == line.Points[1].Y)//前两点在水平线上
+                                if (line.Points[0].Y == line.Points[1].Y && line.Points[2].Y != line.Points[1].Y)//前两点在水平线上,防止三点共线时的Bug
                                 {
                                     tmp.X = endPoint.X;
                                     line.PointTo(1, tmp);
@@ -140,7 +140,8 @@ namespace TPIS.TPISCanvas
                             {
                                 Point tmp = new Point();
                                 tmp = line.Points[line.Points.Count - 2];
-                                if (line.Points[line.Points.Count-2].Y == line.Points[line.Points.Count - 1].Y)//后两点在水平线上
+                                if (line.Points[line.Points.Count - 2].Y == line.Points[line.Points.Count - 1].Y &&
+                                    line.Points[line.Points.Count - 2].Y != line.Points[line.Points.Count - 3].Y)//后两点在水平线上,防止三点共线时的Bug
                                 {
                                     tmp.X = endPoint.X;
                                     line.PointTo(line.Points.Count - 2, tmp);
@@ -157,7 +158,8 @@ namespace TPIS.TPISCanvas
                             }
                             else
                             {
-                                if (line.Points[this.LineAnchorPointID].X == line.Points[this.LineAnchorPointID + 1].X)
+                                if (line.Points[this.LineAnchorPointID].X == line.Points[this.LineAnchorPointID + 1].X &&
+                                    line.Points[this.LineAnchorPointID + 1].X != line.Points[this.LineAnchorPointID + 2].X)//前两点在垂直线上线，后两点不在同一条垂直线上
                                 {
                                     Point tmp = new Point();
                                     tmp = line.Points[this.LineAnchorPointID];
@@ -168,8 +170,8 @@ namespace TPIS.TPISCanvas
                                     tmp.Y = endPoint.Y;
                                     line.PointTo(this.LineAnchorPointID + 2, tmp);
                                 }
-                                else
-                                {
+                                else if(line.Points[this.LineAnchorPointID + 1].Y != line.Points[this.LineAnchorPointID + 2].Y)
+                                {//前两点在水平线上线，或后两点在同一条垂直线上
                                     Point tmp = new Point();
                                     tmp = line.Points[this.LineAnchorPointID];
                                     tmp.Y = endPoint.Y;
@@ -248,36 +250,6 @@ namespace TPIS.TPISCanvas
                     lap.SetBinding(AnchorPoint.VisibilityProperty, binding);
                 }
             }
-            //foreach (UIElement uil in this.Children)
-            //{
-            //    if (uil is LineAnchorPoint)
-            //    {
-            //        for (int i = 0; i < line.Points.Count - 2; i++)
-            //        {
-            //            laps[i] = (LineAnchorPoint)uil;//Count-2个
-            //            {
-            //                //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].Y);
-            //                Binding binding = new Binding();
-            //                binding.Source = line.Points[i + 1];
-            //                binding.Path = new PropertyPath("Y");
-            //                binding.Converter = new AnchorPosConverter();
-            //                binding.Mode = BindingMode.OneWay;
-            //                laps[i].SetBinding(Canvas.TopProperty, binding);
-            //            }
-            //            {
-            //                //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].X);
-            //                Binding binding = new Binding();
-            //                binding.Source = line.Points[i + 1];
-            //                binding.Path = new PropertyPath("X");
-            //                binding.Converter = new AnchorPosConverter();
-            //                binding.Mode = BindingMode.OneWay;
-            //                laps[i].SetBinding(Canvas.LeftProperty, binding);
-            //            }
-            //            Console.WriteLine(i);
-            //        }
-
-            //    }
-            //}
         }
     }
 }
