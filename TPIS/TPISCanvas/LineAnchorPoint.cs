@@ -111,51 +111,47 @@ namespace TPIS.TPISCanvas
                 {
                     if (this.lineID == line.LNum)//确定线
                     {
+                        if (line.Points.Count == 3)//单个锚点
+                        {
+                            return; ;
+                        }
                         if (line.LType == TPISLine.LineType.Straight)
                         {
-                            if (LineAnchorPointID == 0)//前端点
+                            if (this.LineAnchorPointID == 0)//前端点
                             {
-                                if (line.Points[0].Y == line.Points[1].Y)
+                                Point tmp = new Point();
+                                tmp = line.Points[1];
+                                if (line.Points[0].Y == line.Points[1].Y)//前两点在水平线上
                                 {
-                                    Point tmp = new Point();
-                                    tmp = line.Points[1];
                                     tmp.X = endPoint.X;
                                     line.PointTo(1, tmp);
-                                    tmp = line.Points[2];
-                                    tmp.X = endPoint.X;
+                                    tmp.Y = line.Points[2].Y;
                                     line.PointTo(2, tmp);
                                 }
-                                else
+                                else//前两点在垂直线上
                                 {
-                                    Point tmp = new Point();
-                                    tmp = line.Points[1];
                                     tmp.Y = endPoint.Y;
                                     line.PointTo(1, tmp);
-                                    tmp = line.Points[2];
-                                    tmp.Y = endPoint.Y;
+                                    tmp.X = line.Points[2].X;
                                     line.PointTo(2, tmp);
                                 }
                             }
                             else if (LineAnchorPointID + 3 == line.Points.Count)//后端点
                             {
-                                if (line.Points[line.Points.Count-2].Y == line.Points[line.Points.Count - 1].Y)
+                                Point tmp = new Point();
+                                tmp = line.Points[line.Points.Count - 2];
+                                if (line.Points[line.Points.Count-2].Y == line.Points[line.Points.Count - 1].Y)//后两点在水平线上
                                 {
-                                    Point tmp = new Point();
-                                    tmp = line.Points[line.Points.Count - 2];
                                     tmp.X = endPoint.X;
                                     line.PointTo(line.Points.Count - 2, tmp);
-                                    tmp = line.Points[line.Points.Count - 3];
-                                    tmp.X = endPoint.X;
+                                    tmp.Y = line.Points[line.Points.Count - 3].Y;
                                     line.PointTo(line.Points.Count - 3, tmp);
                                 }
-                                else
+                                else//后两点在垂直线上
                                 {
-                                    Point tmp = new Point();
-                                    tmp = line.Points[line.Points.Count - 2];
                                     tmp.Y = endPoint.Y;
                                     line.PointTo(line.Points.Count - 2, tmp);
-                                    tmp = line.Points[line.Points.Count - 3];
-                                    tmp.Y = endPoint.Y;
+                                    tmp.X = line.Points[line.Points.Count - 3].X;
                                     line.PointTo(line.Points.Count - 3, tmp);
                                 }
                             }
