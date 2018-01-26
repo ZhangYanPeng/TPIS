@@ -12,3 +12,8 @@ TPIS/obj/Debug/TPIS.exe
 .vs/TPIS/v15/Server/sqlite3/storage.ide
 .vs/TPIS/v15/Server/sqlite3/storage.ide-shm
 TPIS/obj/Debug/TPIS.csproj.FileListAbsolute.txt
+TPIS/obj/Debug/TPIS_MarkupCompile.cache
+TPIS/obj/Debug/TPIS_MarkupCompile.i.lref
+TPIS/obj/Debug/TPIS_MarkupCompile.lref
+TPIS/obj/Debug/Views/Modules/TPISCanvas.g.i.cs
+*.cache
