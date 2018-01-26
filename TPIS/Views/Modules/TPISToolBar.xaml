@@ -66,6 +66,12 @@
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeHorizentalReversed.png" Stretch="None" />
         </Button>
         <Separator />
-        <TextBox ></TextBox>
+        <Button Name="tsbSupRate" ToolTip="缩小" Click="SubRate">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeShrink.png" Stretch="None" />
+        </Button>
+        <TextBox IsReadOnly="True" Width="60" Name="CurRate"></TextBox>
+        <Button Name="tsbSubRate" ToolTip="放大" Click="SupRate">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeEnlarge.png" Stretch="None" />
+        </Button>
     </ToolBar>
 </ResourceDictionary>

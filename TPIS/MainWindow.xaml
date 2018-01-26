@@ -22,7 +22,7 @@
     </Window.Resources>
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
-        <ContentControl DockPanel.Dock="Top" Content="{StaticResource TPISToolBar}"/>
+        <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISToolBar}"/>
         <ContentControl DockPanel.Dock="Left">
             <DockPanel >
                 <!--输入输出模块-->
@@ -114,7 +114,7 @@
                                                 <GridViewColumn Header="值" Width="112" >
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <TextBox Text="{Binding Value}" Width="100"></TextBox>
+                                                            <TextBox Text="{Binding ShowValue}" Width="100"></TextBox>
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>

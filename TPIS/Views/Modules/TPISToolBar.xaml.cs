@@ -11,6 +11,8 @@ namespace TPIS.Views.Modules
 {
     partial class TPISToolBar : ResourceDictionary
     {
+        //形变操作
+        #region
         /// <summary>
         /// 垂直翻转
         /// </summary>
@@ -18,8 +20,15 @@ namespace TPIS.Views.Modules
         /// <param name="e"></param>
         private void TPISVerReversed(object sender, RoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].VerticalReversedSelection();
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].VerticalReversedSelection();
+            }
+            catch (Exception exp)
+            {
+                return;
+            }
         }
 
         /// <summary>
@@ -29,8 +38,16 @@ namespace TPIS.Views.Modules
         /// <param name="e"></param>
         private void TPISHorReversed(object sender, RoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].HorizentalReversedSelection();
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].HorizentalReversedSelection();
+            }
+            catch (Exception exp)
+            {
+                return;
+            }
+
         }
 
         /// <summary>
@@ -40,14 +57,55 @@ namespace TPIS.Views.Modules
         /// <param name="e"></param>
         private void TPISRotate(object sender, RoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].RotateSelection(1);
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].RotateSelection(1);
+            }
+            catch (Exception exp)
+            {
+                return;
+            }
+        }
+        #endregion
+
+        //缩放操作
+        #region
+        /// <summary>
+        /// 放大
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SupRate(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].SupRate();
+            }
+            catch (Exception exp)
+            {
+                return;
+            }
         }
 
-        private void Rate_Selected(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 缩小
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SubRate(object sender, RoutedEventArgs e)
         {
-            ComboBox cBox = sender as ComboBox;
-            cBox.SelectedIndex;
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].SubRate();
+            }
+            catch (Exception exp)
+            {
+                return;
+            }
         }
+        #endregion
     }
 }

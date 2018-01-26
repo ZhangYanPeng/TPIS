@@ -420,5 +420,9 @@
     <Resource Include="PNG\WaterTag.png" />
     <Resource Include="PNG\WaterValve.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeEnlarge.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeShrink.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

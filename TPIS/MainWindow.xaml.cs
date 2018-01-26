@@ -24,7 +24,7 @@ namespace TPIS
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<BaseType> TypeList { get; set;  } //所有元件列表
+        public List<BaseType> TypeList { get; set; } //所有元件列表
         public ProjectSpace ProjectList { get; set; } //工程列表
         public int CurrentPojectIndex { get; set; } //当前激活工程
 
@@ -51,7 +51,7 @@ namespace TPIS
             Height = SystemParameters.WorkArea.Height;
         }
 
-        public void AddProject( string pName, int width, int height)
+        public void AddProject(string pName, int width, int height)
         {
             ProjectCanvas pCanvas = new ProjectCanvas(width, height);
             ProjectItem project = new ProjectItem(pName, pCanvas, ProjectNum);
@@ -64,18 +64,21 @@ namespace TPIS
 
             ProjectNum++;
         }
-        
+
 
         /// <summary>
         /// 获取当前工程
         /// </summary>
         private void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int index= projectTab.SelectedIndex;//当前工程索引
+            int index = projectTab.SelectedIndex;//当前工程索引
             if (projectTab.Items.Count == 0)
                 CurrentPojectIndex = 0;
             else
+            {
                 CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
+                UpdateRate();
+            }
         }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace TPIS
             string name = closeButton.Tag.ToString();
             foreach (ProjectItem item in projectTab.Items)
             {
-                if (item.Num== CurrentPojectIndex)
+                if (item.Num == CurrentPojectIndex)
                 {
                     MessageBox.Show(name);//所点击关闭按钮对应工程为item
                     ProjectList.projects.Remove(item);
@@ -103,14 +106,15 @@ namespace TPIS
                 //    projectTab.Items.Refresh();
                 //    break;
                 //}
-            }  
+            }
         }
-        
+
     }
 
     /// <summary>
     /// 模板选择器
     /// </summary>
+    #region
     public class SelectionOrComponentSelector : DataTemplateSelector
     {
         private DataTemplate _componentTemplate = null;
@@ -141,7 +145,7 @@ namespace TPIS
             {
                 return _componentTemplate;
             }
-            if(item is Model.TPISLine)
+            if (item is Model.TPISLine)
             {
                 return _lineTemplate;
             }
@@ -151,6 +155,7 @@ namespace TPIS
             }
         }
     }
+    #endregion
 }
 
 
