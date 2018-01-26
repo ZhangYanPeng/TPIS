@@ -158,26 +158,45 @@ namespace TPIS.TPISCanvas
                             }
                             else
                             {
-                                if (line.Points[this.LineAnchorPointID].X == line.Points[this.LineAnchorPointID + 1].X &&
-                                    line.Points[this.LineAnchorPointID + 1].X != line.Points[this.LineAnchorPointID + 2].X)//前两点在垂直线上线，后两点不在同一条垂直线上
+                                Point p1, p2, p3;
+                                p1 = line.Points[this.LineAnchorPointID];
+                                p2 = line.Points[this.LineAnchorPointID + 1];
+                                p3 = line.Points[this.LineAnchorPointID + 2];
+                                Point tmp = new Point();
+                                tmp = p1;
+                                if ((p1.X == p2.X && p2.X != p3.X))//前两点在垂直线上线，后两点不在同一条垂直线上
                                 {
-                                    Point tmp = new Point();
-                                    tmp = line.Points[this.LineAnchorPointID];
                                     tmp.X = endPoint.X;
                                     line.PointTo(this.LineAnchorPointID, tmp);
                                     line.PointTo(this.LineAnchorPointID + 1, endPoint);
-                                    tmp = line.Points[this.LineAnchorPointID + 2];
+                                    tmp = p3;
                                     tmp.Y = endPoint.Y;
                                     line.PointTo(this.LineAnchorPointID + 2, tmp);
                                 }
-                                else if(line.Points[this.LineAnchorPointID + 1].Y != line.Points[this.LineAnchorPointID + 2].Y)
-                                {//前两点在水平线上线，或后两点在同一条垂直线上
-                                    Point tmp = new Point();
-                                    tmp = line.Points[this.LineAnchorPointID];
+                                else if ((p1.Y == p2.Y && p2.Y != p3.Y))//前两点在水平线上线，或后两点在同一条垂直线上
+                                {
                                     tmp.Y = endPoint.Y;
                                     line.PointTo(this.LineAnchorPointID, tmp);
                                     line.PointTo(this.LineAnchorPointID + 1, endPoint);
-                                    tmp = line.Points[this.LineAnchorPointID + 2];
+                                    tmp = p3;
+                                    tmp.X = endPoint.X;
+                                    line.PointTo(this.LineAnchorPointID + 2, tmp);
+                                }
+                                else if (p1.X == p2.X && p2.X == p3.X)//三点共垂直线
+                                {
+                                    tmp.X = endPoint.X;
+                                    line.PointTo(this.LineAnchorPointID, tmp);
+                                    line.PointTo(this.LineAnchorPointID + 1, endPoint);
+                                    tmp = p3;
+                                    tmp.Y = endPoint.Y;
+                                    line.PointTo(this.LineAnchorPointID + 2, tmp);
+                                }
+                                else if (p1.Y == p2.Y && p2.Y == p3.Y)//三点共水平线
+                                {
+                                    tmp.Y = endPoint.Y;
+                                    line.PointTo(this.LineAnchorPointID, tmp);
+                                    line.PointTo(this.LineAnchorPointID + 1, endPoint);
+                                    tmp = p3;
                                     tmp.X = endPoint.X;
                                     line.PointTo(this.LineAnchorPointID + 2, tmp);
                                 }
