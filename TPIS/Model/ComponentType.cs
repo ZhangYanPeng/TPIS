@@ -4,19 +4,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPIS.Model.Common;
 
 namespace TPIS.Model
 {
-    public struct port
+    public class ComponentType : INotifyPropertyChanged
     {
-        double x, y;
-    }
-
-    public class ComponentType : System.ComponentModel.INotifyPropertyChanged
-    {
-        public int Id { get; set;  }
+        public int Id { get; set; }
         public String PicPath { get; set; }
         public String Name { get; set; }
+        public EleType Type {get; set;}
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

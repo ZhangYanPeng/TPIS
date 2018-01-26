@@ -50,10 +50,10 @@ namespace TPIS.Model
             this.Position.IsHorizentalReversed = 1;
             this.Position.Angle = 0;
             this.Pic = ct.PicPath;
-
-            Ports = new ObservableCollection<Port>();
-
-            PropertyGroups = new ObservableCollection<PropertyGroup>();
+            this.eleType = ct.Type;
+            Ports = CommonTypeService.InitComponentPort(eleType);
+            PropertyGroups = CommonTypeService.InitComponentProperty(eleType);
+            ResultGroups = CommonTypeService.InitComponentResult(eleType);
 
             RePosPort();
             if (this.PropertyChanged != null)
@@ -62,6 +62,9 @@ namespace TPIS.Model
             }
         }
 
+
+        //形变操作
+        #region
         /// <summary>
         /// 水平和垂直翻转\旋转
         /// </summary>
@@ -73,6 +76,7 @@ namespace TPIS.Model
                 Position.IsVerticalReversed = 1;
             RePosPort();
         }
+
         internal void HorizentalReverse()
         {
             if (Position.IsHorizentalReversed == 1)
@@ -81,6 +85,7 @@ namespace TPIS.Model
                 Position.IsHorizentalReversed = 1;
             RePosPort();
         }
+
         internal void Rotate(int v)
         {
             int tmp = Position.Angle + v * 90;
@@ -170,23 +175,11 @@ namespace TPIS.Model
                 p.P_y = ty - 5;
             }
         }
+        #endregion
 
         public ObservableCollection<PropertyGroup> PropertyGroups { get; set; }
+        public ObservableCollection<PropertyGroup> ResultGroups { get; set; }
         public EleType eleType { get; set; }
-
-        public void AddPropetry(Property property, string flag)
-        {
-            foreach(PropertyGroup pg in PropertyGroups)
-            {
-                if(pg.Flag == flag)
-                {
-                    pg.Add(property);
-                    return;
-                }
-            }
-            PropertyGroup new_pg = new PropertyGroup() { Flag = flag };
-            new_pg.Add(property);
-            PropertyGroups.Add(new_pg);
-        }
+        
     }
 }

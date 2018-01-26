@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using TPIS.Model.Common;
 
 namespace TPIS.Model
 {
@@ -32,9 +34,68 @@ namespace TPIS.Model
                 OnPropertyChanged("P_y");
             }
         }//纵坐标比例（0~1)
-        public bool type; // true : in  false: out
+
         public Node node;
         public TPISLine link;
+
+        public string DicName { get; set; }
+        public string Name { get; set; }
+        public Material MaterialType { get; set; }
+        public NodType type;
+        public NodType Type {
+            get => type;
+            set
+            {
+                type = value;
+                switch (type)
+                {
+                    case NodType.Inlet:
+                    case NodType.DefIn: PortColor = Brushes.Green; break;
+                    case NodType.Outlet:
+                    case NodType.DefOut: PortColor = Brushes.Red; break;
+                    case NodType.Undef: PortColor = Brushes.Gray; break;
+                }
+                OnPropertyChanged("PortColor");
+            }
+        }
+        public Brush portColor;
+        public Brush PortColor
+        {
+            get => portColor;
+            set
+            {
+                portColor = value;
+                OnPropertyChanged("PortColor");
+            }
+        }
+        public bool CanNotLink { get; set; }
+        public bool CanCancel { get; set; }
+
+        //构造函数
+        #region
+        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool cannotlink, bool cancancel)
+        {
+            DicName = dicName;
+            Name = name;
+            x = xpos;
+            y = ypos;
+            MaterialType = material;
+            Type = nodType;
+            CanNotLink = cannotlink;
+            CanCancel = cancancel;
+        }
+        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool cannotlink)
+        {
+            DicName = dicName;
+            Name = name;
+            x = xpos;
+            y = ypos;
+            MaterialType = material;
+            Type = nodType;
+            CanNotLink = cannotlink;
+            CanCancel = cannotlink;
+        }
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 
