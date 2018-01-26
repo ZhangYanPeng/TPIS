@@ -142,6 +142,7 @@
     <Compile Include="Model\TPISLine.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
+    <Compile Include="TPISCanvas\SelectPort.cs" />
     <Compile Include="TPISCanvas\SelectService.cs" />
     <Compile Include="TPISCommand\TPISCompentView.cs" />
     <Compile Include="Views\Modules\TPISToolBar.xaml.cs">

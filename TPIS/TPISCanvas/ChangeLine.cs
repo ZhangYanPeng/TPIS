@@ -28,10 +28,24 @@ namespace TPIS.TPISCanvas
             mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select((ObjectBase)polyLine.DataContext);
             e.Handled = true;
         }
-    }
 
-    public partial class LineAnchorPoint
-    {
+        public void Port_MouseEnter(object sender, MouseEventArgs e)
+        {//Port感应
+            FrameworkElement frameworkElement = new FrameworkElement();
+            frameworkElement = (FrameworkElement)sender;
+            frameworkElement.Cursor = Cursors.Hand;
+            Mouse.OverrideCursor = null;
+        }
 
+        public void Port_MouseLeftButtonDown(object sender, MouseEventArgs e)
+        {//Port选择
+            //(sender).CanLink = true;
+            Ellipse uIElement = new Ellipse();
+            uIElement = (Ellipse)sender;
+            if (uIElement.Fill== Brushes.Green)
+            {
+                Console.WriteLine("dfa");
+            }
+        }
     }
 }

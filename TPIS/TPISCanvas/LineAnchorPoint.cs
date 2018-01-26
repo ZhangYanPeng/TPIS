@@ -80,8 +80,8 @@ namespace TPIS.TPISCanvas
 
         void Element_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Cursor = Cursors.SizeAll;
-            Mouse.OverrideCursor = null;
+                this.Cursor = Cursors.SizeAll;
+                Mouse.OverrideCursor = null;
         }
 
         public void Element_MouseLeave(object sender, MouseEventArgs e)

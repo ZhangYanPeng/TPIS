@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using TPIS.Model.Common;
 
@@ -68,12 +70,12 @@ namespace TPIS.Model
                 OnPropertyChanged("PortColor");
             }
         }
-        public bool CanNotLink { get; set; }
+        public bool CanLink { get; set; }//受否可以连接
         public bool CanCancel { get; set; }
 
         //构造函数
         #region
-        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool cannotlink, bool cancancel)
+        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool canlink, bool cancancel)
         {
             DicName = dicName;
             Name = name;
@@ -81,10 +83,10 @@ namespace TPIS.Model
             y = ypos;
             MaterialType = material;
             Type = nodType;
-            CanNotLink = cannotlink;
+            CanLink = canlink;
             CanCancel = cancancel;
         }
-        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool cannotlink)
+        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool canlink)
         {
             DicName = dicName;
             Name = name;
@@ -92,8 +94,8 @@ namespace TPIS.Model
             y = ypos;
             MaterialType = material;
             Type = nodType;
-            CanNotLink = cannotlink;
-            CanCancel = cannotlink;
+            CanLink = canlink;
+            CanCancel = canlink;
         }
         #endregion
 

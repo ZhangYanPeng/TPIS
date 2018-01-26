@@ -44,7 +44,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Ellipse Width="10" Height="10" Fill="{Binding PortColor}">
+                    <Ellipse Width="10" Height="10" Fill="{Binding PortColor}" MouseEnter="Port_MouseEnter" MouseLeftButtonDown="Port_MouseLeftButtonDown">
                     </Ellipse>
                 </DataTemplate>
             </Setter.Value>
