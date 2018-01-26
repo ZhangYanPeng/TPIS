@@ -95,6 +95,8 @@
     <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Property.cs" />
     <Compile Include="Model\PropertyGroup.cs" />
+    <Compile Include="TPISCanvas\ChangeLine.cs" />
+    <Compile Include="TPISCanvas\LineAnchorPoint.cs" />
     <Compile Include="TPISCanvas\SelectAdorner.cs" />
     <Compile Include="TPISCanvas\AddComponentAdorner.cs" />
     <Compile Include="TPISCanvas\AddLines.cs" />
@@ -137,7 +139,7 @@
   <ItemGroup>
     <Compile Include="TPISCanvas\Choosen.cs" />
     <Compile Include="Model\TPISComponent.cs" />
-    <Compile Include="Model\Line.cs" />
+    <Compile Include="Model\TPISLine.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />
     <Compile Include="TPISCanvas\ProjectDesignerItem.cs" />
     <Compile Include="TPISCanvas\SelectService.cs" />

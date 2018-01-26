@@ -122,7 +122,7 @@ namespace TPIS.TPISCanvas
 
     partial class DesignerComponent : Canvas
     {
-        public void InitAnchorPoints(object sender,  RoutedEventArgs e)
+        public void InitAnchorPoints(object sender, RoutedEventArgs e)
         {
 
             this.Children.Add(new AnchorPoint(AnchorPointType.UL));

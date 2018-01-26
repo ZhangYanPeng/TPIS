@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Model;
+using TPIS.TPISCanvas;
 
 namespace TPIS.Project
 {
@@ -290,7 +291,14 @@ namespace TPIS.Project
                 else
                 {
                     //是连线，同上
-
+                    if (objectBase == obj)
+                    {
+                        ((TPISLine)obj).IsSelected = true;
+                    }
+                    else
+                    {
+                        ((TPISLine)obj).IsSelected = false;
+                    }
                 }
             }
         }

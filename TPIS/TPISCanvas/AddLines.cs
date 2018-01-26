@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using static System.Math;
 using Forms = System.Windows.Forms;
 using TPIS.Model;
+using static TPIS.Model.TPISLine;
 
 namespace TPIS.TPISCanvas
 {
@@ -20,12 +21,11 @@ namespace TPIS.TPISCanvas
         Point p1, p2;
         public Polyline pline;
         public long count=0;
+        public MainWindow mainwin;
 
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if ( mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
             {
                 if(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"] == 0)
@@ -74,12 +74,17 @@ namespace TPIS.TPISCanvas
         {
             TPISLine line = new TPISLine();
             line.LNum = count;
+            if (IsStraight)
+                line.LType = LineType.Straight;
+            else
+                line.LType = LineType.Slash;
+            line.isSelected = false;
             foreach (Point p in pline.Points)
                 line.Points.Add(p);
             //line.Points = pline.Points;
             pline.Points.Clear();
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(line);
+            InitLineAnchorPoints(line.LNum, line);//初始化锚点
         }
 
         //private void InitalLine(MouseButtonEventArgs e)
