@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("tpisnet.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/activeicon/add.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/activeicon/subtract.png")]
 
 

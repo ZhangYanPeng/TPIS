@@ -27,6 +27,8 @@ namespace TPIS
         {
         }
 
+        //左侧工具栏切换
+        #region
         /// <summary>
         /// 选中添加元件类型
         /// 无当前工程则不设定
@@ -47,8 +49,9 @@ namespace TPIS
                 //取消其他选中
                 foreach (BaseType bt in this.TypeList)
                 {
-                    foreach(ComponentType ct in bt.ComponentTypeList){
-                        if(ct.Id != (int)currEle.Tag)
+                    foreach (ComponentType ct in bt.ComponentTypeList)
+                    {
+                        if (ct.Id != (int)currEle.Tag)
                         {
                             ct.IsChecked = false;
                         }
@@ -60,7 +63,7 @@ namespace TPIS
                 currEle.IsChecked = false;
                 return;
             }
-            
+
         }
 
         /// <summary>
@@ -142,7 +145,7 @@ namespace TPIS
             ToggleButton currEle = sender as ToggleButton;
             try
             {
-                if( this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
+                if (this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
                 {
                     this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.SELECT;
                     this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
@@ -154,7 +157,45 @@ namespace TPIS
                 return;
             }
         }
+        #endregion
 
-        
+        /// <summary>
+        /// binding 工具栏rate显示
+        /// </summary>
+        private void UpdateRate()
+        {
+            Binding binding = new Binding();
+            binding.Source = ProjectList.projects[CurrentPojectIndex];
+            binding.Mode = BindingMode.OneWay;
+            binding.Path = new PropertyPath("Rate");
+            binding.Converter = new RateStrConverter();
+            ToolBar toolBar = Resources["TPISToolBar"] as ToolBar;
+            foreach (object item in toolBar.Items)
+            {
+                if (item is TextBox)
+                {
+                    if (((TextBox)item).Name == "CurRate")
+                    {
+                        ((TextBox)item).SetBinding(TextBox.TextProperty, binding);
+                    }
+                }
+            }
+        }
+
+        public class RateStrConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                if (value == null)
+                    return DependencyProperty.UnsetValue;
+                int val = (int) ((double)value*100.0);
+                return val + "%";
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return null;
+            }
+        }
     }
 }

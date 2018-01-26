@@ -63,6 +63,13 @@ namespace TPIS.Model
         }
 
 
+        //缩放操作
+        internal void SetRate(double rate)
+        {
+            Position.Rate = rate;
+            RePosPort();
+        }
+
         //形变操作
         #region
         /// <summary>

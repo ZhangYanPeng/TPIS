@@ -69,8 +69,6 @@ namespace TPIS.Project
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_width"));
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("V_height"));
                 }
-                //更改所有component 和 link 的rate
-
             }
         }
 

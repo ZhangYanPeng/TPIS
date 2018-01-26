@@ -19,7 +19,7 @@ namespace TPIS.Project
     /// 倍率设置
     /// </summary>
     #region
-    public static class Rate
+    public static class RateService
     {
         public static double GetRate(int i)
         {
@@ -76,10 +76,45 @@ namespace TPIS.Project
     public class ProjectItem : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         public String Name { get; set; }
         public String V_name { get; set; }
         public long Num { get; set; }
+
+        //缩放比率
+        #region
+        public double rate;
+        public double Rate
+        {
+            get => rate;
+            set
+            {
+                rate = value;
+                //画布缩放
+                Canvas.Rate = rate;
+                foreach (ObjectBase obj in Objects)
+                {
+                    
+                    //元件缩放
+                    if (obj is TPISComponent)
+                    {
+                        ((TPISComponent)obj).SetRate(rate);
+                    }
+                    //连线缩放
+
+                }
+                OnPropertyChanged("Rate");
+            }
+        }
+        #endregion
 
         public ObservableCollection<ObjectBase> Objects { get; set; }
 
@@ -91,9 +126,31 @@ namespace TPIS.Project
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
+            this.Rate = 1;
             return;
         }
 
+        //缩放操作
+        #region
+        /// <summary>
+        /// 放大
+        /// </summary>
+        internal void SupRate()
+        {
+            Rate = RateService.GetSupRate(Rate);
+        }
+
+        /// <summary>
+        /// 缩小
+        /// </summary>
+        internal void SubRate()
+        {
+            Rate = RateService.GetSubRate(Rate);
+        }
+        #endregion
+
+        //选中形变操作
+        #region
         /// <summary>
         /// 翻转选中
         /// </summary>
@@ -180,7 +237,10 @@ namespace TPIS.Project
                 }
             }
         }
+        #endregion
 
+        //选择操作
+        #region
         /// <summary>
         /// 选中
         /// </summary>
@@ -252,5 +312,6 @@ namespace TPIS.Project
                 }
             }
         }
+        #endregion
     }
 }
