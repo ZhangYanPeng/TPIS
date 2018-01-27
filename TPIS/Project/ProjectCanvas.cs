@@ -27,6 +27,10 @@ namespace TPIS.Project
         //光标操作
         public OperationType Operation { get; set; } // 类型
         public Dictionary<String,int> OperationParam { get; set; } //参数
+        
+        public bool CanLink { get; set; }
+        public bool CanStopLink { get;set; }
+        public bool LinkStartPoint { get; set; }
 
         public int Height
         {

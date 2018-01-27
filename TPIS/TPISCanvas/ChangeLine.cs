@@ -31,20 +31,59 @@ namespace TPIS.TPISCanvas
 
         public void Port_MouseEnter(object sender, MouseEventArgs e)
         {//Port感应
-            FrameworkElement frameworkElement = new FrameworkElement();
-            frameworkElement = (FrameworkElement)sender;
-            frameworkElement.Cursor = Cursors.Hand;
-            Mouse.OverrideCursor = null;
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
+            {
+                FrameworkElement frameworkElement = new FrameworkElement();
+                frameworkElement = (FrameworkElement)sender;
+                frameworkElement.Cursor = Cursors.Hand;
+                Mouse.OverrideCursor = null;
+            }
         }
 
         public void Port_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {//Port选择
-            //(sender).CanLink = true;
-            Ellipse uIElement = new Ellipse();
-            uIElement = (Ellipse)sender;
-            if (uIElement.Fill== Brushes.Green)
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
             {
-                Console.WriteLine("dfa");
+                Ellipse uIElement = new Ellipse();
+                uIElement = (Ellipse)sender;
+                if (uIElement.Fill == Brushes.Green && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == false)
+                {
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = true;
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint = true;
+                }
+                    
+                else if (uIElement.Fill == Brushes.Red || mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == true)
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;
+            }
+        }
+
+        public void Port_MouseLeftButtonUp(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            Ellipse uIElement = new Ellipse();
+                uIElement = (Ellipse)sender;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == true)
+            {
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = true;
+            }
+        }
+
+        public void Port_MouseRightButtonDown(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
+            {
+                Ellipse uIElement = new Ellipse();
+                uIElement = (Ellipse)sender;
+                if (uIElement.Fill == Brushes.Red)
+                {
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint = false;
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanStopLink = true;
+                }
             }
         }
     }
