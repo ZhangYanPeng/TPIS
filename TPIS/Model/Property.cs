@@ -1,5 +1,7 @@
 ﻿
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using TPIS.Model.Common;
 
 namespace TPIS.Model
@@ -57,7 +59,8 @@ namespace TPIS.Model
         public string[] Units { get; set; }
 
         public int unitNum;
-        public int UnitNum {
+        public int UnitNum
+        {
             get => unitNum;
             set
             {
@@ -75,6 +78,7 @@ namespace TPIS.Model
         public bool IsStrOrNum { get; set; } // true string false num
         public string valStr;
         public double valNum;
+        public ObservableCollection<SelMode> Modes { get; set; }
 
         public string showValue;
         public string ShowValue
@@ -86,12 +90,48 @@ namespace TPIS.Model
                 if (IsStrOrNum)
                     valStr = (string)value;
                 else
-                    valNum = ValueConvertBack(value,Units[UnitNum],Units[0]);
+                    valNum = ValueConvertBack(value, Units[UnitNum], Units[0]);
                 OnPropertyChanged("ShowValue");
             }
         }
 
-        public Property(string dicName, string name, string value, string[] units, P_Type type, string tips = "")
+        //属性可见性
+        #region
+        public bool visible;
+        public Visibility Visibility
+        {
+            get
+            {
+                if (visible)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+
+            set
+            {
+                if (value == Visibility.Visible)
+                {
+                    visible = true;
+                }
+                else
+                {
+                    visible = false;
+                }
+                OnPropertyChanged("Visibility");
+            }
+        }
+        public void SelectProperty(SelMode selMode)
+        {
+            if (Modes.Contains(selMode))
+                visible = true;
+            else
+                visible = false;
+            OnPropertyChanged("Visibility");
+        }
+        #endregion
+
+        public Property(string dicName, string name, string value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
         {
             DicName = dicName;
             Name = name;
@@ -103,9 +143,14 @@ namespace TPIS.Model
 
             valStr = value;
             showValue = value;
+
+            if (modes != null)
+                Modes = modes;
+            else
+                Modes = new ObservableCollection<SelMode>() { SelMode.None };
         }
 
-        public Property(string dicName, string name, double value, string[] units, P_Type type, string tips = "")
+        public Property(string dicName, string name, double value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
         {
             DicName = dicName;
             Name = name;
@@ -117,6 +162,11 @@ namespace TPIS.Model
 
             valNum = value;
             showValue = ValueConvert(value, Units[0], Units[0]);
+
+            if (modes != null)
+                Modes = modes;
+            else
+                Modes = new ObservableCollection<SelMode>() { SelMode.None };
         }
 
         //属性间的转化

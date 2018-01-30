@@ -55,6 +55,9 @@ namespace TPIS.Model
             PropertyGroups = CommonTypeService.InitComponentProperty(eleType);
             ResultGroups = CommonTypeService.InitComponentResult(eleType);
 
+            Mode = CommonTypeService.InitComponentMode(eleType);
+            SelectedMode = 0;
+
             RePosPort();
             if (this.PropertyChanged != null)
             {
@@ -187,6 +190,30 @@ namespace TPIS.Model
         public ObservableCollection<PropertyGroup> PropertyGroups { get; set; }
         public ObservableCollection<PropertyGroup> ResultGroups { get; set; }
         public EleType eleType { get; set; }
-        
+
+        public ObservableCollection<SelMode> Mode { get; set; }
+        public int selectedMode;
+        public int SelectedMode {
+            get=>selectedMode;
+            set
+            {
+                selectedMode = value;
+                foreach(PropertyGroup pg in PropertyGroups)
+                {
+                    foreach(Property p in pg.Properties)
+                    {
+                        p.SelectProperty(Mode[selectedMode]);
+                    }
+                }
+                foreach (PropertyGroup pg in ResultGroups)
+                {
+                    foreach (Property p in pg.Properties)
+                    {
+                        p.SelectProperty(Mode[selectedMode]);
+                    }
+                }
+                OnPropertyChanged("SelectedMode");
+            }
+        }
     }
 }

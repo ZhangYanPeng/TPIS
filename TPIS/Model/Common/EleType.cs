@@ -72,6 +72,14 @@ namespace TPIS.Model.Common
         None
     }
 
+    public enum SelMode
+    {
+        None,
+        DesignMode,
+        InterMode,
+        CalMode
+    }
+
     public static partial class CommonTypeService
     {
 

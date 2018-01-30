@@ -324,7 +324,13 @@ namespace TPIS.Model.Common
 
         private static ObservableCollection<Port> InitTurbinPort()
         {
-            throw new NotImplementedException();
+            ObservableCollection<Port> ports = new ObservableCollection<Port>();
+            ports.Add(new Port("InSteam", "进口蒸汽", 0, 0.125, Material.water, NodType.Inlet, false));
+            ports.Add(new Port("OutSteam", "出口蒸汽", 1, 0, Material.water, NodType.Outlet, false));
+            ports.Add(new Port("InPower", "输入功率", 0, 0.5, Material.power, NodType.Inlet, true));
+            ports.Add(new Port("Outpower", "输出功率", 1, 0.5, Material.power, NodType.Outlet, false));
+            ports.Add(new Port("ExtractSteam", "抽汽点", 1, 1, Material.water, NodType.Outlet, true, true));
+            return ports;
         }
 
         private static ObservableCollection<Port> InitControllingstagePort()

@@ -7,7 +7,7 @@
 
     <model:LinePosConverter x:Key="myPointsConverter"/>
 
-        <Style x:Key="ComponentItemsControlStyle" TargetType="ItemsControl">
+    <Style x:Key="ComponentItemsControlStyle" TargetType="ItemsControl">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
