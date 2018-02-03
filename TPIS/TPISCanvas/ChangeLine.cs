@@ -48,13 +48,13 @@ namespace TPIS.TPISCanvas
             {
                 Ellipse uIElement = new Ellipse();
                 uIElement = (Ellipse)sender;
-                if (uIElement.Fill == Brushes.Green && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == false)
+                if (uIElement.Fill == Brushes.Red && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == false)
                 {
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = true;
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint = true;
                 }
                     
-                else if (uIElement.Fill == Brushes.Red || mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == true)
+                else if (uIElement.Fill == Brushes.Green || mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == true)
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;
             }
         }
@@ -78,7 +78,7 @@ namespace TPIS.TPISCanvas
             {
                 Ellipse uIElement = new Ellipse();
                 uIElement = (Ellipse)sender;
-                if (uIElement.Fill == Brushes.Red)
+                if (uIElement.Fill == Brushes.Green)
                 {
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint = false;
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;
