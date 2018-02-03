@@ -85,6 +85,7 @@
     <Compile Include="Command\TPISCommand.cs" />
     <Compile Include="Model\BaseType.cs" />
     <Compile Include="Model\Common\EleType.cs" />
+    <Compile Include="Model\Common\InitComponentMode.cs" />
     <Compile Include="Model\Common\InitComponentPort.cs" />
     <Compile Include="Model\Common\InitComponentResult.cs" />
     <Compile Include="Model\Common\InitComponentProperty.cs" />
@@ -111,6 +112,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\PropertyWindow.xaml.cs">
+      <DependentUpon>PropertyWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\Modules\TPISCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PropertyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

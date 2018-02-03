@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TPIS.Model;
+using TPIS.Views;
 
 namespace TPIS.TPISCanvas
 {
@@ -32,6 +33,7 @@ namespace TPIS.TPISCanvas
             base.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
             base.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
             base.Loaded += new RoutedEventHandler(InitAnchorPoints);
+            
         }
 
         /// <summary>
@@ -82,6 +84,13 @@ namespace TPIS.TPISCanvas
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.ClickCount == 2)
+            {
+                //双击时执行
+                PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);
+                propertyWindow.Show();
+            }
+
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
             {
