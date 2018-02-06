@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,6 +48,6 @@ namespace TPIS.TPISCanvas
             this.Children.Add(pline);
 
             mainwin = (MainWindow)Application.Current.MainWindow;
-        }  
+        }
     }
 }

@@ -28,7 +28,6 @@ namespace TPIS
         public List<BaseType> TypeList { get; set; } //所有元件列表
         public ProjectSpace ProjectList { get; set; } //工程列表
         public int CurrentPojectIndex { get; set; } //当前激活工程
-
         public int ProjectNum { get; set; } // 新工程编号
 
         public MainWindow()

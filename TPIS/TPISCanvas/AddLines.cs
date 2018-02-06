@@ -16,7 +16,7 @@ namespace TPIS.TPISCanvas
         /// 画折线
         /// </summary>
         /// 
-        bool flag = false;
+        bool flag;
         public bool IsStraight { get; set; } //是否直线
         Point p1, p2;
         public Polyline pline;
@@ -24,11 +24,13 @@ namespace TPIS.TPISCanvas
         public MainWindow mainwin;
 
 
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if ( mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
+            if ( mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE &&
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink==true)
             {
-                if(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"] == 0)
+                if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"] == 0)
                     this.IsStraight = true;
                 else
                     this.IsStraight = false;
@@ -66,8 +68,12 @@ namespace TPIS.TPISCanvas
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseRightButtonDown(e);
-            flag = false;//结束画线
-            SubstitutionLine();
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanStopLink==true)
+            {
+                flag = false;//结束画线
+                SubstitutionLine();
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanStopLink = false;
+            }
         }
 
         private void SubstitutionLine()
