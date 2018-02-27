@@ -88,6 +88,7 @@ namespace TPIS.Project
         public String Name { get; set; }
         public String V_name { get; set; }
         public long Num { get; set; }
+        public ClipBoard clipBoard { get; set; }
 
         //缩放比率
         #region
@@ -102,7 +103,7 @@ namespace TPIS.Project
                 Canvas.Rate = rate;
                 foreach (ObjectBase obj in Objects)
                 {
-                    
+
                     //元件缩放
                     if (obj is TPISComponent)
                     {
@@ -127,6 +128,7 @@ namespace TPIS.Project
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
             this.Rate = 1;
+            this.clipBoard = new ClipBoard();
             return;
         }
 
@@ -309,6 +311,62 @@ namespace TPIS.Project
                 if (obj is TPISComponent)
                 {
                     ((TPISComponent)obj).IsSelected = false;
+                }
+            }
+        }
+        #endregion
+
+        //添加元件
+        #region
+        public void AddComponent(int tx, int ty, int width, int height, ComponentType ct)
+        {
+            int n = 0;
+            foreach (ObjectBase obj in this.Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    if (((TPISComponent)obj).No > n)
+                        n = ((TPISComponent)obj).No;
+                }
+            }
+            n++;
+            Objects.Add(new TPISComponent(n, tx, ty, width, height, ct));
+        }
+        #endregion
+
+        //复制
+        #region
+        /// <summary>
+        /// 复制到clipboard
+        /// </summary>
+        public void CopySelection()
+        {
+            clipBoard.Objects = new List<ObjectBase>();
+            foreach (ObjectBase obj in this.Objects)
+            {
+                if (obj.isSelected)
+                {
+                    clipBoard.Objects.Add(obj);
+                }
+            }
+        }
+        #endregion
+
+        //删除
+        #region
+        public void Delete()
+        {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
+                if (obj is TPISComponent)
+                {
+                    if (((TPISComponent)obj).IsSelected)
+                    {
+                        //删除并删除连线
+                        Objects.Remove(obj);
+
+                    }
                 }
             }
         }
