@@ -34,13 +34,16 @@ namespace TPIS.Model
             }
         }
 
+        public int No { get; set; }
         public Position Position { get; set; }
         public ObservableCollection<Port> Ports { get; set; }
         public long Id { get; set; }
         public string Pic { get; set; }
 
-        public TPISComponent(int tx, int ty, int width, int height, ComponentType ct)
+        public TPISComponent(int no, int tx, int ty, int width, int height, ComponentType ct)
         {
+            this.No = no;
+
             this.Position = new Position { Rate = 1 };
             this.Position.V_x = tx;
             this.Position.V_y = ty;
