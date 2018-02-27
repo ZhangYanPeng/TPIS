@@ -32,10 +32,11 @@ namespace TPIS.TPISCanvas
         public void Port_MouseEnter(object sender, MouseEventArgs e)
         {//Port感应
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
+            FrameworkElement frameworkElement = new FrameworkElement();
+            frameworkElement = (FrameworkElement)sender;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.SELECT)
             {
-                FrameworkElement frameworkElement = new FrameworkElement();
-                frameworkElement = (FrameworkElement)sender;
+
                 frameworkElement.Cursor = Cursors.Hand;
                 Mouse.OverrideCursor = null;
             }
