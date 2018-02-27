@@ -17,3 +17,6 @@ TPIS/obj/Debug/TPIS_MarkupCompile.i.lref
 TPIS/obj/Debug/TPIS_MarkupCompile.lref
 TPIS/obj/Debug/Views/Modules/TPISCanvas.g.i.cs
 *.cache
+*.cache
+*.suo
+.vs/TPIS/v15/Server/sqlite3/storage.ide
