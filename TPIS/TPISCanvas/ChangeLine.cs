@@ -48,12 +48,24 @@ namespace TPIS.TPISCanvas
             {
                 Ellipse uIElement = new Ellipse();
                 uIElement = (Ellipse)sender;
+                DependencyObject obj = new DependencyObject();
+                obj = VisualTreeHelper.GetParent(uIElement);
+                while (obj.GetType()!= typeof(ProjectDesignerCanvas))
+                {
+                    obj=VisualTreeHelper.GetParent(obj);
+                }
+                ProjectDesignerCanvas designer = obj as ProjectDesignerCanvas;
+                Point point = uIElement.TranslatePoint(new Point(), designer);//控件左上点
+                point.X = point.X + 5;//求中心点
+                point.Y = point.Y + 5;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.statrPoint = point;//折线终点
+                //Console.WriteLine(point);
                 if (uIElement.Fill == Brushes.Red && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == false)
                 {
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = true;
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint = true;
                 }
-                    
+
                 else if (uIElement.Fill == Brushes.Green || mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == true)
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;
             }
@@ -63,7 +75,7 @@ namespace TPIS.TPISCanvas
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             Ellipse uIElement = new Ellipse();
-                uIElement = (Ellipse)sender;
+            uIElement = (Ellipse)sender;
             if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint == true)
             {
                 mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;
@@ -78,6 +90,17 @@ namespace TPIS.TPISCanvas
             {
                 Ellipse uIElement = new Ellipse();
                 uIElement = (Ellipse)sender;
+                DependencyObject obj = new DependencyObject();
+                obj = VisualTreeHelper.GetParent(uIElement);
+                while (obj.GetType() != typeof(ProjectDesignerCanvas))
+                {
+                    obj = VisualTreeHelper.GetParent(obj);
+                }
+                ProjectDesignerCanvas designer = obj as ProjectDesignerCanvas;
+                Point point = uIElement.TranslatePoint(new Point(), designer);
+                point.X = point.X + 5;
+                point.Y = point.Y + 5;
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint = point;//折线终点
                 if (uIElement.Fill == Brushes.Green)
                 {
                     mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.LinkStartPoint = false;

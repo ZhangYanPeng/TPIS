@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace TPIS.Project
 {
@@ -31,6 +33,8 @@ namespace TPIS.Project
         public bool CanLink { get; set; }
         public bool CanStopLink { get;set; }
         public bool LinkStartPoint { get; set; }
+        public Point statrPoint;
+        public Point endPoint;
 
         public int Height
         {
@@ -90,5 +94,6 @@ namespace TPIS.Project
             this.OperationParam = new Dictionary<String, int>();
         }
 
+        
     }
 }
