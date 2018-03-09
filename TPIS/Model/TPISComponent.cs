@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -12,8 +13,43 @@ using TPIS.Project;
 
 namespace TPIS.Model
 {
-    public class TPISComponent : ObjectBase, INotifyPropertyChanged
+    [Serializable]
+    public class TPISComponent : ObjectBase, INotifyPropertyChanged, ISerializable
     {
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("no", No);
+            info.AddValue("position", Position);
+            info.AddValue("pic", Pic);
+            info.AddValue("eleType", eleType);
+            info.AddValue("mode", Mode);
+            info.AddValue("propertyGroups", PropertyGroups);
+            info.AddValue("resultGroups", ResultGroups);
+            info.AddValue("ports", Ports);
+        }
+
+        public TPISComponent(SerializationInfo info, StreamingContext context)
+        {
+            this.No = info.GetInt32("no");
+            this.Position = (Position)info.GetValue("position", typeof(Object));
+            this.Pic = info.GetString("pic");
+            this.eleType = (EleType)info.GetValue("eleType", typeof(Object));
+            Ports = (ObservableCollection<Port>)info.GetValue("ports", typeof(Object));
+            PropertyGroups = (ObservableCollection<PropertyGroup>)info.GetValue("propertyGroups", typeof(Object));
+            ResultGroups = (ObservableCollection<PropertyGroup>)info.GetValue("resultGroups", typeof(Object)); 
+
+            Mode = (ObservableCollection<SelMode>)info.GetValue("mode", typeof(Object));
+            SelectedMode = 0;
+
+            RePosPort();
+            OnPropertyChanged("Pic");
+        }
+        #endregion
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -196,14 +232,15 @@ namespace TPIS.Model
 
         public ObservableCollection<SelMode> Mode { get; set; }
         public int selectedMode;
-        public int SelectedMode {
-            get=>selectedMode;
+        public int SelectedMode
+        {
+            get => selectedMode;
             set
             {
                 selectedMode = value;
-                foreach(PropertyGroup pg in PropertyGroups)
+                foreach (PropertyGroup pg in PropertyGroups)
                 {
-                    foreach(Property p in pg.Properties)
+                    foreach (Property p in pg.Properties)
                     {
                         p.SelectProperty(Mode[selectedMode]);
                     }

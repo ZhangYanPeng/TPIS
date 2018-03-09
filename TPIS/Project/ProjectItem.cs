@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -10,9 +13,12 @@ using TPIS.TPISCanvas;
 
 namespace TPIS.Project
 {
-    public class ObjectBase
+    [Serializable]
+    public abstract class ObjectBase: ISerializable
     {
         public bool isSelected;
+
+        public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
     }
 
     /// <summary>
@@ -73,7 +79,8 @@ namespace TPIS.Project
     }
     #endregion
 
-    public class ProjectItem : INotifyPropertyChanged
+    [Serializable]
+    public class ProjectItem : INotifyPropertyChanged, ISerializable
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -369,6 +376,29 @@ namespace TPIS.Project
                     }
                 }
             }
+        }
+        #endregion
+
+
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("name", Name);
+            info.AddValue("canvas", Canvas);
+            info.AddValue("objects", Objects);
+        }
+
+        public ProjectItem(SerializationInfo info, StreamingContext context)
+        {
+            this.Name = info.GetString("name");
+            this.Num = 2;
+            this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
+            this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
+            this.Rate = 1;
+            this.clipBoard = new ClipBoard();
         }
         #endregion
     }

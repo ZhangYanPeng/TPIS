@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace TPIS.Project
 {
@@ -14,9 +15,9 @@ namespace TPIS.Project
         ADD_LINE
     }
 
-    public class ProjectCanvas : INotifyPropertyChanged
+    [Serializable]
+    public class ProjectCanvas : INotifyPropertyChanged, ISerializable
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
         private int height;
         private int width;
@@ -26,10 +27,10 @@ namespace TPIS.Project
 
         //光标操作
         public OperationType Operation { get; set; } // 类型
-        public Dictionary<String,int> OperationParam { get; set; } //参数
-        
+        public Dictionary<String, int> OperationParam { get; set; } //参数
+
         public bool CanLink { get; set; }
-        public bool CanStopLink { get;set; }
+        public bool CanStopLink { get; set; }
         public bool LinkStartPoint { get; set; }
 
         public int Height
@@ -90,5 +91,28 @@ namespace TPIS.Project
             this.OperationParam = new Dictionary<String, int>();
         }
 
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("width", width);
+            info.AddValue("height", height);
+            this.Operation = OperationType.SELECT;
+            this.OperationParam = new Dictionary<String, int>();
+        }
+
+        public ProjectCanvas(SerializationInfo info, StreamingContext context)
+        {
+            this.width = info.GetInt32("width");
+            this.v_width = info.GetInt32("width"); 
+            this.height = info.GetInt32("height"); 
+            this.v_height = info.GetInt32("height");
+            this.rate = 1;
+            this.Operation = OperationType.SELECT;
+            this.OperationParam = new Dictionary<String, int>();
+        }
+        #endregion
     }
 }

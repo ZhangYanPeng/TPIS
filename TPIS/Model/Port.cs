@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -11,8 +12,38 @@ using TPIS.Model.Common;
 
 namespace TPIS.Model
 {
-    public class Port : INotifyPropertyChanged
+    [Serializable]
+    public class Port : INotifyPropertyChanged , ISerializable
     {
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("dicName", DicName);
+            info.AddValue("name", Name);
+            info.AddValue("xpos", x);
+            info.AddValue("ypos", y);
+            info.AddValue("material", MaterialType);
+            info.AddValue("nodType", Type);
+            info.AddValue("canlink", CanLink);
+            info.AddValue("cancancel", CanCancel);
+        }
+
+        public Port(SerializationInfo info, StreamingContext context)
+        {
+            this.DicName = info.GetString("dicName");
+            this.Name = info.GetString("name");
+            this.x = info.GetDouble("xpos");
+            this.y = info.GetDouble("ypos");
+            this.MaterialType = (Material)info.GetValue("material", typeof(Object));
+            this.Type = (NodType)info.GetValue("nodType", typeof(Object));
+            this.CanLink = info.GetBoolean("canlink");
+            this.CanCancel = info.GetBoolean("cancancel"); 
+        }
+        #endregion
+
         public double x;
         public double p_x;
         public double P_x
@@ -110,5 +141,6 @@ namespace TPIS.Model
             }
         }
 
+        
     }
 }

@@ -145,7 +145,7 @@ namespace TPIS
 
         public static TPISComponent NewTPISComponent(int x, int y, int width, int height, ComponentType ct)
         {
-            TPISComponent c = new TPISComponent(x, y, width, height, ct);
+            TPISComponent c = new TPISComponent(0,x, y, width, height, ct);
             //foreach(var item in ct.DProperty)
             //{
             //    string flag = item.Value.GroupFlag;

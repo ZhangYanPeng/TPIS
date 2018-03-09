@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TPIS.Project
 {
+    [Serializable]
     public class ClipBoard
     {
         public List<ObjectBase> Objects { get; set; }

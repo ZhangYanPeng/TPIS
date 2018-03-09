@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -47,8 +48,23 @@ namespace TPIS.Model
         public int x;
         public int y;
     }
-    public class TPISLine : ObjectBase, INotifyPropertyChanged
+
+    [Serializable]
+    public class TPISLine : ObjectBase, INotifyPropertyChanged , ISerializable
     {
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+        }
+
+        public TPISLine(SerializationInfo info, StreamingContext context)
+        {
+        }
+        #endregion
+
         public bool IsCompleted { get; set; }
 
         public enum LineType

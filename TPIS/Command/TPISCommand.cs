@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Input;
+using TPIS.Project;
 
 namespace TPIS.Command
 {
@@ -69,13 +72,42 @@ namespace TPIS.Command
             MessageBox.Show("NewProject");
         }
 
+        public static object DeserializeWithBinary(byte[] data)
+        {
+            MemoryStream stream = new MemoryStream();
+            stream.Write(data, 0, data.Length);
+            stream.Position = 0;
+            BinaryFormatter bf = new BinaryFormatter();
+            object obj = bf.Deserialize(stream);
+
+            stream.Close();
+
+            return obj;
+        }
+
         #endregion
 
         #region 存储
 
         private void Save_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("NewProject");
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            byte[] data = SerializeToBinary(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex]);
+            object obj = DeserializeWithBinary(data);
+            mainwin.ProjectList.projects.Add((ProjectItem)obj);
+
+        }
+
+        private static byte[] SerializeToBinary(object obj)
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(stream, obj);
+
+            byte[] data = stream.ToArray();
+            stream.Close();
+
+            return data;
         }
 
         #endregion
