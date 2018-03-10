@@ -7,6 +7,7 @@ using static System.Math;
 using Forms = System.Windows.Forms;
 using TPIS.Model;
 using static TPIS.Model.TPISLine;
+using System;
 
 namespace TPIS.TPISCanvas
 {
@@ -22,9 +23,7 @@ namespace TPIS.TPISCanvas
         public Polyline pline;
         public long count=0;
         public MainWindow mainwin;
-
-
-
+        
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if ( mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE &&
@@ -40,7 +39,8 @@ namespace TPIS.TPISCanvas
                 {
                     count++;
                     flag = true;//开始画线
-                    p1 = e.GetPosition(this);
+                    //p1 = e.GetPosition(this);
+                    p1 = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.statrPoint;//起点
                     pline.Points.Add(p1);
                 }
                 /*再击左键续线*/
@@ -70,6 +70,8 @@ namespace TPIS.TPISCanvas
             base.OnMouseRightButtonDown(e);
             if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanStopLink==true)
             {
+                //pline.Points.Add(e.GetPosition(this));
+                pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
                 flag = false;//结束画线
                 SubstitutionLine();
                 mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanStopLink = false;

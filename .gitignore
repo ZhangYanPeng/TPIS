@@ -20,3 +20,7 @@ TPIS/obj/Debug/Views/Modules/TPISCanvas.g.i.cs
 *.cache
 *.suo
 .vs/TPIS/v15/Server/sqlite3/storage.ide
+.vs/TPIS/v15/.suo
+*.ide
+*.Cache
+*.lref

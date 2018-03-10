@@ -106,6 +106,8 @@ namespace TPIS.Model
 
         //构造函数
         #region
+        public Port()
+        { }
         public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool canlink, bool cancancel)
         {
             DicName = dicName;
