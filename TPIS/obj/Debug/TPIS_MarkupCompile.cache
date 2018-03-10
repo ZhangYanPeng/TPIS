@@ -4,29 +4,17 @@
 winexe
 C#
 .cs
-<<<<<<< HEAD
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\
-=======
-C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\obj\Debug\
->>>>>>> refs/remotes/origin/Liu
 TPIS
 none
 false
 DEBUG;TRACE
-<<<<<<< HEAD
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\App.xaml
 7764676720
 
 58-985912268
 17-489333176
-=======
-C:\Users\xjtu_lw\Source\Repos\TPIS4\TPIS\App.xaml
-7764676720
-
-61122191630
-17-890176922
->>>>>>> refs/remotes/origin/Liu
 Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\PropertyWindow.xaml;
 
-True
+False
 

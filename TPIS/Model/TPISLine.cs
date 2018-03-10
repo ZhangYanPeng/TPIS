@@ -52,6 +52,10 @@ namespace TPIS.Model
     [Serializable]
     public class TPISLine : ObjectBase, INotifyPropertyChanged , ISerializable
     {
+        public Port inPort { get; set; }
+        public Port outPort { get; set; }
+
+
         /// <summary>
         /// 序列化与反序列化
         /// </summary>

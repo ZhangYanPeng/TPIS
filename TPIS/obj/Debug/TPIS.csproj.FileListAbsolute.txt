@@ -28,4 +28,3 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreComp
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
-

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
+using TPIS.Model;
 
 namespace TPIS.Project
 {
@@ -35,6 +36,8 @@ namespace TPIS.Project
         public bool CanStopLink { get; set; }
         public bool LinkStartPoint { get; set; }
         public Point statrPoint;
+        public Port startPort { get; set; }
+        public Port endPort { get; set; }
         public Point endPoint;
 
         public int Height
