@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using TPIS.Model;
 
 namespace TPIS.Project
 {
@@ -31,8 +32,9 @@ namespace TPIS.Project
         public Dictionary<String,int> OperationParam { get; set; } //参数
         
         public bool CanLink { get; set; }
-        public bool CanStopLink { get;set; }
-        public bool LinkStartPoint { get; set; }
+        public Port StartPort { get; set; }
+        public Port EndPort { get; set; }
+
         public Point statrPoint;
         public Point endPoint;
 
