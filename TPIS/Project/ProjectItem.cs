@@ -82,6 +82,7 @@ namespace TPIS.Project
     [Serializable]
     public class ProjectItem : INotifyPropertyChanged, ISerializable
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -256,20 +257,29 @@ namespace TPIS.Project
         /// <param name="components"></param>
         internal void Select(List<TPISComponent> components)
         {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (components.Count >0)
+            {
+                if (mainwin.PropertyWindow.ItemsSource != components[0].PropertyGroups)
+                {
+                    mainwin.PropertyWindow.ItemsSource = components[0].PropertyGroups;
+                    mainwin.PropertyWindow.Items.Refresh();
+                    Console.WriteLine("Change");
+                }
+            }
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is TPISComponent)
                 {
                     if (components.Contains(obj as TPISComponent))
                     {
-                        ((TPISComponent)obj).IsSelected = true;
-                        MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                        mainwin.PropertyWindow.ItemsSource = ((TPISComponent)obj).PropertyGroups;
-                        mainwin.PropertyWindow.Items.Refresh();
+                        if( !((TPISComponent)obj).IsSelected)
+                            ((TPISComponent)obj).IsSelected = true;
                     }
                     else
                     {
-                        ((TPISComponent)obj).IsSelected = false;
+                        if (((TPISComponent)obj).IsSelected)
+                            ((TPISComponent)obj).IsSelected = false;
                     }
                 }
             }

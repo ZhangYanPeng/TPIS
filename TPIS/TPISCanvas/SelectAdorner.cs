@@ -81,13 +81,17 @@ namespace TPIS.TPISCanvas
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
 
             Rect rubberBand = new Rect(startPoint.Value, endPoint.Value);
+            double Max_X = Math.Max(startPoint.Value.X, endPoint.Value.X);
+            double Min_X = Math.Min(startPoint.Value.X, endPoint.Value.X);
+            double Max_Y = Math.Max(startPoint.Value.Y, endPoint.Value.Y);
+            double Min_Y = Math.Min(startPoint.Value.Y, endPoint.Value.Y);
             foreach (ObjectBase obj in mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects)
             {
                 if(obj is TPISComponent)
                 {
-                    if (((TPISComponent)obj).Position.V_x > startPoint.Value.X && ((TPISComponent)obj).Position.V_y > startPoint.Value.Y
-                        && ((TPISComponent)obj).Position.V_x + ((TPISComponent)obj).Position.V_width < endPoint.Value.X
-                        && ((TPISComponent)obj).Position.V_y + ((TPISComponent)obj).Position.V_height < endPoint.Value.Y)
+                    if (((TPISComponent)obj).Position.V_x > Min_X && ((TPISComponent)obj).Position.V_y > Min_Y
+                        && ((TPISComponent)obj).Position.V_x + ((TPISComponent)obj).Position.V_width < Max_X
+                        && ((TPISComponent)obj).Position.V_y + ((TPISComponent)obj).Position.V_height < Max_Y)
                         selection.Add((TPISComponent)obj);
                 }
             }
