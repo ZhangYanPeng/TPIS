@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using TPIS.Command;
 using TPIS.Model;
 using TPIS.Project;
+using TPIS.Views;
 
 namespace TPIS.TPISCanvas
 {
@@ -41,6 +42,7 @@ namespace TPIS.TPISCanvas
             base.MouseMove += new MouseEventHandler(ComponentMouseMove);
             base.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLBtnClickEmpty);
             base.MouseMove += new MouseEventHandler(MouseLBtnSelectMove);
+            base.MouseRightButtonDown += new MouseButtonEventHandler(MouseCanvasRightButtonDown);
 
             pline = new Polyline();
             pline.Stroke = Brushes.Red;
@@ -48,6 +50,19 @@ namespace TPIS.TPISCanvas
             this.Children.Add(pline);
 
             mainwin = (MainWindow)Application.Current.MainWindow;
+        }
+
+        public void MouseCanvasRightButtonDown(object sender, MouseEventArgs e)
+        {
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            {
+                return;
+            }
+            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select();
+            TPISContextMenu contextMenu = new TPISContextMenu(2);
+            contextMenu.SetPos(e.GetPosition(this));
+            ContextMenu = contextMenu;
+            e.Handled = true;
         }
     }
 }

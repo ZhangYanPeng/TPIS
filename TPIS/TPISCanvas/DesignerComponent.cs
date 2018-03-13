@@ -32,6 +32,7 @@ namespace TPIS.TPISCanvas
             base.MouseMove += new MouseEventHandler(Element_MouseMove);
             base.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
             base.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
+            base.MouseRightButtonDown += new MouseButtonEventHandler(Element_MouseRightButtonDown);
             base.Loaded += new RoutedEventHandler(InitAnchorPoints);
             
         }
@@ -139,6 +140,31 @@ namespace TPIS.TPISCanvas
                 fEle.Cursor = Cursors.SizeAll;
             fEle.CaptureMouse();
             isDragDropInEffect = true;
+            e.Handled = true;
+        }
+
+        void Element_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            {
+                return;
+            }
+            if (((TPISComponent)this.DataContext).IsSelected)
+            {
+                //已被选中，不改变选择范围
+                ContextMenu contextMenu = new TPISContextMenu(1);
+                this.ContextMenu = contextMenu;
+            }
+            if (!((TPISComponent)this.DataContext).IsSelected || this.moveType != MoveType.pos)
+            {
+                //之前未被选中，或改为改变大小操作，单独选中该元件
+                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select((TPISComponent)this.DataContext);
+                BindingAnchorPoints();
+                ContextMenu contextMenu = new TPISContextMenu(1);
+                this.ContextMenu = contextMenu;
+            }
+            isDragDropInEffect = false;
             e.Handled = true;
         }
 

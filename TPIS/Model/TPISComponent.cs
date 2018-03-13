@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -14,7 +16,7 @@ using TPIS.Project;
 namespace TPIS.Model
 {
     [Serializable]
-    public class TPISComponent : ObjectBase, INotifyPropertyChanged, ISerializable
+    public class TPISComponent : ObjectBase, INotifyPropertyChanged, ISerializable, ICloneable
     {
         /// <summary>
         /// 序列化与反序列化
@@ -40,7 +42,7 @@ namespace TPIS.Model
             this.eleType = (EleType)info.GetValue("eleType", typeof(Object));
             Ports = (ObservableCollection<Port>)info.GetValue("ports", typeof(Object));
             PropertyGroups = (ObservableCollection<PropertyGroup>)info.GetValue("propertyGroups", typeof(Object));
-            ResultGroups = (ObservableCollection<PropertyGroup>)info.GetValue("resultGroups", typeof(Object)); 
+            ResultGroups = (ObservableCollection<PropertyGroup>)info.GetValue("resultGroups", typeof(Object));
 
             Mode = (ObservableCollection<SelMode>)info.GetValue("mode", typeof(Object));
             SelectedMode = 0;
@@ -223,6 +225,18 @@ namespace TPIS.Model
                 p.P_x = tx - 5;
                 p.P_y = ty - 5;
             }
+        }
+
+        public object Clone()
+        {
+
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(stream, this);
+            stream.Position = 0;
+            Object obj = bf.Deserialize(stream);
+            stream.Close();
+            return obj;
         }
         #endregion
 

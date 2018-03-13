@@ -351,11 +351,11 @@ namespace TPIS.Project
         }
         #endregion
 
-        //复制
-        #region
         /// <summary>
-        /// 复制到clipboard
+        /// 选择后续操作
         /// </summary>
+        #region
+        //复制到clipboard
         public void CopySelection()
         {
             clipBoard.Objects = new List<ObjectBase>();
@@ -367,11 +367,9 @@ namespace TPIS.Project
                 }
             }
         }
-        #endregion
 
         //删除
-        #region
-        public void Delete()
+        public void DeleteSelection()
         {
             for (int i = 0; i < Objects.Count; i++)
             {
@@ -382,10 +380,49 @@ namespace TPIS.Project
                     {
                         //删除并删除连线
                         Objects.Remove(obj);
-
                     }
                 }
             }
+        }
+
+        //粘贴
+        public void PasteSelection(double x, double y)
+        {
+            Boolean init = false;
+            double min_x=0, min_y=0;
+            //计算粘贴后偏移量
+            foreach (ObjectBase obj in clipBoard.Objects)
+            {
+                if(obj is TPISComponent)
+                {
+                    if (!init)
+                    {
+                        min_x = ((TPISComponent)obj).Position.V_x;
+                        min_y = ((TPISComponent)obj).Position.V_y;
+                        init = true;
+                    }
+                    else {
+                        min_x = Math.Min(((TPISComponent)obj).Position.V_x, min_x);
+                        min_y = Math.Min(((TPISComponent)obj).Position.V_y, min_y);
+                    }
+                }
+            }
+            double offset_x = x - min_x;
+            double offset_y = y - min_y;
+
+            //按偏移量粘贴并选中
+            Console.WriteLine(clipBoard.Objects.Count);
+            foreach (ObjectBase obj in clipBoard.Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    TPISComponent component = ((TPISComponent)obj).Clone() as TPISComponent;
+                    component.PosChange((int)offset_x, (int)offset_y);
+                    
+                    Objects.Add(component);
+                }
+            }
+            return;
         }
         #endregion
 
@@ -411,5 +448,6 @@ namespace TPIS.Project
             this.clipBoard = new ClipBoard();
         }
         #endregion
+
     }
 }
