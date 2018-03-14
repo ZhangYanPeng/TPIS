@@ -85,7 +85,7 @@ namespace TPIS.TPISCanvas
             double Min_X = Math.Min(startPoint.Value.X, endPoint.Value.X);
             double Max_Y = Math.Max(startPoint.Value.Y, endPoint.Value.Y);
             double Min_Y = Math.Min(startPoint.Value.Y, endPoint.Value.Y);
-            foreach (ObjectBase obj in mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects)
+            foreach (ObjectBase obj in mainwin.GetCurrentProject().Objects)
             {
                 if(obj is TPISComponent)
                 {
@@ -95,7 +95,7 @@ namespace TPIS.TPISCanvas
                         selection.Add((TPISComponent)obj);
                 }
             }
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select(selection);
+            mainwin.GetCurrentProject().Select(selection);
         }
     }
     

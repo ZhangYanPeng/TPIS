@@ -23,7 +23,7 @@ namespace TPIS.Views.Modules
             try
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].VerticalReversedSelection();
+                mainwin.GetCurrentProject().VerticalReversedSelection();
             }
             catch (Exception exp)
             {
@@ -41,7 +41,7 @@ namespace TPIS.Views.Modules
             try
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].HorizentalReversedSelection();
+                mainwin.GetCurrentProject().HorizentalReversedSelection();
             }
             catch (Exception exp)
             {
@@ -60,7 +60,7 @@ namespace TPIS.Views.Modules
             try
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].RotateSelection(1);
+                mainwin.GetCurrentProject().RotateSelection(1);
             }
             catch (Exception exp)
             {
@@ -81,7 +81,7 @@ namespace TPIS.Views.Modules
             try
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].SupRate();
+                mainwin.GetCurrentProject().SupRate();
             }
             catch (Exception exp)
             {
@@ -99,10 +99,31 @@ namespace TPIS.Views.Modules
             try
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].SubRate();
+                mainwin.GetCurrentProject().SubRate();
             }
             catch (Exception exp)
             {
+                return;
+            }
+        }
+        #endregion
+
+        // 查找操作
+        #region
+        private void FindTargNo(object sender, RoutedEventArgs e)
+        {
+            String str = TargetNo.Text;
+            try{
+                int tn = int.Parse(str);
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                if( !mainwin.GetCurrentProject().FindComponent(tn))
+                {
+                    MessageBox.Show("未找到该元件!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请检查输入是否为整数！");
                 return;
             }
         }

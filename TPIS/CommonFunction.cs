@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using TPIS.Model;
@@ -146,17 +148,34 @@ namespace TPIS
         public static TPISComponent NewTPISComponent(int x, int y, int width, int height, ComponentType ct)
         {
             TPISComponent c = new TPISComponent(0,x, y, width, height, ct);
-            //foreach(var item in ct.DProperty)
-            //{
-            //    string flag = item.Value.GroupFlag;
-            //    if( c.DPropetyGroups[flag] == null)
-            //    {
-            //        PropertyGroup pg = new PropertyGroup();
-            //        c.DPropetyGroups.Add(flag, pg);
-            //    }
-            //    c.DPropetyGroups[flag].Dproperty.Add(item);
-            //}
             return c;
+        }
+
+
+
+        public static object DeserializeWithBinary(byte[] data)
+        {
+            MemoryStream stream = new MemoryStream();
+            stream.Write(data, 0, data.Length);
+            stream.Position = 0;
+            BinaryFormatter bf = new BinaryFormatter();
+            object obj = bf.Deserialize(stream);
+
+            stream.Close();
+
+            return obj;
+        }
+
+        public static byte[] SerializeToBinary(object obj)
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(stream, obj);
+
+            byte[] data = stream.ToArray();
+            stream.Close();
+
+            return data;
         }
     }
 }

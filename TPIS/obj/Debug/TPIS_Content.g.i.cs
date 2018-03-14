@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/activeicon/add.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/activeicon/subtract.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/back.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/more.png")]
 
 

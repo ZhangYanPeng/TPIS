@@ -1,3 +1,8 @@
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPISNet.dll
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPISNet.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISToolBar.baml
@@ -6,16 +11,11 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\NewProject.g.c
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISMenu.g.cs
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISToolBar.g.cs
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\MainWindow.g.cs
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\PropertyWindow.g.cs
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\App.g.cs
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS_MarkupCompile.cache
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS_MarkupCompile.lref
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\PropertyWindow.g.cs
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPISNet.dll
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPISNet.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\App.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISMenu.baml

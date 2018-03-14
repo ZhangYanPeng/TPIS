@@ -30,8 +30,8 @@
                 <TextBlock Text=".tpis" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
                 <Button Content="浏览" Grid.Row="1" Grid.Column="3" Click="FolderBrowse" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="90"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="画布尺寸"/>
-                <TextBox Name="canvas_width" Grid.Row="2" Grid.Column="1"  Margin="10,15,10,15" FontSize="20" Height="40" VerticalAlignment="Center"  VerticalContentAlignment="Center"/>
-                <TextBox Name="canvas_height" Grid.Row="2" Grid.Column="2"  Margin="10,15,10,15" FontSize="20" Height="40" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Text="1000" Name="canvas_width" Grid.Row="2" Grid.Column="1"  Margin="10,15,10,15" FontSize="20" Height="40" VerticalAlignment="Center"  VerticalContentAlignment="Center"/>
+                <TextBox Text="1000" Name="canvas_height" Grid.Row="2" Grid.Column="2"  Margin="10,15,10,15" FontSize="20" Height="40" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                 <TextBlock Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="(像素)"/>
                 
                 <Button Content="新建" Grid.Row="3" Grid.Column="2" Click="Create" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="90"/>

@@ -107,7 +107,7 @@ namespace TPIS.TPISCanvas
                 Point endPoint = e.GetPosition((ProjectDesignerCanvas)this.Parent);
 
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                foreach (TPISLine line in mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects)
+                foreach (TPISLine line in mainwin.GetCurrentProject().Objects)
                 {
                     if (this.lineID == line.LNum)//确定线
                     {

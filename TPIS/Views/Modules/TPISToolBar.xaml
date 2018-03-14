@@ -52,9 +52,6 @@
         <Button Name="tsbSelection" ToolTip="选择">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSelection.png" Stretch="None" />
         </Button>
-        <Button Name="tsbFreehandSelection" ToolTip="自由图形选择">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeFreehandSelection.png" Stretch="None" />
-        </Button>
         <Separator />
         <Button Name="tsbRotate" ToolTip="向右旋转" Click="TPISRotate" >
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeRotate.png" Stretch="None" />
@@ -72,6 +69,11 @@
         <TextBox IsReadOnly="True" Width="60" Name="CurRate"></TextBox>
         <Button Name="tsbSubRate" ToolTip="放大" Click="SupRate">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeEnlarge.png" Stretch="None" />
+        </Button>
+        <Separator />
+        <TextBox Width="60" Name="TargetNo"></TextBox>
+        <Button Name="tsbFind" ToolTip="查找" Click="FindTargNo">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_search.png" Stretch="None" />
         </Button>
     </ToolBar>
 </ResourceDictionary>

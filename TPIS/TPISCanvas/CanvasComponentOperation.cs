@@ -23,10 +23,17 @@ namespace TPIS.TPISCanvas
         public void CanvasMouseEnter(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            try
+            {
+                if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
+                    this.Cursor = Cursors.Cross;
+                else
+                    this.Cursor = Cursors.Arrow;
+            }
+            catch
+            {
                 this.Cursor = Cursors.Cross;
-            else
-                this.Cursor = Cursors.Arrow;
+            }
         }
 
         /// <summary>
@@ -42,7 +49,7 @@ namespace TPIS.TPISCanvas
         public void ComponentMouseLButtonDown(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
             {
                 if (e.Source == this)
                 {
@@ -54,13 +61,13 @@ namespace TPIS.TPISCanvas
                     e.Handled = true;
                 }
             }
-            
+
         }
 
         protected void ComponentMouseMove(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
             {
                 // if mouse button is not pressed we have no drag operation, ...
                 if (e.LeftButton != MouseButtonState.Pressed)
@@ -74,13 +81,13 @@ namespace TPIS.TPISCanvas
                     AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
                     if (adornerLayer != null)
                     {
-                        int type = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"];
+                        int type = mainwin.GetCurrentProject().Canvas.OperationParam["type"];
                         ComponentType targetType = null;
                         foreach (BaseType bt in mainwin.TypeList)
                         {
                             foreach (ComponentType ct in bt.ComponentTypeList)
                             {
-                                if( type == ct.Id)
+                                if (type == ct.Id)
                                 {
                                     targetType = ct;
                                     break;

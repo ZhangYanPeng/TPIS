@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,5 +51,18 @@ namespace TPIS
             this.ElementList.ItemsSource = TypeList;
             this.ElementList.Items.Refresh();
         }
+
+        //建立工作空间文件夹
+        #region
+        private void InitWorkSpace()
+        {
+            string directoryPath = @".\WorkSpace";
+            if (!Directory.Exists(directoryPath))//如果路径不存在
+            {
+                Directory.CreateDirectory(directoryPath);//创建一个路径的文件夹
+            }
+        }
+        #endregion
     }
+
 }

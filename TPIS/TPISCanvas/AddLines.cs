@@ -26,10 +26,10 @@ namespace TPIS.TPISCanvas
         
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if ( mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE &&
-                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink==true)
+            if ( mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_LINE &&
+                mainwin.GetCurrentProject().Canvas.CanLink==true)
             {
-                if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"] == 0)
+                if (mainwin.GetCurrentProject().Canvas.OperationParam["type"] == 0)
                     this.IsStraight = true;
                 else
                     this.IsStraight = false;
@@ -40,7 +40,7 @@ namespace TPIS.TPISCanvas
                     count++;
                     flag = true;//开始画线
                     //p1 = e.GetPosition(this);
-                    p1 = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.statrPoint;//起点
+                    p1 = mainwin.GetCurrentProject().Canvas.statrPoint;//起点
                     pline.Points.Add(p1);
                 }
                 /*再击左键续线*/
@@ -68,13 +68,13 @@ namespace TPIS.TPISCanvas
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseRightButtonDown(e);
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanStopLink==true)
+            if (mainwin.GetCurrentProject().Canvas.CanStopLink==true)
             {
                 //pline.Points.Add(e.GetPosition(this));
-                pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
+                pline.Points.Add(mainwin.GetCurrentProject().Canvas.endPoint);//终点
                 flag = false;//结束画线
                 SubstitutionLine();
-                mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanStopLink = false;
+                mainwin.GetCurrentProject().Canvas.CanStopLink = false;
             }
         }
 
@@ -91,7 +91,7 @@ namespace TPIS.TPISCanvas
                 line.Points.Add(p);
             //line.Points = pline.Points;
             pline.Points.Clear();
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(line);
+            mainwin.GetCurrentProject().Objects.Add(line);
             InitLineAnchorPoints(line.LNum, line);//初始化锚点
         }
 

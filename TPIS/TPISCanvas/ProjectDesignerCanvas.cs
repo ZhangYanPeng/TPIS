@@ -54,11 +54,11 @@ namespace TPIS.TPISCanvas
 
         public void MouseCanvasRightButtonDown(object sender, MouseEventArgs e)
         {
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
             {
                 return;
             }
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select();
+            mainwin.GetCurrentProject().Select();
             TPISContextMenu contextMenu = new TPISContextMenu(2);
             contextMenu.SetPos(e.GetPosition(this));
             ContextMenu = contextMenu;

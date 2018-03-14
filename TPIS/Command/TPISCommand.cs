@@ -21,7 +21,7 @@ namespace TPIS.Command
 
         public TPISCommand()
         {
-            Clipboard.Clear();
+            System.Windows.Clipboard.Clear();
         }
 
         #region 新建工程
@@ -43,11 +43,12 @@ namespace TPIS.Command
             openFileDialog.Title = "选择TPIS工程项目";
             openFileDialog.Filter = "TPIS工程项目(*.tpis)|*.tpis";
             //openFileDialog.FileName = "*.tpis";
+            openFileDialog.InitialDirectory = Path.GetFullPath(@".\WorkSpace");
             openFileDialog.FilterIndex = 1;
             openFileDialog.ValidateNames = false;
             openFileDialog.CheckFileExists = false;
             openFileDialog.CheckPathExists = true;
-            openFileDialog.Multiselect = true;//允许同时选择多个文件 
+            openFileDialog.Multiselect = false;
             bool? result = openFileDialog.ShowDialog();
             if (result != true)
             {
@@ -55,10 +56,36 @@ namespace TPIS.Command
             }
             else
             {
-                string[] files = openFileDialog.FileNames;
-                foreach (string file in files)
+                string path = openFileDialog.FileName;
+                try
                 {
-                    System.Windows.MessageBox.Show("已选择文件:" + file, "选择文件提示");
+                    MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+                    //检查是否已经打开
+                    foreach (ProjectItem project in mainwin.ProjectList.projects)
+                    {
+                        if (path == Path.GetFullPath(project.Path + "\\" + project.Name))
+                        {
+                            MessageBox.Show("工程已经打开！");
+                            return;
+                        }
+                    }
+
+                    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    byte[] data = new byte[fileStream.Length];
+                    fileStream.Read(data, 0, data.Length);
+                    fileStream.Close();
+                    object obj = CommonFunction.DeserializeWithBinary(data);
+
+                    ((ProjectItem)obj).Num = mainwin.ProjectNum;
+                    mainwin.ProjectList.projects.Add(obj as ProjectItem);
+                    mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
+                    mainwin.projectTab.Items.Refresh();
+                    mainwin.projectTab.SelectedItem = obj;
+                    mainwin.ProjectNum++;
+                }
+                catch
+                {
+                    return;
                 }
             }
         }
@@ -69,54 +96,24 @@ namespace TPIS.Command
 
         private void CloseProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("NewProject");
-        }
-
-        public static object DeserializeWithBinary(byte[] data)
-        {
-            MemoryStream stream = new MemoryStream();
-            stream.Write(data, 0, data.Length);
-            stream.Position = 0;
-            BinaryFormatter bf = new BinaryFormatter();
-            object obj = bf.Deserialize(stream);
-
-            stream.Close();
-
-            return obj;
+            
         }
 
         #endregion
 
         #region 存储
-
         private void Save_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            byte[] data = SerializeToBinary(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex]);
-            object obj = DeserializeWithBinary(data);
-            mainwin.ProjectList.projects.Add((ProjectItem)obj);
-
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            mainwin.GetCurrentProject().SaveProject() ;
         }
-
-        private static byte[] SerializeToBinary(object obj)
-        {
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(stream, obj);
-
-            byte[] data = stream.ToArray();
-            stream.Close();
-
-            return data;
-        }
-
         #endregion
 
         #region 另存为
 
         private void SaveAs_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("NewProject");
+            System.Windows.MessageBox.Show("NewProject");
         }
 
         #endregion
@@ -125,7 +122,11 @@ namespace TPIS.Command
 
         private void SaveAll_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("NewProject");
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            foreach(ProjectItem project in mainwin.ProjectList.projects)
+            {
+                project.SaveProject();
+            }
         }
 
         #endregion
@@ -134,7 +135,7 @@ namespace TPIS.Command
 
         private void Print_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("NewProject");
+            System.Windows.MessageBox.Show("NewProject");
         }
 
         #endregion
@@ -143,7 +144,7 @@ namespace TPIS.Command
 
         private void RecentlyUsedProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("NewProject");
+            System.Windows.MessageBox.Show("NewProject");
         }
 
         #endregion
@@ -152,7 +153,8 @@ namespace TPIS.Command
 
         private void Exit_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("NewProject");
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            mainwin.Close();
         }
 
         public bool CanExecute(object parameter)

@@ -44,7 +44,7 @@ namespace TPIS.Views
                 copyMenuItem.IsEnabled = false;
                 deleteMenuItem.IsEnabled = false;
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                if(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].clipBoard.Objects.Count == 0)
+                if(mainwin.GetCurrentProject().clipBoard.Objects.Count == 0)
                 {
                     pasteMenuItem.IsEnabled = false;
                 }
@@ -61,19 +61,19 @@ namespace TPIS.Views
         private void btDel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].DeleteSelection();
+            mainwin.GetCurrentProject().DeleteSelection();
         }
 
         private void btPaste_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].PasteSelection(point_x, point_y);
+            mainwin.GetCurrentProject().PasteSelection(point_x, point_y);
         }
 
         private void btCopy_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].CopySelection();
+            mainwin.GetCurrentProject().CopySelection();
         }
     }
 }
