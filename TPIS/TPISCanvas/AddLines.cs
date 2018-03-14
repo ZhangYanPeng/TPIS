@@ -49,7 +49,7 @@ namespace TPIS.TPISCanvas
                         p1 = p2;//衔接
                     pline.Points.Add(p1);
                 }
-                else
+                else if(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort != null)
                 {
                     pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
                     flag = false;//结束画线
