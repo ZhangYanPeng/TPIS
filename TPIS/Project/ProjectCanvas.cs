@@ -12,6 +12,7 @@ namespace TPIS.Project
 {
     public enum OperationType
     {
+        Null,
         ADD_COMPONENT,
         SELECT,
         ADD_LINE

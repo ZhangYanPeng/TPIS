@@ -21,9 +21,9 @@ namespace TPIS.TPISCanvas
         public bool IsStraight { get; set; } //是否直线
         Point p1, p2;
         public Polyline pline;
-        public long count=0;
+        public long count = 0;
         public MainWindow mainwin;
-        
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
@@ -49,8 +49,15 @@ namespace TPIS.TPISCanvas
                         p1 = p2;//衔接
                     pline.Points.Add(p1);
                 }
-                else if(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort != null)
+                else if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort != null)
                 {
+                    Point tmp=p2;
+                    if (p1.X == p2.X)
+                        tmp.Y = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint.Y;
+                    else
+                        tmp.X = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint.X;
+                    pline.Points[pline.Points.Count - 1] = tmp;//保证最后拐点为直角
+
                     pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
                     flag = false;//结束画线
                     SubstitutionLine();
@@ -65,10 +72,18 @@ namespace TPIS.TPISCanvas
                 return;
             /*移动中确定拐点和终点*/
             p2 = e.GetPosition(this);
-            if ( IsStraight || (Forms.Control.ModifierKeys & Forms.Keys.Shift) == Forms.Keys.Shift)
+            if (IsStraight || Forms.Control.ModifierKeys == Forms.Keys.Shift)
             {
-                if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
-                else p2.X = p1.X;
+                if (pline.Points.Count >= 3)
+                {//避免新线覆盖旧线
+                    if (pline.Points[pline.Points.Count - 3].X == p1.X) p2.Y = p1.Y;
+                    else p2.X = p1.X;
+                }
+                else
+                {
+                    if (Abs(p1.X - p2.X) > Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
+                    else p2.X = p1.X;
+                }
             }
             pline.Points[pline.Points.Count - 1] = p2;
         }
