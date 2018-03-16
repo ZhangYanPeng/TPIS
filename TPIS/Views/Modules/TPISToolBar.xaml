@@ -20,7 +20,7 @@
         <Button Name="tsbSaveAs" ToolTip="另存为">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSaveAs .png" Stretch="None" />
         </Button>
-        <Button Name="tsbSaveAll" ToolTip="另存为(Ctrl+Shift+S)">
+        <Button Name="tsbSaveAll" ToolTip="全部存储(Ctrl+Shift+S)">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSaveAll.png" Stretch="None" />
         </Button>
         <Separator />
@@ -44,9 +44,6 @@
         <Separator />
         <Button Name="tsbDelete" ToolTip="删除(Del)">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeDelete.png" Stretch="None" />
-        </Button>
-        <Button Name="tsbAllSelection" ToolTip="全选(Ctrl+A)">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeAllSelection.png" Stretch="None" />
         </Button>
         <Separator />
         <Button Name="tsbSelection" ToolTip="选择">

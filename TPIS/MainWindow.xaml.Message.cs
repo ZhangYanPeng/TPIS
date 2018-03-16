@@ -197,5 +197,44 @@ namespace TPIS
                 return null;
             }
         }
+
+        //显示隐藏属性窗口
+        private void btn_PropertyStateChange(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if(btn.Tag.ToString() == "show")
+            {
+                btn.Tag = "hide";
+                btn.ToolTip = "显示属性窗";
+                PropertyWindow.Visibility = Visibility.Collapsed;
+                PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
+            }
+            else
+            {
+                btn.Tag = "show";
+                btn.ToolTip = "隐藏属性窗";
+                PropertyWindow.Visibility = Visibility.Visible;
+                PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
+            }
+        }
+
+        private void btn_ResultStateChange(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn.Tag.ToString() == "show")
+            {
+                btn.Tag = "hide";
+                btn.ToolTip = "显示结果窗";
+                ResultWindow.Visibility = Visibility.Collapsed;
+                ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
+            }
+            else
+            {
+                btn.Tag = "show";
+                btn.ToolTip = "隐藏结果窗";
+                ResultWindow.Visibility = Visibility.Visible;
+                ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
+            }
+        }
     }
 }

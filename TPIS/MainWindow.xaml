@@ -102,13 +102,61 @@
         <ContentControl DockPanel.Dock="right" >
             <DockPanel>
                 <!--元件模块-->
-                <Button Name="PropertyStateChange" DockPanel.Dock="Left" Width="20" Height="200" IsEnabled="False" Click="PropertyStateChange">
-                    <Button.Content>
-                        <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Image Source="Images\icon\window_show.png" ></Image>
-                        </ContentControl>
-                    </Button.Content>
-                </Button>
+                <DockPanel DockPanel.Dock="Left" Width="10" Height="200">
+                    <Button Name="PropertyStateChange" DockPanel.Dock="Top" Height="100" Click="btn_PropertyStateChange" Tag="show" ToolTip="隐藏属性窗">
+                        <Button.Content>
+                            <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Image Name="PropertyStateChangeFig" Source="Images\icon\window_hide.png" ></Image>
+                            </ContentControl>
+                        </Button.Content>
+                    </Button>
+                    <Button Name="ResultStateChange" Height="100" Click="btn_ResultStateChange" Tag="show" ToolTip="隐藏结果窗">
+                        <Button.Content>
+                            <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Image Name="ResultStateChangeFig" Source="Images\icon\window_hide.png" ></Image>
+                            </ContentControl>
+                        </Button.Content>
+                    </Button>
+                </DockPanel>
+                
+                <Border BorderThickness="1" BorderBrush="Gray">
+                    <ListBox Name="ResultWindow">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <GroupBox Header="{Binding Flag}">
+                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                <GridViewColumn Header="值" Width="112" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding ShowValue}" Width="100"></TextBox>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn Header="单位" Width="70" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding }"></TextBlock>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </GroupBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                </Border>
+                
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <ListBox Name="PropertyWindow">
                         <ItemsControl.ItemTemplate>

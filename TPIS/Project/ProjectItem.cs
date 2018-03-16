@@ -23,10 +23,7 @@ namespace TPIS.Project
         public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
     }
 
-    /// <summary>
-    /// 倍率设置
-    /// </summary>
-    #region
+    #region 倍率设置
     public static class RateService
     {
         public static double GetRate(int i)
@@ -84,7 +81,7 @@ namespace TPIS.Project
     [Serializable]
     public class ProjectItem : INotifyPropertyChanged, ISerializable
     {
-
+        #region 属性更新
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -94,6 +91,7 @@ namespace TPIS.Project
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        #endregion
 
         public String Name { get; set; }
         public String V_name { get; set; }
@@ -101,8 +99,7 @@ namespace TPIS.Project
         public ClipBoard clipBoard { get; set; }
         public String Path { get; set; }
 
-        //缩放比率
-        #region
+        #region 缩放比率
         public double rate;
         public double Rate
         {
@@ -145,11 +142,10 @@ namespace TPIS.Project
             return;
         }
 
-        //存储工程
-        #region
+        #region 存储工程
         public void SaveProject()
         {
-            string path = Path+"\\" + Name;
+            string path = Path + "\\" + Name;
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
             byte[] data = CommonFunction.SerializeToBinary(this);
             BinaryWriter bw = new BinaryWriter(fs);
@@ -159,8 +155,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        //缩放操作
-        #region
+        #region 缩放操作
         /// <summary>
         /// 放大
         /// </summary>
@@ -178,8 +173,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        //选中形变操作
-        #region
+        #region 选中形变操作
         /// <summary>
         /// 翻转选中
         /// </summary>
@@ -268,8 +262,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        //选择操作
-        #region
+        #region 选择操作
         /// <summary>
         /// 选中
         /// </summary>
@@ -283,7 +276,8 @@ namespace TPIS.Project
                 {
                     mainwin.PropertyWindow.ItemsSource = components[0].PropertyGroups;
                     mainwin.PropertyWindow.Items.Refresh();
-                    mainwin.PropertyStateChange.IsEnabled = true;
+                    mainwin.ResultWindow.ItemsSource = components[0].ResultGroups;
+                    mainwin.ResultWindow.Items.Refresh();
                 }
             }
             foreach (ObjectBase obj in Objects)
@@ -320,7 +314,8 @@ namespace TPIS.Project
                         MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                         mainwin.PropertyWindow.ItemsSource = ((TPISComponent)obj).PropertyGroups;
                         mainwin.PropertyWindow.Items.Refresh();
-                        mainwin.PropertyStateChange.IsEnabled = true;
+                        mainwin.ResultWindow.ItemsSource = ((TPISComponent)obj).ResultGroups;
+                        mainwin.ResultWindow.Items.Refresh();
                     }
                     else
                     {
@@ -341,6 +336,7 @@ namespace TPIS.Project
                 }
             }
         }
+
         internal void Select()
         {
             foreach (ObjectBase obj in Objects)
@@ -351,14 +347,14 @@ namespace TPIS.Project
                 }
             }
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.PropertyStateChange.IsEnabled = false;
+            mainwin.PropertyWindow.ItemsSource = null;
+            mainwin.PropertyWindow.Items.Refresh();
+            mainwin.ResultWindow.ItemsSource = null;
+            mainwin.ResultWindow.Items.Refresh();
         }
         #endregion
 
-        /// <summary>
-        /// 添加
-        /// </summary>
-        #region
+        #region 添加
         //添加元件
         public void AddComponent(int tx, int ty, int width, int height, ComponentType ct)
         {
@@ -382,10 +378,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        /// <summary>
-        /// 选择后续操作
-        /// </summary>
-        #region
+        #region 选择后续操作 复制 删除 剪切
         //复制到clipboard
         public void CopySelection()
         {
@@ -458,8 +451,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        //查找元件并选中居中
-        #region
+        #region 查找元件并选中居中
         internal bool FindComponent(int tn)
         {
             Boolean findOrNot = false;
@@ -509,10 +501,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        /// <summary>
-        /// 序列化与反序列化
-        /// </summary>
-        #region
+        #region 序列化与反序列化
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("name", Name);

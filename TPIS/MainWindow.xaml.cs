@@ -124,11 +124,6 @@ namespace TPIS
                 }
             }
         }
-
-        private void PropertyStateChange(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 
     /// <summary>
