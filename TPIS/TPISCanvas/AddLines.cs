@@ -56,11 +56,13 @@ namespace TPIS.TPISCanvas
                         tmp.Y = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint.Y;
                     else
                         tmp.X = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint.X;
-                    pline.Points[pline.Points.Count - 1] = tmp;//保证最后拐点为直角
+                    pline.Points[pline.Points.Count - 1] = tmp;//保证最后拐点为直角，保证终点和后端点所在直线为坐标线
 
                     pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
                     flag = false;//结束画线
                     SubstitutionLine();
+
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort = null;//画完一条线，标志结束
                 }
             }
         }

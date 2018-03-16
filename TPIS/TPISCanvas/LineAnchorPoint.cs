@@ -152,7 +152,7 @@ namespace TPIS.TPISCanvas
                                     tmp = line.Points[line.Points.Count - 2];
                                     if (line.Points[line.Points.Count - 1].Y == line.Points[line.Points.Count - 2].Y &&
                                         line.Points[line.Points.Count - 2].Y != line.Points[line.Points.Count - 3].Y)//后两点在水平线上,防止三点共线时的Bug
-                                    {
+                                    {//当终点和后端点所在直线为坐标线时，可执行
                                         tmp.X = endPoint.X;
                                         line.PointTo(line.Points.Count - 2, tmp);
                                         tmp.Y = line.Points[line.Points.Count - 3].Y;
