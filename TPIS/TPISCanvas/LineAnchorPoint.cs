@@ -111,9 +111,10 @@ namespace TPIS.TPISCanvas
                 {
                     if (this.lineID == line.LNum)//确定线
                     {
-                        if (line.Points.Count == 3)//单个锚点
+                        if (line.Points.Count == 3)//一个锚点
                         {
-                            return; ;
+                            line.PointTo(1, endPoint);
+                            //return; ;
                         }
                         if (line.LType == TPISLine.LineType.Straight)
                         {
