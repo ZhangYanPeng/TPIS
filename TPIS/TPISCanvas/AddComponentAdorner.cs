@@ -66,9 +66,8 @@ namespace TPIS.TPISCanvas
                 {
                     Point sp = startPoint.Value;
                     Point ep = endPoint.Value;
-                    int width = (int)(ep.X - sp.X) > 5 ? (int)(ep.X - sp.X) : 5;
-                    int height = (int)(ep.Y - sp.Y) > 5 ? (int)(ep.Y - sp.Y) : 5;
-                    TPISComponent c = CommonFunction.NewTPISComponent((int)sp.X, (int)sp.Y, width, height, targetType);
+                    int width = (int)(ep.X - sp.X) > 20 ? (int)(ep.X - sp.X) : 20;
+                    int height = (int)(ep.Y - sp.Y) > 20 ? (int)(ep.Y - sp.Y) : 20;
                     //添加元件
                     mainwin.GetCurrentProject().AddComponent((int)sp.X, (int)sp.Y, width, height, targetType);
                 }
