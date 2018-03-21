@@ -27,3 +27,8 @@ TPIS/obj/Debug/Views/Modules/TPISCanvas.g.i.cs
 .vs/TPIS/v15/Server/sqlite3/db.lock
 .vs/VSWorkspaceState.json
 *.sqlite
+TPIS/obj/Debug/TPIS_MarkupCompile.lref
+*.lref
+TPIS/obj/Debug/TPIS_MarkupCompile.cache
+*.pdb
+*.ide

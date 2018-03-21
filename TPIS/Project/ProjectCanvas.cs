@@ -13,6 +13,7 @@ namespace TPIS.Project
 {
     public enum OperationType
     {
+        Null,
         ADD_COMPONENT,
         SELECT,
         ADD_LINE
@@ -33,11 +34,10 @@ namespace TPIS.Project
         public Dictionary<String, int> OperationParam { get; set; } //参数
 
         public bool CanLink { get; set; }
-        public bool CanStopLink { get; set; }
-        public bool LinkStartPoint { get; set; }
+        public Port StartPort { get; set; }
+        public Port EndPort { get; set; }
+
         public Point statrPoint;
-        public Port startPort { get; set; }
-        public Port endPort { get; set; }
         public Point endPoint;
 
         public int Height

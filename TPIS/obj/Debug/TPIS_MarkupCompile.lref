@@ -1,7 +1,15 @@
 ﻿
+<<<<<<< HEAD
 FC:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\App.xaml;;
 FC:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\Views\Modules\TPISCanvas.xaml;;
 FC:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\Views\Modules\TPISMenu.xaml;;
 FC:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\MainWindow.xaml;;
 FC:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\Views\PropertyWindow.xaml;;
+=======
+FE:\TMP\TPIS3\TPIS\App.xaml;;
+FE:\TMP\TPIS3\TPIS\Views\Modules\TPISCanvas.xaml;;
+FE:\TMP\TPIS3\TPIS\Views\Modules\TPISMenu.xaml;;
+FE:\TMP\TPIS3\TPIS\MainWindow.xaml;;
+FE:\TMP\TPIS3\TPIS\Views\PropertyWindow.xaml;;
+>>>>>>> refs/remotes/origin/Liu
 

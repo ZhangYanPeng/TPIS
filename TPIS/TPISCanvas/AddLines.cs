@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
@@ -21,32 +21,49 @@ namespace TPIS.TPISCanvas
         public bool IsStraight { get; set; } //是否直线
         Point p1, p2;
         public Polyline pline;
-        public long count=0;
+        public long count = 0;
         public MainWindow mainwin;
-        
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if ( mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_LINE &&
-                mainwin.GetCurrentProject().Canvas.CanLink==true)
+            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_LINE)
             {
-                if (mainwin.GetCurrentProject().Canvas.OperationParam["type"] == 0)
-                    this.IsStraight = true;
-                else
-                    this.IsStraight = false;
-
-                /*首击左键确定起点*/
-                if (flag == false)
+                if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink == true)
                 {
-                    count++;
-                    flag = true;//开始画线
-                    //p1 = e.GetPosition(this);
-                    p1 = mainwin.GetCurrentProject().Canvas.statrPoint;//起点
+                    if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"] == 0)
+                        this.IsStraight = true;
+                    else
+                        this.IsStraight = false;
+
+                    /*首击左键确定起点*/
+                    if (flag == false)
+                    {
+                        count++;
+                        flag = true;//开始画线
+                                    //p1 = e.GetPosition(this);
+                        p1 = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.statrPoint;//起点
+                        pline.Points.Add(p1);
+                    }
+                    /*再击左键续线*/
+                    else
+                        p1 = p2;//衔接
                     pline.Points.Add(p1);
                 }
-                /*再击左键续线*/
-                else
-                    p1 = p2;//衔接
-                pline.Points.Add(p1);
+                else if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort != null)
+                {
+                    Point tmp=p2;
+                    if (p1.X == p2.X)
+                        tmp.Y = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint.Y;
+                    else
+                        tmp.X = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint.X;
+                    pline.Points[pline.Points.Count - 1] = tmp;//保证最后拐点为直角，保证终点和后端点所在直线为坐标线
+
+                    pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
+                    flag = false;//结束画线
+                    SubstitutionLine();
+
+                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort = null;//画完一条线，标志结束
+                }
             }
         }
 
@@ -57,26 +74,32 @@ namespace TPIS.TPISCanvas
                 return;
             /*移动中确定拐点和终点*/
             p2 = e.GetPosition(this);
-            if ( IsStraight || (Forms.Control.ModifierKeys & Forms.Keys.Shift) == Forms.Keys.Shift)
+            if (IsStraight || Forms.Control.ModifierKeys == Forms.Keys.Shift)
             {
-                if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
-                else p2.X = p1.X;
+                if (pline.Points.Count >= 3)
+                {//避免新线覆盖旧线
+                    if (pline.Points[pline.Points.Count - 3].X == p1.X) p2.Y = p1.Y;
+                    else p2.X = p1.X;
+                }
+                else
+                {
+                    if (Abs(p1.X - p2.X) > Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
+                    else p2.X = p1.X;
+                }
             }
             pline.Points[pline.Points.Count - 1] = p2;
         }
 
-        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseRightButtonDown(e);
-            if (mainwin.GetCurrentProject().Canvas.CanStopLink==true)
-            {
-                //pline.Points.Add(e.GetPosition(this));
-                pline.Points.Add(mainwin.GetCurrentProject().Canvas.endPoint);//终点
-                flag = false;//结束画线
-                SubstitutionLine();
-                mainwin.GetCurrentProject().Canvas.CanStopLink = false;
-            }
-        }
+        //protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        //{
+        //    base.OnMouseRightButtonDown(e);
+        //    if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink==false)
+        //    {
+        //        pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
+        //        flag = false;//结束画线
+        //        SubstitutionLine();
+        //    }
+        //}
 
         private void SubstitutionLine()
         {

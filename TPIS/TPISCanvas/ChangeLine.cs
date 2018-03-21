@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -58,29 +59,26 @@ namespace TPIS.TPISCanvas
                     obj = VisualTreeHelper.GetParent(obj);
                 }
                 ProjectDesignerCanvas designer = obj as ProjectDesignerCanvas;
+
+                Point point = uIElement.TranslatePoint(new Point(), designer);//控件左上点
+                point.X = point.X + 5;//求中心点
+                point.Y = point.Y + 5;
                 if (port.Type == NodType.Outlet || port.Type == NodType.Undef)
                 {
-                    if(port.link == null && mainwin.GetCurrentProject().Canvas.LinkStartPoint == false)
+                    if (port.link == null && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink == false)
                     {
-                        Point point = uIElement.TranslatePoint(new Point(), designer);//控件左上点
-                        point.X = point.X + 5;//求中心点
-                        point.Y = point.Y + 5;
-                        mainwin.GetCurrentProject().Canvas.statrPoint = point;//折线终点
-                        mainwin.GetCurrentProject().Canvas.CanLink = true;
-                        mainwin.GetCurrentProject().Canvas.LinkStartPoint = true;
-                        mainwin.GetCurrentProject().Canvas.startPort = port;
+                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.statrPoint = point;//折线起点
+                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.StartPort = port;//起始Port
+                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = true;//可以开始画线
                     }
-                }else if (port.Type == NodType.Inlet || port.Type == NodType.Undef)
+                }
+                else if (port.link == null && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink == true)
                 {
-                    if (port.link == null && mainwin.GetCurrentProject().Canvas.LinkStartPoint == true)
+                    if (port.Type == NodType.Inlet || port.Type == NodType.Undef)
                     {
-                        Point point = uIElement.TranslatePoint(new Point(), designer);
-                        point.X = point.X + 5;
-                        point.Y = point.Y + 5;
-                        mainwin.GetCurrentProject().Canvas.endPoint = point;//折线终点
-                        mainwin.GetCurrentProject().Canvas.LinkStartPoint = false;
-                        mainwin.GetCurrentProject().Canvas.CanLink = false;
-                        mainwin.GetCurrentProject().Canvas.CanStopLink = true;
+                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint = point;//折线终点
+                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort = port;//终止Port
+                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;//可以终止画线
                     }
                 }
             }
