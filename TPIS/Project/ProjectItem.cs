@@ -252,10 +252,29 @@ namespace TPIS.Project
                 {
                     if (((TPISComponent)obj).IsSelected && true)//选中
                     {
-                        if (obj is TPISComponent)
+                        ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
+
+                        foreach(Port port in ((TPISComponent)obj).Ports)
                         {
-                            ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
+                            if (port.link !=null && !port.link.IsSelected)
+                            {
+                                if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
+                                {
+                                    port.link.PointTo(0, new Point(port.link.Points[0].X + d_vx, port.link.Points[0].Y + d_vy));
+                                }
+                                else
+                                {
+                                    port.link.PointTo(port.link.Points.Count-1, new Point(port.link.Points[port.link.Points.Count - 1].X + d_vx, port.link.Points[port.link.Points.Count - 1].Y + d_vy));
+                                }
+                            }
                         }
+                    }
+                }
+                if (obj is TPISLine)
+                {
+                    if (((TPISLine)obj).IsSelected && true)//选中
+                    {
+                        ((TPISLine)Objects[i]).PosChange(d_vx, d_vy);
                     }
                 }
             }
@@ -295,6 +314,33 @@ namespace TPIS.Project
                             ((TPISComponent)obj).IsSelected = false;
                     }
                 }
+                if(obj is TPISLine)
+                {
+                    Boolean checkin = false, checkout = false;
+                    foreach(TPISComponent cp in components)
+                    {
+                        if (cp.Ports.Contains(((TPISLine)obj).inPort))
+                        {
+                            checkin = true;
+                        }
+                        if (cp.Ports.Contains(((TPISLine)obj).outPort))
+                        {
+                            checkout = true;
+                        }
+                        if(checkin && checkout)
+                        {
+                            break;
+                        }
+                    }
+                    if (checkin && checkout)
+                    {
+                        ((TPISLine)obj).IsSelected = true;
+                    }
+                    else
+                    {
+                        ((TPISLine)obj).IsSelected = false;
+                    }
+                }
             }
         }
         /// <summary>
@@ -325,6 +371,7 @@ namespace TPIS.Project
                 else
                 {
                     //是连线，同上
+
                     if (objectBase == obj)
                     {
                         ((TPISLine)obj).IsSelected = true;

@@ -108,108 +108,12 @@ namespace TPIS.TPISCanvas
 
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
 
-                foreach (ObjectBase obj in mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects)
+                foreach (ObjectBase obj in mainwin.GetCurrentProject().Objects)
                 {
                     if (obj.GetType() == typeof(TPISLine))
                     {
                         TPISLine line = (TPISLine)obj;
-                        if (this.lineID == line.LNum)//确定线
-                        {
-                            if (line.Points.Count == 3)//一个锚点
-                            {
-                                line.PointTo(1, endPoint);//可移动
-                                //return; ;
-                            }
-                            else if (line.LType == TPISLine.LineType.Straight)
-                            {
-                                if (this.LineAnchorPointID == 0)//前端点
-                                {
-                                    Point tmp = new Point();
-                                    tmp = line.Points[1];
-                                    if (line.Points[0].Y == line.Points[1].Y && line.Points[2].Y != line.Points[1].Y)//前两点在水平线上,防止三点共线时的Bug
-                                    {
-                                        tmp.X = endPoint.X;
-                                        line.PointTo(1, tmp);
-                                        tmp.Y = line.Points[2].Y;
-                                        line.PointTo(2, tmp);
-                                    }
-                                    else//前两点在垂直线上
-                                    {
-                                        tmp.Y = endPoint.Y;
-                                        line.PointTo(1, tmp);
-                                        tmp.X = line.Points[2].X;
-                                        line.PointTo(2, tmp);
-                                    }
-                                }
-                                else if (LineAnchorPointID + 3 == line.Points.Count)//后端点
-                                {
-                                    Point tmp = new Point();
-                                    tmp = line.Points[line.Points.Count - 2];
-                                    if (line.Points[line.Points.Count - 1].Y == line.Points[line.Points.Count - 2].Y &&
-                                        line.Points[line.Points.Count - 2].Y != line.Points[line.Points.Count - 3].Y)//后两点在水平线上,防止三点共线时的Bug
-                                    {//当终点和后端点所在直线为坐标线时，可执行
-                                        tmp.X = endPoint.X;
-                                        line.PointTo(line.Points.Count - 2, tmp);
-                                        tmp.Y = line.Points[line.Points.Count - 3].Y;
-                                        line.PointTo(line.Points.Count - 3, tmp);
-                                    }
-                                    else//后两点在垂直线上
-                                    {
-                                        tmp.Y = endPoint.Y;
-                                        line.PointTo(line.Points.Count - 2, tmp);
-                                        tmp.X = line.Points[line.Points.Count - 3].X;
-                                        line.PointTo(line.Points.Count - 3, tmp);
-                                    }
-                                }
-                                else//中间端点
-                                {
-                                    Point p1, p2, p3;
-                                    p1 = line.Points[this.LineAnchorPointID];
-                                    p2 = line.Points[this.LineAnchorPointID + 1];
-                                    p3 = line.Points[this.LineAnchorPointID + 2];
-                                    Point tmp = new Point();
-                                    tmp = p1;
-                                    if ((p1.X == p2.X && p2.X != p3.X))//前两点在垂直线上线，后两点不在同一条垂直线上
-                                    {
-                                        tmp.X = endPoint.X;
-                                        line.PointTo(this.LineAnchorPointID, tmp);
-                                        line.PointTo(this.LineAnchorPointID + 1, endPoint);
-                                        tmp = p3;
-                                        tmp.Y = endPoint.Y;
-                                        line.PointTo(this.LineAnchorPointID + 2, tmp);
-                                    }
-                                    else if ((p1.Y == p2.Y && p2.Y != p3.Y))//前两点在垂直线上线，或后两点不在在同一条垂直线上
-                                    {
-                                        tmp.Y = endPoint.Y;
-                                        line.PointTo(this.LineAnchorPointID, tmp);
-                                        line.PointTo(this.LineAnchorPointID + 1, endPoint);
-                                        tmp = p3;
-                                        tmp.X = endPoint.X;
-                                        line.PointTo(this.LineAnchorPointID + 2, tmp);
-                                    }
-                                    else if (p1.X == p2.X && p2.X == p3.X)//三点共垂直线
-                                    {
-                                        tmp.X = endPoint.X;
-                                        line.PointTo(this.LineAnchorPointID, tmp);
-                                        line.PointTo(this.LineAnchorPointID + 1, endPoint);
-                                        tmp = p3;
-                                        tmp.Y = endPoint.Y;
-                                        line.PointTo(this.LineAnchorPointID + 2, tmp);
-                                    }
-                                    else if (p1.Y == p2.Y && p2.Y == p3.Y)//三点共水平线
-                                    {
-                                        tmp.Y = endPoint.Y;
-                                        line.PointTo(this.LineAnchorPointID, tmp);
-                                        line.PointTo(this.LineAnchorPointID + 1, endPoint);
-                                        tmp = p3;
-                                        tmp.X = endPoint.X;
-                                        line.PointTo(this.LineAnchorPointID + 2, tmp);
-                                    }
-                                }
-                            }
-                            else
-                                line.PointTo(this.LineAnchorPointID + 1, endPoint);//确定点
-                        }
+                        line.PointTo(LineAnchorPointID + 1, endPoint);
                     }
                 }
             }

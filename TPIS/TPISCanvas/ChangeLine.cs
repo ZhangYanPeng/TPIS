@@ -65,20 +65,20 @@ namespace TPIS.TPISCanvas
                 point.Y = point.Y + 5;
                 if (port.Type == NodType.Outlet || port.Type == NodType.Undef)
                 {
-                    if (port.link == null && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink == false)
+                    if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == false)
                     {
-                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.statrPoint = point;//折线起点
-                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.StartPort = port;//起始Port
-                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = true;//可以开始画线
+                        mainwin.GetCurrentProject().Canvas.statrPoint = point;//折线起点
+                        mainwin.GetCurrentProject().Canvas.StartPort = port;//起始Port
+                        mainwin.GetCurrentProject().Canvas.CanLink = true;//可以开始画线
                     }
                 }
-                else if (port.link == null && mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink == true)
+                else if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == true)
                 {
-                    if (port.Type == NodType.Inlet || port.Type == NodType.Undef)
+                    if ((port.Type == NodType.Inlet || port.Type == NodType.Undef) && port.MaterialType == mainwin.GetCurrentProject().Canvas.StartPort.MaterialType )
                     {
-                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint = point;//折线终点
-                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.EndPort = port;//终止Port
-                        mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink = false;//可以终止画线
+                        mainwin.GetCurrentProject().Canvas.endPoint = point;//折线终点
+                        mainwin.GetCurrentProject().Canvas.EndPort = port;//终止Port
+                        mainwin.GetCurrentProject().Canvas.CanLink = false;//可以终止画线
                     }
                 }
             }
@@ -89,11 +89,11 @@ namespace TPIS.TPISCanvas
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             Ellipse uIElement = new Ellipse();
             uIElement = (Ellipse)sender;
-            if (mainwin.GetCurrentProject().Canvas.LinkStartPoint == true)
-            {
-                mainwin.GetCurrentProject().Canvas.CanLink = false;
-                mainwin.GetCurrentProject().Canvas.CanLink = true;
-            }
+            //if (mainwin.GetCurrentProject().Canvas.LinkStartPoint == true)
+            //{
+            //    mainwin.GetCurrentProject().Canvas.CanLink = false;
+            //    mainwin.GetCurrentProject().Canvas.CanLink = true;
+            //}
         }
 
         public void Port_MouseRightButtonDown(object sender, MouseEventArgs e)
