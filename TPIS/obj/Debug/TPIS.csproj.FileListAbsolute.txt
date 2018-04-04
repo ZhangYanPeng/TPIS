@@ -2,7 +2,6 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe.config
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPISNet.dll
-C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\TPISNet.pdb
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\Views\Modules\TPISToolBar.baml
@@ -27,4 +26,5 @@ C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.Generate
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\bin\Debug\CurvesData.exe
 C:\Users\yanpengzhang\Desktop\Workspace\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

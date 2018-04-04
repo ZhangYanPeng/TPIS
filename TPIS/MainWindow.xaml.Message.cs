@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPIS.Model;
+using TPIS.Model.Common;
 using TPIS.Project;
 using TPIS.TPISCommand;
 
@@ -235,6 +236,51 @@ namespace TPIS
                 ResultWindow.Visibility = Visibility.Visible;
                 ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
             }
+        }
+    }
+
+    //控制显示样式
+    public class ValVisualConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)value != P_Type.ToSelect)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制显示样式
+    public class MeasureVisualConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Visible;
+            else
+            {
+                string[] tmp = (string[])value;
+                if (tmp.Count<String>() == 1 && tmp[0] == "" )
+                    return Visibility.Collapsed;
+                else
+                    return Visibility.Visible;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
         }
     }
 }

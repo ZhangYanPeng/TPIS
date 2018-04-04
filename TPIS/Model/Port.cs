@@ -37,7 +37,7 @@ namespace TPIS.Model
             this.Name = info.GetString("name");
             this.x = info.GetDouble("xpos");
             this.y = info.GetDouble("ypos");
-            this.MaterialType = (Material)info.GetValue("material", typeof(Object));
+            this.MaterialType = (TPISNet.Material)info.GetValue("material", typeof(Object));
             this.Type = (NodType)info.GetValue("nodType", typeof(Object));
             this.CanLink = info.GetBoolean("canlink");
             this.CanCancel = info.GetBoolean("cancancel"); 
@@ -73,7 +73,7 @@ namespace TPIS.Model
 
         public string DicName { get; set; }
         public string Name { get; set; }
-        public Material MaterialType { get; set; }
+        public TPISNet.Material MaterialType { get; set; }
         public NodType type;
         public NodType Type {
             get => type;
@@ -108,7 +108,7 @@ namespace TPIS.Model
         #region
         public Port()
         { }
-        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool canlink, bool cancancel)
+        public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink, bool cancancel)
         {
             DicName = dicName;
             Name = name;
@@ -119,7 +119,7 @@ namespace TPIS.Model
             CanLink = canlink;
             CanCancel = cancancel;
         }
-        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool canlink)
+        public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink)
         {
             DicName = dicName;
             Name = name;

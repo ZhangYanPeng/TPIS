@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CurvesData">
+      <HintPath>..\CurvesData.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -48,8 +51,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TPISNet">
-      <HintPath>..\..\..\TPISNet\TPISNet\bin\Debug\TPISNet.dll</HintPath>
+    <Reference Include="TPISNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\TPISNet.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -86,11 +90,13 @@
     <Compile Include="Model\BaseType.cs" />
     <Compile Include="Model\Common\EleType.cs" />
     <Compile Include="Model\Common\InitComponentMode.cs" />
+    <Compile Include="Model\Common\InitComponentPic.cs" />
     <Compile Include="Model\Common\InitComponentPort.cs" />
     <Compile Include="Model\Common\InitComponentResult.cs" />
     <Compile Include="Model\Common\InitComponentProperty.cs" />
     <Compile Include="Model\Common\PortParam.cs" />
     <Compile Include="Model\Common\Unit.cs" />
+    <Compile Include="Model\Common\IViewModel.cs" />
     <Compile Include="Model\ComponentType.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\Position.cs" />

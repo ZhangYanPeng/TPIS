@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPIS.Model.Common;
+using TPISNet;
 
 namespace TPIS.Model
 {

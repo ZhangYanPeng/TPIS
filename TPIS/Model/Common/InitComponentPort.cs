@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPISNet;
 
 namespace TPIS.Model.Common
 {
@@ -13,314 +14,41 @@ namespace TPIS.Model.Common
 
         public static ObservableCollection<Port> InitComponentPort(EleType eleType)
         {
-            if (eleType == EleType.CFB)
-                return InitCFBPort();
-            else if (eleType == EleType.SuperHeater)
-                return InitSuperHeaterPort();
-            else if (eleType == EleType.EVAP)
-                return InitEVAPPort();
-            else if (eleType == EleType.EVAP2)
-                return InitEVAP2Port();
-            else if (eleType == EleType.ECON)
-                return InitECONPort();
-            else if (eleType == EleType.WaterPool)
-                return InitWaterPoolPort();
-            else if (eleType == EleType.WaterSource)
-                return InitWaterSourcePort();
-            else if (eleType == EleType.CoalSource)
-                return InitCoalSourcePort();
-            else if (eleType == EleType.GasSoource)
-                return InitGasSourcePort();
-            else if (eleType == EleType.TeeGas)
-                return InitTeeGasPort();
-            else if (eleType == EleType.Compressor)
-                return InitCompressorPort();
-            else if (eleType == EleType.Pump)
-                return InitPumpPort();
-            else if (eleType == EleType.SteamHeader)
-                return InitSteamHeaderPort();
-            else if (eleType == EleType.TeeWater)
-                return InitTeeWaterPort();
-            else if (eleType == EleType.PipeEle)
-                return InitPipeElePort();
-            else if (eleType == EleType.GasTurbin)
-                return InitGasTurbinPort();
-            else if (eleType == EleType.GasMidTurbin)
-                return InitGasMidTurbinPort();
-            else if (eleType == EleType.GasLastTurbin)
-                return InitGasLastTurbinPort();
-            else if (eleType == EleType.Controllingstage)
-                return InitControllingstagePort();
-            else if (eleType == EleType.Turbin)
-                return InitTurbinPort();
-            else if (eleType == EleType.SmallTurbin)
-                return InitSmallTurbinPort();
-            else if (eleType == EleType.Laststage)
-                return InitLaststagePort();
-            else if (eleType == EleType.Condenser)
-                return InitCondenserPort();
-            else if (eleType == EleType.Airisland)
-                return InitAirislandPort();
-            else if (eleType == EleType.Deaerator)
-                return InitDeaeratorPort();
-            else if (eleType == EleType.WaterHeater)
-                return InitWaterHeaterPort();
-            else if (eleType == EleType.GasHeater)
-                return InitGasHeaterPort();
-            else if (eleType == EleType.PumpSteam)
-                return InitPumpSteamPort();
-            else if (eleType == EleType.PTReducer)
-                return InitPTReducerPort();
-            else if (eleType == EleType.Boiler)//
-                return InitBoilerPort();
-            else if (eleType == EleType.Calorifier)
-                return InitCalorifierPort();
-            else if (eleType == EleType.GasBoiler)
-                return InitGasBoilerPort();
-            else if (eleType == EleType.Fan)
-                return InitFanPort();
-            else if (eleType == EleType.FanSteam)
-                return InitFanSteamPort();
-            else if (eleType == EleType.Chimney)
-                return InitChimneyPort();
-            else if (eleType == EleType.ConTank)
-                return InitConTankPort();
-            else if (eleType == EleType.Ejector)
-                return InitEjectorPort();
-            else if (eleType == EleType.Generator)
-                return InitGeneratorPort();
-            else if (eleType == EleType.Motor)
-                return InitMotorPort();
-            else if (eleType == EleType.TeePower)
-                return InitTeePowerPort();
-            else if (eleType == EleType.GasBurner)
-                return InitGasBurnerPort();
-            else if (eleType == EleType.MixedHeatExchanger)
-                return InitMixedHeatExchangerPort();
-            else if (eleType == EleType.SurfaceHeatExchanger)
-                return InitSurfaceHeatExchangerPort();
-            else if (eleType == EleType.ControlDot)
-                return InitControlDotPort();
-            else if (eleType == EleType.TeeCoal)
-                return InitTeeCoalPort();
-            else if (eleType == EleType.GasHeatExchanger)
-                return InitGasHeatExchangerPort();
-            else if (eleType == EleType.ControlDotGas)
-                return InitControlDotGasPort();
-            else if (eleType == EleType.IterateDot)
-                return InitIterateDotPort();
-            else if (eleType == EleType.IterateDotGas)
-                return InitIterateDotGasPort();
-            else if (eleType == EleType.SlagCooler)
-                return InitSlagCoolerPort();
-            else if (eleType == EleType.BagFilter)
-                return InitBagFilterPort();
-            else if (eleType == EleType.Thionizer)
-                return InitThionizerPort();
-            else if (eleType == EleType.WaterTag)
-                return InitWaterTagPort();
-            else if (eleType == EleType.WaterValve)
-                return InitWaterValvePort();
-            else if (eleType == EleType.TeeValve)
-                return InitTeeValvePort();
-            else if (eleType == EleType.ControlValve)
-                return InitControlValvePort();
-            else if (eleType == EleType.Throttle)
-                return InitThrottlePort();
-            else if (eleType == EleType.HeatSupply)
-                return InitHeatSupplyPort();
-            return null;
+            Element element = CommonTypeService.LoadElement(eleType);
+            return InitPort(element);
         }
 
-        private static ObservableCollection<Port> InitHeatSupplyPort()
+        private static ObservableCollection<Port> InitPort(Element element)
         {
-            throw new NotImplementedException();
+            ObservableCollection<Port> ports = new ObservableCollection<Port>();
+            foreach ( string key in element.IOPoints.Keys)
+            {
+                Nozzle n = element.IOPoints[key];
+                if (n.IsInner)
+                    continue;
+                if(n.CanCancel == true)
+                {
+                    ports.Add(new Port(key, n.Name, n.NX[0]/element.Nwidth[0], n.NY[0] / element.Nheight[0], n.material, TransformNodType(n.nodtype), n.CanNotLink, true));
+                }
+                else
+                {
+                    ports.Add(new Port(key, n.Name, n.NX[0] / element.Nwidth[0], n.NY[0] / element.Nheight[0], n.material, TransformNodType(n.nodtype), n.CanNotLink));
+                }
+            }
+            return ports;
         }
 
-        private static ObservableCollection<Port> InitThrottlePort()
+        internal static NodType TransformNodType(TPISNet.NodType type)
         {
-            throw new NotImplementedException();
+            switch (type)
+            {
+                case TPISNet.NodType.Inlet: return NodType.Inlet;
+                case TPISNet.NodType.Outlet: return NodType.Outlet;
+                case TPISNet.NodType.Undef: return NodType.Undef;
+            }
+            return NodType.Undef;
         }
 
-        private static ObservableCollection<Port> InitControlValvePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitTeeValvePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitWaterValvePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitWaterTagPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitThionizerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitBagFilterPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitSlagCoolerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitIterateDotGasPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitIterateDotPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitControlDotGasPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasHeatExchangerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitTeeCoalPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitControlDotPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitSurfaceHeatExchangerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitMixedHeatExchangerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasBurnerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitTeePowerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitMotorPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGeneratorPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitEjectorPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitConTankPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitChimneyPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitFanSteamPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitFanPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasBoilerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitCalorifierPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitBoilerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitPTReducerPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitPumpSteamPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasHeaterPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitWaterHeaterPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitDeaeratorPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitAirislandPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitCondenserPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitLaststagePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitSmallTurbinPort()
-        {
-            throw new NotImplementedException();
-        }
 
         private static ObservableCollection<Port> InitTurbinPort()
         {
@@ -332,96 +60,7 @@ namespace TPIS.Model.Common
             ports.Add(new Port("ExtractSteam", "抽汽点", 1, 1, Material.water, NodType.Outlet, true, true));
             return ports;
         }
-
-        private static ObservableCollection<Port> InitControllingstagePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasLastTurbinPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasMidTurbinPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasTurbinPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitPipeElePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitTeeWaterPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitSteamHeaderPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitPumpPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitCompressorPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitTeeGasPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitGasSourcePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitCoalSourcePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitWaterSourcePort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitWaterPoolPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitECONPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitEVAP2Port()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitEVAPPort()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static ObservableCollection<Port> InitSuperHeaterPort()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         private static ObservableCollection<Port> InitCFBPort()
         {

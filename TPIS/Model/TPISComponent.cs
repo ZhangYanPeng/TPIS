@@ -12,16 +12,14 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using TPIS.Model.Common;
 using TPIS.Project;
+using TPISNet;
 
 namespace TPIS.Model
 {
     [Serializable]
-    public class TPISComponent : ObjectBase, INotifyPropertyChanged, ISerializable, ICloneable
+    public class TPISComponent : ObjectBase, INotifyPropertyChanged, ISerializable, ICloneable, IViewModel
     {
-        /// <summary>
-        /// 序列化与反序列化
-        /// </summary>
-        #region
+        #region 序列化与反序列化
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("no", No);
@@ -44,7 +42,7 @@ namespace TPIS.Model
             PropertyGroups = (ObservableCollection<PropertyGroup>)info.GetValue("propertyGroups", typeof(Object));
             ResultGroups = (ObservableCollection<PropertyGroup>)info.GetValue("resultGroups", typeof(Object));
 
-            Mode = (ObservableCollection<SelMode>)info.GetValue("mode", typeof(Object));
+            Mode = (ObservableCollection<Common.SelMode>)info.GetValue("mode", typeof(Object));
             SelectedMode = 0;
 
             RePosPort();
@@ -52,6 +50,7 @@ namespace TPIS.Model
         }
         #endregion
 
+        #region binding通知
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -71,6 +70,7 @@ namespace TPIS.Model
                 OnPropertyChanged("IsSelected");
             }
         }
+        #endregion
 
         public Position Position { get; set; }
         public ObservableCollection<Port> Ports { get; set; }
@@ -85,16 +85,11 @@ namespace TPIS.Model
             this.Position.V_y = ty;
             this.Position.V_width = width;
             this.Position.V_height = height;
+            this.eleType = ct.Type;
+            this.ModelToView(ct);
             this.Position.IsVerticalReversed = 1;
             this.Position.IsHorizentalReversed = 1;
             this.Position.Angle = 0;
-            this.Pic = ct.PicPath;
-            this.eleType = ct.Type;
-            Ports = CommonTypeService.InitComponentPort(eleType);
-            PropertyGroups = CommonTypeService.InitComponentProperty(eleType);
-            ResultGroups = CommonTypeService.InitComponentResult(eleType);
-
-            Mode = CommonTypeService.InitComponentMode(eleType);
             SelectedMode = 0;
 
             RePosPort();
@@ -112,8 +107,7 @@ namespace TPIS.Model
             RePosPort();
         }
 
-        //形变操作
-        #region
+        #region 形变操作
         /// <summary>
         /// 水平和垂直翻转\旋转
         /// </summary>
@@ -242,7 +236,7 @@ namespace TPIS.Model
         public ObservableCollection<PropertyGroup> ResultGroups { get; set; }
         public EleType eleType { get; set; }
 
-        public ObservableCollection<SelMode> Mode { get; set; }
+        public ObservableCollection<Common.SelMode> Mode { get; set; }
         public int selectedMode;
         public int SelectedMode
         {
@@ -267,5 +261,24 @@ namespace TPIS.Model
                 OnPropertyChanged("SelectedMode");
             }
         }
+
+        #region 与后台数据转换
+        //根据 component传入后台数据
+        public Element ViewToModel(TPISComponent component)
+        {
+            return null;
+        }
+        //根据后台数据构建component
+        public TPISComponent ModelToView(ComponentType ct)
+        {
+            Pic = CommonTypeService.InitComponentPic(ct.Type);
+            Ports = CommonTypeService.InitComponentPort(ct.Type);
+            PropertyGroups = CommonTypeService.InitComponentProperty(ct.Type);
+            ResultGroups = CommonTypeService.InitComponentResult(ct.Type);
+
+            Mode = CommonTypeService.InitComponentMode(ct.Type);
+            return null;
+        }
+        #endregion
     }
 }
