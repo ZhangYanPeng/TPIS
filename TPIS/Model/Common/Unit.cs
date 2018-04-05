@@ -38,7 +38,7 @@ namespace TPIS.Model.Common
         public static string[] KJ_KG = { "KJ/Kg" };
         public static string[] Percent = { "%" };
         public static string[] Nm3_Kg = { "Nm3/kg" };
-        public static string[] NA = { };
+        public static string[] NA = {""};
         public static string[] t_h = { "t/h" };
         public static string[] m3_h = { "m3/h" };
         public static string[] MPa = { "MPa" };

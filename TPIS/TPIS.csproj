@@ -88,6 +88,7 @@
     <Compile Include="Command\ToolboxItem.cs" />
     <Compile Include="Command\TPISCommand.cs" />
     <Compile Include="Model\BaseType.cs" />
+    <Compile Include="Model\Common\CalculateInBackEnd.cs" />
     <Compile Include="Model\Common\EleType.cs" />
     <Compile Include="Model\Common\InitComponentMode.cs" />
     <Compile Include="Model\Common\InitComponentPic.cs" />
@@ -449,6 +450,9 @@
   <ItemGroup>
     <Resource Include="Images\icon\window_show.png" />
     <Resource Include="Images\icon\window_hide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_play.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

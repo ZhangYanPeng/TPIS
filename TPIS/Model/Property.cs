@@ -166,6 +166,7 @@ namespace TPIS.Model
                 OnPropertyChanged("Visibility");
             }
         }
+
         public void SelectProperty(SelMode selMode)
         {
             if (Modes.Contains(selMode))

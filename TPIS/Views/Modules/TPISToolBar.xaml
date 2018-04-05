@@ -72,5 +72,10 @@
         <Button Name="tsbFind" ToolTip="查找" Click="FindTargNo">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_search.png" Stretch="None" />
         </Button>
+        <Separator />
+        <TextBox Width="60" Name="Calculate"></TextBox>
+        <Button Name="tsbCal" ToolTip="查找" Click="CalculateResult">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_play.png" Stretch="None" />
+        </Button>
     </ToolBar>
 </ResourceDictionary>

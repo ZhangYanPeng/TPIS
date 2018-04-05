@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TPIS.Model;
+using TPIS.Model.Common;
+using TPIS.Project;
 
 namespace TPIS.Views.Modules
 {
     partial class TPISToolBar : ResourceDictionary
     {
-        //形变操作
-        #region
+
+        #region 形变操作
         /// <summary>
         /// 垂直翻转
         /// </summary>
@@ -69,8 +71,7 @@ namespace TPIS.Views.Modules
         }
         #endregion
 
-        //缩放操作
-        #region
+        #region 缩放操作
         /// <summary>
         /// 放大
         /// </summary>
@@ -108,15 +109,15 @@ namespace TPIS.Views.Modules
         }
         #endregion
 
-        // 查找操作
-        #region
+        #region 查找操作
         private void FindTargNo(object sender, RoutedEventArgs e)
         {
             String str = TargetNo.Text;
-            try{
+            try
+            {
                 int tn = int.Parse(str);
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                if( !mainwin.GetCurrentProject().FindComponent(tn))
+                if (!mainwin.GetCurrentProject().FindComponent(tn))
                 {
                     MessageBox.Show("未找到该元件!");
                 }
@@ -127,6 +128,37 @@ namespace TPIS.Views.Modules
                 return;
             }
         }
+        #endregion
+
+        #region 计算
+        private void CalculateResult(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                ProjectItem project = mainwin.GetCurrentProject();
+                //Task t = new Task(() => CalculateCurrent(project));
+                //t.Start();
+                ProjectItem result = CalculateCurrent(project);
+                for (int i = 0; i < mainwin.ProjectList.projects.Count; i++)
+                {
+                    if (mainwin.ProjectList.projects[i].Num == result.Num)
+                    {
+                        mainwin.ProjectList.projects[i].Objects = result.Objects;
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        public static ProjectItem CalculateCurrent(object data )
+        {
+            return CalculateInBackEnd.Calculate(data as ProjectItem);
+        }
+
         #endregion
     }
 }
