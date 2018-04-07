@@ -27,7 +27,7 @@ namespace TPIS.Views.Modules
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 mainwin.GetCurrentProject().VerticalReversedSelection();
             }
-            catch (Exception exp)
+            catch
             {
                 return;
             }
@@ -45,7 +45,7 @@ namespace TPIS.Views.Modules
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 mainwin.GetCurrentProject().HorizentalReversedSelection();
             }
-            catch (Exception exp)
+            catch
             {
                 return;
             }
@@ -64,7 +64,7 @@ namespace TPIS.Views.Modules
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 mainwin.GetCurrentProject().RotateSelection(1);
             }
-            catch (Exception exp)
+            catch
             {
                 return;
             }
@@ -84,7 +84,7 @@ namespace TPIS.Views.Modules
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 mainwin.GetCurrentProject().SupRate();
             }
-            catch (Exception exp)
+            catch
             {
                 return;
             }
@@ -102,7 +102,7 @@ namespace TPIS.Views.Modules
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 mainwin.GetCurrentProject().SubRate();
             }
-            catch (Exception exp)
+            catch
             {
                 return;
             }

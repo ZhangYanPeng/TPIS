@@ -52,7 +52,25 @@ namespace TPIS.Model.Common
                     PropertyGroups.Add(baseGroup);
                 }
             }
+            
+            PropertyGroup curveGroup = new PropertyGroup() { Flag = "曲线" };
+
+            //初始化curve
+            foreach (string key in element.DLines.Keys)
+            {
+                Curves curve = element.DLines[key];
+                Property p = InitCurve(key, curve);
+                curveGroup.Properties.Add(p);
+            }
+            PropertyGroups.Add(curveGroup);
+
             return PropertyGroups;
+        }
+
+        private static Property InitCurve(string key, Curves curve)
+        {
+            Property p = new Property(key, curve.Name, curve.units.ToArray(), curve.tips);
+            return p;
         }
 
         public static Property InitProperty(string key, TPISNet.Property property, ObservableCollection<SelMode> sm)

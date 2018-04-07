@@ -141,6 +141,7 @@ namespace TPIS.Model.Common
 
     public enum P_Type
     {
+        ToLine,
         ToSelect,
         ToSetAsString,
         ToSetAsDouble,

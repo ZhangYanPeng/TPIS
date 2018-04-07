@@ -43,7 +43,7 @@ namespace TPIS
                     return;
                 }
             }
-            catch(Exception exp)
+            catch
             {
                 MessageBox.Show("画布像素只能为正整数！", "提示", MessageBoxButton.OKCancel);
                 return;

@@ -102,6 +102,7 @@ namespace TPIS.Model
         public string Name { get; set; }
         public string Tips { get; set; }
         public string[] Units { get; set; }
+        public TPISNet.Curves Curve { get; set; }
 
         public int unitNum;
         public int UnitNum
@@ -213,6 +214,18 @@ namespace TPIS.Model
                 Modes = modes;
             else
                 Modes = new ObservableCollection<SelMode>() { SelMode.None };
+        }
+
+        public Property(string dicName, string name, string[] units, string tips = "")
+        {
+            DicName = dicName;
+            Name = name;
+            Units = units;
+            Type = P_Type.ToLine;
+            Tips = tips;
+            Modes = new ObservableCollection<SelMode>() { SelMode.InterMode };
+            Curve = new TPISNet.Curves(name, units[0], units[1]);
+            Curve.Lx1x2.Add(new TPISNet.XYDataLine());
         }
 
         //属性间的转化

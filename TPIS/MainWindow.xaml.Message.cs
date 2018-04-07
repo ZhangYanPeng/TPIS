@@ -59,7 +59,7 @@ namespace TPIS
                     }
                 }
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -91,7 +91,7 @@ namespace TPIS
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.SELECT;
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -129,7 +129,7 @@ namespace TPIS
                     }
                 }
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -152,7 +152,7 @@ namespace TPIS
                     this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
                 }
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -237,6 +237,16 @@ namespace TPIS
                 ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
             }
         }
+
+        private void OpenCurveWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            CurvesData.FittingWin ftw = new CurvesData.FittingWin(btn.DataContext as CurvesData.Curves);
+            ftw.Owner = this;
+            ftw.ShowDialog();
+
+        }
+
     }
 
     //控制显示样式
@@ -248,7 +258,7 @@ namespace TPIS
                 return Visibility.Visible;
             else
             {
-                if ((P_Type)value != P_Type.ToSelect)
+                if ((P_Type)value != P_Type.ToSelect && (P_Type)value != P_Type.ToLine)
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;
@@ -262,7 +272,32 @@ namespace TPIS
     }
 
     //控制显示样式
-    public class MeasureVisualConverter : IValueConverter
+    public class MeasureVisualConverter : IMultiValueConverter
+    {
+        object IMultiValueConverter.Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values[0] == null || values[1] == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)values[1] == P_Type.ToLine)
+                    return Visibility.Collapsed;
+                string[] tmp = (string[])values[0];
+                if (tmp.Count<String>() == 1 && tmp[0] == "")
+                    return Visibility.Collapsed;
+                else
+                    return Visibility.Visible;
+            }
+        }
+
+        object[] IMultiValueConverter.ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制显示样式
+    public class LineVisualConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -270,11 +305,10 @@ namespace TPIS
                 return Visibility.Visible;
             else
             {
-                string[] tmp = (string[])value;
-                if (tmp.Count<String>() == 1 && tmp[0] == "" )
-                    return Visibility.Collapsed;
-                else
+                if ((P_Type)value == P_Type.ToLine)
                     return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
             }
         }
 
