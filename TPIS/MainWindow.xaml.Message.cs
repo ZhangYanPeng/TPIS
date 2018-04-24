@@ -240,10 +240,10 @@ namespace TPIS
 
         private void OpenCurveWindow_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            CurvesData.FittingWin ftw = new CurvesData.FittingWin(btn.DataContext as CurvesData.Curves);
-            ftw.Owner = this;
-            ftw.ShowDialog();
+            //Button btn = sender as Button;
+            //CurvesData.FittingWin ftw = new CurvesData.FittingWin(btn.DataContext as CurvesData.Curves);
+            //ftw.Owner = this;
+            //ftw.ShowDialog();
 
         }
 
