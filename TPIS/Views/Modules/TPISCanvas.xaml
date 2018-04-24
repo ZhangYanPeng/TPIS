@@ -44,7 +44,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Ellipse Width="10" Height="10" Fill="{Binding PortColor}" MouseEnter="Port_MouseEnter" MouseLeftButtonDown="Port_MouseLeftButtonDown" MouseRightButtonDown="Port_MouseRightButtonDown" MouseLeftButtonUp="Port_MouseLeftButtonUp">
+                    <Ellipse Width="10" Height="10" Fill="{Binding PortColor}" ToolTip="{Binding MaterialType}" MouseEnter="Port_MouseEnter" MouseLeftButtonDown="Port_MouseLeftButtonDown" MouseRightButtonDown="Port_MouseRightButtonDown" MouseLeftButtonUp="Port_MouseLeftButtonUp">
                     </Ellipse>
                 </DataTemplate>
             </Setter.Value>
@@ -65,6 +65,7 @@
                     </ImageBrush.RelativeTransform>
                 </ImageBrush>
             </s:DesignerComponent.Background>
+            <TextBlock Text="{Binding No}" Canvas.Left="0" Canvas.Top="{Binding Position.V_height}" Width="{Binding Position.V_width}" TextAlignment="Center"></TextBlock>
             <ItemsControl ItemsSource="{Binding Ports}" Style="{StaticResource PortItemsControlStyle}">
             </ItemsControl>
         </s:DesignerComponent>

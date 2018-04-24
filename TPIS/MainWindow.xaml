@@ -18,6 +18,9 @@
                 <ResourceDictionary Source="Views/Modules/TPISCanvas.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <local:ValVisualConverter x:Key="ValVisualConverter"></local:ValVisualConverter>
+            <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
+            <local:LineVisualConverter x:Key="LineVisualConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -60,7 +63,7 @@
                     </GroupBox>
                 </Border>
                 <Border BorderThickness="1" BorderBrush="Gray">
-                <GroupBox Header="元件" Margin="3,0,0,0">
+                    <GroupBox Header="元件" Margin="3,0,0,0">
                         <ScrollViewer Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="3" >
                                 <ItemsControl Name="ElementList">
@@ -102,8 +105,25 @@
         <ContentControl DockPanel.Dock="right" >
             <DockPanel>
                 <!--元件模块-->
+                <DockPanel DockPanel.Dock="Left" Width="10" Height="200">
+                    <Button Name="PropertyStateChange" DockPanel.Dock="Top" Height="100" Click="btn_PropertyStateChange" Tag="show" ToolTip="隐藏属性窗">
+                        <Button.Content>
+                            <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Image Name="PropertyStateChangeFig" Source="Images\icon\window_hide.png" ></Image>
+                            </ContentControl>
+                        </Button.Content>
+                    </Button>
+                    <Button Name="ResultStateChange" Height="100" Click="btn_ResultStateChange" Tag="show" ToolTip="隐藏结果窗">
+                        <Button.Content>
+                            <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Image Name="ResultStateChangeFig" Source="Images\icon\window_hide.png" ></Image>
+                            </ContentControl>
+                        </Button.Content>
+                    </Button>
+                </DockPanel>
+                
                 <Border BorderThickness="1" BorderBrush="Gray">
-                    <ListBox Name="PropertyWindow">
+                    <ListBox Name="ResultWindow">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <GroupBox Header="{Binding Flag}">
@@ -139,6 +159,49 @@
                         </ItemsControl.ItemTemplate>
                     </ListBox>
                 </Border>
+                
+                <Border BorderThickness="1" BorderBrush="Gray">
+                    <ListBox Name="PropertyWindow">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <GroupBox Header="{Binding Flag}">
+                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                <GridViewColumn Header="值" Width="180" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <DockPanel Width="165">
+                                                                <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                    <ComboBox.Visibility>
+                                                                        <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                            <Binding Path="Units"></Binding>
+                                                                            <Binding Path="Type"></Binding>
+                                                                        </MultiBinding>
+                                                                    </ComboBox.Visibility>
+                                                                    <ComboBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBlock Text="{Binding }"></TextBlock>
+                                                                        </DataTemplate>
+                                                                    </ComboBox.ItemTemplate> 
+                                                                </ComboBox>
+                                                                <UserControl Visibility="{Binding Type, Converter={StaticResource LineVisualConverter}}">
+                                                                    <Button Content="设置" DataContext="{Binding Curve}"  Click="OpenCurveWindow_Click"></Button>
+                                                                </UserControl>
+                                                            </DockPanel>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </GroupBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                </Border>
             </DockPanel>
         </ContentControl>
         <Grid>
@@ -152,7 +215,7 @@
                         <TabControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="90" MinWidth="30" Background="AliceBlue">
-                                    <Button Tag="{Binding Name}" DockPanel.Dock="Right" Click="ProjectItem_Close" >
+                                    <Button Tag="{Binding Num}" DockPanel.Dock="Right" Click="ProjectItem_Close" >
                                         <Image Source="Images/icon/tab_close.png" Width="10" Height="10"/>
                                     </Button>
                                     <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"></TextBlock>
@@ -162,7 +225,7 @@
                         <TabControl.ContentTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <ScrollViewer Name="CanvasScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                         <!-- 画布-->
                                         <s:ProjectDesignerCanvas Visibility="Visible" Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
                                             <ItemsControl ItemsSource="{Binding Objects}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrLineOrComponent}">

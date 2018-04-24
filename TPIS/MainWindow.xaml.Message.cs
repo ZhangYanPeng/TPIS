@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPIS.Model;
+using TPIS.Model.Common;
 using TPIS.Project;
 using TPIS.TPISCommand;
 
@@ -58,7 +59,7 @@ namespace TPIS
                     }
                 }
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -90,7 +91,7 @@ namespace TPIS
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.SELECT;
                 this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -128,7 +129,7 @@ namespace TPIS
                     }
                 }
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -151,7 +152,7 @@ namespace TPIS
                     this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
                 }
             }
-            catch (Exception exp)
+            catch
             {
                 currEle.IsChecked = false;
                 return;
@@ -196,6 +197,124 @@ namespace TPIS
             {
                 return null;
             }
+        }
+
+        //显示隐藏属性窗口
+        private void btn_PropertyStateChange(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if(btn.Tag.ToString() == "show")
+            {
+                btn.Tag = "hide";
+                btn.ToolTip = "显示属性窗";
+                PropertyWindow.Visibility = Visibility.Collapsed;
+                PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
+            }
+            else
+            {
+                btn.Tag = "show";
+                btn.ToolTip = "隐藏属性窗";
+                PropertyWindow.Visibility = Visibility.Visible;
+                PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
+            }
+        }
+
+        private void btn_ResultStateChange(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn.Tag.ToString() == "show")
+            {
+                btn.Tag = "hide";
+                btn.ToolTip = "显示结果窗";
+                ResultWindow.Visibility = Visibility.Collapsed;
+                ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
+            }
+            else
+            {
+                btn.Tag = "show";
+                btn.ToolTip = "隐藏结果窗";
+                ResultWindow.Visibility = Visibility.Visible;
+                ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
+            }
+        }
+
+        private void OpenCurveWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            CurvesData.FittingWin ftw = new CurvesData.FittingWin(btn.DataContext as CurvesData.Curves);
+            ftw.Owner = this;
+            ftw.ShowDialog();
+
+        }
+
+    }
+
+    //控制显示样式
+    public class ValVisualConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)value != P_Type.ToSelect && (P_Type)value != P_Type.ToLine)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制显示样式
+    public class MeasureVisualConverter : IMultiValueConverter
+    {
+        object IMultiValueConverter.Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values[0] == null || values[1] == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)values[1] == P_Type.ToLine)
+                    return Visibility.Collapsed;
+                string[] tmp = (string[])values[0];
+                if (tmp.Count<String>() == 1 && tmp[0] == "")
+                    return Visibility.Collapsed;
+                else
+                    return Visibility.Visible;
+            }
+        }
+
+        object[] IMultiValueConverter.ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制显示样式
+    public class LineVisualConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)value == P_Type.ToLine)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
         }
     }
 }

@@ -7,6 +7,7 @@ using WinForms = System.Windows.Forms;
 using TPIS.Project;
 using TPIS.TPISCanvas;
 using System.Windows.Media;
+using System.IO;
 
 namespace TPIS
 {
@@ -20,6 +21,13 @@ namespace TPIS
         public NewProject()
         {
             InitializeComponent();
+
+            string directoryPath = @".\WorkSpace";
+            if (!Directory.Exists(directoryPath))//如果路径不存在
+            {
+                Directory.CreateDirectory(directoryPath);//创建一个路径的文件夹
+            }
+            proj_location.Text = Path.GetFullPath(directoryPath);
         }
 
         /// <summary>
@@ -35,7 +43,7 @@ namespace TPIS
                     return;
                 }
             }
-            catch(Exception exp)
+            catch
             {
                 MessageBox.Show("画布像素只能为正整数！", "提示", MessageBoxButton.OKCancel);
                 return;
@@ -48,8 +56,14 @@ namespace TPIS
                 MessageBox.Show("存储位置不能为空！", "提示", MessageBoxButton.OKCancel);
             else
             {
-                mainwin.AddProject(proj_name.Text, int.Parse(canvas_width.Text), int.Parse(canvas_height.Text));
-                Close();
+                if (mainwin.AddProject(proj_name.Text, proj_location.Text, int.Parse(canvas_width.Text), int.Parse(canvas_height.Text)))
+                {
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("工程已存在！", "提示", MessageBoxButton.OKCancel);
+                }
             }
             //mainwin.ActiveProject(mainwin.projectList.projects.Count-1);
         }
@@ -68,6 +82,7 @@ namespace TPIS
         private void FolderBrowse(object sender, RoutedEventArgs e)
         {
             WinForms.FolderBrowserDialog m_Dialog = new WinForms.FolderBrowserDialog();
+            m_Dialog.SelectedPath = proj_location.Text;
             WinForms.DialogResult result = m_Dialog.ShowDialog();
             if (result == WinForms.DialogResult.Cancel)
             {
@@ -75,11 +90,6 @@ namespace TPIS
             }
             string m_Dir = m_Dialog.SelectedPath.Trim();
             proj_location.Text = m_Dir;
-        }
-
-        private void canvas_width_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Windows;
 using TPIS.Model.Common;
 
@@ -41,8 +43,51 @@ namespace TPIS.Model
     }
     #endregion
 
-    public class Property : INotifyPropertyChanged
+    [Serializable]
+    public class Property : INotifyPropertyChanged, ISerializable
     {
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("dicName", DicName);
+            info.AddValue("name", Name);
+            info.AddValue("units", Units);
+            info.AddValue("type", Type);
+            info.AddValue("tips", Tips);
+            info.AddValue("unitNum", UnitNum);
+            info.AddValue("isStrOrNum", IsStrOrNum);
+            info.AddValue("valStr", valStr);
+            info.AddValue("valNum", valNum);
+            info.AddValue("modes", Modes);
+        }
+
+        public Property(SerializationInfo info, StreamingContext context)
+        {
+            DicName = info.GetString("dicName"); ;
+            Name = info.GetString("name");
+            Units = (string[])info.GetValue("units", typeof(Object));
+            Type = (P_Type)info.GetValue("type", typeof(Object));
+            Tips = info.GetString("tips");
+            UnitNum = info.GetInt32("unitNum");
+            IsStrOrNum = info.GetBoolean("isStrOrNum");
+
+            valStr = info.GetString("valStr"); 
+            valNum = info.GetDouble("valNum");
+            if (IsStrOrNum)
+            {
+                showValue = valStr;
+            }
+            else
+            {
+                showValue = ValueConvert(valNum, Units[0], Units[0]);
+            }
+            Modes = (ObservableCollection<SelMode>)info.GetValue("modes", typeof(Object));
+        }
+        #endregion
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -57,6 +102,7 @@ namespace TPIS.Model
         public string Name { get; set; }
         public string Tips { get; set; }
         public string[] Units { get; set; }
+        public TPISNet.Curves Curve { get; set; }
 
         public int unitNum;
         public int UnitNum
@@ -121,6 +167,7 @@ namespace TPIS.Model
                 OnPropertyChanged("Visibility");
             }
         }
+
         public void SelectProperty(SelMode selMode)
         {
             if (Modes.Contains(selMode))
@@ -167,6 +214,18 @@ namespace TPIS.Model
                 Modes = modes;
             else
                 Modes = new ObservableCollection<SelMode>() { SelMode.None };
+        }
+
+        public Property(string dicName, string name, string[] units, string tips = "")
+        {
+            DicName = dicName;
+            Name = name;
+            Units = units;
+            Type = P_Type.ToLine;
+            Tips = tips;
+            Modes = new ObservableCollection<SelMode>() { SelMode.InterMode };
+            Curve = new TPISNet.Curves(name, units[0], units[1]);
+            Curve.Lx1x2.Add(new TPISNet.XYDataLine());
         }
 
         //属性间的转化

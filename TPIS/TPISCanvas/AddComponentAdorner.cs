@@ -60,18 +60,16 @@ namespace TPIS.TPISCanvas
             if (adornerLayer != null)
                 adornerLayer.Remove(this);
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
             {
                 if (startPoint.HasValue && endPoint.HasValue)
                 {
                     Point sp = startPoint.Value;
                     Point ep = endPoint.Value;
-                    int width = (int)(ep.X - sp.X) > 5 ? (int)(ep.X - sp.X) : 5;
-                    int height = (int)(ep.Y - sp.Y) > 5 ? (int)(ep.Y - sp.Y) : 5;
-                    TPISComponent c = CommonFunction.NewTPISComponent((int)sp.X, (int)sp.Y, width, height, targetType);
-                    c.IsSelected = false;
+                    int width = (int)(ep.X - sp.X) > 20 ? (int)(ep.X - sp.X) : 20;
+                    int height = (int)(ep.Y - sp.Y) > 20 ? (int)(ep.Y - sp.Y) : 20;
                     //添加元件
-                    mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Objects.Add(c);
+                    mainwin.GetCurrentProject().AddComponent((int)sp.X, (int)sp.Y, width, height, targetType);
                 }
                 e.Handled = true;
             }

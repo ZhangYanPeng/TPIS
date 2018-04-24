@@ -16,11 +16,11 @@ namespace TPIS.TPISCanvas
         public void MouseLBtnClickEmpty(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
             {
                 return;
             }
-            mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Select();
+            mainwin.GetCurrentProject().Select();
             this.SelectStartPoint = new Point?(e.GetPosition(this));
 
             // if you click directly on the canvas all selected items are 'de-selected'
@@ -31,7 +31,7 @@ namespace TPIS.TPISCanvas
         public void MouseLBtnSelectMove(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.SELECT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT)
             {
                 // if mouse button is not pressed we have no drag operation, ...
                 if (e.LeftButton != MouseButtonState.Pressed)

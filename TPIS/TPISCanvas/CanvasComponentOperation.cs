@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using TPIS.Model;
 
 namespace TPIS.TPISCanvas
@@ -14,6 +15,7 @@ namespace TPIS.TPISCanvas
     public partial class ProjectDesignerCanvas : Canvas
     {
         public Point? AddComponentStartPoint { get; set; }
+        public Image AddComponentImage;
 
         /// <summary>
         /// 判定画布内鼠标形状
@@ -23,10 +25,39 @@ namespace TPIS.TPISCanvas
         public void CanvasMouseEnter(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation != Project.OperationType.SELECT)
+            try
+            {
+                if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
+                {
+                    this.Cursor = Cursors.Cross;
+
+                    if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+                    {
+                        int type = mainwin.GetCurrentProject().Canvas.OperationParam["type"];
+                        ComponentType targetType = null;
+                        foreach (BaseType bt in mainwin.TypeList)
+                        {
+                            foreach (ComponentType ct in bt.ComponentTypeList)
+                            {
+                                if (type == ct.Id)
+                                {
+                                    targetType = ct;
+                                    break;
+                                }
+                            }
+                        }
+                        AddComponentImage = new Image();
+                        AddComponentImage.Source = new BitmapImage(new Uri(targetType.PicPath, UriKind.Relative));
+                        Children.Add(AddComponentImage);
+                    }
+                }
+                else
+                    this.Cursor = Cursors.Arrow;
+            }
+            catch
+            {
                 this.Cursor = Cursors.Cross;
-            else
-                this.Cursor = Cursors.Arrow;
+            }
         }
 
         /// <summary>
@@ -37,31 +68,76 @@ namespace TPIS.TPISCanvas
         public void CanvasMouseLeave(object sender, MouseEventArgs e)
         {
             this.Cursor = Cursors.Arrow;
+            Children.Remove(AddComponentImage);
         }
 
         public void ComponentMouseLButtonDown(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
             {
-                if (e.Source == this)
-                {
-                    // in case that this click is the start of a drag operation we cache the start point
-                    this.AddComponentStartPoint = new Point?(e.GetPosition(this));
+                // in case that this click is the start of a drag operation we cache the start point
+                this.AddComponentStartPoint = new Point?(e.GetPosition(this));
 
-                    // if you click directly on the canvas all selected items are 'de-selected'
-                    Focus();
-                    e.Handled = true;
-                }
+                // if you click directly on the canvas all selected items are 'de-selected'
+                Focus();
+                e.Handled = true;
             }
-            
+
+        }
+
+        public void ComponentMouseLButtonUp(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+            {
+                // in case that this click is the start of a drag operation we cache the start point
+                Point? AddComponentEndPoint = new Point?(e.GetPosition(this));
+
+                if (AddComponentStartPoint.HasValue && AddComponentEndPoint.HasValue)
+                {
+                    Point sp = AddComponentStartPoint.Value;
+                    Point ep = AddComponentEndPoint.Value;
+                    if (Math.Abs(ep.X - sp.X) < 5 && Math.Abs(ep.Y - sp.Y) < 5)
+                    {
+
+                        //添加元件
+                        int type = mainwin.GetCurrentProject().Canvas.OperationParam["type"];
+                        ComponentType targetType = null;
+                        foreach (BaseType bt in mainwin.TypeList)
+                        {
+                            foreach (ComponentType ct in bt.ComponentTypeList)
+                            {
+                                if (type == ct.Id)
+                                {
+                                    targetType = ct;
+                                    break;
+                                }
+                            }
+                        }
+
+                        mainwin.GetCurrentProject().AddComponent((int)sp.X, (int)sp.Y, (int)AddComponentImage.ActualWidth, (int)AddComponentImage.ActualHeight, targetType);
+                    }
+                }
+
+                e.Handled = true;
+            }
+
         }
 
         protected void ComponentMouseMove(object sender, MouseEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
             {
+
+                if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
+                {
+                    Point pos = e.GetPosition(this);
+                    AddComponentImage.SetValue(Canvas.LeftProperty, pos.X);
+                    AddComponentImage.SetValue(Canvas.TopProperty, pos.Y);
+                }
+
                 // if mouse button is not pressed we have no drag operation, ...
                 if (e.LeftButton != MouseButtonState.Pressed)
                     this.AddComponentStartPoint = null;
@@ -74,13 +150,13 @@ namespace TPIS.TPISCanvas
                     AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
                     if (adornerLayer != null)
                     {
-                        int type = mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.OperationParam["type"];
+                        int type = mainwin.GetCurrentProject().Canvas.OperationParam["type"];
                         ComponentType targetType = null;
                         foreach (BaseType bt in mainwin.TypeList)
                         {
                             foreach (ComponentType ct in bt.ComponentTypeList)
                             {
-                                if( type == ct.Id)
+                                if (type == ct.Id)
                                 {
                                     targetType = ct;
                                     break;

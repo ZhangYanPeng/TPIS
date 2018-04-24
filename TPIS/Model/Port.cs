@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -11,8 +12,38 @@ using TPIS.Model.Common;
 
 namespace TPIS.Model
 {
-    public class Port : INotifyPropertyChanged
+    [Serializable]
+    public class Port : INotifyPropertyChanged , ISerializable
     {
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("dicName", DicName);
+            info.AddValue("name", Name);
+            info.AddValue("xpos", x);
+            info.AddValue("ypos", y);
+            info.AddValue("material", MaterialType);
+            info.AddValue("nodType", Type);
+            info.AddValue("canlink", CanLink);
+            info.AddValue("cancancel", CanCancel);
+        }
+
+        public Port(SerializationInfo info, StreamingContext context)
+        {
+            this.DicName = info.GetString("dicName");
+            this.Name = info.GetString("name");
+            this.x = info.GetDouble("xpos");
+            this.y = info.GetDouble("ypos");
+            this.MaterialType = (TPISNet.Material)info.GetValue("material", typeof(Object));
+            this.Type = (NodType)info.GetValue("nodType", typeof(Object));
+            this.CanLink = info.GetBoolean("canlink");
+            this.CanCancel = info.GetBoolean("cancancel"); 
+        }
+        #endregion
+
         public double x;
         public double p_x;
         public double P_x
@@ -42,7 +73,7 @@ namespace TPIS.Model
 
         public string DicName { get; set; }
         public string Name { get; set; }
-        public Material MaterialType { get; set; }
+        public TPISNet.Material MaterialType { get; set; }
         public NodType type;
         public NodType Type {
             get => type;
@@ -77,7 +108,7 @@ namespace TPIS.Model
         #region
         public Port()
         { }
-        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool canlink, bool cancancel)
+        public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink, bool cancancel)
         {
             DicName = dicName;
             Name = name;
@@ -88,7 +119,7 @@ namespace TPIS.Model
             CanLink = canlink;
             CanCancel = cancancel;
         }
-        public Port(string dicName, string name, double xpos, double ypos, Material material, NodType nodType, bool canlink)
+        public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink)
         {
             DicName = dicName;
             Name = name;
@@ -112,5 +143,6 @@ namespace TPIS.Model
             }
         }
 
+        
     }
 }

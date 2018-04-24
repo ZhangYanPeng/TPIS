@@ -2,14 +2,51 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TPIS.Model
 {
     //位置，宽高
-    public class Position : INotifyPropertyChanged
+    [Serializable]
+    public class Position : INotifyPropertyChanged, ISerializable
     {
+        /// <summary>
+        /// 序列化与反序列化
+        /// </summary>
+        #region
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("x", x);
+            info.AddValue("y", y);
+            info.AddValue("width", width);
+            info.AddValue("height", height);
+            info.AddValue("angle", angle);
+            info.AddValue("isVerticalReversed", isVerticalReversed);
+            info.AddValue("isHorizentalReversed", isHorizentalReversed);
+        }
+
+        public Position(SerializationInfo info, StreamingContext context)
+        {
+            this.X = info.GetInt32("x");
+            this.Y = info.GetInt32("y");
+            this.Width = info.GetInt32("width");
+            this.Height = info.GetInt32("height");
+            this.Angle = info.GetInt32("angle");
+
+            this.IsVerticalReversed = info.GetInt32("isVerticalReversed");
+            this.IsHorizentalReversed = info.GetInt32("isHorizentalReversed");
+
+            this.Rate = 1;
+            ReSizeAll();
+        }
+        #endregion
+
+        public Position()
+        {
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -142,7 +179,7 @@ namespace TPIS.Model
             }
         }
 
-        
+
         public int V_width
         {
             get => v_width; set
@@ -167,7 +204,7 @@ namespace TPIS.Model
         /// </summary>
         private void ReSizeAll()
         {
-            if(Angle == 90 || Angle == 270)
+            if (Angle == 90 || Angle == 270)
             {
                 v_width = (int)(Height * Rate);
                 v_height = (int)(Width * Rate);

@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Model;
@@ -10,15 +14,16 @@ using TPIS.TPISCanvas;
 
 namespace TPIS.Project
 {
-    public class ObjectBase
+    [Serializable]
+    public abstract class ObjectBase : ISerializable
     {
         public bool isSelected;
+        public int No { get; set; }
+
+        public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
     }
 
-    /// <summary>
-    /// 倍率设置
-    /// </summary>
-    #region
+    #region 倍率设置
     public static class RateService
     {
         public static double GetRate(int i)
@@ -73,8 +78,10 @@ namespace TPIS.Project
     }
     #endregion
 
-    public class ProjectItem : INotifyPropertyChanged
+    [Serializable]
+    public class ProjectItem : INotifyPropertyChanged, ISerializable
     {
+        #region 属性更新
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -84,13 +91,15 @@ namespace TPIS.Project
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        #endregion
 
         public String Name { get; set; }
         public String V_name { get; set; }
         public long Num { get; set; }
+        public ClipBoard clipBoard { get; set; }
+        public String Path { get; set; }
 
-        //缩放比率
-        #region
+        #region 缩放比率
         public double rate;
         public double Rate
         {
@@ -102,7 +111,7 @@ namespace TPIS.Project
                 Canvas.Rate = rate;
                 foreach (ObjectBase obj in Objects)
                 {
-                    
+
                     //元件缩放
                     if (obj is TPISComponent)
                     {
@@ -120,18 +129,33 @@ namespace TPIS.Project
 
         public ProjectCanvas Canvas { get; set; }
 
-        public ProjectItem(string name, ProjectCanvas pCanvas, long num)
+        public ProjectItem(string name, ProjectCanvas pCanvas, long num, string p)
         {
             this.Name = name + ".tpis";
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
             this.Rate = 1;
+            this.clipBoard = new ClipBoard();
+            Path = p;
+            SaveProject();
             return;
         }
 
-        //缩放操作
-        #region
+        #region 存储工程
+        public void SaveProject()
+        {
+            string path = Path + "\\" + Name;
+            FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
+            byte[] data = CommonFunction.SerializeToBinary(this);
+            BinaryWriter bw = new BinaryWriter(fs);
+            bw.Write(data);
+            bw.Close();
+            fs.Close();
+        }
+        #endregion
+
+        #region 缩放操作
         /// <summary>
         /// 放大
         /// </summary>
@@ -149,8 +173,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        //选中形变操作
-        #region
+        #region 选中形变操作
         /// <summary>
         /// 翻转选中
         /// </summary>
@@ -229,38 +252,93 @@ namespace TPIS.Project
                 {
                     if (((TPISComponent)obj).IsSelected && true)//选中
                     {
-                        if (obj is TPISComponent)
+                        ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
+
+                        foreach(Port port in ((TPISComponent)obj).Ports)
                         {
-                            ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
+                            if (port.link !=null && !port.link.IsSelected)
+                            {
+                                if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
+                                {
+                                    port.link.PointTo(0, new Point(port.link.Points[0].X + d_vx, port.link.Points[0].Y + d_vy));
+                                }
+                                else
+                                {
+                                    port.link.PointTo(port.link.Points.Count-1, new Point(port.link.Points[port.link.Points.Count - 1].X + d_vx, port.link.Points[port.link.Points.Count - 1].Y + d_vy));
+                                }
+                            }
                         }
+                    }
+                }
+                if (obj is TPISLine)
+                {
+                    if (((TPISLine)obj).IsSelected && true)//选中
+                    {
+                        ((TPISLine)Objects[i]).PosChange(d_vx, d_vy);
                     }
                 }
             }
         }
         #endregion
 
-        //选择操作
-        #region
+        #region 选择操作
         /// <summary>
         /// 选中
         /// </summary>
         /// <param name="components"></param>
         internal void Select(List<TPISComponent> components)
         {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (components.Count > 0)
+            {
+                if (mainwin.PropertyWindow.ItemsSource != components[0].PropertyGroups)
+                {
+                    mainwin.PropertyWindow.ItemsSource = components[0].PropertyGroups;
+                    mainwin.PropertyWindow.Items.Refresh();
+                    mainwin.ResultWindow.ItemsSource = components[0].ResultGroups;
+                    mainwin.ResultWindow.Items.Refresh();
+                }
+            }
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is TPISComponent)
                 {
                     if (components.Contains(obj as TPISComponent))
                     {
-                        ((TPISComponent)obj).IsSelected = true;
-                        MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                        mainwin.PropertyWindow.ItemsSource = ((TPISComponent)obj).PropertyGroups;
-                        mainwin.PropertyWindow.Items.Refresh();
+                        if (!((TPISComponent)obj).IsSelected)
+                            ((TPISComponent)obj).IsSelected = true;
                     }
                     else
                     {
-                        ((TPISComponent)obj).IsSelected = false;
+                        if (((TPISComponent)obj).IsSelected)
+                            ((TPISComponent)obj).IsSelected = false;
+                    }
+                }
+                if(obj is TPISLine)
+                {
+                    Boolean checkin = false, checkout = false;
+                    foreach(TPISComponent cp in components)
+                    {
+                        if (cp.Ports.Contains(((TPISLine)obj).inPort))
+                        {
+                            checkin = true;
+                        }
+                        if (cp.Ports.Contains(((TPISLine)obj).outPort))
+                        {
+                            checkout = true;
+                        }
+                        if(checkin && checkout)
+                        {
+                            break;
+                        }
+                    }
+                    if (checkin && checkout)
+                    {
+                        ((TPISLine)obj).IsSelected = true;
+                    }
+                    else
+                    {
+                        ((TPISLine)obj).IsSelected = false;
                     }
                 }
             }
@@ -282,6 +360,8 @@ namespace TPIS.Project
                         MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                         mainwin.PropertyWindow.ItemsSource = ((TPISComponent)obj).PropertyGroups;
                         mainwin.PropertyWindow.Items.Refresh();
+                        mainwin.ResultWindow.ItemsSource = ((TPISComponent)obj).ResultGroups;
+                        mainwin.ResultWindow.Items.Refresh();
                     }
                     else
                     {
@@ -291,6 +371,7 @@ namespace TPIS.Project
                 else
                 {
                     //是连线，同上
+
                     if (objectBase == obj)
                     {
                         ((TPISLine)obj).IsSelected = true;
@@ -302,6 +383,7 @@ namespace TPIS.Project
                 }
             }
         }
+
         internal void Select()
         {
             foreach (ObjectBase obj in Objects)
@@ -311,7 +393,181 @@ namespace TPIS.Project
                     ((TPISComponent)obj).IsSelected = false;
                 }
             }
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.PropertyWindow.ItemsSource = null;
+            mainwin.PropertyWindow.Items.Refresh();
+            mainwin.ResultWindow.ItemsSource = null;
+            mainwin.ResultWindow.Items.Refresh();
         }
         #endregion
+
+        #region 添加
+        //添加元件
+        public void AddComponent(int tx, int ty, int width, int height, ComponentType ct)
+        {
+            int n = 0;
+            foreach (ObjectBase obj in this.Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    if (((TPISComponent)obj).No > n)
+                        n = ((TPISComponent)obj).No;
+                }
+            }
+            n++;
+            Objects.Add(new TPISComponent(n, tx, ty, width, height, ct));
+        }
+
+        //添加线
+        public void AddLine()
+        {
+            return;
+        }
+        #endregion
+
+        #region 选择后续操作 复制 删除 剪切
+        //复制到clipboard
+        public void CopySelection()
+        {
+            clipBoard.Objects = new List<ObjectBase>();
+            foreach (ObjectBase obj in this.Objects)
+            {
+                if (obj.isSelected)
+                {
+                    clipBoard.Objects.Add(obj);
+                }
+            }
+        }
+
+        //删除
+        public void DeleteSelection()
+        {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
+                if (obj is TPISComponent)
+                {
+                    if (((TPISComponent)obj).IsSelected)
+                    {
+                        //删除并删除连线
+                        Objects.Remove(obj);
+                    }
+                }
+            }
+        }
+
+        //粘贴
+        public void PasteSelection(double x, double y)
+        {
+            Boolean init = false;
+            double min_x = 0, min_y = 0;
+            //计算粘贴后偏移量
+            foreach (ObjectBase obj in clipBoard.Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    if (!init)
+                    {
+                        min_x = ((TPISComponent)obj).Position.V_x;
+                        min_y = ((TPISComponent)obj).Position.V_y;
+                        init = true;
+                    }
+                    else
+                    {
+                        min_x = Math.Min(((TPISComponent)obj).Position.V_x, min_x);
+                        min_y = Math.Min(((TPISComponent)obj).Position.V_y, min_y);
+                    }
+                }
+            }
+            double offset_x = x - min_x;
+            double offset_y = y - min_y;
+
+            //按偏移量粘贴并选中
+            Console.WriteLine(clipBoard.Objects.Count);
+            foreach (ObjectBase obj in clipBoard.Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    TPISComponent component = ((TPISComponent)obj).Clone() as TPISComponent;
+                    component.PosChange((int)offset_x, (int)offset_y);
+
+                    Objects.Add(component);
+                }
+            }
+            return;
+        }
+        #endregion
+
+        #region 查找元件并选中居中
+        internal bool FindComponent(int tn)
+        {
+            Boolean findOrNot = false;
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    if (obj.No == tn)
+                    {
+                        findOrNot = true;
+                        ((TPISComponent)obj).IsSelected = true;
+
+                        MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                        Grid tabGrid = FindVisualChild<Grid>(mainwin.projectTab);
+                        Border contentBorder = tabGrid.FindName("ContentPanel") as Border;
+                        ContentPresenter contentPresenter = FindVisualChild<ContentPresenter>(contentBorder);
+                        ScrollViewer sv = contentPresenter.ContentTemplate.FindName("CanvasScrollViewer", contentPresenter) as ScrollViewer;
+
+                        //移动坐标
+                        sv.ScrollToHorizontalOffset(((TPISComponent)obj).Position.V_x - sv.ActualWidth / 2 + ((TPISComponent)obj).Position.V_width / 2);
+                        sv.ScrollToVerticalOffset(((TPISComponent)obj).Position.V_y - sv.ActualHeight / 2 + ((TPISComponent)obj).Position.V_height / 2);
+                    }
+                    else
+                    {
+                        ((TPISComponent)obj).IsSelected = false;
+                    }
+                }
+            }
+            return findOrNot;
+        }
+
+        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is childItem)
+                    return (childItem)child;
+                else
+                {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null)
+                        return childOfChild;
+                }
+            }
+            return null;
+        }
+        #endregion
+
+        #region 序列化与反序列化
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("name", Name);
+            info.AddValue("canvas", Canvas);
+            info.AddValue("objects", Objects);
+            info.AddValue("path", Path);
+        }
+
+        public ProjectItem(SerializationInfo info, StreamingContext context)
+        {
+            this.Name = info.GetString("name");
+            this.Num = 2;
+            this.Path = info.GetString("path");
+            this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
+            this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
+            this.Rate = 1;
+            this.clipBoard = new ClipBoard();
+        }
+        #endregion
+
     }
 }
