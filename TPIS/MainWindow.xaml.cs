@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,11 +29,17 @@ namespace TPIS
     {
         public List<BaseType> TypeList { get; set; } //所有元件列表
         public ProjectSpace ProjectList { get; set; } //工程列表
-        private int CurrentPojectIndex { get; set; }//当前激活工程
+        public int CurrentPojectIndex { get; set; }//当前激活工程
         public int ProjectNum { get; set; } // 新工程编号
 
         public ProjectItem GetCurrentProject(){
-            return ProjectList.projects[CurrentPojectIndex];
+            try {
+                return ProjectList.projects[CurrentPojectIndex];
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public MainWindow()

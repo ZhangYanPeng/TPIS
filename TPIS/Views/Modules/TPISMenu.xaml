@@ -16,7 +16,7 @@
             <CommandBinding Command="s:TPISCommand.Exit" Executed="Exit_Excuted"/>
         </Menu.CommandBindings>
         <!--设备管理-->
-        <MenuItem Header="设备管理(M)" >
+        <MenuItem Header="文件管理(M)" SubmenuOpened="OnSubMenuOpened">
             <MenuItem Header="新建工程(N)" Command="{x:Static s:TPISCommand.NewProject}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_new.png"/>
@@ -33,17 +33,17 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="存储(S)" InputGestureText="Ctrl+S" Command="{x:Static s:TPISCommand.Save}">
+            <MenuItem Header="存储(S)" Name="SaveOpe" InputGestureText="Ctrl+S" Command="{x:Static s:TPISCommand.Save}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_save.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="另存为(A)" Command="{x:Static s:TPISCommand.SaveAs}">
+            <MenuItem Header="另存为(A)" Name="SaveAsOpe" Command="{x:Static s:TPISCommand.SaveAs}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_saveAs.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="全部存储(L)" InputGestureText="Ctrl+Shift+S" Command="{x:Static s:TPISCommand.SaveAll}">
+            <MenuItem Header="全部存储(L)" Name="SaveAllOpe" InputGestureText="Ctrl+Shift+S" Command="{x:Static s:TPISCommand.SaveAll}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_saveAll.png" />
                 </MenuItem.Icon>
