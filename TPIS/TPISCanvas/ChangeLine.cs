@@ -63,9 +63,9 @@ namespace TPIS.TPISCanvas
                 Point point = uIElement.TranslatePoint(new Point(), designer);//控件左上点
                 point.X = point.X + 5;//求中心点
                 point.Y = point.Y + 5;
-                if (port.Type == NodType.Outlet || port.Type == NodType.Undef)
+                if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == false)
                 {
-                    if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == false)
+                    if (port.Type == NodType.Outlet || port.Type == NodType.Undef)
                     {
                         mainwin.GetCurrentProject().Canvas.statrPoint = point;//折线起点
                         mainwin.GetCurrentProject().Canvas.StartPort = port;//起始Port

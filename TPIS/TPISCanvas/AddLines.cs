@@ -40,7 +40,7 @@ namespace TPIS.TPISCanvas
                     {
                         count++;
                         flag = true;//开始画线
-                                    //p1 = e.GetPosition(this);
+                        //p1 = e.GetPosition(this);
                         p1 = mainwin.GetCurrentProject().Canvas.statrPoint;//起点
                         pline.Points.Add(p1);
                     }
@@ -51,15 +51,19 @@ namespace TPIS.TPISCanvas
                 }
                 else if (mainwin.GetCurrentProject().Canvas.EndPort != null)
                 {
-                    Point tmp = p2;
-                    if (p1.X == p2.X)
-                        tmp.Y = mainwin.GetCurrentProject().Canvas.endPoint.Y;
-                    else
-                        tmp.X = mainwin.GetCurrentProject().Canvas.endPoint.X;
                     if (IsStraight || Forms.Control.ModifierKeys == Forms.Keys.Shift)
                     {
+                        Point tmp = p2;
+                        if (p1.X == p2.X)
+                            tmp.Y = mainwin.GetCurrentProject().Canvas.endPoint.Y;
+                        else
+                            tmp.X = mainwin.GetCurrentProject().Canvas.endPoint.X;
                         pline.Points[pline.Points.Count - 1] = tmp;//保证最后拐点为直角，保证终点和后端点所在直线为坐标线
                         pline.Points.Add(mainwin.GetCurrentProject().Canvas.endPoint);//终点
+                    }
+                    else if (!IsStraight)
+                    {
+                        pline.Points[pline.Points.Count - 1] = mainwin.GetCurrentProject().Canvas.endPoint;//斜线终点居中
                     }
                     flag = false;//结束画线
                     SubstitutionLine();
