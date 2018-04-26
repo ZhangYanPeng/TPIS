@@ -21,14 +21,14 @@ namespace TPIS.Model.Common
                 TPISNet.Property property = element.DProperty[key];
 
                 ObservableCollection<SelMode> SelModes = new ObservableCollection<SelMode>();
-                foreach(CalMode cm in element.LCalMode)
+                foreach (CalMode cm in element.LCalMode)
                 {
                     if (cm.LDProperty.Contains(property))
                     {
                         SelModes.Add(TransSelMode(cm.Mode));
                     }
                 }
-                if(SelModes.Count == 0)
+                if (SelModes.Count == 0)
                 {
                     SelModes = null;
                 }
@@ -40,7 +40,8 @@ namespace TPIS.Model.Common
                     {
                         check = true;
                         Property p = InitProperty(key, property, SelModes);
-                        pg.Properties.Add(p);
+                        if (p != null)
+                            pg.Properties.Add(p);
                         break;
                     }
                 }
@@ -48,11 +49,12 @@ namespace TPIS.Model.Common
                 {
                     Property p = InitProperty(key, property, SelModes);
                     PropertyGroup baseGroup = new PropertyGroup() { Flag = property.GroupFlag };
-                    baseGroup.Properties.Add(p);
+                    if (p != null)
+                        baseGroup.Properties.Add(p);
                     PropertyGroups.Add(baseGroup);
                 }
             }
-            
+
             PropertyGroup curveGroup = new PropertyGroup() { Flag = "曲线" };
 
             //初始化curve
@@ -91,6 +93,10 @@ namespace TPIS.Model.Common
                 Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSetAsString, sm, property.Tips);
                 return p;
             }
+            else if (property.type == TPISNet.P_Type.NotNeed || property.type == TPISNet.P_Type.Notshow)
+            {
+                return null;
+            }
             else
             {
                 Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSelect, sm, property.Tips);
@@ -108,7 +114,8 @@ namespace TPIS.Model.Common
                         return units;
                 }
             }
-            else { 
+            else
+            {
                 foreach (string[] units in Units.ListAllUnits())
                 {
                     if (units.Contains(u))

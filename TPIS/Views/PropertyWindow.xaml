@@ -28,7 +28,7 @@
             </ComboBox>
         </DockPanel>
         <GroupBox Header="属性">
-            <ListBox  Name="ModePropeties" ItemsSource="{Binding PropertyGroups}">
+            <ListBox Name="ModePropeties" ItemsSource="{Binding PropertyGroups}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <GroupBox Header="{Binding Flag}">

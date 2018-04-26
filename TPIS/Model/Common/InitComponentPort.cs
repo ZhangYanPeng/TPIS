@@ -23,17 +23,27 @@ namespace TPIS.Model.Common
             ObservableCollection<Port> ports = new ObservableCollection<Port>();
             foreach (string key in element.IOPoints.Keys)
             {
+                Port p = new Port();
                 Nozzle n = element.IOPoints[key];
                 if (n.IsInner)
                     continue;
                 if (n.CanCancel == true)
                 {
-                    ports.Add(new Port(key, n.Name, (double)n.NX[0] / (double)element.Nwidth[0], (double)n.NY[0] / (double)element.Nheight[0], n.material, TransformNodType(n.nodtype), n.CanNotLink, true));
+                    p = new Port(key, n.Name, (double)n.NX[0] / (double)element.Nwidth[0], (double)n.NY[0] / (double)element.Nheight[0], n.material, TransformNodType(n.nodtype), n.CanNotLink, true);
                 }
                 else
                 {
-                    ports.Add(new Port(key, n.Name, (double)n.NX[0] / (double)element.Nwidth[0], (double)n.NY[0] / (double)element.Nheight[0], n.material, TransformNodType(n.nodtype), n.CanNotLink));
+                    p = new Port(key, n.Name, (double)n.NX[0] / (double)element.Nwidth[0], (double)n.NY[0] / (double)element.Nheight[0], n.material, TransformNodType(n.nodtype), n.CanNotLink);
                 }
+
+                foreach (string pkey in n.DProperty.Keys)
+                {
+                    TPISNet.Property property = n.DProperty[pkey];
+                    Property pr = InitProperty(pkey, property, null);
+                    if(pr != null)
+                        p.Results.Add(pr);
+                }
+                ports.Add(p);
             }
             return ports;
         }

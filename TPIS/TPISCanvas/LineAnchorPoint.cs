@@ -113,7 +113,11 @@ namespace TPIS.TPISCanvas
                     if (obj.GetType() == typeof(TPISLine))
                     {
                         TPISLine line = (TPISLine)obj;
-                        line.PointTo(LineAnchorPointID + 1, endPoint);
+                        if (this.lineID == line.LNum)//确定线
+                        {
+                            //解决移动线条时出现的问题
+                            line.PointTo(LineAnchorPointID + 1, endPoint);
+                        }
                     }
                 }
             }

@@ -39,6 +39,7 @@ namespace TPIS.Model.Common
                     {
                         check = true;
                         Property p = InitProperty(key, property, SelModes);
+                        p.IsKnown = false;
                         pg.Properties.Add(p);
                         break;
                     }

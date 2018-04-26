@@ -133,24 +133,10 @@ namespace TPIS.Views.Modules
 
         private void ToSelectMode(object sender, RoutedEventArgs e)
         {
-            String str = TargetNo.Text;
             try
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-
-
-                mainwin.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
-                mainwin.GetCurrentProject().Canvas.OperationParam.Clear();
-                mainwin.AddStraightLine.IsChecked = false;
-                mainwin.AddLine.IsChecked = false;
-                mainwin.GetCurrentProject().Select();
-                foreach (BaseType bt in mainwin.TypeList)
-                {
-                    foreach (ComponentType ct in bt.ComponentTypeList)
-                    {
-                        ct.IsChecked = false;
-                    }
-                }
+                mainwin.ToSelectMode();
             }
             catch
             {

@@ -30,6 +30,23 @@ namespace TPIS
 
         //左侧工具栏切换
         #region
+
+        public void ToSelectMode()
+        {
+            GetCurrentProject().Canvas.Operation = OperationType.SELECT;
+            GetCurrentProject().Canvas.OperationParam.Clear();
+            AddStraightLine.IsChecked = false;
+            AddLine.IsChecked = false;
+            GetCurrentProject().Select();
+            foreach (BaseType bt in TypeList)
+            {
+                foreach (ComponentType ct in bt.ComponentTypeList)
+                {
+                    ct.IsChecked = false;
+                }
+            }
+        }
+
         /// <summary>
         /// 选中添加元件类型
         /// 无当前工程则不设定
@@ -231,6 +248,7 @@ namespace TPIS
                 btn.Tag = "hide";
                 btn.ToolTip = "显示结果窗";
                 ResultWindow.Visibility = Visibility.Collapsed;
+                PortResults.Visibility = Visibility.Collapsed;
                 ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
             }
             else
@@ -238,6 +256,7 @@ namespace TPIS
                 btn.Tag = "show";
                 btn.ToolTip = "隐藏结果窗";
                 ResultWindow.Visibility = Visibility.Visible;
+                PortResults.Visibility = Visibility.Visible;
                 ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
             }
         }

@@ -22,6 +22,10 @@
             <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
             <local:LineVisualConverter x:Key="LineVisualConverter" />
             <local:CalStateConverter x:Key="CalStateConverter" />
+
+            <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
+                <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -70,7 +74,7 @@
                                 <ItemsControl Name="ElementList">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Expander Header="{Binding Name}" IsExpanded="True">
+                                            <Expander Header="{Binding Name}" IsExpanded="False">
                                                 <Expander.Content>
                                                     <!--元件池-->
                                                     <ItemsControl ItemsSource="{Binding ComponentTypeList}">
@@ -122,51 +126,98 @@
                         </Button.Content>
                     </Button>
                 </DockPanel>
-                
+
                 <Border BorderThickness="1" BorderBrush="Gray">
-                    <ListBox Name="ResultWindow">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <GroupBox Header="{Binding Flag}">
-                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                                <GridViewColumn Header="值" Width="112" >
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBox Text="{Binding ShowValue}" Width="100" IsReadOnly="True"></TextBox>
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Header="单位" Width="70" >
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}" IsReadOnly="True">
-                                                                <ComboBox.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <TextBlock Text="{Binding }"></TextBlock>
-                                                                    </DataTemplate>
-                                                                </ComboBox.ItemTemplate>
-                                                            </ComboBox>
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </GroupBox>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ListBox>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="3" >
+                            <ListBox Name="ResultWindow">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <GroupBox Header="{Binding Flag}">
+                                            <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                        <GridViewColumn Header="值" Width="112" >
+                                                            <GridViewColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBox Text="{Binding ShowValue}" Width="100" IsReadOnly="True"></TextBox>
+                                                                </DataTemplate>
+                                                            </GridViewColumn.CellTemplate>
+                                                        </GridViewColumn>
+                                                        <GridViewColumn Header="单位" Width="70" >
+                                                            <GridViewColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}" IsReadOnly="True">
+                                                                        <ComboBox.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <TextBlock Text="{Binding }"></TextBlock>
+                                                                            </DataTemplate>
+                                                                        </ComboBox.ItemTemplate>
+                                                                    </ComboBox>
+                                                                </DataTemplate>
+                                                            </GridViewColumn.CellTemplate>
+                                                        </GridViewColumn>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </GroupBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ListBox>
+
+                            <StackPanel Margin="3" MinWidth="306">
+                                <ItemsControl Name="PortResults">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Expander>
+                                                <Expander.Header>
+                                                    <TextBlock  Text="{Binding Name}" FontSize="14" FontWeight="Bold" ></TextBlock>
+                                                </Expander.Header>
+                                                <Expander.Content>
+                                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Results}">
+                                                        <ListView.View>
+                                                            <GridView>
+                                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                                <GridViewColumn Header="值" Width="112" >
+                                                                    <GridViewColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBox Text="{Binding ShowValue}" Width="100" IsReadOnly="True"></TextBox>
+                                                                        </DataTemplate>
+                                                                    </GridViewColumn.CellTemplate>
+                                                                </GridViewColumn>
+                                                                <GridViewColumn Header="单位" Width="70" >
+                                                                    <GridViewColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}" IsReadOnly="True">
+                                                                                <ComboBox.ItemTemplate>
+                                                                                    <DataTemplate>
+                                                                                        <TextBlock Text="{Binding }"></TextBlock>
+                                                                                    </DataTemplate>
+                                                                                </ComboBox.ItemTemplate>
+                                                                            </ComboBox>
+                                                                        </DataTemplate>
+                                                                    </GridViewColumn.CellTemplate>
+                                                                </GridViewColumn>
+                                                            </GridView>
+                                                        </ListView.View>
+                                                    </ListView>
+                                                </Expander.Content>
+                                            </Expander>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Border>
-                
+
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <ListBox Name="PropertyWindow">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <GroupBox Header="{Binding Flag}">
-                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}">
+                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
@@ -186,7 +237,7 @@
                                                                         <DataTemplate>
                                                                             <TextBlock Text="{Binding }"></TextBlock>
                                                                         </DataTemplate>
-                                                                    </ComboBox.ItemTemplate> 
+                                                                    </ComboBox.ItemTemplate>
                                                                 </ComboBox>
                                                                 <UserControl Visibility="{Binding Type, Converter={StaticResource LineVisualConverter}}">
                                                                     <Button Content="设置" DataContext="{Binding Curve}"  Click="OpenCurveWindow_Click"></Button>

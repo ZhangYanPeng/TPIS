@@ -317,14 +317,17 @@ namespace TPIS.Project
                     mainwin.PropertyWindow.Items.Refresh();
                     mainwin.ResultWindow.ItemsSource = components[0].ResultGroups;
                     mainwin.ResultWindow.Items.Refresh();
-                }
-                else
-                {
-                    mainwin.PropertyWindow.ItemsSource = PropertyGroup;
-                    mainwin.PropertyWindow.Items.Refresh();
-                    mainwin.ResultWindow.ItemsSource = null;
+                    mainwin.PortResults.ItemsSource = components[0].Ports;
+                    mainwin.PortResults.Items.Refresh();
                 }
             }
+            else
+            {
+                mainwin.PropertyWindow.ItemsSource = PropertyGroup;
+                mainwin.PropertyWindow.Items.Refresh();
+                mainwin.ResultWindow.ItemsSource = null;
+            }
+
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is TPISComponent)
@@ -388,6 +391,8 @@ namespace TPIS.Project
                         mainwin.PropertyWindow.Items.Refresh();
                         mainwin.ResultWindow.ItemsSource = ((TPISComponent)obj).ResultGroups;
                         mainwin.ResultWindow.Items.Refresh();
+                        mainwin.PortResults.ItemsSource = ((TPISComponent)obj).Ports;
+                        mainwin.PortResults.Items.Refresh();
                     }
                     else
                     {
@@ -477,12 +482,39 @@ namespace TPIS.Project
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
+                if (obj is TPISComponent && obj.isSelected)
+                {
+                    foreach(Port p in ((TPISComponent)obj).Ports)
+                    {
+                        if(p.link != null)
+                            p.link.IsSelected = true;
+                    }
+                }
+            }
+            for (int i = 0; i < Objects.Count; )
+            {
+                ObjectBase obj = Objects[i];
+                if (obj.isSelected)
+                {
+                    Objects.Remove(obj);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
                 if (obj is TPISComponent)
                 {
-                    if (((TPISComponent)obj).IsSelected)
+                    foreach (Port p in ((TPISComponent)obj).Ports)
                     {
-                        //删除并删除连线
-                        Objects.Remove(obj);
+                        if(p.link == null)
+                        {
+                            if (p.Type == NodType.DefIn || p.Type == NodType.DefOut)
+                                p.Type = NodType.Undef;
+                        }
                     }
                 }
             }

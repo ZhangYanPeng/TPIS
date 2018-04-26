@@ -27,7 +27,6 @@ namespace TPIS.Model.Common
                 if (obj is TPISComponent)
                 {
                     TPISComponent component = obj as TPISComponent;
-                    Interface.Add(BackEnd, component.No, component.eleType);
                     Element element = Interface.GetElement(BackEnd, component.No);
                     //传属性
                     foreach (PropertyGroup pg in component.ResultGroups)
@@ -36,7 +35,12 @@ namespace TPIS.Model.Common
                         {
                             //属性传入值
                             if (p.Type == P_Type.ToSetAsDouble)
+                            {
+                                if (element.DPResult[p.DicName].Data_string != "")
+                                    p.IsKnown = true;
                                 p.valNum = element.DPResult[p.DicName].Data;
+                                p.UnitNum = 0;
+                            }
                             else if (p.Type == P_Type.ToSetAsString)
                                 p.valStr = element.DPResult[p.DicName].Data_string;
                             else if (p.Type == P_Type.ToSelect)
@@ -46,6 +50,42 @@ namespace TPIS.Model.Common
                                 {
                                     if (p.Units[i] == unit)
                                         p.UnitNum = i;
+                                }
+                            }
+                            else if (p.Type == P_Type.ToCal)
+                                p.valNum = element.DPResult[p.DicName].Data;
+                        }
+                    }
+                    foreach(Port p in component.Ports)
+                    {
+                        foreach(String key in element.IOPoints.Keys)
+                        {
+                            Nozzle n = element.IOPoints[key] as Nozzle;
+                            if (p.DicName == key)
+                            {
+                                foreach (Property pr in p.Results)
+                                {
+                                    //属性传入值
+                                    if (pr.Type == P_Type.ToSetAsDouble)
+                                    {
+                                        if (n.DProperty[pr.DicName].Data_string != "")
+                                            pr.IsKnown = true;
+                                        pr.valNum = n.DProperty[pr.DicName].Data;
+                                        pr.UnitNum = 0;
+                                    }
+                                    else if (pr.Type == P_Type.ToSetAsString)
+                                        pr.valStr = n.DProperty[pr.DicName].Data_string;
+                                    else if (pr.Type == P_Type.ToSelect)
+                                    {
+                                        string unit = n.DProperty[pr.DicName].SelectList[n.DProperty[pr.DicName].SIndex];
+                                        for (int i = 0; i < (pr.Units).Count<string>(); i++)
+                                        {
+                                            if (pr.Units[i] == unit)
+                                                pr.UnitNum = i;
+                                        }
+                                    }
+                                    else if (pr.Type == P_Type.ToCal)
+                                        pr.valNum = n.DProperty[pr.DicName].Data;
                                 }
                             }
                         }

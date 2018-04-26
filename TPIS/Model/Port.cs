@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -29,6 +30,7 @@ namespace TPIS.Model
             info.AddValue("nodType", Type);
             info.AddValue("canlink", CanLink);
             info.AddValue("cancancel", CanCancel);
+            info.AddValue("results", Results);
             if(link == null)
                 info.AddValue("linkNo", -1);
             else
@@ -45,9 +47,12 @@ namespace TPIS.Model
             this.Type = (NodType)info.GetValue("nodType", typeof(Object));
             this.CanLink = info.GetBoolean("canlink");
             this.CanCancel = info.GetBoolean("cancancel");
+            this.Results = (ObservableCollection<Property>)info.GetValue("results", typeof(Object));
             this.LinkNo = info.GetInt32("linkNo");
         }
         #endregion
+
+        public ObservableCollection<Property> Results { get; set; } //该类属性字典
 
         public double x;
         public double p_x;
@@ -113,7 +118,10 @@ namespace TPIS.Model
         //构造函数
         #region
         public Port()
-        { }
+        {
+            Results = new ObservableCollection<Property>();
+        }
+
         public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink, bool cancancel)
         {
             DicName = dicName;
@@ -124,6 +132,7 @@ namespace TPIS.Model
             Type = nodType;
             CanLink = canlink;
             CanCancel = cancancel;
+            Results = new ObservableCollection<Property>();
         }
         public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink)
         {
@@ -135,6 +144,7 @@ namespace TPIS.Model
             Type = nodType;
             CanLink = canlink;
             CanCancel = canlink;
+            Results = new ObservableCollection<Property>();
         }
         #endregion
 

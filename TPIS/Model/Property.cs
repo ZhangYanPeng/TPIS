@@ -265,9 +265,15 @@ namespace TPIS.Model
 
         internal double ValueConvertBack(string value, string unit_src, string unit_desc)
         {
-            if (unit_src != unit_desc)
-                return double.Parse(value) - 1;
-            else return double.Parse(value);
+            try { 
+                if (unit_src != unit_desc)
+                    return double.Parse(value) - 1;
+                else return double.Parse(value);
+            }
+            catch
+            {
+                return 0;
+            }
         }
         #endregion
     }
