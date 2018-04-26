@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Model;
+using TPIS.Model.Common;
 using TPIS.TPISCanvas;
 
 namespace TPIS.Project
@@ -98,6 +99,15 @@ namespace TPIS.Project
         public long Num { get; set; }
         public ClipBoard clipBoard { get; set; }
         public String Path { get; set; }
+        public bool calculateState;
+        public bool CalculateState
+        {
+            get { return calculateState; }
+            set {
+                calculateState = value;
+                OnPropertyChanged("CalculateState");
+            }
+        }
 
         #region 缩放比率
         public double rate;
@@ -126,6 +136,7 @@ namespace TPIS.Project
         #endregion
 
         public ObservableCollection<ObjectBase> Objects { get; set; }
+        public ObservableCollection<PropertyGroup> PropertyGroup { get; set; }
 
         public ProjectCanvas Canvas { get; set; }
 
@@ -137,7 +148,9 @@ namespace TPIS.Project
             Objects = new ObservableCollection<ObjectBase>();
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
+            this.CalculateState = false;
             Path = p;
+            PropertyGroup = CommonTypeService.InitProject();
             SaveProject();
             return;
         }
@@ -231,6 +244,13 @@ namespace TPIS.Project
                     {
                         if (obj is TPISComponent)
                         {
+                            foreach (Port port in ((TPISComponent)obj).Ports)
+                            {
+                                if(port.link != null)
+                                {
+                                    return;
+                                }
+                            }
                             ((TPISComponent)Objects[i]).Rotate(n);
                         }
                     }
@@ -297,6 +317,12 @@ namespace TPIS.Project
                     mainwin.PropertyWindow.Items.Refresh();
                     mainwin.ResultWindow.ItemsSource = components[0].ResultGroups;
                     mainwin.ResultWindow.Items.Refresh();
+                }
+                else
+                {
+                    mainwin.PropertyWindow.ItemsSource = PropertyGroup;
+                    mainwin.PropertyWindow.Items.Refresh();
+                    mainwin.ResultWindow.ItemsSource = null;
                 }
             }
             foreach (ObjectBase obj in Objects)
@@ -394,7 +420,7 @@ namespace TPIS.Project
                 }
             }
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.PropertyWindow.ItemsSource = null;
+            mainwin.PropertyWindow.ItemsSource = PropertyGroup;
             mainwin.PropertyWindow.Items.Refresh();
             mainwin.ResultWindow.ItemsSource = null;
             mainwin.ResultWindow.Items.Refresh();
@@ -408,19 +434,25 @@ namespace TPIS.Project
             int n = 0;
             foreach (ObjectBase obj in this.Objects)
             {
-                if (obj is TPISComponent)
-                {
-                    if (((TPISComponent)obj).No > n)
-                        n = ((TPISComponent)obj).No;
-                }
+                if (obj.No > n)
+                    n = obj.No;
             }
             n++;
             Objects.Add(new TPISComponent(n, tx, ty, width, height, ct));
         }
 
         //添加线
-        public void AddLine()
+        public void AddLine(TPISLine line)
         {
+            int n = 0;
+            foreach (ObjectBase obj in this.Objects)
+            {
+                if (obj.No > n)
+                    n = obj.No;
+            }
+            n++;
+            line.No = n;
+            Objects.Add(line);
             return;
         }
         #endregion
@@ -555,6 +587,7 @@ namespace TPIS.Project
             info.AddValue("canvas", Canvas);
             info.AddValue("objects", Objects);
             info.AddValue("path", Path);
+            info.AddValue("properties", PropertyGroup);
         }
 
         public ProjectItem(SerializationInfo info, StreamingContext context)
@@ -564,8 +597,41 @@ namespace TPIS.Project
             this.Path = info.GetString("path");
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
+            this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
+        }
+
+        public void RebuildLink()
+        {
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    TPISComponent component = obj as TPISComponent;
+                    foreach (Port port in component.Ports)
+                    {
+                        if (port.LinkNo >= 0)
+                        {
+                            foreach (ObjectBase lobj in Objects)
+                            {
+                                if (lobj is TPISLine)
+                                {
+                                    TPISLine line = lobj as TPISLine;
+                                    if (line.No == port.LinkNo)
+                                    {
+                                        if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
+                                            line.inPort = port;
+                                        else
+                                            line.outPort = port;
+                                        port.link = line;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         #endregion
 

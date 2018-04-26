@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,21 +20,23 @@ namespace TPIS
         private void loadComponentType()
         {
             TypeList = new List<BaseType>();
-
             Interface inface = new Interface();
+
             int id = 0;
-            foreach (string key in inface.EleTypeGroup.Keys)
+            foreach (string key in Interface.EleTypeGroup.Keys)
             {
                 BaseType bt = new BaseType();
                 bt.Name = key;
                 TypeList.Add(bt);
 
-                List<EleType> eleTypes = inface.EleTypeGroup[key];
+                List<EleType> eleTypes = Interface.EleTypeGroup[key];
                 foreach(EleType eleType in eleTypes)
                 {
                     id++;
                     Element element = CommonTypeService.LoadElement(eleType);
-                    ComponentType ct = new ComponentType { Id = id, PicPath = inface.GetPNGstr(eleType), Name = element.DProperty["Name"].data_string, Type = eleType, IsChecked = false };
+                    ComponentType ct = new ComponentType { Id = id, PicPath = "pack://SiteofOrigin:,,," + Interface.GetPNGstr(eleType), Name = element.DProperty["Name"].data_string, Type = eleType, IsChecked = false };
+                    ct.Width = element.Nwidth[0]*10;
+                    ct.Height = element.Nheight[0]*10;
                     bt.ComponentTypeList.Add(ct);
                 }
             }

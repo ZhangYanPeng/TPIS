@@ -85,7 +85,7 @@ namespace TPIS.TPISCanvas
             dc.DrawRectangle(Brushes.Transparent, null, new Rect(RenderSize));
 
             if (this.startPoint.HasValue && this.endPoint.HasValue)
-                dc.DrawImage(new BitmapImage(new Uri("pack://application:,,," + targetType.PicPath, UriKind.Absolute)), new Rect(this.startPoint.Value, this.endPoint.Value));
+                dc.DrawImage(new BitmapImage(new Uri(targetType.PicPath, UriKind.RelativeOrAbsolute)), new Rect(this.startPoint.Value, this.endPoint.Value));
         }
     }
 }

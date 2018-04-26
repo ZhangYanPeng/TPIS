@@ -62,10 +62,22 @@ namespace TPIS.Model
         #region
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            info.AddValue("no", No);
+            info.AddValue("isCompleted", IsCompleted);
+            info.AddValue("lineType", LType);
+            info.AddValue("lNum", LNum);
+            info.AddValue("points", Points);
+            info.AddValue("vorH", VorH);
         }
 
         public TPISLine(SerializationInfo info, StreamingContext context)
         {
+            this.No = info.GetInt32("no");
+            this.IsCompleted = info.GetBoolean("isCompleted");
+            this.LType = (LineType)info.GetValue("lineType", typeof(LineType));
+            this.LNum = (long)info.GetValue("lNum", typeof(long));
+            this.Points = (ObservableCollection<Point>)info.GetValue("points", typeof(ObservableCollection<Point>));
+            this.VorH = (List<Boolean>)info.GetValue("vorH", typeof(List<Boolean>));
         }
         #endregion
 

@@ -39,11 +39,12 @@ namespace TPIS
         private void TPISComponentTypeSelected(object sender, RoutedEventArgs e)
         {
             TPISCompentView currEle = sender as TPISCompentView;
+            GetCurrentProject().Select();
             try
             {
-                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.ADD_COMPONENT;
-                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
-                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Add("type", (int)currEle.Tag);
+                this.GetCurrentProject().Canvas.Operation = OperationType.ADD_COMPONENT;
+                this.GetCurrentProject().Canvas.OperationParam.Clear();
+                this.GetCurrentProject().Canvas.OperationParam.Add("type", (int)currEle.Tag);
 
                 this.AddLine.IsChecked = false;
                 this.AddStraightLine.IsChecked = false;
@@ -67,7 +68,7 @@ namespace TPIS
 
         }
 
-        /// <summary>
+        /// <summary>mainwin.ProjectList.projects[mainwin.CurrentPojectIndex]
         /// 取消添加元件
         /// 改为选中操作
         /// </summary>
@@ -76,9 +77,10 @@ namespace TPIS
         private void TPISComponentTypeUnSelected(object sender, RoutedEventArgs e)
         {
             TPISCompentView currEle = sender as TPISCompentView;
+            GetCurrentProject().Select();
             try
             {
-                if (this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation != OperationType.ADD_COMPONENT)
+                if (this.GetCurrentProject().Canvas.Operation != OperationType.ADD_COMPONENT)
                     return;
                 foreach (BaseType bt in this.TypeList)
                 {
@@ -88,8 +90,8 @@ namespace TPIS
                             return;
                     }
                 }
-                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.SELECT;
-                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
+                this.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
+                this.GetCurrentProject().Canvas.OperationParam.Clear();
             }
             catch
             {
@@ -106,18 +108,19 @@ namespace TPIS
         private void TPISLineTypeSelected(object sender, RoutedEventArgs e)
         {
             ToggleButton currEle = sender as ToggleButton;
+            GetCurrentProject().Select();
             try
             {
-                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.ADD_LINE;
-                this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
+                this.GetCurrentProject().Canvas.Operation = OperationType.ADD_LINE;
+                this.GetCurrentProject().Canvas.OperationParam.Clear();
                 if (currEle.Name == "AddLine")
                 {
-                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Add("type", 1);
+                    this.GetCurrentProject().Canvas.OperationParam.Add("type", 1);
                     this.AddStraightLine.IsChecked = false;
                 }
                 else
                 {
-                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Add("type", 0);
+                    this.GetCurrentProject().Canvas.OperationParam.Add("type", 0);
 
                     this.AddLine.IsChecked = false;
                 }
@@ -144,12 +147,13 @@ namespace TPIS
         private void TPISLineTypeUnSelected(object sender, RoutedEventArgs e)
         {
             ToggleButton currEle = sender as ToggleButton;
+            GetCurrentProject().Select();
             try
             {
-                if (this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
+                if (this.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
                 {
-                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.Operation = OperationType.SELECT;
-                    this.ProjectList.projects[this.CurrentPojectIndex].Canvas.OperationParam.Clear();
+                    this.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
+                    this.GetCurrentProject().Canvas.OperationParam.Clear();
                 }
             }
             catch
@@ -244,7 +248,6 @@ namespace TPIS
             CurvesData.FittingWin ftw = new CurvesData.FittingWin(btn.DataContext as CurvesData.Curves);
             ftw.Owner = this;
             ftw.ShowDialog();
-
         }
 
     }
@@ -306,6 +309,28 @@ namespace TPIS
             else
             {
                 if ((P_Type)value == P_Type.ToLine)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制是否在计算
+    public class CalStateConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Collapsed;
+            else
+            {
+                if ((bool)value)
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;

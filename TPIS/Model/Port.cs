@@ -29,6 +29,10 @@ namespace TPIS.Model
             info.AddValue("nodType", Type);
             info.AddValue("canlink", CanLink);
             info.AddValue("cancancel", CanCancel);
+            if(link == null)
+                info.AddValue("linkNo", -1);
+            else
+                info.AddValue("linkNo", link.No);
         }
 
         public Port(SerializationInfo info, StreamingContext context)
@@ -40,7 +44,8 @@ namespace TPIS.Model
             this.MaterialType = (TPISNet.Material)info.GetValue("material", typeof(Object));
             this.Type = (NodType)info.GetValue("nodType", typeof(Object));
             this.CanLink = info.GetBoolean("canlink");
-            this.CanCancel = info.GetBoolean("cancancel"); 
+            this.CanCancel = info.GetBoolean("cancancel");
+            this.LinkNo = info.GetInt32("linkNo");
         }
         #endregion
 
@@ -70,6 +75,7 @@ namespace TPIS.Model
 
         public Node node;
         public TPISLine link;
+        public int LinkNo { get; set; }
 
         public string DicName { get; set; }
         public string Name { get; set; }

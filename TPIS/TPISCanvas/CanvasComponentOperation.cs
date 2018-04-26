@@ -15,7 +15,7 @@ namespace TPIS.TPISCanvas
     public partial class ProjectDesignerCanvas : Canvas
     {
         public Point? AddComponentStartPoint { get; set; }
-        public Image AddComponentImage;
+        private Image AddComponentImage { get; set; }
 
         /// <summary>
         /// 判定画布内鼠标形状
@@ -47,7 +47,9 @@ namespace TPIS.TPISCanvas
                             }
                         }
                         AddComponentImage = new Image();
-                        AddComponentImage.Source = new BitmapImage(new Uri(targetType.PicPath, UriKind.Relative));
+                        AddComponentImage.Source = new BitmapImage(new Uri(targetType.PicPath, UriKind.RelativeOrAbsolute));
+                        AddComponentImage.Width = targetType.Width;
+                        AddComponentImage.Height = targetType.Height;
                         Children.Add(AddComponentImage);
                     }
                 }
@@ -115,8 +117,7 @@ namespace TPIS.TPISCanvas
                                 }
                             }
                         }
-
-                        mainwin.GetCurrentProject().AddComponent((int)sp.X, (int)sp.Y, (int)AddComponentImage.ActualWidth, (int)AddComponentImage.ActualHeight, targetType);
+                        mainwin.GetCurrentProject().AddComponent((int)sp.X, (int)sp.Y, targetType.Width, targetType.Height, targetType);
                     }
                 }
 

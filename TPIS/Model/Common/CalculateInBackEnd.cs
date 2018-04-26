@@ -10,13 +10,13 @@ namespace TPIS.Model.Common
 {
     public class CalculateInBackEnd
     {
-        public static Interface BackEnd;
+        public static Net BackEnd;
 
         public static ProjectItem Calculate(ProjectItem project)
         {
             //传入参数
             Init(project);
-            BackEnd.PNet.Solve();
+            BackEnd.Solve();
             return GetResult(project);
         }
 
@@ -27,8 +27,8 @@ namespace TPIS.Model.Common
                 if (obj is TPISComponent)
                 {
                     TPISComponent component = obj as TPISComponent;
-                    BackEnd.Add(component.No, component.eleType);
-                    Element element = BackEnd.GetElement(component.No);
+                    Interface.Add(BackEnd, component.No, component.eleType);
+                    Element element = Interface.GetElement(BackEnd, component.No);
                     //传属性
                     foreach (PropertyGroup pg in component.ResultGroups)
                     {
@@ -42,7 +42,7 @@ namespace TPIS.Model.Common
                             else if (p.Type == P_Type.ToSelect)
                             {
                                 string unit = element.DPResult[p.DicName].SelectList[element.DPResult[p.DicName].SIndex];
-                                for( int i=0; i<(p.Units).Count<string>(); i++)
+                                for (int i = 0; i < (p.Units).Count<string>(); i++)
                                 {
                                     if (p.Units[i] == unit)
                                         p.UnitNum = i;
@@ -57,22 +57,49 @@ namespace TPIS.Model.Common
 
         public static void Init(ProjectItem project)
         {
-            BackEnd = new Interface();
-            BackEnd.PNet = new Net();
+            BackEnd = new Net();
             //传入参数
+            foreach (PropertyGroup pg in project.PropertyGroup)
+            {
+                foreach (Property p in pg.Properties)
+                {
+                    //属性传入值
+                    if (p.Type == P_Type.ToSetAsDouble)
+                        BackEnd.DProperty[p.DicName].Data = p.valNum;
+                    else if (p.Type == P_Type.ToSetAsString)
+                        BackEnd.DProperty[p.DicName].Data_string = p.valStr;
+                    else if (p.Type == P_Type.ToSelect)
+                    {
+                        string unit = (p.Units)[p.UnitNum];
+                        BackEnd.DProperty[p.DicName].SIndex = BackEnd.DProperty[p.DicName].SelectList.IndexOf(unit);
+                    }
+                }
+            }
+
             foreach (ObjectBase obj in project.Objects)
             {
-                if(obj is TPISComponent)
+                if (obj is TPISComponent)
                 {
                     TPISComponent component = obj as TPISComponent;
-                    BackEnd.Add(component.No, component.eleType);
-                    Element element = BackEnd.GetElement(component.No);
+                    Interface.Add(BackEnd, component.No, component.eleType);
+                    Element element = Interface.GetElement(BackEnd, component.No);
                     //传属性
-                    foreach(PropertyGroup pg in component.PropertyGroups)
+                    foreach (PropertyGroup pg in component.PropertyGroups)
                     {
-                        foreach(Property p in pg.Properties)
+                        foreach (Property p in pg.Properties)
                         {
                             //属性传入值
+                            if (p.Type != P_Type.ToLine)
+                            {
+                                if (p.IsKnown)
+                                {
+                                    element.DProperty[p.DicName].status = P_Status.WeakSet;
+                                }
+                                else
+                                {
+                                    element.DProperty[p.DicName].status = P_Status.Unknown;
+                                }
+                            }
                             if (p.Type == P_Type.ToSetAsDouble)
                                 element.DProperty[p.DicName].Data = p.valNum;
                             else if (p.Type == P_Type.ToSetAsString)
@@ -81,6 +108,41 @@ namespace TPIS.Model.Common
                             {
                                 string unit = (p.Units)[p.UnitNum];
                                 element.DProperty[p.DicName].SIndex = element.DProperty[p.DicName].SelectList.IndexOf(unit);
+                            }
+                            else if (p.Type == P_Type.ToLine)
+                            {
+                                element.DLines[p.DicName] = p.Curve;
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (ObjectBase obj in project.Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    TPISComponent component = obj as TPISComponent;
+                    foreach (Port port in component.Ports)
+                    {
+                        if (port.type == NodType.Inlet || port.type == NodType.DefIn)
+                        {
+                            if (port.link != null)
+                            {
+                                foreach (ObjectBase tobj in project.Objects)
+                                {
+                                    if (tobj is TPISComponent)
+                                    {
+                                        TPISComponent tcomponent = tobj as TPISComponent;
+                                        if (tcomponent.Ports.Contains(port.link.inPort))
+                                        {
+                                            TPISLine line = port.link;
+                                            Pipe pipe = new Pipe(line.No);
+                                            pipe.init(component.No, line.outPort.DicName, BackEnd.elements[component.No].IOPoints[line.outPort.DicName], tcomponent.No, line.inPort.DicName, BackEnd.elements[tcomponent.No].IOPoints[line.inPort.DicName]);
+                                            BackEnd.Pipes.Add(port.link.No, pipe);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

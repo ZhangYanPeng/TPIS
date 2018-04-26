@@ -35,8 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CurvesData">
-      <HintPath>..\CurvesData.exe</HintPath>
+    <Reference Include="CurvesData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>link\CurvesData.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -53,7 +54,7 @@
     </Reference>
     <Reference Include="TPISNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\TPISNet.dll</HintPath>
+      <HintPath>link\TPISNet.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -120,10 +121,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\CalWin.xaml.cs">
+      <DependentUpon>CalWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Compile Include="Views\PropertyWindow.xaml.cs">
       <DependentUpon>PropertyWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CalWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Modules\TPISCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -340,107 +348,6 @@
     <Resource Include="Images\icon\activeIcon\icon_activeHorizentalReversed.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="PNG\Airisland.png" />
-    <Resource Include="PNG\AirSouce.png" />
-    <Resource Include="PNG\AirSource.png" />
-    <Resource Include="PNG\Auxiload.png" />
-    <Resource Include="PNG\BagFilter.png" />
-    <Resource Include="PNG\Boiler.png" />
-    <Resource Include="PNG\Calorifier.png" />
-    <Resource Include="PNG\CFB.png" />
-    <Resource Include="PNG\CFB2.png" />
-    <Resource Include="PNG\CFB3.png" />
-    <Resource Include="PNG\Chimney.png" />
-    <Resource Include="PNG\CoalPool.png" />
-    <Resource Include="PNG\CoalSource.png" />
-    <Resource Include="PNG\Compressor.png" />
-    <Resource Include="PNG\Compressor1.png" />
-    <Resource Include="PNG\Compressor2.png" />
-    <Resource Include="PNG\Compressor3.png" />
-    <Resource Include="PNG\Compressor4.png" />
-    <Resource Include="PNG\Condenser.png" />
-    <Resource Include="PNG\ConTank.png" />
-    <Resource Include="PNG\ControlDot2.png" />
-    <Resource Include="PNG\ControlDotGas.png" />
-    <Resource Include="PNG\Controllingstage.png" />
-    <Resource Include="PNG\ControlValve.png" />
-    <Resource Include="PNG\Deaerator.png" />
-    <Resource Include="PNG\ECON.png" />
-    <Resource Include="PNG\Ejector.png" />
-    <Resource Include="PNG\EVAP.png" />
-    <Resource Include="PNG\EVAP2.png" />
-    <Resource Include="PNG\Fan.png" />
-    <Resource Include="PNG\GasBurner.png" />
-    <Resource Include="PNG\GasHeater.png" />
-    <Resource Include="PNG\GasHeatExchanger.png" />
-    <Resource Include="PNG\GasLastTurbin.png" />
-    <Resource Include="PNG\GasPool.png" />
-    <Resource Include="PNG\GasSource.png" />
-    <Resource Include="PNG\GasTurbin.png" />
-    <Resource Include="PNG\GasTurbin1.png" />
-    <Resource Include="PNG\GasTurbin2.png" />
-    <Resource Include="PNG\GasTurbin3.png" />
-    <Resource Include="PNG\GasTurbin4.png" />
-    <Resource Include="PNG\gear.png" />
-    <Resource Include="PNG\Generator.png" />
-    <Resource Include="PNG\Grid.png" />
-    <Resource Include="PNG\HeatSupply.png" />
-    <Resource Include="PNG\IterateDot.png" />
-    <Resource Include="PNG\Laststage1.png" />
-    <Resource Include="PNG\Laststage2.png" />
-    <Resource Include="PNG\Laststage3.png" />
-    <Resource Include="PNG\Laststage4.png" />
-    <Resource Include="PNG\Laststage5.png" />
-    <Resource Include="PNG\Laststage6.png" />
-    <Resource Include="PNG\MixedHeatExchanger.png" />
-    <Resource Include="PNG\moleskine.png" />
-    <Resource Include="PNG\monitor.png" />
-    <Resource Include="PNG\Motor.png" />
-    <Resource Include="PNG\music.png" />
-    <Resource Include="PNG\new.png" />
-    <Resource Include="PNG\notebook.png" />
-    <Resource Include="PNG\pill.png" />
-    <Resource Include="PNG\Pipe.png" />
-    <Resource Include="PNG\PipeEle.png" />
-    <Resource Include="PNG\present.png" />
-    <Resource Include="PNG\print.png" />
-    <Resource Include="PNG\PTReducer.png" />
-    <Resource Include="PNG\Pump.png" />
-    <Resource Include="PNG\puzzle.png" />
-    <Resource Include="PNG\rulers.png" />
-    <Resource Include="PNG\save.png" />
-    <Resource Include="PNG\search.png" />
-    <Resource Include="PNG\Select.png" />
-    <Resource Include="PNG\SH.png" />
-    <Resource Include="PNG\SlagCooler.png" />
-    <Resource Include="PNG\SmallTurbin.png" />
-    <Resource Include="PNG\statistics.png" />
-    <Resource Include="PNG\SteamHeader.png" />
-    <Resource Include="PNG\SuperHeater.png" />
-    <Resource Include="PNG\SurfaceHeatExchanger.png" />
-    <Resource Include="PNG\TeeGas.png" />
-    <Resource Include="PNG\TeePower.png" />
-    <Resource Include="PNG\TeeValve.png" />
-    <Resource Include="PNG\TeeWater.png" />
-    <Resource Include="PNG\Thionizer.png" />
-    <Resource Include="PNG\Throttle1.png" />
-    <Resource Include="PNG\Throttle2.png" />
-    <Resource Include="PNG\Turbin1.png" />
-    <Resource Include="PNG\Turbin2.png" />
-    <Resource Include="PNG\Turbin3.png" />
-    <Resource Include="PNG\Turbin4.png" />
-    <Resource Include="PNG\Turbin5.png" />
-    <Resource Include="PNG\Turbin6.png" />
-    <Resource Include="PNG\Turbin7.png" />
-    <Resource Include="PNG\user.png" />
-    <Resource Include="PNG\WaterHeater.png" />
-    <Resource Include="PNG\WaterPool.png" />
-    <Resource Include="PNG\WaterSource.png" />
-    <Resource Include="PNG\WaterSource2.png" />
-    <Resource Include="PNG\WaterTag.png" />
-    <Resource Include="PNG\WaterValve.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_activeEnlarge.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeShrink.png" />
   </ItemGroup>
@@ -454,5 +361,6 @@
   <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_play.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -130,21 +131,24 @@ namespace TPIS.Views.Modules
         }
         #endregion
 
-        #region 计算
-        private void CalculateResult(object sender, RoutedEventArgs e)
+        private void ToSelectMode(object sender, RoutedEventArgs e)
         {
+            String str = TargetNo.Text;
             try
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                ProjectItem project = mainwin.GetCurrentProject();
-                //Task t = new Task(() => CalculateCurrent(project));
-                //t.Start();
-                ProjectItem result = CalculateCurrent(project);
-                for (int i = 0; i < mainwin.ProjectList.projects.Count; i++)
+
+
+                mainwin.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
+                mainwin.GetCurrentProject().Canvas.OperationParam.Clear();
+                mainwin.AddStraightLine.IsChecked = false;
+                mainwin.AddLine.IsChecked = false;
+                mainwin.GetCurrentProject().Select();
+                foreach (BaseType bt in mainwin.TypeList)
                 {
-                    if (mainwin.ProjectList.projects[i].Num == result.Num)
+                    foreach (ComponentType ct in bt.ComponentTypeList)
                     {
-                        mainwin.ProjectList.projects[i].Objects = result.Objects;
+                        ct.IsChecked = false;
                     }
                 }
             }
@@ -154,7 +158,35 @@ namespace TPIS.Views.Modules
             }
         }
 
-        public static ProjectItem CalculateCurrent(object data )
+        #region 计算
+        private void CalculateResult(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                ProjectItem project = mainwin.GetCurrentProject();
+                Task<ProjectItem> task = new Task<ProjectItem>(() => CalculateCurrent(project));
+                mainwin.GetCurrentProject().CalculateState = true;
+                task.Start();
+                Task cwt = task.ContinueWith(t => {
+                    ProjectItem result = t.Result;
+                    for (int i = 0; i < mainwin.ProjectList.projects.Count; i++)
+                    {
+                        if (mainwin.ProjectList.projects[i].Num == result.Num)
+                        {
+                            mainwin.ProjectList.projects[i].Objects = result.Objects;
+                            mainwin.ProjectList.projects[i].CalculateState = false;
+                        }
+                    }
+                });
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        public static ProjectItem CalculateCurrent(object data)
         {
             return CalculateInBackEnd.Calculate(data as ProjectItem);
         }

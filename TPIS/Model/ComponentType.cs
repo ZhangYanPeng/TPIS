@@ -15,6 +15,8 @@ namespace TPIS.Model
         public String PicPath { get; set; }
         public String Name { get; set; }
         public EleType Type {get; set;}
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

@@ -1,4 +1,5 @@
 ﻿
+using CurvesData;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -62,6 +63,7 @@ namespace TPIS.Model
             info.AddValue("valStr", valStr);
             info.AddValue("valNum", valNum);
             info.AddValue("modes", Modes);
+            info.AddValue("isKnown", IsKnown);
         }
 
         public Property(SerializationInfo info, StreamingContext context)
@@ -73,8 +75,9 @@ namespace TPIS.Model
             Tips = info.GetString("tips");
             UnitNum = info.GetInt32("unitNum");
             IsStrOrNum = info.GetBoolean("isStrOrNum");
+            IsKnown = info.GetBoolean("isKnown");
 
-            valStr = info.GetString("valStr"); 
+            valStr = info.GetString("valStr");
             valNum = info.GetDouble("valNum");
             if (IsStrOrNum)
             {
@@ -102,7 +105,7 @@ namespace TPIS.Model
         public string Name { get; set; }
         public string Tips { get; set; }
         public string[] Units { get; set; }
-        public TPISNet.Curves Curve { get; set; }
+        public Curves Curve { get; set; }
 
         public int unitNum;
         public int UnitNum
@@ -113,7 +116,10 @@ namespace TPIS.Model
                 unitNum = value;
                 if (!IsStrOrNum)
                 {
-                    showValue = ValueConvert(valNum, Units[0], Units[unitNum]);
+                    if (!IsKnown)
+                        showValue = "";
+                    else
+                        showValue = ValueConvert(valNum, Units[0], Units[unitNum]);
                 }
                 OnPropertyChanged("ShowValue");
             }
@@ -133,6 +139,10 @@ namespace TPIS.Model
             set
             {
                 showValue = value;
+                if (value == "" || value == null)
+                    IsKnown = false;
+                else
+                    IsKnown = true;
                 if (IsStrOrNum)
                     valStr = (string)value;
                 else
@@ -140,6 +150,8 @@ namespace TPIS.Model
                 OnPropertyChanged("ShowValue");
             }
         }
+
+        public Boolean IsKnown { get; set; }
 
         //属性可见性
         #region
@@ -178,8 +190,9 @@ namespace TPIS.Model
         }
         #endregion
 
-        public Property(string dicName, string name, string value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
+        public Property(string dicName, string d_str, string name, string value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
         {
+            SetKnown(d_str);
             DicName = dicName;
             Name = name;
             Units = units;
@@ -197,8 +210,9 @@ namespace TPIS.Model
                 Modes = new ObservableCollection<SelMode>() { SelMode.None };
         }
 
-        public Property(string dicName, string name, double value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
+        public Property(string dicName, string d_str, string name, double value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
         {
+            SetKnown(d_str);
             DicName = dicName;
             Name = name;
             Units = units;
@@ -208,7 +222,11 @@ namespace TPIS.Model
             IsStrOrNum = false;
 
             valNum = value;
-            showValue = ValueConvert(value, Units[0], Units[0]);
+            if (IsKnown)
+                showValue = ValueConvert(value, Units[0], Units[0]);
+            else
+                showValue = "";
+            
 
             if (modes != null)
                 Modes = modes;
@@ -218,14 +236,22 @@ namespace TPIS.Model
 
         public Property(string dicName, string name, string[] units, string tips = "")
         {
+            IsKnown = false;
             DicName = dicName;
             Name = name;
             Units = units;
             Type = P_Type.ToLine;
             Tips = tips;
             Modes = new ObservableCollection<SelMode>() { SelMode.InterMode };
-            Curve = new TPISNet.Curves(name, units[0], units[1]);
-            Curve.Lx1x2.Add(new TPISNet.XYDataLine());
+            Curve = new Curves(name, units[0], units[1]);
+            Curve.Lx1x2.Add(new XYDataLine());
+        }
+
+        internal void SetKnown(string str)
+        {
+            IsKnown = false;
+            if (str != "" && str != null)
+                IsKnown = true;
         }
 
         //属性间的转化

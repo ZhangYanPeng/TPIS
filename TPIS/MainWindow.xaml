@@ -21,6 +21,7 @@
             <local:ValVisualConverter x:Key="ValVisualConverter"></local:ValVisualConverter>
             <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
             <local:LineVisualConverter x:Key="LineVisualConverter" />
+            <local:CalStateConverter x:Key="CalStateConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -134,14 +135,14 @@
                                                 <GridViewColumn Header="值" Width="112" >
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <TextBox Text="{Binding ShowValue}" Width="100"></TextBox>
+                                                            <TextBox Text="{Binding ShowValue}" Width="100" IsReadOnly="True"></TextBox>
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
                                                 <GridViewColumn Header="单位" Width="70" >
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                            <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}" IsReadOnly="True">
                                                                 <ComboBox.ItemTemplate>
                                                                     <DataTemplate>
                                                                         <TextBlock Text="{Binding }"></TextBlock>
@@ -174,7 +175,7 @@
                                                         <DataTemplate>
                                                             <DockPanel Width="165">
                                                                 <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
-                                                                <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                <ComboBox Width="58" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
                                                                     <ComboBox.Visibility>
                                                                         <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
                                                                             <Binding Path="Units"></Binding>
@@ -232,6 +233,11 @@
                                             </ItemsControl>
                                         </s:ProjectDesignerCanvas>
                                     </ScrollViewer>
+                                    <AdornerDecorator VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding CalculateState,Converter={StaticResource CalStateConverter}}">
+                                        <DockPanel Background="Gray" Opacity="0.5" >
+                                            <TextBlock Text="计算中......" FontSize="40" FontWeight="Bold" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                        </DockPanel>
+                                    </AdornerDecorator>
                                 </Grid>
                             </DataTemplate>
                         </TabControl.ContentTemplate>

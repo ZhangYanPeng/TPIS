@@ -77,6 +77,7 @@ namespace TPIS.Command
                     object obj = CommonFunction.DeserializeWithBinary(data);
 
                     ((ProjectItem)obj).Num = mainwin.ProjectNum;
+                    ((ProjectItem)obj).RebuildLink();
                     mainwin.ProjectList.projects.Add(obj as ProjectItem);
                     mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
                     mainwin.projectTab.Items.Refresh();

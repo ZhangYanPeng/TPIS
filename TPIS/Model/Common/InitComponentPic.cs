@@ -11,8 +11,8 @@ namespace TPIS.Model.Common
     {
         public static string InitComponentPic(EleType eleType)
         {
-            Interface inface = new Interface();
-            return inface.GetPNGstr(eleType);
+            return "pack://SiteofOrigin:,,," + Interface.GetPNGstr(eleType);
+            //return "pack://application:,,,/PNG/Airisland.png";
         }
     }
 }

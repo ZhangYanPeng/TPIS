@@ -46,7 +46,7 @@
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeDelete.png" Stretch="None" />
         </Button>
         <Separator />
-        <Button Name="tsbSelection" ToolTip="选择">
+        <Button Name="tsbSelection" ToolTip="选择" Click="ToSelectMode">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSelection.png" Stretch="None" />
         </Button>
         <Separator />
@@ -73,8 +73,7 @@
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_search.png" Stretch="None" />
         </Button>
         <Separator />
-        <TextBox Width="60" Name="Calculate"></TextBox>
-        <Button Name="tsbCal" ToolTip="查找" Click="CalculateResult">
+        <Button Name="tsbCal" ToolTip="计算" Click="CalculateResult">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_play.png" Stretch="None" />
         </Button>
     </ToolBar>

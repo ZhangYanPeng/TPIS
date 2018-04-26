@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CurvesData;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace TPIS.Model.Common
     public static partial class CommonTypeService
     {
         //包含各个元件的属性的初始化
-
         public static ObservableCollection<PropertyGroup> InitComponentProperty(EleType eleType)
         {
             Element element = CommonTypeService.LoadElement(eleType);
@@ -83,17 +83,17 @@ namespace TPIS.Model.Common
 
             if (property.type == TPISNet.P_Type.ToSetAsDouble || property.type == TPISNet.P_Type.ToCal)
             {
-                Property p = new Property(key, property.Name, property.Data, TransformUnit(property.Unit, units), P_Type.ToSetAsString, sm, property.Tips);
+                Property p = new Property(key, property.Data_string, property.Name, property.Data, TransformUnit(property.Unit, units), P_Type.ToSetAsDouble, sm, property.Tips);
                 return p;
             }
             else if (property.type == TPISNet.P_Type.ToSetAsString)
             {
-                Property p = new Property(key, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSetAsString, sm, property.Tips);
+                Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSetAsString, sm, property.Tips);
                 return p;
             }
             else
             {
-                Property p = new Property(key, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSelect, sm, property.Tips);
+                Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSelect, sm, property.Tips);
                 return p;
             }
         }
@@ -116,6 +116,36 @@ namespace TPIS.Model.Common
                 }
             }
             return Units.NA;
+        }
+
+        //初始化 Project 的属性
+        public static ObservableCollection<PropertyGroup> InitProject()
+        {
+            Net BackEnd = new Net();
+            ObservableCollection<PropertyGroup> PropertyGroups = new ObservableCollection<PropertyGroup>();
+            foreach (string key in BackEnd.DProperty.Keys)
+            {
+                TPISNet.Property property = BackEnd.DProperty[key];
+                bool check = false;
+                foreach (PropertyGroup pg in PropertyGroups)
+                {
+                    if (pg.Flag == property.GroupFlag)
+                    {
+                        check = true;
+                        Property p = InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
+                        pg.Properties.Add(p);
+                        break;
+                    }
+                }
+                if (!check)
+                {
+                    Property p = InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
+                    PropertyGroup baseGroup = new PropertyGroup() { Flag = property.GroupFlag };
+                    baseGroup.Properties.Add(p);
+                    PropertyGroups.Add(baseGroup);
+                }
+            }
+            return PropertyGroups;
         }
     }
 }

@@ -21,8 +21,7 @@ namespace TPIS.Model.Common
 
         public static Element LoadElement(EleType eleType)
         {
-            Interface inface = new Interface();
-            return inface.NewElement(eleType, 0);
+            return Interface.NewElement(eleType, 0);
         }
     }
 }

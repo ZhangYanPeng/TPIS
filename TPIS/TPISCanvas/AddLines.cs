@@ -51,12 +51,13 @@ namespace TPIS.TPISCanvas
                 }
                 else if (mainwin.GetCurrentProject().Canvas.EndPort != null)
                 {
-                    Point tmp=p2;
+                    Point tmp = p2;
                     if (p1.X == p2.X)
                         tmp.Y = mainwin.GetCurrentProject().Canvas.endPoint.Y;
                     else
                         tmp.X = mainwin.GetCurrentProject().Canvas.endPoint.X;
-                    if (IsStraight || Forms.Control.ModifierKeys == Forms.Keys.Shift) {
+                    if (IsStraight || Forms.Control.ModifierKeys == Forms.Keys.Shift)
+                    {
                         pline.Points[pline.Points.Count - 1] = tmp;//保证最后拐点为直角，保证终点和后端点所在直线为坐标线
                         pline.Points.Add(mainwin.GetCurrentProject().Canvas.endPoint);//终点
                     }
@@ -91,17 +92,6 @@ namespace TPIS.TPISCanvas
             pline.Points[pline.Points.Count - 1] = p2;
         }
 
-        //protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
-        //{
-        //    base.OnMouseRightButtonDown(e);
-        //    if (mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.CanLink==false)
-        //    {
-        //        pline.Points.Add(mainwin.ProjectList.projects[mainwin.CurrentPojectIndex].Canvas.endPoint);//终点
-        //        flag = false;//结束画线
-        //        SubstitutionLine();
-        //    }
-        //}
-
         private void SubstitutionLine()
         {
             TPISLine line = new TPISLine();
@@ -111,7 +101,7 @@ namespace TPIS.TPISCanvas
             else
                 line.LType = LineType.Slash;
             line.isSelected = false;
-            for( int i = pline.Points.Count - 2; i< pline.Points.Count-1; i++)
+            for (int i = 1; i < pline.Points.Count - 2; i++)
             {
                 if (pline.Points[i].X == pline.Points[i - 1].X && pline.Points[i].X == pline.Points[i + 1].X)
                     pline.Points.RemoveAt(i);
@@ -138,63 +128,9 @@ namespace TPIS.TPISCanvas
             mainwin.GetCurrentProject().Canvas.StartPort.link = line;
             mainwin.GetCurrentProject().Canvas.EndPort.link = line;
 
-            mainwin.GetCurrentProject().Objects.Add(line);
+            mainwin.GetCurrentProject().AddLine(line);
             InitLineAnchorPoints(line.LNum, line);//初始化锚点
         }
-
-        //private void InitalLine(MouseButtonEventArgs e)
-        //{
-        //    count++;
-        //    Polyline pline = new Polyline();
-        //    pline.Stroke = Brushes.Black;
-        //    pline.StrokeThickness = 2;
-
-        //    plines.Add(pline);
-        //    this.Children.Add(plines[count]);
-
-        //    plines[count].Points.Add(p1);//起点
-        //    if (pline.Points.Count  == 1)
-        //        pline.Points.Add(p1);
-        //}
-
-        /*初始化线段*/
-        //private void InitalLine(MouseButtonEventArgs e)
-        //{
-        //    count++;
-        //    Polyline pline = new Polyline();
-        //    pline.Stroke = Brushes.Black;
-        //    pline.StrokeThickness = 2;
-
-        //    plines.Add(pline);
-        //    this.Children.Add(plines[count]);
-
-        //    plines[count].Points.Add(p1);//起点
-        //    plines[count].Points.Add(p1);//初始化折线（四个点）
-        //    plines[count].Points.Add(p1);
-        //    plines[count].Points.Add(p1);
-        //}
-
-        /*折线*/
-        //private void DrawPolyLine(MouseEventArgs e)
-        //{
-        //    p2 = e.GetPosition(this);
-        //    tmp.X = (p1.X + p2.X) / 2;
-        //    tmp.Y = p1.Y;
-        //    plines[count].Points[1] = tmp;//拐点1
-        //    tmp.Y = p2.Y;
-        //    plines[count].Points[2] = tmp;//拐点2
-        //    plines[count].Points[3] = e.GetPosition(this);//终点
-        //}
-
-        /*直线*/
-        //private void DrawLine(MouseEventArgs e)
-        //{
-        //    p2 = e.GetPosition(this);
-        //    if (Abs(p2.X - p1.X) >= Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
-        //    else p2.X = p1.X;
-        //    plines[count].Points[1] = p2;//拐点1
-        //    plines[count].Points[2] = p2;//拐点2
-        //    plines[count].Points[3] = p2;//终点
-        //}
+        
     }
 }
