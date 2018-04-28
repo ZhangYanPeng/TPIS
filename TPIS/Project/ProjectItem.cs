@@ -126,9 +126,26 @@ namespace TPIS.Project
                     if (obj is TPISComponent)
                     {
                         ((TPISComponent)obj).SetRate(rate);
+                        //MessageBox.Show("aff");
+                        //foreach (Port p in ((TPISComponent)obj).Ports)
+                        //{
+                            
+                        //    if (p.link != null && !p.link.IsSelected)
+                        //    {
+                        //        //MessageBox.Show(new Point(p.x, p.y).ToString());
+                        //        //MessageBox.Show(new Point(p.link.points[0].X, p.link.points[0].Y).ToString());
+                        //        if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
+                        //        {
+                        //            p.link.PointTo(0, new Point(p.link.points[0].X + p.P_x, p.link.points[0].Y + p.P_y));
+                        //        }
+                        //        else
+                        //        {
+                        //            p.link.PointTo(p.link.Points.Count - 1, new Point(p.link.points[p.link.Points.Count - 1].X + p.P_x, p.link.points[p.link.Points.Count - 1].Y + p.P_y));
+                        //        }
+                        //    }
+                        //}
                     }
                     //连线缩放
-
                 }
                 OnPropertyChanged("Rate");
             }

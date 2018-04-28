@@ -25,12 +25,30 @@ namespace TPIS.Command
                 SaveOpe.IsEnabled = false;
                 SaveAsOpe.IsEnabled = false;
                 SaveAllOpe.IsEnabled = false;
+                CloseOpe.IsEnabled = false;
+                PrintOpe.IsEnabled = false;
+                CutOpe.IsEnabled = false;
+                CopyOpe.IsEnabled = false;
+                PasteOpe.IsEnabled = false;
+                DelOpe.IsEnabled = false;
+                SeltAllOpe.IsEnabled = false;
+                SeltOpe.IsEnabled = false;
+                RandSeltOpe.IsEnabled = false;
             }
             else
             {
                 SaveOpe.IsEnabled = true;
                 SaveAsOpe.IsEnabled = true;
                 SaveAllOpe.IsEnabled = true;
+                CloseOpe.IsEnabled = true;
+                PrintOpe.IsEnabled = true;
+                CutOpe.IsEnabled = true;
+                CopyOpe.IsEnabled = true;
+                PasteOpe.IsEnabled = true;
+                DelOpe.IsEnabled = true;
+                SeltAllOpe.IsEnabled = true;
+                SeltOpe.IsEnabled = true;
+                RandSeltOpe.IsEnabled = true;
             }
         }
 

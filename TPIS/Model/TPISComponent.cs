@@ -9,7 +9,9 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 using TPIS.Model.Common;
 using TPIS.Project;
 using TPISNet;
@@ -72,7 +74,7 @@ namespace TPIS.Model
         }
         #endregion
 
-        public Position Position { get; set; }
+        public Position Position { get; set; }//控件左上角位置
         public ObservableCollection<Port> Ports { get; set; }
         public string Pic { get; set; }
 
@@ -105,6 +107,26 @@ namespace TPIS.Model
         {
             Position.Rate = rate;
             RePosPort();
+            
+            //foreach (Port p in this.Ports)
+            //{
+
+            //    if (p.link != null && !p.link.IsSelected)
+            //    {
+            //        //MessageBox.Show(new Point(p.x, p.y).ToString());
+            //        //MessageBox.Show(new Point(p.link.points[0].X, p.link.points[0].Y).ToString());
+            //        if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
+            //        {
+            //            p.link.PointTo(0, new Point(p.link.points[0].X + p.P_x, p.link.points[0].Y + p.P_y));
+            //        }
+            //        else
+            //        {
+            //            p.link.PointTo(p.link.Points.Count - 1, new Point(p.link.points[p.link.Points.Count - 1].X + p.P_x, p.link.points[p.link.Points.Count - 1].Y + p.P_y));
+            //        }
+            //    }
+            //}
+
+
         }
 
         #region 形变操作

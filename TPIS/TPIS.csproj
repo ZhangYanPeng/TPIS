@@ -119,9 +119,6 @@
     <Compile Include="Views\CalWin.xaml.cs">
       <DependentUpon>CalWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Modules\TPISMenu.xaml.cs">
-      <DependentUpon>TPISMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Compile Include="Views\PropertyWindow.xaml.cs">
       <DependentUpon>PropertyWindow.xaml</DependentUpon>
@@ -194,13 +191,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\icon_app.png" />
