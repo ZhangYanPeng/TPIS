@@ -147,7 +147,7 @@ namespace TPIS
 
         public static TPISComponent NewTPISComponent(int x, int y, int width, int height, ComponentType ct)
         {
-            TPISComponent c = new TPISComponent(0,x, y, width, height, ct);
+            TPISComponent c = new TPISComponent(0,x, y, 1, width, height, ct);
             return c;
         }
 

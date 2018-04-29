@@ -103,7 +103,8 @@ namespace TPIS.Project
         public bool CalculateState
         {
             get { return calculateState; }
-            set {
+            set
+            {
                 calculateState = value;
                 OnPropertyChanged("CalculateState");
             }
@@ -132,6 +133,10 @@ namespace TPIS.Project
                     {
                         ((TPISLine)obj).SetRate(lrate);
                     }
+                    if (obj is ResultCross)
+                    {
+                        ((ResultCross)obj).SetRate(rate);
+                    }
                 }
                 OnPropertyChanged("Rate");
             }
@@ -140,7 +145,6 @@ namespace TPIS.Project
 
         public ObservableCollection<ObjectBase> Objects { get; set; }
         public ObservableCollection<PropertyGroup> PropertyGroup { get; set; }
-        public ObservableCollection<ResultCross> ResultCross { get; set; }
 
         public ProjectCanvas Canvas { get; set; }
 
@@ -150,7 +154,6 @@ namespace TPIS.Project
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
-            //ResultCross = new ObservableCollection<ResultCross>();
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
             this.CalculateState = false;
@@ -194,10 +197,10 @@ namespace TPIS.Project
         #region 选中形变操作
         internal bool LinkOrNot(ObjectBase obj)
         {
-            if(obj is TPISComponent)
+            if (obj is TPISComponent)
             {
                 TPISComponent c = obj as TPISComponent;
-                foreach(Port p in c.Ports)
+                foreach (Port p in c.Ports)
                 {
                     if (p.link != null)
                         return false;
@@ -302,9 +305,9 @@ namespace TPIS.Project
                     {
                         ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
 
-                        foreach(Port port in ((TPISComponent)obj).Ports)
+                        foreach (Port port in ((TPISComponent)obj).Ports)
                         {
-                            if (port.link !=null && !port.link.IsSelected)
+                            if (port.link != null && !port.link.IsSelected)
                             {
                                 if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
                                 {
@@ -312,7 +315,7 @@ namespace TPIS.Project
                                 }
                                 else
                                 {
-                                    port.link.PointTo(port.link.Points.Count-1, new Point(port.link.Points[port.link.Points.Count - 1].X + d_vx, port.link.Points[port.link.Points.Count - 1].Y + d_vy));
+                                    port.link.PointTo(port.link.Points.Count - 1, new Point(port.link.Points[port.link.Points.Count - 1].X + d_vx, port.link.Points[port.link.Points.Count - 1].Y + d_vy));
                                 }
                             }
                         }
@@ -323,6 +326,13 @@ namespace TPIS.Project
                     if (((TPISLine)obj).IsSelected && true)//选中
                     {
                         ((TPISLine)Objects[i]).PosChange(d_vx, d_vy);
+                    }
+                }
+                if (obj is ResultCross)
+                {
+                    if (((ResultCross)obj).isSelected && true)//选中
+                    {
+                        ((ResultCross)Objects[i]).PosChange(d_vx, d_vy);
                     }
                 }
             }
@@ -358,23 +368,36 @@ namespace TPIS.Project
 
             foreach (ObjectBase obj in Objects)
             {
+                obj.isSelected = false;
+            }
+
+            foreach (ObjectBase obj in Objects)
+            {
                 if (obj is TPISComponent)
                 {
                     if (components.Contains(obj as TPISComponent))
                     {
                         if (!((TPISComponent)obj).IsSelected)
+                        {
                             ((TPISComponent)obj).IsSelected = true;
-                    }
-                    else
-                    {
-                        if (((TPISComponent)obj).IsSelected)
-                            ((TPISComponent)obj).IsSelected = false;
+                            foreach (Port p in ((TPISComponent)obj).Ports)
+                            {
+                                if (p.CrossNo <= 0)
+                                {
+                                    foreach (ObjectBase objt in Objects)
+                                    {
+                                        if (objt.No == p.CrossNo && objt is ResultCross)
+                                            objt.isSelected = true;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                if(obj is TPISLine)
+                else if (obj is TPISLine)
                 {
                     Boolean checkin = false, checkout = false;
-                    foreach(TPISComponent cp in components)
+                    foreach (TPISComponent cp in components)
                     {
                         if (cp.Ports.Contains(((TPISLine)obj).inPort))
                         {
@@ -384,7 +407,7 @@ namespace TPIS.Project
                         {
                             checkout = true;
                         }
-                        if(checkin && checkout)
+                        if (checkin && checkout)
                         {
                             break;
                         }
@@ -408,11 +431,35 @@ namespace TPIS.Project
         {
             foreach (ObjectBase obj in Objects)
             {
-                if (obj is TPISComponent)
+                if (obj is ResultCross)
+                    obj.isSelected = false;
+            }
+
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is ResultCross)
+                {
+                    if (objectBase == obj)
+                    {
+                        ((ResultCross)obj).isSelected = true;
+                    }
+                }
+                else if (obj is TPISComponent)
                 {
                     if (objectBase == obj)
                     {
                         ((TPISComponent)obj).IsSelected = true;
+                        foreach (Port p in ((TPISComponent)obj).Ports)
+                        {
+                            if (p.CrossNo <= 0)
+                            {
+                                foreach (ObjectBase objt in Objects)
+                                {
+                                    if (objt.No == p.CrossNo && objt is ResultCross)
+                                        objt.isSelected = true;
+                                }
+                            }
+                        }
                         //设置属性框显示该属性
                         MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                         mainwin.PropertyWindow.ItemsSource = ((TPISComponent)obj).PropertyGroups;
@@ -425,12 +472,22 @@ namespace TPIS.Project
                     else
                     {
                         ((TPISComponent)obj).IsSelected = false;
+                        foreach (Port p in ((TPISComponent)obj).Ports)
+                        {
+                            if (p.CrossNo >= 0)
+                            {
+                                foreach (ObjectBase objt in Objects)
+                                {
+                                    if (objt.No == p.CrossNo && objt is ResultCross)
+                                        objt.isSelected = false;
+                                }
+                            }
+                        }
                     }
                 }
-                else
+                else if (obj is TPISLine)
                 {
                     //是连线，同上
-
                     if (objectBase == obj)
                     {
                         ((TPISLine)obj).IsSelected = true;
@@ -473,7 +530,7 @@ namespace TPIS.Project
                     n = obj.No;
             }
             n++;
-            Objects.Add(new TPISComponent(n, tx, ty, width, height, ct));
+            Objects.Add(new TPISComponent(n, Rate, tx, ty, width, height, ct));
         }
 
         //添加线
@@ -482,10 +539,10 @@ namespace TPIS.Project
             int n = 0;
             foreach (ObjectBase obj in this.Objects)
             {
-                if (obj.No > n)
+                if (obj.No < n)
                     n = obj.No;
             }
-            n++;
+            n--;
             line.No = n;
             Objects.Add(line);
             return;
@@ -499,7 +556,7 @@ namespace TPIS.Project
             clipBoard.Objects = new List<ObjectBase>();
             foreach (ObjectBase obj in this.Objects)
             {
-                if (obj.isSelected)
+                if (obj.isSelected && (obj is TPISComponent || obj is TPISLine))
                 {
                     clipBoard.Objects.Add(obj);
                 }
@@ -514,14 +571,14 @@ namespace TPIS.Project
                 ObjectBase obj = Objects[i];
                 if (obj is TPISComponent && obj.isSelected)
                 {
-                    foreach(Port p in ((TPISComponent)obj).Ports)
+                    foreach (Port p in ((TPISComponent)obj).Ports)
                     {
-                        if(p.link != null)
+                        if (p.link != null)
                             p.link.IsSelected = true;
                     }
                 }
             }
-            for (int i = 0; i < Objects.Count; )
+            for (int i = 0; i < Objects.Count;)
             {
                 ObjectBase obj = Objects[i];
                 if (obj.isSelected)
@@ -540,7 +597,7 @@ namespace TPIS.Project
                 {
                     foreach (Port p in ((TPISComponent)obj).Ports)
                     {
-                        if(p.link == null)
+                        if (p.link == null)
                         {
                             if (p.Type == NodType.DefIn || p.Type == NodType.DefOut)
                                 p.Type = NodType.Undef;
@@ -584,7 +641,10 @@ namespace TPIS.Project
                 {
                     TPISComponent component = ((TPISComponent)obj).Clone() as TPISComponent;
                     component.PosChange((int)offset_x, (int)offset_y);
-
+                    foreach(Port port in component.Ports)
+                    {
+                        port.CrossNo = 1;
+                    }
                     Objects.Add(component);
                 }
             }
@@ -642,6 +702,34 @@ namespace TPIS.Project
         }
         #endregion
 
+        #region cross操作 
+        public void AddCross(Port port)
+        {
+            int no = 0;
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj.No <= no)
+                {
+                    no = obj.No - 1;
+                }
+            }
+            Objects.Add(new ResultCross(port, no, Rate, new System.Drawing.Point(no * 200)));
+        }
+
+        public void RemoveCross(int no)
+        {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
+                if (obj is ResultCross && obj.No == no)
+                {
+                    Objects.Remove(obj);
+                    return;
+                }
+            }
+        }
+        #endregion
+
         #region 序列化与反序列化
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -650,7 +738,6 @@ namespace TPIS.Project
             info.AddValue("objects", Objects);
             info.AddValue("path", Path);
             info.AddValue("properties", PropertyGroup);
-            info.AddValue("resultcross", ResultCross);
         }
 
         public ProjectItem(SerializationInfo info, StreamingContext context)
@@ -660,7 +747,6 @@ namespace TPIS.Project
             this.Path = info.GetString("path");
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
-            this.ResultCross = (ObservableCollection<ResultCross>)info.GetValue("resultcross", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
             this.Rate = 1;
             this.clipBoard = new ClipBoard();

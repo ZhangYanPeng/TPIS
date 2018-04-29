@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using TPIS.Model;
 using TPIS.Model.Common;
+using TPIS.Project;
 using TPISNet;
 
 namespace TPIS
@@ -53,6 +54,22 @@ namespace TPIS
             {
                 Directory.CreateDirectory(directoryPath);//创建一个路径的文件夹
             }
+        }
+
+        internal ProjectItem GetRelateProject(Port port)
+        {
+            foreach(ProjectItem pi in ProjectList.projects)
+            {
+                foreach(ObjectBase obj in pi.Objects)
+                {
+                    if(obj is TPISComponent)
+                    {
+                        if( ((TPISComponent)obj).Ports.Contains(port) )
+                            return pi;
+                    }
+                }
+            }
+            return null;
         }
 
         #endregion

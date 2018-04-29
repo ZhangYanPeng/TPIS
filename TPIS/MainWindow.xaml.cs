@@ -161,6 +161,13 @@ namespace TPIS
             set { _lineTemplate = value; }
         }
 
+        private DataTemplate _crossTemplate = null;
+        public DataTemplate CrossTemplate
+        {
+            get { return _crossTemplate; }
+            set { _crossTemplate = value; }
+        }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is TPISComponent)
@@ -168,9 +175,12 @@ namespace TPIS
                 return _componentTemplate;
             }
             if (item is TPISLine)
-
             {
                 return _lineTemplate;
+            }
+            if (item is ResultCross)
+            {
+                return _crossTemplate;
             }
             else
             {

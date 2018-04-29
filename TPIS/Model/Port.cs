@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using TPIS.Model.Common;
+using TPIS.Project;
 
 namespace TPIS.Model
 {
@@ -92,13 +93,26 @@ namespace TPIS.Model
             get => showResult;
             set{
                 showResult = value;
-                if (showResult && CrossNo<0)
+                if (showResult && CrossNo>0)
                 {
                     //添加Cross
+                    MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                    ProjectItem pi = mainwin.GetRelateProject(this);
+                    if( pi != null)
+                    {
+                        pi.AddCross(this);
+                    }
                 }
-                else if (!showResult && CrossNo >= 0)
+                else if (!showResult && CrossNo <= 0)
                 {
                     //删除Cross
+                    MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                    ProjectItem pi = mainwin.GetRelateProject(this);
+                    if (pi != null)
+                    {
+                        pi.RemoveCross(CrossNo);
+                        CrossNo = -1;
+                    }
                 }
                 OnPropertyChanged("ShowResult");
             }
@@ -142,7 +156,7 @@ namespace TPIS.Model
         public Port()
         {
             Results = new ObservableCollection<Property>();
-            CrossNo = -1;
+            CrossNo = 1;
             ShowResult = false;
         }
 
@@ -157,7 +171,7 @@ namespace TPIS.Model
             CanLink = canlink;
             CanCancel = cancancel;
             Results = new ObservableCollection<Property>();
-            CrossNo = -1;
+            CrossNo = 1;
             ShowResult = false;
         }
         public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink)
@@ -171,7 +185,7 @@ namespace TPIS.Model
             CanLink = canlink;
             CanCancel = canlink;
             Results = new ObservableCollection<Property>();
-            CrossNo = -1;
+            CrossNo = 1;
             ShowResult = false;
         }
         #endregion

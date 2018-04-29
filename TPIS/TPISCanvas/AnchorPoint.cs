@@ -124,16 +124,18 @@ namespace TPIS.TPISCanvas
     {
         public void InitAnchorPoints(object sender, RoutedEventArgs e)
         {
-
-            this.Children.Add(new AnchorPoint(AnchorPointType.UL));
-            this.Children.Add(new AnchorPoint(AnchorPointType.U));
-            this.Children.Add(new AnchorPoint(AnchorPointType.UR));
-            this.Children.Add(new AnchorPoint(AnchorPointType.L));
-            this.Children.Add(new AnchorPoint(AnchorPointType.R));
-            this.Children.Add(new AnchorPoint(AnchorPointType.DL));
-            this.Children.Add(new AnchorPoint(AnchorPointType.D));
-            this.Children.Add(new AnchorPoint(AnchorPointType.DR));
-            BindingAnchorPoints();
+            if (this.DataContext is TPISComponent)
+            {
+                this.Children.Add(new AnchorPoint(AnchorPointType.UL));
+                this.Children.Add(new AnchorPoint(AnchorPointType.U));
+                this.Children.Add(new AnchorPoint(AnchorPointType.UR));
+                this.Children.Add(new AnchorPoint(AnchorPointType.L));
+                this.Children.Add(new AnchorPoint(AnchorPointType.R));
+                this.Children.Add(new AnchorPoint(AnchorPointType.DL));
+                this.Children.Add(new AnchorPoint(AnchorPointType.D));
+                this.Children.Add(new AnchorPoint(AnchorPointType.DR));
+                BindingAnchorPoints();
+            }
         }
 
         public void BindingAnchorPoints()

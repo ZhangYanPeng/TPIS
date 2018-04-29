@@ -142,8 +142,8 @@
                                                             <GridViewColumn.CellTemplate>
                                                                 <DataTemplate>
                                                                     <DockPanel Width="185">
-                                                                        <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
-                                                                        <ComboBox Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                        <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                        <ComboBox Width="78" IsEnabled="False" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
                                                                             <ComboBox.Visibility>
                                                                                 <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
                                                                                     <Binding Path="Units"></Binding>
@@ -192,8 +192,8 @@
                                                                     <GridViewColumn.CellTemplate>
                                                                         <DataTemplate>
                                                                             <DockPanel Width="185">
-                                                                                <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
-                                                                                <ComboBox Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                                <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                                <ComboBox IsEnabled="False" Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
                                                                                     <ComboBox.Visibility>
                                                                                         <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
                                                                                             <Binding Path="Units"></Binding>
@@ -293,26 +293,8 @@
                                         <s:ProjectDesignerCanvas Visibility="Visible" Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
                                             <ItemsControl ItemsSource="{Binding Objects}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrLineOrComponent}">
                                             </ItemsControl>
-                                            <AdornerDecorator VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-                                                <Canvas >
-                                                    <ItemsControl ItemsSource="{Binding ResultCross}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrLineOrComponent}">
-                                                        <Rectangle Width="200" Height="100" Canvas.Left="100" Canvas.Top="100" Stroke="Black"></Rectangle>
-                                                        <Line></Line>
-                                                        <Line></Line>
-                                                        <TextBlock></TextBlock>
-                                                        <TextBlock></TextBlock>
-                                                        <TextBlock></TextBlock>
-                                                        <TextBlock></TextBlock>
-                                                    </ItemsControl>
-                                                </Canvas>
-                                            </AdornerDecorator>
                                         </s:ProjectDesignerCanvas>
                                     </ScrollViewer>
-                                    <AdornerDecorator VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding CalculateState,Converter={StaticResource CalStateConverter}}">
-                                        <DockPanel Background="Gray" Opacity="0.5" >
-                                            <TextBlock Text="计算中......" FontSize="40" FontWeight="Bold" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                                        </DockPanel>
-                                    </AdornerDecorator>
                                 </Grid>
                             </DataTemplate>
                         </TabControl.ContentTemplate>

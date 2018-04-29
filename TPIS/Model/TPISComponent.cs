@@ -78,11 +78,11 @@ namespace TPIS.Model
         public ObservableCollection<Port> Ports { get; set; }
         public string Pic { get; set; }
 
-        public TPISComponent(int no, int tx, int ty, int width, int height, ComponentType ct)
+        public TPISComponent(int no, double rate, int tx, int ty, int width, int height, ComponentType ct)
         {
             this.No = no;
 
-            this.Position = new Position { Rate = 1 };
+            this.Position = new Position { Rate = rate };
             this.Position.V_x = tx;
             this.Position.V_y = ty;
             this.Position.V_width = width;
@@ -107,26 +107,6 @@ namespace TPIS.Model
         {
             Position.Rate = rate;
             RePosPort();
-            
-            //foreach (Port p in this.Ports)
-            //{
-
-            //    if (p.link != null && !p.link.IsSelected)
-            //    {
-            //        //MessageBox.Show(new Point(p.x, p.y).ToString());
-            //        //MessageBox.Show(new Point(p.link.points[0].X, p.link.points[0].Y).ToString());
-            //        if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
-            //        {
-            //            p.link.PointTo(0, new Point(p.link.points[0].X + p.P_x, p.link.points[0].Y + p.P_y));
-            //        }
-            //        else
-            //        {
-            //            p.link.PointTo(p.link.Points.Count - 1, new Point(p.link.points[p.link.Points.Count - 1].X + p.P_x, p.link.points[p.link.Points.Count - 1].Y + p.P_y));
-            //        }
-            //    }
-            //}
-
-
         }
 
         #region 形变操作
@@ -172,24 +152,6 @@ namespace TPIS.Model
             if (height.HasValue)
                 Position.V_height = Position.V_height + height.Value > 0 ? Position.V_height + height.Value : 1;
             RePosPort();
-            //MessageBox.Show("aff");
-            //foreach (Port p in this.Ports)
-            //{
-
-            //    if (p.link != null && !p.link.IsSelected)
-            //    {
-            //        //MessageBox.Show(new Point(p.x, p.y).ToString());
-            //        //MessageBox.Show(new Point(p.link.points[0].X, p.link.points[0].Y).ToString());
-            //        if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
-            //        {
-            //            p.link.PointTo(0, new Point(p.link.points[0].X + p.P_x, p.link.points[0].Y + p.P_y));
-            //        }
-            //        else
-            //        {
-            //            p.link.PointTo(p.link.Points.Count - 1, new Point(p.link.points[p.link.Points.Count - 1].X + p.P_x, p.link.points[p.link.Points.Count - 1].Y + p.P_y));
-            //        }
-            //    }
-            //}
         }
 
         /// <summary>

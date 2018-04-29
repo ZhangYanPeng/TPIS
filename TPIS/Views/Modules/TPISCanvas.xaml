@@ -71,6 +71,35 @@
         </s:DesignerComponent>
     </DataTemplate>
 
+    <DataTemplate x:Key="template_cross">
+        <s:DesignerComponent >
+            <Viewbox Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0">
+                        <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[0].ShowValue}"></TextBlock>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="0">
+                        <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[1].ShowValue}"></TextBlock>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1">
+                        <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[2].ShowValue}"></TextBlock>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1">
+                        <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[3].ShowValue}"></TextBlock>
+                    </Border>
+                </Grid>
+            </Viewbox>
+        </s:DesignerComponent>
+    </DataTemplate>
+
     <DataTemplate x:Key="template_line">
         <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
         </Polyline>
@@ -90,5 +119,6 @@
                 ComponentTemplate="{StaticResource template_component}"
                 SelectionTemplate="{StaticResource template_selection}"
                 LineTemplate="{StaticResource template_line}"
+                CrossTemplate="{StaticResource template_cross}"
                 />
 </ResourceDictionary>

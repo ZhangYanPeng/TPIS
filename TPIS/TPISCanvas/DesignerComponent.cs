@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TPIS.Model;
+using TPIS.Project;
 using TPIS.Views;
 
 namespace TPIS.TPISCanvas
@@ -34,7 +35,6 @@ namespace TPIS.TPISCanvas
             base.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
             base.MouseRightButtonDown += new MouseButtonEventHandler(Element_MouseRightButtonDown);
             base.Loaded += new RoutedEventHandler(InitAnchorPoints);
-            
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace TPIS.TPISCanvas
             pos = e.GetPosition(null);
 
             this.moveType = MoveType.pos;
-            if (((TPISComponent)this.DataContext).IsSelected )
+            if (this.DataContext is TPISComponent && ((TPISComponent)this.DataContext).IsSelected )
             {
                 //已被选中，不改变选择范围
                 foreach (UIElement uie in this.Children)
@@ -131,11 +131,12 @@ namespace TPIS.TPISCanvas
                     }
                 }
             }
-            if ( !((TPISComponent)this.DataContext).IsSelected || this.moveType != MoveType.pos)
+            if ( !((ObjectBase)this.DataContext).isSelected || this.moveType != MoveType.pos)
             {
                 //之前未被选中，或改为改变大小操作，单独选中该元件
-                mainwin.GetCurrentProject().Select((TPISComponent)this.DataContext);
-                BindingAnchorPoints();
+                mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                if(this.DataContext is TPISComponent)
+                    BindingAnchorPoints();
             }
             if (this.moveType == MoveType.pos)
                 fEle.Cursor = Cursors.SizeAll;
