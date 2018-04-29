@@ -56,6 +56,7 @@ namespace TPIS.TPISCanvas
                 {
                     MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                     mainwin.GetCurrentProject().MoveSelection((int)x, (int)y);
+                    
                 }
 
                 //改变大小
@@ -65,19 +66,19 @@ namespace TPIS.TPISCanvas
                     MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                     if (this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.DL || this.sizeType == AnchorPointType.DR)
                     {
-                        mainwin.GetCurrentProject().SizeChange(no, null, (int)y, null, null);
+                        mainwin.GetCurrentProject().SizeChange(no, null, y, null, null);
                     }
                     if (this.sizeType == AnchorPointType.UR || this.sizeType == AnchorPointType.R || this.sizeType == AnchorPointType.DR)
                     {
-                        mainwin.GetCurrentProject().SizeChange(no, (int)x, null, null, null);
+                        mainwin.GetCurrentProject().SizeChange(no, x, null, null, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.L || this.sizeType == AnchorPointType.DL)
                     {
-                        mainwin.GetCurrentProject().SizeChange(no, -(int)x, null, (int)x, null);
+                        mainwin.GetCurrentProject().SizeChange(no, -x, null, x, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.U || this.sizeType == AnchorPointType.UR)
                     {
-                        mainwin.GetCurrentProject().SizeChange(no, null, -(int)y, null, (int)y);
+                        mainwin.GetCurrentProject().SizeChange(no, null, -y, null, y);
                     }
                 }
             }

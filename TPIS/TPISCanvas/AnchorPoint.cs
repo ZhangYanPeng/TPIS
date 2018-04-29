@@ -58,7 +58,7 @@ namespace TPIS.TPISCanvas
         {
             if (value == null)
                 return DependencyProperty.UnsetValue;
-            return (int)value / 2 - 4;
+            return (double)value / 2 - 4;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -73,7 +73,7 @@ namespace TPIS.TPISCanvas
         {
             if (value == null)
                 return DependencyProperty.UnsetValue;
-            return (int)value - 8;
+            return (double)value - 8;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

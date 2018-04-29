@@ -116,6 +116,7 @@ namespace TPIS.Project
             get => rate;
             set
             {
+                double lrate = value / rate;
                 rate = value;
                 //画布缩放
                 Canvas.Rate = rate;
@@ -127,8 +128,10 @@ namespace TPIS.Project
                     {
                         ((TPISComponent)obj).SetRate(rate);
                     }
-                    //连线缩放
-
+                    if (obj is TPISLine)
+                    {
+                        ((TPISLine)obj).SetRate(lrate);
+                    }
                 }
                 OnPropertyChanged("Rate");
             }
@@ -147,7 +150,7 @@ namespace TPIS.Project
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
-            ResultCross = new ObservableCollection<Model.ResultCross>();
+            //ResultCross = new ObservableCollection<ResultCross>();
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
             this.CalculateState = false;
@@ -265,10 +268,9 @@ namespace TPIS.Project
         }
 
         /// <summary>
-        /// 旋转选中
+        /// 改变大小
         /// </summary>
-        /// <param name="n">n*90 为顺时针旋转角度</param>
-        public void SizeChange(int np, int? width, int? height, int? x, int? y)
+        public void SizeChange(int np, double? width, double? height, double? x, double? y)
         {
             for (int i = 0; i < Objects.Count; i++)
             {
@@ -289,7 +291,7 @@ namespace TPIS.Project
         /// </summary>
         /// <param name="d_vx"></param>
         /// <param name="d_vy"></param>
-        public void MoveSelection(int d_vx, int d_vy)
+        public void MoveSelection(double d_vx, double d_vy)
         {
             for (int i = 0; i < Objects.Count; i++)
             {

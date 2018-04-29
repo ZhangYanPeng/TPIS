@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TPIS.Project;
 
@@ -9,6 +10,48 @@ namespace TPIS.Command
 {
     public partial class TPISCommand
     {
+        public TPISCommand() : base()
+        {
+            System.Windows.Clipboard.Clear();
+        }
+
+        private void OnSubMenuOpened(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuitem = sender as MenuItem;
+            menuitem.IsSubmenuOpen = true;
+            MainWindow mw = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if(mw.GetCurrentProject() == null)
+            {
+                SaveOpe.IsEnabled = false;
+                SaveAsOpe.IsEnabled = false;
+                SaveAllOpe.IsEnabled = false;
+                CloseOpe.IsEnabled = false;
+                PrintOpe.IsEnabled = false;
+                CutOpe.IsEnabled = false;
+                CopyOpe.IsEnabled = false;
+                PasteOpe.IsEnabled = false;
+                DelOpe.IsEnabled = false;
+                SeltAllOpe.IsEnabled = false;
+                SeltOpe.IsEnabled = false;
+                RandSeltOpe.IsEnabled = false;
+            }
+            else
+            {
+                SaveOpe.IsEnabled = true;
+                SaveAsOpe.IsEnabled = true;
+                SaveAllOpe.IsEnabled = true;
+                CloseOpe.IsEnabled = true;
+                PrintOpe.IsEnabled = true;
+                CutOpe.IsEnabled = true;
+                CopyOpe.IsEnabled = true;
+                PasteOpe.IsEnabled = true;
+                DelOpe.IsEnabled = true;
+                SeltAllOpe.IsEnabled = true;
+                SeltOpe.IsEnabled = true;
+                RandSeltOpe.IsEnabled = true;
+            }
+        }
+
         public static RoutedCommand NewProject = new RoutedCommand();
         public static RoutedCommand OpenProject = new RoutedCommand();
         public static RoutedCommand CloseProject = new RoutedCommand();
@@ -18,11 +61,7 @@ namespace TPIS.Command
         public static RoutedCommand Print = new RoutedCommand();
         public static RoutedCommand RecentlyUsedProject = new RoutedCommand();
         public static RoutedCommand Exit = new RoutedCommand();
-
-        public TPISCommand()
-        {
-            System.Windows.Clipboard.Clear();
-        }
+        
 
         #region 新建工程
 
@@ -106,7 +145,7 @@ namespace TPIS.Command
         private void Save_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            mainwin.GetCurrentProject().SaveProject() ;
+            mainwin.GetCurrentProject().SaveProject();
         }
         #endregion
 

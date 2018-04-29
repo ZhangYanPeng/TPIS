@@ -16,7 +16,7 @@
             <CommandBinding Command="s:TPISCommand.Exit" Executed="Exit_Excuted"/>
         </Menu.CommandBindings>
         <!--设备管理-->
-        <MenuItem Header="设备管理(M)" >
+        <MenuItem Header="文件管理(M)" SubmenuOpened="OnSubMenuOpened">
             <MenuItem Header="新建工程(N)" Command="{x:Static s:TPISCommand.NewProject}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_new.png"/>
@@ -27,29 +27,29 @@
                     <Image Source="pack://application:,,,/Images/icon/icon_open.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="关闭工程(C)" Command="{x:Static s:TPISCommand.CloseProject}">
+            <MenuItem Header="关闭工程(C)" Name="CloseOpe" Command="{x:Static s:TPISCommand.CloseProject}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_close.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="存储(S)" InputGestureText="Ctrl+S" Command="{x:Static s:TPISCommand.Save}">
+            <MenuItem Header="存储(S)" Name="SaveOpe" InputGestureText="Ctrl+S" Command="{x:Static s:TPISCommand.Save}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_save.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="另存为(A)" Command="{x:Static s:TPISCommand.SaveAs}">
+            <MenuItem Header="另存为(A)" Name="SaveAsOpe" Command="{x:Static s:TPISCommand.SaveAs}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_saveAs.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="全部存储(L)" InputGestureText="Ctrl+Shift+S" Command="{x:Static s:TPISCommand.SaveAll}">
+            <MenuItem Header="全部存储(L)" Name="SaveAllOpe" InputGestureText="Ctrl+Shift+S" Command="{x:Static s:TPISCommand.SaveAll}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_saveAll.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="打印(P)" Command="{x:Static s:TPISCommand.Print}">
+            <MenuItem Header="打印(P)" Name="PrintOpe" Command="{x:Static s:TPISCommand.Print}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_print.png" />
                 </MenuItem.Icon>
@@ -77,39 +77,39 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="剪切(T)" InputGestureText="Ctrl+X" >
+            <MenuItem Header="剪切(T)" Name="CutOpe" InputGestureText="Ctrl+X" >
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_cut.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="复制(C)" InputGestureText="Ctrl+C" >
+            <MenuItem Header="复制(C)" Name="CopyOpe" InputGestureText="Ctrl+C" >
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_copy.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="粘贴(P)" InputGestureText="Ctrl+V" >
+            <MenuItem Header="粘贴(P)" Name="PasteOpe" InputGestureText="Ctrl+V" >
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_paste.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="删除(D)" InputGestureText="Del" >
+            <MenuItem Header="删除(D)" Name="DelOpe" InputGestureText="Del" >
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_delete.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="全选(A)" InputGestureText="Ctrl+A" >
+            <MenuItem Header="全选(A)" Name="SeltAllOpe" InputGestureText="Ctrl+A" >
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_allSelection.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="选择(S)" >
+            <MenuItem Header="选择(S)" Name="SeltOpe">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_selection.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="自由图形选择(F)" >
+            <MenuItem Header="自由图形选择(F)" Name="RandSeltOpe">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_freehandSelection.png" />
                 </MenuItem.Icon>
