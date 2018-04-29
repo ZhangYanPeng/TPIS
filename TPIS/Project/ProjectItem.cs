@@ -570,7 +570,7 @@ namespace TPIS.Project
                 {
                     foreach (Port p in ((TPISComponent)obj).Ports)
                     {
-                        if (p.link != null)
+                        if (p.link != null && Objects.Contains(p.link))//去TPISLine的锚点
                             p.link.IsSelected = true;
                     }
                 }
@@ -580,6 +580,8 @@ namespace TPIS.Project
                 ObjectBase obj = Objects[i];
                 if (obj.isSelected)
                 {
+                    if (obj is TPISLine)//去TPISLine的锚点
+                        ((TPISLine)obj).IsSelected = false;
                     Objects.Remove(obj);
                 }
                 else

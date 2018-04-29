@@ -55,6 +55,9 @@ namespace TPIS.Command
         public static RoutedCommand NewProject = new RoutedCommand();
         public static RoutedCommand OpenProject = new RoutedCommand();
         public static RoutedCommand CloseProject = new RoutedCommand();
+        public static RoutedCommand Copy = new RoutedCommand();
+        public static RoutedCommand Paste = new RoutedCommand();
+        public static RoutedCommand Del = new RoutedCommand();
         public static RoutedCommand Save = new RoutedCommand();
         public static RoutedCommand SaveAs = new RoutedCommand();
         public static RoutedCommand SaveAll = new RoutedCommand();
@@ -137,6 +140,37 @@ namespace TPIS.Command
         private void CloseProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             
+        }
+
+        #endregion
+
+        #region 复制
+
+        private void Copy_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().CopySelection();
+            PasteOpe.IsEnabled = true;
+        }
+
+        #endregion
+
+        #region 粘贴
+
+        private void Paste_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().PasteSelection(5, 5);
+        }
+
+        #endregion
+
+        #region 删除
+
+        private void Del_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().DeleteSelection();
         }
 
         #endregion
