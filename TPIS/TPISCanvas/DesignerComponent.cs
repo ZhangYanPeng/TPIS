@@ -86,7 +86,7 @@ namespace TPIS.TPISCanvas
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2)
+            if (e.ClickCount == 2 && DataContext is TPISComponent)
             {
                 //双击时执行
                 PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);

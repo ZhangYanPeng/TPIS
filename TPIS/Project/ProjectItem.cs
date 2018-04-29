@@ -4,14 +4,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Model.Common;
-using TPIS.TPISCanvas;
 
 namespace TPIS.Project
 {
@@ -641,7 +638,7 @@ namespace TPIS.Project
                 {
                     TPISComponent component = ((TPISComponent)obj).Clone() as TPISComponent;
                     component.PosChange((int)offset_x, (int)offset_y);
-                    foreach(Port port in component.Ports)
+                    foreach (Port port in component.Ports)
                     {
                         port.CrossNo = 1;
                     }
@@ -713,7 +710,59 @@ namespace TPIS.Project
                     no = obj.No - 1;
                 }
             }
-            Objects.Add(new ResultCross(port, no, Rate, new System.Drawing.Point(no * 200)));
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    TPISComponent component = obj as TPISComponent;
+                    if (component.Ports.Contains(port))
+                    {
+                        double vx, vy;
+                        for (double d = 20; ; d += 10)
+                        {
+                            for (int angle = 0; angle < 360; angle += 5)
+                            {
+                                vx = component.Position.V_x + component.Position.V_width / 2 + d * Math.Sin(angle);
+                                vy = component.Position.V_y + component.Position.V_height / 2 + d * Math.Cos(angle);
+                                if (!CoverOrNot(vx, vy, CrossSize.WIDTH * Rate, CrossSize.HEIGHT * Rate))
+                                {
+                                    Objects.Add(new ResultCross(port, no, Rate, vx, vy));
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool CoverOrNot(double x, double y, double w, double h)
+        {
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    TPISComponent component = obj as TPISComponent;
+                    if (WithinOrNot(x, y, w, h, component.Position.V_x - 5, component.Position.V_y - 5, component.Position.V_width + 5, component.Position.V_height + 5))
+                        return true;
+                }
+                if (obj is ResultCross)
+                {
+                    ResultCross cross = obj as ResultCross;
+                    if (WithinOrNot(x, y, w, h, cross.Position.V_x -5, cross.Position.V_y - 5, cross.Position.V_width + 5, cross.Position.V_height + 5))
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        internal bool WithinOrNot(double x1, double y1, double w1, double h1, double x2, double y2, double w2, double h2)
+        {
+            if (x1 + w1 > x2 && x2 + w2 > x1 && y1 + h1 > y2 && y2 + h2 > y1)
+                return true;
+            else
+                return false;
+
         }
 
         public void RemoveCross(int no)
@@ -776,6 +825,25 @@ namespace TPIS.Project
                                             line.outPort = port;
                                         port.link = line;
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    foreach (Port port in ((TPISComponent)obj).Ports)
+                    {
+                        if (port.CrossNo <= 0)
+                        {
+                            foreach (ObjectBase objt in Objects)
+                            {
+                                if (obj is ResultCross && objt.No == port.CrossNo)
+                                {
+                                    ((ResultCross)objt).LinkPort = port;
                                 }
                             }
                         }

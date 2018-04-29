@@ -83,16 +83,16 @@
                         <ColumnDefinition Width="50*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0">
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[0].ShowValue}"></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="0">
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[1].ShowValue}"></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1">
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[2].ShowValue}"></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1">
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[3].ShowValue}"></TextBlock>
                     </Border>
                 </Grid>

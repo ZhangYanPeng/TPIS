@@ -111,7 +111,7 @@ namespace TPIS.Model
                     if (pi != null)
                     {
                         pi.RemoveCross(CrossNo);
-                        CrossNo = -1;
+                        CrossNo = 1;
                     }
                 }
                 OnPropertyChanged("ShowResult");

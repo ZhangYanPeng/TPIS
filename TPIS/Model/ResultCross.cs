@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using TPIS.Project;
 
 namespace TPIS.Model
 {
+    public static class CrossSize
+    {
+        public static double WIDTH = 90;
+        public static double HEIGHT = 20;
+    }
+
     public class ResultCross : ObjectBase, INotifyPropertyChanged, ISerializable
     {
         #region 属性更新
@@ -28,14 +30,14 @@ namespace TPIS.Model
         
         public Position Position { get; set; }
 
-        public ResultCross(Port port, int no, double rate, Point pos)
+        public ResultCross(Port port, int no, double rate, double vx, double vy)
         {
             LinkPort = port;
             No = no;
             port.CrossNo = no;
             this.Position = new Position { Rate = rate };
-            this.Position.X = pos.X;
-            this.Position.X = pos.Y;
+            this.Position.V_x = vx;
+            this.Position.V_y = vy;
             this.Position.Width = 90;
             this.Position.V_height = 30;
         }
@@ -43,13 +45,14 @@ namespace TPIS.Model
         #region 序列化与反序列化
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            throw new NotImplementedException();
+            info.AddValue("no", No);
+            info.AddValue("position", Position);
         }
 
         public ResultCross(SerializationInfo info, StreamingContext context)
         {
-            //this.Name = info.GetString("name");
-            //this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
+            this.No = info.GetInt32("no");
+            this.Position = (Position)info.GetValue("position", typeof(Object));
         }
 
         internal void PosChange(double? x, double? y)
