@@ -56,6 +56,7 @@ namespace TPIS.TPISCanvas
                 {
                     MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                     mainwin.GetCurrentProject().MoveSelection((int)x, (int)y);
+                    
                 }
 
                 //改变大小
@@ -63,21 +64,21 @@ namespace TPIS.TPISCanvas
                 {
                     if (this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.DL || this.sizeType == AnchorPointType.DR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(null, (int)y);
+                        ((TPISComponent)currEle.DataContext).SizeChange(null, y);
                     }
                     if (this.sizeType == AnchorPointType.UR || this.sizeType == AnchorPointType.R || this.sizeType == AnchorPointType.DR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange((int)x, null);
+                        ((TPISComponent)currEle.DataContext).SizeChange(x, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.L || this.sizeType == AnchorPointType.DL)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(-(int)x, null);
-                        ((TPISComponent)currEle.DataContext).PosChange((int)x, null);
+                        ((TPISComponent)currEle.DataContext).SizeChange(-x, null);
+                        ((TPISComponent)currEle.DataContext).PosChange(x, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.U || this.sizeType == AnchorPointType.UR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(null, -(int)y);
-                        ((TPISComponent)currEle.DataContext).PosChange(null, (int)y);
+                        ((TPISComponent)currEle.DataContext).SizeChange(null, -y);
+                        ((TPISComponent)currEle.DataContext).PosChange(null, y);
                     }
                 }
             }

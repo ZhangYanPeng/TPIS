@@ -29,10 +29,10 @@ namespace TPIS.Model
 
         public Position(SerializationInfo info, StreamingContext context)
         {
-            this.X = info.GetInt32("x");
-            this.Y = info.GetInt32("y");
-            this.Width = info.GetInt32("width");
-            this.Height = info.GetInt32("height");
+            this.X = info.GetDouble("x");
+            this.Y = info.GetDouble("y");
+            this.Width = info.GetDouble("width");
+            this.Height = info.GetDouble("height");
             this.Angle = info.GetInt32("angle");
 
             this.IsVerticalReversed = info.GetInt32("isVerticalReversed");
@@ -57,15 +57,15 @@ namespace TPIS.Model
             }
         }
 
-        private int x;//中心横坐标
-        private int y;//中心纵坐标
-        private int width;//宽度
-        private int height;//高度
+        private double x;//中心横坐标
+        private double y;//中心纵坐标
+        private double width;//宽度
+        private double height;//高度
 
-        private int v_x;
-        private int v_y;
-        private int v_width;
-        private int v_height;
+        private double v_x;
+        private double v_y;
+        private double v_width;
+        private double v_height;
         private double rate;
 
         public int angle;
@@ -125,7 +125,7 @@ namespace TPIS.Model
             }
         }
 
-        public int X
+        public double X
         {
             get => x; set
             {
@@ -134,7 +134,7 @@ namespace TPIS.Model
                 OnPropertyChanged("V_x");
             }
         }
-        public int Y
+        public double Y
         {
             get => y; set
             {
@@ -143,7 +143,7 @@ namespace TPIS.Model
                 OnPropertyChanged("V_y");
             }
         }
-        public int V_x
+        public double V_x
         {
             get => v_x; set
             {
@@ -152,7 +152,7 @@ namespace TPIS.Model
                 OnPropertyChanged("V_x");
             }
         }
-        public int V_y
+        public double V_y
         {
             get => v_y; set
             {
@@ -162,7 +162,7 @@ namespace TPIS.Model
             }
         }
 
-        public int Width
+        public double Width
         {
             get => width; set
             {
@@ -170,7 +170,7 @@ namespace TPIS.Model
                 ReSizeAll();
             }
         }
-        public int Height
+        public double Height
         {
             get => height; set
             {
@@ -180,7 +180,7 @@ namespace TPIS.Model
         }
 
 
-        public int V_width
+        public double V_width
         {
             get => v_width; set
             {
@@ -189,7 +189,7 @@ namespace TPIS.Model
                 ReSizeAllBack();
             }
         }
-        public int V_height
+        public double V_height
         {
             get => v_height; set
             {

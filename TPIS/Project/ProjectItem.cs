@@ -116,6 +116,7 @@ namespace TPIS.Project
             get => rate;
             set
             {
+                double lrate = value / rate;
                 rate = value;
                 //画布缩放
                 Canvas.Rate = rate;
@@ -126,26 +127,11 @@ namespace TPIS.Project
                     if (obj is TPISComponent)
                     {
                         ((TPISComponent)obj).SetRate(rate);
-                        //MessageBox.Show("aff");
-                        //foreach (Port p in ((TPISComponent)obj).Ports)
-                        //{
-                            
-                        //    if (p.link != null && !p.link.IsSelected)
-                        //    {
-                        //        //MessageBox.Show(new Point(p.x, p.y).ToString());
-                        //        //MessageBox.Show(new Point(p.link.points[0].X, p.link.points[0].Y).ToString());
-                        //        if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
-                        //        {
-                        //            p.link.PointTo(0, new Point(p.link.points[0].X + p.P_x, p.link.points[0].Y + p.P_y));
-                        //        }
-                        //        else
-                        //        {
-                        //            p.link.PointTo(p.link.Points.Count - 1, new Point(p.link.points[p.link.Points.Count - 1].X + p.P_x, p.link.points[p.link.Points.Count - 1].Y + p.P_y));
-                        //        }
-                        //    }
-                        //}
                     }
-                    //连线缩放
+                    if (obj is TPISLine)
+                    {
+                        ((TPISLine)obj).SetRate(lrate);
+                    }
                 }
                 OnPropertyChanged("Rate");
             }
@@ -280,7 +266,7 @@ namespace TPIS.Project
         /// </summary>
         /// <param name="d_vx"></param>
         /// <param name="d_vy"></param>
-        public void MoveSelection(int d_vx, int d_vy)
+        public void MoveSelection(double d_vx, double d_vy)
         {
             for (int i = 0; i < Objects.Count; i++)
             {

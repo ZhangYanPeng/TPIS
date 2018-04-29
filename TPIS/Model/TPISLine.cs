@@ -267,8 +267,17 @@ namespace TPIS.Model
             return false;
         }
 
+        internal void SetRate(double lrate)
+        {
+            for (int i=0;i<Points.Count;i++)
+            {
+                points[i] = new Point(points[i].X * lrate, points[i].Y * lrate);
+            }
+            OnPropertyChanged("Points");
+        }
+
         //整体平移
-        internal void PosChange(int d_vx, int d_vy)
+        internal void PosChange(double d_vx, double d_vy)
         {
             for( int i=0; i<Points.Count; i++)
             {
