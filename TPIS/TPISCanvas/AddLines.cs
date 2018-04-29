@@ -66,6 +66,11 @@ namespace TPIS.TPISCanvas
 
                     mainwin.GetCurrentProject().Canvas.EndPort = null;//画完一条线，标志结束
                 }
+                else
+                {
+                    flag = false;
+                    pline.Points.Clear();
+                }
             }
         }
 
@@ -80,13 +85,17 @@ namespace TPIS.TPISCanvas
             {
                 if (pline.Points.Count >= 3)
                 {//避免新线覆盖旧线
-                    if (pline.Points[pline.Points.Count - 3].X == p1.X) p2.Y = p1.Y;
-                    else p2.X = p1.X;
+                    if (pline.Points[pline.Points.Count - 3].X == p1.X)
+                        p2.Y = p1.Y;
+                    else
+                        p2.X = p1.X;
                 }
                 else
                 {
-                    if (Abs(p1.X - p2.X) > Abs(p2.Y - p1.Y)) p2.Y = p1.Y;
-                    else p2.X = p1.X;
+                    if (Abs(p1.X - p2.X) > Abs(p2.Y - p1.Y))
+                        p2.Y = p1.Y;
+                    else
+                        p2.X = p1.X;
                 }
             }
             pline.Points[pline.Points.Count - 1] = p2;
@@ -94,6 +103,33 @@ namespace TPIS.TPISCanvas
 
         private void SubstitutionLine()
         {
+            //判断线是否反了
+            if(mainwin.GetCurrentProject().Canvas.StartPort.Type == Model.Common.NodType.Inlet || mainwin.GetCurrentProject().Canvas.EndPort.Type == Model.Common.NodType.Outlet)
+            {
+                Polyline tp = new Polyline();
+                for (int i = pline.Points.Count-1; i >=0 ; i--)
+                {
+                    tp.Points.Add(pline.Points[i]);
+                }
+                pline.Points.Clear();
+                foreach (Point p in tp.Points)
+                {
+                    pline.Points.Add(p);
+                }
+                Port tpt = mainwin.GetCurrentProject().Canvas.StartPort;
+                mainwin.GetCurrentProject().Canvas.StartPort = mainwin.GetCurrentProject().Canvas.EndPort;
+                mainwin.GetCurrentProject().Canvas.EndPort = tpt;
+            }
+
+            if(mainwin.GetCurrentProject().Canvas.StartPort.Type == Model.Common.NodType.Undef)
+            {
+                mainwin.GetCurrentProject().Canvas.StartPort.Type = Model.Common.NodType.DefOut;
+            }
+            if (mainwin.GetCurrentProject().Canvas.EndPort.Type == Model.Common.NodType.Undef)
+            {
+                mainwin.GetCurrentProject().Canvas.EndPort.Type = Model.Common.NodType.DefIn;
+            }
+
             TPISLine line = new TPISLine();
             line.LNum = count;
             if (IsStraight)
@@ -121,15 +157,15 @@ namespace TPIS.TPISCanvas
             {
                 line.Points.Add(p);
             }
-            //line.Points = pline.Points;
             pline.Points.Clear();
             line.inPort = mainwin.GetCurrentProject().Canvas.StartPort;
             line.outPort = mainwin.GetCurrentProject().Canvas.EndPort;
+            
             mainwin.GetCurrentProject().Canvas.StartPort.link = line;
             mainwin.GetCurrentProject().Canvas.EndPort.link = line;
 
             mainwin.GetCurrentProject().AddLine(line);
-            InitLineAnchorPoints(line.LNum, line);//初始化锚点
+            InitLineAnchorPoints(line.No, line);//初始化锚点
         }
         
     }

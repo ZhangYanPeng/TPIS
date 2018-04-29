@@ -64,6 +64,7 @@ namespace TPIS.Model
             info.AddValue("valNum", valNum);
             info.AddValue("modes", Modes);
             info.AddValue("isKnown", IsKnown);
+            info.AddValue("visible", visible);
         }
 
         public Property(SerializationInfo info, StreamingContext context)
@@ -76,6 +77,11 @@ namespace TPIS.Model
             UnitNum = info.GetInt32("unitNum");
             IsStrOrNum = info.GetBoolean("isStrOrNum");
             IsKnown = info.GetBoolean("isKnown");
+            bool vb = info.GetBoolean("visible");
+            if (vb)
+                Visibility = Visibility.Visible;
+            else
+                Visibility = Visibility.Collapsed;
 
             valStr = info.GetString("valStr");
             valNum = info.GetDouble("valNum");

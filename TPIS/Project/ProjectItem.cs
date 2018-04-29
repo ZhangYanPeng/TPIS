@@ -137,6 +137,7 @@ namespace TPIS.Project
 
         public ObservableCollection<ObjectBase> Objects { get; set; }
         public ObservableCollection<PropertyGroup> PropertyGroup { get; set; }
+        public ObservableCollection<ResultCross> ResultCross { get; set; }
 
         public ProjectCanvas Canvas { get; set; }
 
@@ -146,6 +147,7 @@ namespace TPIS.Project
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
+            ResultCross = new ObservableCollection<Model.ResultCross>();
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
             this.CalculateState = false;
@@ -187,6 +189,20 @@ namespace TPIS.Project
         #endregion
 
         #region 选中形变操作
+        internal bool LinkOrNot(ObjectBase obj)
+        {
+            if(obj is TPISComponent)
+            {
+                TPISComponent c = obj as TPISComponent;
+                foreach(Port p in c.Ports)
+                {
+                    if (p.link != null)
+                        return false;
+                }
+            }
+            return true;
+        }
+
         /// <summary>
         /// 翻转选中
         /// </summary>
@@ -197,7 +213,7 @@ namespace TPIS.Project
                 ObjectBase obj = Objects[i];
                 if (obj is TPISComponent)
                 {
-                    if (((TPISComponent)obj).IsSelected && true)//选中，切不含连接关系
+                    if (((TPISComponent)obj).IsSelected && LinkOrNot(obj))//选中，切不含连接关系
                     {
                         if (obj is TPISComponent)
                         {
@@ -218,7 +234,7 @@ namespace TPIS.Project
                 ObjectBase obj = Objects[i];
                 if (obj is TPISComponent)
                 {
-                    if (((TPISComponent)obj).IsSelected && true)//选中，切不含连接关系
+                    if (((TPISComponent)obj).IsSelected && LinkOrNot(obj))//选中，切不含连接关系
                     {
                         if (obj is TPISComponent)
                         {
@@ -240,19 +256,29 @@ namespace TPIS.Project
                 ObjectBase obj = Objects[i];
                 if (obj is TPISComponent)
                 {
-                    if (((TPISComponent)obj).IsSelected && true)//选中，切不含连接关系
+                    if (((TPISComponent)obj).IsSelected && LinkOrNot(obj))//选中，切不含连接关系
                     {
-                        if (obj is TPISComponent)
-                        {
-                            foreach (Port port in ((TPISComponent)obj).Ports)
-                            {
-                                if(port.link != null)
-                                {
-                                    return;
-                                }
-                            }
-                            ((TPISComponent)Objects[i]).Rotate(n);
-                        }
+                        ((TPISComponent)Objects[i]).Rotate(n);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 旋转选中
+        /// </summary>
+        /// <param name="n">n*90 为顺时针旋转角度</param>
+        public void SizeChange(int np, int? width, int? height, int? x, int? y)
+        {
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                ObjectBase obj = Objects[i];
+                if (obj is TPISComponent)
+                {
+                    if (((TPISComponent)obj).IsSelected && obj.No == np && LinkOrNot(obj))//选中，切不含连接关系
+                    {
+                        ((TPISComponent)Objects[i]).SizeChange(width, height);
+                        ((TPISComponent)Objects[i]).PosChange(x, y);
                     }
                 }
             }
@@ -429,6 +455,8 @@ namespace TPIS.Project
             mainwin.PropertyWindow.Items.Refresh();
             mainwin.ResultWindow.ItemsSource = null;
             mainwin.ResultWindow.Items.Refresh();
+            mainwin.PortResults.ItemsSource = null;
+            mainwin.PortResults.Items.Refresh();
         }
         #endregion
 
@@ -620,6 +648,7 @@ namespace TPIS.Project
             info.AddValue("objects", Objects);
             info.AddValue("path", Path);
             info.AddValue("properties", PropertyGroup);
+            info.AddValue("resultcross", ResultCross);
         }
 
         public ProjectItem(SerializationInfo info, StreamingContext context)
@@ -629,6 +658,7 @@ namespace TPIS.Project
             this.Path = info.GetString("path");
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
+            this.ResultCross = (ObservableCollection<ResultCross>)info.GetValue("resultcross", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
             this.Rate = 1;
             this.clipBoard = new ClipBoard();

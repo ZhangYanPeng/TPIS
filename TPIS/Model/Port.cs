@@ -31,7 +31,9 @@ namespace TPIS.Model
             info.AddValue("canlink", CanLink);
             info.AddValue("cancancel", CanCancel);
             info.AddValue("results", Results);
-            if(link == null)
+            info.AddValue("crossNo", CrossNo);
+            info.AddValue("showResult", ShowResult);
+            if (link == null)
                 info.AddValue("linkNo", -1);
             else
                 info.AddValue("linkNo", link.No);
@@ -49,6 +51,8 @@ namespace TPIS.Model
             this.CanCancel = info.GetBoolean("cancancel");
             this.Results = (ObservableCollection<Property>)info.GetValue("results", typeof(Object));
             this.LinkNo = info.GetInt32("linkNo");
+            this.CrossNo = info.GetInt32("crossNo");
+            this.ShowResult = info.GetBoolean("showResult");
         }
         #endregion
 
@@ -81,6 +85,23 @@ namespace TPIS.Model
         public Node node;
         public TPISLine link;
         public int LinkNo { get; set; }
+        public int CrossNo { get; set; }
+        public bool showResult;
+        public bool ShowResult {
+            get => showResult;
+            set{
+                showResult = value;
+                if (showResult && CrossNo<0)
+                {
+                    //添加Cross
+                }
+                else if (!showResult && CrossNo >= 0)
+                {
+                    //删除Cross
+                }
+                OnPropertyChanged("ShowResult");
+            }
+        }
 
         public string DicName { get; set; }
         public string Name { get; set; }
@@ -120,6 +141,8 @@ namespace TPIS.Model
         public Port()
         {
             Results = new ObservableCollection<Property>();
+            CrossNo = -1;
+            ShowResult = false;
         }
 
         public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink, bool cancancel)
@@ -133,6 +156,8 @@ namespace TPIS.Model
             CanLink = canlink;
             CanCancel = cancancel;
             Results = new ObservableCollection<Property>();
+            CrossNo = -1;
+            ShowResult = false;
         }
         public Port(string dicName, string name, double xpos, double ypos, TPISNet.Material material, NodType nodType, bool canlink)
         {
@@ -145,6 +170,8 @@ namespace TPIS.Model
             CanLink = canlink;
             CanCancel = canlink;
             Results = new ObservableCollection<Property>();
+            CrossNo = -1;
+            ShowResult = false;
         }
         #endregion
 
@@ -158,7 +185,6 @@ namespace TPIS.Model
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
         
     }
 }

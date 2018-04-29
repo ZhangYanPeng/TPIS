@@ -140,6 +140,7 @@ namespace TPIS.Model.Common
                     {
                         check = true;
                         Property p = InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
+                        p.SelectProperty(SelMode.None);
                         pg.Properties.Add(p);
                         break;
                     }
@@ -148,6 +149,7 @@ namespace TPIS.Model.Common
                 {
                     Property p = InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
                     PropertyGroup baseGroup = new PropertyGroup() { Flag = property.GroupFlag };
+                    p.SelectProperty(SelMode.None);
                     baseGroup.Properties.Add(p);
                     PropertyGroups.Add(baseGroup);
                 }

@@ -134,27 +134,32 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <GroupBox Header="{Binding Flag}">
-                                            <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}">
+                                            <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
                                                 <ListView.View>
                                                     <GridView>
                                                         <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                                        <GridViewColumn Header="值" Width="112" >
+                                                        <GridViewColumn Header="值" Width="200" >
                                                             <GridViewColumn.CellTemplate>
                                                                 <DataTemplate>
-                                                                    <TextBox Text="{Binding ShowValue}" Width="100" IsReadOnly="True"></TextBox>
-                                                                </DataTemplate>
-                                                            </GridViewColumn.CellTemplate>
-                                                        </GridViewColumn>
-                                                        <GridViewColumn Header="单位" Width="70" >
-                                                            <GridViewColumn.CellTemplate>
-                                                                <DataTemplate>
-                                                                    <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}" IsReadOnly="True">
-                                                                        <ComboBox.ItemTemplate>
-                                                                            <DataTemplate>
-                                                                                <TextBlock Text="{Binding }"></TextBlock>
-                                                                            </DataTemplate>
-                                                                        </ComboBox.ItemTemplate>
-                                                                    </ComboBox>
+                                                                    <DockPanel Width="185">
+                                                                        <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                        <ComboBox Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                            <ComboBox.Visibility>
+                                                                                <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                                    <Binding Path="Units"></Binding>
+                                                                                    <Binding Path="Type"></Binding>
+                                                                                </MultiBinding>
+                                                                            </ComboBox.Visibility>
+                                                                            <ComboBox.ItemTemplate>
+                                                                                <DataTemplate>
+                                                                                    <TextBlock Text="{Binding }"></TextBlock>
+                                                                                </DataTemplate>
+                                                                            </ComboBox.ItemTemplate>
+                                                                        </ComboBox>
+                                                                        <UserControl Visibility="{Binding Type, Converter={StaticResource LineVisualConverter}}">
+                                                                            <Button Content="设置" DataContext="{Binding Curve}"  Click="OpenCurveWindow_Click"></Button>
+                                                                        </UserControl>
+                                                                    </DockPanel>
                                                                 </DataTemplate>
                                                             </GridViewColumn.CellTemplate>
                                                         </GridViewColumn>
@@ -166,36 +171,42 @@
                                 </ItemsControl.ItemTemplate>
                             </ListBox>
 
-                            <StackPanel Margin="3" MinWidth="306">
-                                <ItemsControl Name="PortResults">
+                            <StackPanel Margin="3">
+                                <ItemsControl Name="PortResults" >
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Expander>
+                                            <Expander MinWidth="300">
                                                 <Expander.Header>
-                                                    <TextBlock  Text="{Binding Name}" FontSize="14" FontWeight="Bold" ></TextBlock>
+                                                    <DockPanel>
+                                                        <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" FontSize="14" FontWeight="Bold" >
+                                                        </TextBlock>
+                                                        <CheckBox IsChecked="{Binding ShowResult}"></CheckBox>
+                                                    </DockPanel>
                                                 </Expander.Header>
                                                 <Expander.Content>
                                                     <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Results}">
                                                         <ListView.View>
                                                             <GridView>
                                                                 <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                                                <GridViewColumn Header="值" Width="112" >
+                                                                <GridViewColumn Header="值" Width="200" >
                                                                     <GridViewColumn.CellTemplate>
                                                                         <DataTemplate>
-                                                                            <TextBox Text="{Binding ShowValue}" Width="100" IsReadOnly="True"></TextBox>
-                                                                        </DataTemplate>
-                                                                    </GridViewColumn.CellTemplate>
-                                                                </GridViewColumn>
-                                                                <GridViewColumn Header="单位" Width="70" >
-                                                                    <GridViewColumn.CellTemplate>
-                                                                        <DataTemplate>
-                                                                            <ComboBox Width="58" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}" IsReadOnly="True">
-                                                                                <ComboBox.ItemTemplate>
-                                                                                    <DataTemplate>
-                                                                                        <TextBlock Text="{Binding }"></TextBlock>
-                                                                                    </DataTemplate>
-                                                                                </ComboBox.ItemTemplate>
-                                                                            </ComboBox>
+                                                                            <DockPanel Width="185">
+                                                                                <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                                <ComboBox Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                                    <ComboBox.Visibility>
+                                                                                        <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                                            <Binding Path="Units"></Binding>
+                                                                                            <Binding Path="Type"></Binding>
+                                                                                        </MultiBinding>
+                                                                                    </ComboBox.Visibility>
+                                                                                    <ComboBox.ItemTemplate>
+                                                                                        <DataTemplate>
+                                                                                            <TextBlock Text="{Binding }"></TextBlock>
+                                                                                        </DataTemplate>
+                                                                                    </ComboBox.ItemTemplate>
+                                                                                </ComboBox>
+                                                                            </DockPanel>
                                                                         </DataTemplate>
                                                                     </GridViewColumn.CellTemplate>
                                                                 </GridViewColumn>
@@ -217,16 +228,16 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <GroupBox Header="{Binding Flag}">
-                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
+                                    <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                                <GridViewColumn Header="值" Width="180" >
+                                                <GridViewColumn Header="值" Width="200" >
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <DockPanel Width="165">
+                                                            <DockPanel Width="185">
                                                                 <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
-                                                                <ComboBox Width="58" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                <ComboBox Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
                                                                     <ComboBox.Visibility>
                                                                         <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
                                                                             <Binding Path="Units"></Binding>
@@ -282,6 +293,19 @@
                                         <s:ProjectDesignerCanvas Visibility="Visible" Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
                                             <ItemsControl ItemsSource="{Binding Objects}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrLineOrComponent}">
                                             </ItemsControl>
+                                            <AdornerDecorator VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                                                <Canvas >
+                                                    <ItemsControl ItemsSource="{Binding ResultCross}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrLineOrComponent}">
+                                                        <Rectangle Width="200" Height="100" Canvas.Left="100" Canvas.Top="100" Stroke="Black"></Rectangle>
+                                                        <Line></Line>
+                                                        <Line></Line>
+                                                        <TextBlock></TextBlock>
+                                                        <TextBlock></TextBlock>
+                                                        <TextBlock></TextBlock>
+                                                        <TextBlock></TextBlock>
+                                                    </ItemsControl>
+                                                </Canvas>
+                                            </AdornerDecorator>
                                         </s:ProjectDesignerCanvas>
                                     </ScrollViewer>
                                     <AdornerDecorator VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding CalculateState,Converter={StaticResource CalStateConverter}}">

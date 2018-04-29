@@ -61,23 +61,23 @@ namespace TPIS.TPISCanvas
                 //改变大小
                 if (this.moveType == MoveType.size)
                 {
+                    int no = ((TPISComponent)currEle.DataContext).No;
+                    MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                     if (this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.DL || this.sizeType == AnchorPointType.DR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(null, (int)y);
+                        mainwin.GetCurrentProject().SizeChange(no, null, (int)y, null, null);
                     }
                     if (this.sizeType == AnchorPointType.UR || this.sizeType == AnchorPointType.R || this.sizeType == AnchorPointType.DR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange((int)x, null);
+                        mainwin.GetCurrentProject().SizeChange(no, (int)x, null, null, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.L || this.sizeType == AnchorPointType.DL)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(-(int)x, null);
-                        ((TPISComponent)currEle.DataContext).PosChange((int)x, null);
+                        mainwin.GetCurrentProject().SizeChange(no, -(int)x, null, (int)x, null);
                     }
                     if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.U || this.sizeType == AnchorPointType.UR)
                     {
-                        ((TPISComponent)currEle.DataContext).SizeChange(null, -(int)y);
-                        ((TPISComponent)currEle.DataContext).PosChange(null, (int)y);
+                        mainwin.GetCurrentProject().SizeChange(no, null, -(int)y, null, (int)y);
                     }
                 }
             }

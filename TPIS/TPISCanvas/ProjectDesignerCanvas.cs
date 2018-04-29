@@ -55,7 +55,13 @@ namespace TPIS.TPISCanvas
 
         public void MouseCanvasRightButtonDown(object sender, MouseEventArgs e)
         {
-            if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE)
+            {
+                flag = false;
+                pline.Points.Clear();
+            }
+
+            if (mainwin.GetCurrentProject().Canvas.Operation != OperationType.SELECT)
             {
                 this.Cursor = Cursors.Arrow;
                 mainwin.ToSelectMode();

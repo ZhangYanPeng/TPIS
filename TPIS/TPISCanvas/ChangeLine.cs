@@ -63,25 +63,45 @@ namespace TPIS.TPISCanvas
                 Point point = uIElement.TranslatePoint(new Point(), designer);//控件左上点
                 point.X = point.X + 5;//求中心点
                 point.Y = point.Y + 5;
-                if (port.Type == NodType.Outlet || port.Type == NodType.Undef)
+                if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == false)
                 {
-                    if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == false)
-                    {
-                        mainwin.GetCurrentProject().Canvas.statrPoint = point;//折线起点
-                        mainwin.GetCurrentProject().Canvas.StartPort = port;//起始Port
-                        mainwin.GetCurrentProject().Canvas.CanLink = true;//可以开始画线
-                    }
+                    mainwin.GetCurrentProject().Canvas.statrPoint = point;//折线起点
+                    mainwin.GetCurrentProject().Canvas.StartPort = port;//起始Port
+                    mainwin.GetCurrentProject().Canvas.CanLink = true;//可以开始画线
                 }
                 else if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == true)
                 {
-                    if ((port.Type == NodType.Inlet || port.Type == NodType.Undef) && port.MaterialType == mainwin.GetCurrentProject().Canvas.StartPort.MaterialType )
+                    if ( port.MaterialType == mainwin.GetCurrentProject().Canvas.StartPort.MaterialType )
                     {
-                        mainwin.GetCurrentProject().Canvas.endPoint = point;//折线终点
-                        mainwin.GetCurrentProject().Canvas.EndPort = port;//终止Port
+                        if(CheckPort(port.Type, mainwin.GetCurrentProject().Canvas.StartPort.Type)) { 
+                            mainwin.GetCurrentProject().Canvas.endPoint = point;//折线终点
+                            mainwin.GetCurrentProject().Canvas.EndPort = port;//终止Port
+                            mainwin.GetCurrentProject().Canvas.CanLink = false;//可以终止画线
+                        }
+                        else
+                        {
+                            MessageBox.Show("两节点同为出口或入口，无法连接！");
+                            mainwin.GetCurrentProject().Canvas.CanLink = false;//可以终止画线
+                            mainwin.GetCurrentProject().Canvas.EndPort = null;//终止Port
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("两节点材质不同，无法连接！");
                         mainwin.GetCurrentProject().Canvas.CanLink = false;//可以终止画线
+                        mainwin.GetCurrentProject().Canvas.EndPort = null;//终止Port
                     }
                 }
             }
+        }
+
+        internal bool CheckPort(NodType t1, NodType t2)
+        {
+            if ((t1 == NodType.Inlet || t1 == NodType.Undef) && ((t2 == NodType.Outlet || t2 == NodType.Undef)))
+                return true;
+            if ((t1 == NodType.Outlet || t1 == NodType.Undef) && ((t2 == NodType.Inlet || t2 == NodType.Undef)))
+                return true;
+            return false;
         }
 
         public void Port_MouseLeftButtonUp(object sender, MouseEventArgs e)
