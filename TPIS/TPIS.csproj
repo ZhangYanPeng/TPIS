@@ -68,6 +68,9 @@
     <Compile Include="MainWindow.xaml.Intialize.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.xaml.KeyCut.cs">
+    <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.Message.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

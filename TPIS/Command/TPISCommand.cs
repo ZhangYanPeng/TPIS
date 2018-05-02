@@ -64,11 +64,11 @@ namespace TPIS.Command
         public static RoutedCommand Print = new RoutedCommand();
         public static RoutedCommand RecentlyUsedProject = new RoutedCommand();
         public static RoutedCommand Exit = new RoutedCommand();
-        
+
 
         #region 新建工程
 
-        private void NewProject_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void NewProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             Window new_project = new NewProject();
             new_project.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -79,7 +79,7 @@ namespace TPIS.Command
 
         #region 打开工程
 
-        private void OpenProject_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void OpenProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.Title = "选择TPIS工程项目";
@@ -137,7 +137,7 @@ namespace TPIS.Command
 
         #region 关闭工程
 
-        private void CloseProject_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void CloseProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             
         }
@@ -146,18 +146,18 @@ namespace TPIS.Command
 
         #region 复制
 
-        private void Copy_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Copy_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.GetCurrentProject().CopySelection();
-            PasteOpe.IsEnabled = true;
+            //PasteOpe.IsEnabled = true;
         }
 
         #endregion
 
         #region 粘贴
 
-        private void Paste_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Paste_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.GetCurrentProject().PasteSelection(5, 5);
@@ -167,7 +167,7 @@ namespace TPIS.Command
 
         #region 删除
 
-        private void Del_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Del_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.GetCurrentProject().DeleteSelection();
@@ -176,7 +176,7 @@ namespace TPIS.Command
         #endregion
 
         #region 存储
-        private void Save_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Save_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             mainwin.GetCurrentProject().SaveProject();
@@ -185,7 +185,7 @@ namespace TPIS.Command
 
         #region 另存为
 
-        private void SaveAs_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void SaveAs_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             System.Windows.MessageBox.Show("NewProject");
         }
@@ -194,7 +194,7 @@ namespace TPIS.Command
 
         #region 全部存储
 
-        private void SaveAll_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void SaveAll_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             foreach(ProjectItem project in mainwin.ProjectList.projects)
@@ -207,7 +207,7 @@ namespace TPIS.Command
 
         #region 打印
 
-        private void Print_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Print_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             System.Windows.MessageBox.Show("NewProject");
         }
@@ -216,7 +216,7 @@ namespace TPIS.Command
 
         #region 最近使用过的工程
 
-        private void RecentlyUsedProject_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void RecentlyUsedProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             System.Windows.MessageBox.Show("NewProject");
         }
@@ -225,7 +225,7 @@ namespace TPIS.Command
 
         #region 退出
 
-        private void Exit_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Exit_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             mainwin.Close();

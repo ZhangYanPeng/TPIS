@@ -18,12 +18,7 @@
             <CommandBinding Command="s:TPISCommand.RecentlyUsedProject" Executed="RecentlyUsedProject_Excuted"/>
             <CommandBinding Command="s:TPISCommand.Exit" Executed="Exit_Excuted"/>
         </Menu.CommandBindings>
-        <!--快捷键-->
-        <Menu.InputBindings>
-            <KeyBinding Gesture="Ctrl+C" Command="{x:Static s:TPISCommand.Copy}" />
-            <KeyBinding Gesture="Ctrl+V" Command="{x:Static s:TPISCommand.Paste}" />
-            <KeyBinding Gesture="Del" Command="{x:Static s:TPISCommand.Del}" />
-        </Menu.InputBindings>
+        
         <!--文件管理-->
         <MenuItem Header="文件管理(M)" SubmenuOpened="OnSubMenuOpened">
             <MenuItem Header="新建工程(N)" Command="{x:Static s:TPISCommand.NewProject}">
@@ -58,7 +53,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="打印(P)" Name="PrintOpe" Command="{x:Static s:TPISCommand.Print}">
+            <MenuItem Header="打印(P)" Name="PrintOpe" InputGestureText="Ctrl+P" Command="{x:Static s:TPISCommand.Print}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_print.png" />
                 </MenuItem.Icon>

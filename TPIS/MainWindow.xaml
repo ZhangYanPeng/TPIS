@@ -30,26 +30,29 @@
         </ResourceDictionary>
     </Window.Resources>
     
-    <!--快捷键--><!--
+    <!--快捷键-->
     <Window.CommandBindings>
         <CommandBinding Command="c:TPISCommand.NewProject" Executed="NewProject_Excuted"/>
         <CommandBinding Command="c:TPISCommand.OpenProject" Executed="OpenProject_Excuted"/>
-        <CommandBinding Command="c:TPISCommand.CloseProject" Executed="CloseProject_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Copy" Executed="Copy_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Paste" Executed="Paste_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Del" Executed="Del_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Save" Executed="Save_Excuted"/>
-        <CommandBinding Command="c:TPISCommand.SaveAs" Executed="SaveAs_Excuted"/>
         <CommandBinding Command="c:TPISCommand.SaveAll" Executed="SaveAll_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Print" Executed="Print_Excuted"/>
-        <CommandBinding Command="c:TPISCommand.RecentlyUsedProject" Executed="RecentlyUsedProject_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Exit" Executed="Exit_Excuted"/>
     </Window.CommandBindings>
     <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{x:Static c:TPISCommand.NewProject}" />
+        <KeyBinding Gesture="Ctrl+O" Command="{x:Static c:TPISCommand.OpenProject}" />
         <KeyBinding Gesture="Ctrl+C" Command="{x:Static c:TPISCommand.Copy}" />
         <KeyBinding Gesture="Ctrl+V" Command="{x:Static c:TPISCommand.Paste}" />
         <KeyBinding Gesture="Del" Command="{x:Static c:TPISCommand.Del}" />
-    </Window.InputBindings>-->
+        <KeyBinding Gesture="Ctrl+S" Command="{x:Static c:TPISCommand.Save}" />
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{x:Static c:TPISCommand.SaveAll}" />
+        <KeyBinding Gesture="Ctrl+P" Command="{x:Static c:TPISCommand.Print}" />
+        <KeyBinding Gesture="Alt+F4" Command="{x:Static c:TPISCommand.Exit}" />
+    </Window.InputBindings>
     
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
