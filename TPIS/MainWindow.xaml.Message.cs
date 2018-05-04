@@ -19,6 +19,7 @@ using TPIS.Model;
 using TPIS.Model.Common;
 using TPIS.Project;
 using TPIS.TPISCommand;
+using TPIS.Views.Modules;
 
 namespace TPIS
 {
@@ -45,6 +46,7 @@ namespace TPIS
                     ct.IsChecked = false;
                 }
             }
+            projectTab.Focus();//WorkSpace获取焦点使方向键使能
         }
 
         /// <summary>
@@ -56,33 +58,45 @@ namespace TPIS
         private void TPISComponentTypeSelected(object sender, RoutedEventArgs e)
         {
             TPISCompentView currEle = sender as TPISCompentView;
-            GetCurrentProject().Select();
-            try
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
             {
-                this.GetCurrentProject().Canvas.Operation = OperationType.ADD_COMPONENT;
-                this.GetCurrentProject().Canvas.OperationParam.Clear();
-                this.GetCurrentProject().Canvas.OperationParam.Add("type", (int)currEle.Tag);
-
-                this.AddLine.IsChecked = false;
-                this.AddStraightLine.IsChecked = false;
-                //取消其他选中
-                foreach (BaseType bt in this.TypeList)
+                //工程不空可选择
+                GetCurrentProject().Select();
+                try
                 {
-                    foreach (ComponentType ct in bt.ComponentTypeList)
+                    this.GetCurrentProject().Canvas.Operation = OperationType.ADD_COMPONENT;
+                    this.GetCurrentProject().Canvas.OperationParam.Clear();
+                    this.GetCurrentProject().Canvas.OperationParam.Add("type", (int)currEle.Tag);
+
+                    this.AddLine.IsChecked = false;
+                    this.AddStraightLine.IsChecked = false;
+                    //取消其他选中
+                    foreach (BaseType bt in this.TypeList)
                     {
-                        if (ct.Id != (int)currEle.Tag)
+                        foreach (ComponentType ct in bt.ComponentTypeList)
                         {
-                            ct.IsChecked = false;
+                            if (ct.Id != (int)currEle.Tag)
+                            {
+                                ct.IsChecked = false;
+                            }
                         }
                     }
                 }
+                catch
+                {
+                    //取消选中和焦点
+                    currEle.IsChecked = false;
+                    currEle.Focusable = false;
+                    return;
+                }
             }
-            catch
+            else
             {
+                //取消选中和焦点
                 currEle.IsChecked = false;
-                return;
+                currEle.Focusable = false;
             }
-
         }
 
         /// <summary>mainwin.ProjectList.projects[mainwin.CurrentPojectIndex]
@@ -93,27 +107,32 @@ namespace TPIS
         /// <param name="e"></param>
         private void TPISComponentTypeUnSelected(object sender, RoutedEventArgs e)
         {
-            TPISCompentView currEle = sender as TPISCompentView;
-            GetCurrentProject().Select();
-            try
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
             {
-                if (this.GetCurrentProject().Canvas.Operation != OperationType.ADD_COMPONENT)
-                    return;
-                foreach (BaseType bt in this.TypeList)
+                TPISCompentView currEle = sender as TPISCompentView;
+                GetCurrentProject().Select();
+                try
                 {
-                    foreach (ComponentType ct in bt.ComponentTypeList)
+                    if (this.GetCurrentProject().Canvas.Operation != OperationType.ADD_COMPONENT)
+                        return;
+                    foreach (BaseType bt in this.TypeList)
                     {
-                        if (ct.IsChecked == true)
-                            return;
+                        foreach (ComponentType ct in bt.ComponentTypeList)
+                        {
+                            if (ct.IsChecked == true)
+                                return;
+                        }
                     }
+                    this.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
+                    this.GetCurrentProject().Canvas.OperationParam.Clear();
                 }
-                this.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
-                this.GetCurrentProject().Canvas.OperationParam.Clear();
-            }
-            catch
-            {
-                currEle.IsChecked = false;
-                return;
+                catch
+                {
+                    currEle.IsChecked = false;
+                    currEle.Focusable = false;
+                    return;
+                }
             }
         }
 
@@ -125,34 +144,44 @@ namespace TPIS
         private void TPISLineTypeSelected(object sender, RoutedEventArgs e)
         {
             ToggleButton currEle = sender as ToggleButton;
-            GetCurrentProject().Select();
-            try
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
             {
-                this.GetCurrentProject().Canvas.Operation = OperationType.ADD_LINE;
-                this.GetCurrentProject().Canvas.OperationParam.Clear();
-                if (currEle.Name == "AddLine")
+                GetCurrentProject().Select();
+                try
                 {
-                    this.GetCurrentProject().Canvas.OperationParam.Add("type", 1);
-                    this.AddStraightLine.IsChecked = false;
-                }
-                else
-                {
-                    this.GetCurrentProject().Canvas.OperationParam.Add("type", 0);
-
-                    this.AddLine.IsChecked = false;
-                }
-                foreach (BaseType bt in this.TypeList)
-                {
-                    foreach (ComponentType ct in bt.ComponentTypeList)
+                    this.GetCurrentProject().Canvas.Operation = OperationType.ADD_LINE;
+                    this.GetCurrentProject().Canvas.OperationParam.Clear();
+                    if (currEle.Name == "AddLine")
                     {
-                        ct.IsChecked = false;
+                        this.GetCurrentProject().Canvas.OperationParam.Add("type", 1);
+                        this.AddStraightLine.IsChecked = false;
+                    }
+                    else
+                    {
+                        this.GetCurrentProject().Canvas.OperationParam.Add("type", 0);
+
+                        this.AddLine.IsChecked = false;
+                    }
+                    foreach (BaseType bt in this.TypeList)
+                    {
+                        foreach (ComponentType ct in bt.ComponentTypeList)
+                        {
+                            ct.IsChecked = false;
+                        }
                     }
                 }
+                catch
+                {
+                    currEle.IsChecked = false;
+                    currEle.Focusable = false;
+                    return;
+                }
             }
-            catch
+            else
             {
                 currEle.IsChecked = false;
-                return;
+                currEle.Focusable = false;
             }
         }
 
@@ -163,20 +192,25 @@ namespace TPIS
         /// <param name="e"></param>
         private void TPISLineTypeUnSelected(object sender, RoutedEventArgs e)
         {
-            ToggleButton currEle = sender as ToggleButton;
-            GetCurrentProject().Select();
-            try
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
             {
-                if (this.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
+                ToggleButton currEle = sender as ToggleButton;
+                GetCurrentProject().Select();
+                try
                 {
-                    this.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
-                    this.GetCurrentProject().Canvas.OperationParam.Clear();
+                    if (this.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
+                    {
+                        this.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
+                        this.GetCurrentProject().Canvas.OperationParam.Clear();
+                    }
                 }
-            }
-            catch
-            {
-                currEle.IsChecked = false;
-                return;
+                catch
+                {
+                    currEle.IsChecked = false;
+                    currEle.Focusable = false;
+                    return;
+                }
             }
         }
         #endregion
@@ -210,7 +244,7 @@ namespace TPIS
             {
                 if (value == null)
                     return DependencyProperty.UnsetValue;
-                int val = (int) ((double)value*100.0);
+                int val = (int)((double)value * 100.0);
                 return val + "%";
             }
 
@@ -224,7 +258,7 @@ namespace TPIS
         private void btn_PropertyStateChange(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            if(btn.Tag.ToString() == "show")
+            if (btn.Tag.ToString() == "show")
             {
                 btn.Tag = "hide";
                 btn.ToolTip = "显示属性窗";
@@ -360,5 +394,28 @@ namespace TPIS
         {
             return null;
         }
+    }
+
+    //网格缩放
+    public class RectConverter : IMultiValueConverter
+    {
+        #region IMultiValueConverter Members
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                return new System.Windows.Rect(0, 0, mainwin.GetCurrentProject().GridUintLength, mainwin.GetCurrentProject().GridUintLength);
+            }
+            return null;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

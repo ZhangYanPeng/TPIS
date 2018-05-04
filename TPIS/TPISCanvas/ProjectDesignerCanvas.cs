@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Command;
@@ -29,6 +31,22 @@ namespace TPIS.TPISCanvas
             }
         }
 
+        /// <summary>  
+        /// 画布背景  
+        /// </summary>  
+
+        public bool gridIsCheck = false;
+        public bool GridIsCheck
+        {
+            get
+            {
+                return gridIsCheck;
+            }
+            set
+            {
+                gridIsCheck = value;
+            }
+        }
 
         /// <summary>
         /// 初始化函数，添加画布事件
@@ -43,7 +61,6 @@ namespace TPIS.TPISCanvas
             base.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLBtnClickEmpty);
             base.MouseMove += new MouseEventHandler(MouseLBtnSelectMove);
             base.MouseRightButtonDown += new MouseButtonEventHandler(MouseCanvasRightButtonDown);
-            
 
             pline = new Polyline();
             pline.Stroke = Brushes.Red;

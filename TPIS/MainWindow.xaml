@@ -19,17 +19,51 @@
                 <ResourceDictionary Source="Views/Modules/TPISCanvas.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <local:ValVisualConverter x:Key="ValVisualConverter"></local:ValVisualConverter>
+            <local:ValVisualConverter x:Key="ValVisualConverter"/>
             <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
             <local:LineVisualConverter x:Key="LineVisualConverter" />
             <local:CalStateConverter x:Key="CalStateConverter" />
+            <local:RectConverter x:Key="RectConverter" />
 
             <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
                 <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>
             </Style>
+
+            <!--网格线-->
+            <Style x:Key="BackgroundGrid" TargetType="{x:Type s:ProjectDesignerCanvas}">
+                <Setter Property ="Background">
+                    <Setter.Value>
+                        <DrawingBrush TileMode="Tile" ViewportUnits="Absolute">
+                            <DrawingBrush.Viewport>
+                                <MultiBinding Converter="{StaticResource RectConverter}">
+                                    <Binding Path="GridUintLength"/>
+                                    <Binding Path="GridUintLength"/>
+                                </MultiBinding>
+                            </DrawingBrush.Viewport>
+                            <DrawingBrush.Drawing>
+                                <GeometryDrawing Brush="White">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry>
+                                            <RectangleGeometry.Rect>
+                                                <MultiBinding Converter="{StaticResource RectConverter}">
+                                                    <Binding Path="GridUintLength"/>
+                                                    <Binding Path="GridUintLength"/>
+                                                </MultiBinding>
+                                            </RectangleGeometry.Rect>
+                                        </RectangleGeometry>
+                                    </GeometryDrawing.Geometry>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="LightGray" Thickness="{Binding GridThickness}"/>
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <!--快捷键-->
     <Window.CommandBindings>
         <CommandBinding Command="c:TPISCommand.NewProject" Executed="NewProject_Excuted"/>
@@ -41,6 +75,12 @@
         <CommandBinding Command="c:TPISCommand.SaveAll" Executed="SaveAll_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Print" Executed="Print_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Exit" Executed="Exit_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.Up" Executed="Up_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.Down" Executed="Down_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.Left" Executed="Left_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.Right" Executed="Right_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.Cut" Executed="Cut_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.DrawGrid" Executed="DrawGrid_Excuted"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+N" Command="{x:Static c:TPISCommand.NewProject}" />
@@ -52,8 +92,14 @@
         <KeyBinding Gesture="Ctrl+Shift+S" Command="{x:Static c:TPISCommand.SaveAll}" />
         <KeyBinding Gesture="Ctrl+P" Command="{x:Static c:TPISCommand.Print}" />
         <KeyBinding Gesture="Alt+F4" Command="{x:Static c:TPISCommand.Exit}" />
+        <KeyBinding Gesture="Up" Command="{x:Static c:TPISCommand.Up}" />
+        <KeyBinding Gesture="Down" Command="{x:Static c:TPISCommand.Down}" />
+        <KeyBinding Gesture="Left" Command="{x:Static c:TPISCommand.Left}" />
+        <KeyBinding Gesture="Right" Command="{x:Static c:TPISCommand.Right}" />
+        <KeyBinding Gesture="Ctrl+X" Command="{x:Static c:TPISCommand.Cut}" />
+        <KeyBinding Gesture="F1" Command="{x:Static c:TPISCommand.DrawGrid}" />
     </Window.InputBindings>
-    
+
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISToolBar}"/>
@@ -316,7 +362,7 @@
                                 <Grid>
                                     <ScrollViewer Name="CanvasScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                         <!-- 画布-->
-                                        <s:ProjectDesignerCanvas Visibility="Visible" Background="White" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
+                                        <s:ProjectDesignerCanvas Visibility="Visible" Style="{StaticResource BackgroundGrid}" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
                                             <ItemsControl ItemsSource="{Binding Objects}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrLineOrComponent}">
                                             </ItemsControl>
                                         </s:ProjectDesignerCanvas>

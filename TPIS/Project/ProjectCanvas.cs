@@ -8,6 +8,8 @@ using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using TPIS.Model;
+using System.Collections.ObjectModel;
+using System.Windows.Media;
 
 namespace TPIS.Project
 {

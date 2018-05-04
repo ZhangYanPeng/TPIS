@@ -19,8 +19,8 @@ namespace TPIS.Command
         {
             MenuItem menuitem = sender as MenuItem;
             menuitem.IsSubmenuOpen = true;
-            MainWindow mw = (MainWindow)System.Windows.Application.Current.MainWindow;
-            if(mw.GetCurrentProject() == null)
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() == null)
             {
                 SaveOpe.IsEnabled = false;
                 SaveAsOpe.IsEnabled = false;
@@ -64,6 +64,12 @@ namespace TPIS.Command
         public static RoutedCommand Print = new RoutedCommand();
         public static RoutedCommand RecentlyUsedProject = new RoutedCommand();
         public static RoutedCommand Exit = new RoutedCommand();
+        public static RoutedCommand Cut = new RoutedCommand();
+        public static RoutedCommand Up = new RoutedCommand();
+        public static RoutedCommand Down = new RoutedCommand();
+        public static RoutedCommand Left = new RoutedCommand();
+        public static RoutedCommand Right = new RoutedCommand();
+        public static RoutedCommand DrawGrid = new RoutedCommand();
 
 
         #region 新建工程
@@ -139,7 +145,12 @@ namespace TPIS.Command
 
         public void CloseProject_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+
+            }
+
         }
 
         #endregion
@@ -148,8 +159,11 @@ namespace TPIS.Command
 
         public void Copy_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.GetCurrentProject().CopySelection();
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().CopySelection();
+            }
             //PasteOpe.IsEnabled = true;
         }
 
@@ -159,8 +173,11 @@ namespace TPIS.Command
 
         public void Paste_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.GetCurrentProject().PasteSelection(5, 5);
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().PasteSelection(5, 5);
+            }
         }
 
         #endregion
@@ -169,8 +186,25 @@ namespace TPIS.Command
 
         public void Del_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.GetCurrentProject().DeleteSelection();
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().DeleteSelection();
+            }
+        }
+
+        #endregion
+
+        #region 剪切
+
+        public void Cut_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().CopySelection();
+                mainwin.GetCurrentProject().DeleteSelection();
+            }
         }
 
         #endregion
@@ -179,7 +213,10 @@ namespace TPIS.Command
         public void Save_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            mainwin.GetCurrentProject().SaveProject();
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().SaveProject();
+            }
         }
         #endregion
 
@@ -187,7 +224,11 @@ namespace TPIS.Command
 
         public void SaveAs_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("NewProject");
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                MessageBox.Show("NewProject");
+            }
         }
 
         #endregion
@@ -197,9 +238,12 @@ namespace TPIS.Command
         public void SaveAll_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            foreach(ProjectItem project in mainwin.ProjectList.projects)
+            if (mainwin.GetCurrentProject() != null)
             {
-                project.SaveProject();
+                foreach (ProjectItem project in mainwin.ProjectList.projects)
+                {
+                    project.SaveProject();
+                }
             }
         }
 
@@ -209,7 +253,11 @@ namespace TPIS.Command
 
         public void Print_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("NewProject");
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                MessageBox.Show("NewProject");
+            }
         }
 
         #endregion
@@ -241,6 +289,58 @@ namespace TPIS.Command
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region 网格
+
+        public void DrawGrid_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().DrawGridSelection();
+            }
+        }
+
+        #endregion
+
+        #region 上下左右移动
+
+        public void Up_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().MoveSelection(0, -1);
+            }
+        }
+
+        public void Down_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().MoveSelection(0, 1);
+            }
+        }
+
+        public void Left_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().MoveSelection(-1, 0);
+            }
+        }
+
+        public void Right_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().MoveSelection(1, 0);
+            }
+        }
         #endregion
     }
 }

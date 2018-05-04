@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using TPIS.TPISCanvas;
 
 namespace TPIS
 {
@@ -90,6 +94,48 @@ namespace TPIS
         private void Exit_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             tPISCommand.Exit_Excuted(sender, e);
+        }
+
+        #endregion
+
+        #region 网格
+
+        private void DrawGrid_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.DrawGrid_Excuted(sender, e);
+        }
+
+        #endregion
+
+        #region 上下左右移动
+
+        private void Up_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.Up_Excuted(sender, e);
+        }
+
+        private void Down_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.Down_Excuted(sender, e);
+        }
+
+        private void Left_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.Left_Excuted(sender, e);
+        }
+
+        private void Right_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.Right_Excuted(sender, e);
+        }
+
+        #endregion
+
+        #region 剪切
+
+        public void Cut_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.Cut_Excuted(sender, e);
         }
 
         #endregion

@@ -1,48 +1,49 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:TPIS.Command"
                     x:Class="TPIS.Views.Modules.TPISToolBar">
 
     <ToolBar x:Key="TPISToolBar" Height="30">
-        <Button Name="tsbNew"  ToolTip="新建工程">
+        <Button Name="tsbNew"  ToolTip="新建工程" Command="{x:Static c:TPISCommand.NewProject}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeNew.png" Stretch="None" />
         </Button>
-        <Button Name="tsbOpen" ToolTip="打开工程">
+        <Button Name="tsbOpen" ToolTip="打开工程" Command="{x:Static c:TPISCommand.OpenProject}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeOpen.png" Stretch="None" />
         </Button>
-        <Button Name="tsbClose" ToolTip="关闭工程">
+        <Button Name="tsbClose" ToolTip="关闭工程" Command="{x:Static c:TPISCommand.CloseProject}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeClose.png" Stretch="None" />
         </Button>
         <Separator />
 
-        <Button Name="tsbSave" ToolTip="存储(Ctrl+S)">
+        <Button Name="tsbSave" ToolTip="存储(Ctrl+S)" Command="{x:Static c:TPISCommand.Save}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSave.png" Stretch="None" />
         </Button>
-        <Button Name="tsbSaveAs" ToolTip="另存为">
+        <Button Name="tsbSaveAs" ToolTip="另存为" Command="{x:Static c:TPISCommand.SaveAs}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSaveAs .png" Stretch="None" />
         </Button>
-        <Button Name="tsbSaveAll" ToolTip="全部存储(Ctrl+Shift+S)">
+        <Button Name="tsbSaveAll" ToolTip="全部存储(Ctrl+Shift+S)" Command="{x:Static c:TPISCommand.SaveAll}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSaveAll.png" Stretch="None" />
         </Button>
         <Separator />
 
-        <Button Name="tsbCut" ToolTip="剪切(Ctrl+X)">
+        <Button Name="tsbCut" ToolTip="剪切(Ctrl+X)" Command="{x:Static c:TPISCommand.Cut}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeCut.png" Stretch="None" />
         </Button>
-        <Button Name="tsbCopy" ToolTip="复制(Ctrl+C)">
+        <Button Name="tsbCopy" ToolTip="复制(Ctrl+C)" Command="{x:Static c:TPISCommand.Copy}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeCopy.png" Stretch="None" />
         </Button>
-        <Button Name="tsbPaste" ToolTip="粘贴(Ctrl+V)">
+        <Button Name="tsbPaste" ToolTip="粘贴(Ctrl+V)" Command="{x:Static c:TPISCommand.Paste}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activePaste.png" Stretch="None" />
         </Button>
         <Separator />
-        <Button Name="tsbUndo" ToolTip="撤销(Ctrl+Z)">
+        <Button Name="tsbUndo" ToolTip="撤销(Ctrl+Z)" Command="{x:Static c:TPISCommand.Up}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeUndo.png" Stretch="None" />
         </Button>
-        <Button Name="tsbRedo" ToolTip="重做(Ctrl+Y)">
+        <Button Name="tsbRedo" ToolTip="重做(Ctrl+Y)" Command="{x:Static c:TPISCommand.Up}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeRedo.png" Stretch="None" />
         </Button>
         <Separator />
-        <Button Name="tsbDelete" ToolTip="删除(Del)">
+        <Button Name="tsbDelete" ToolTip="删除(Del)" Command="{x:Static c:TPISCommand.Del}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeDelete.png" Stretch="None" />
         </Button>
         <Separator />
@@ -63,7 +64,7 @@
         <Button Name="tsbSupRate" ToolTip="缩小" Click="SubRate">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeShrink.png" Stretch="None" />
         </Button>
-        <TextBox IsReadOnly="True" Width="60" Name="CurRate"></TextBox>
+        <TextBox Name="CurRate" IsReadOnly="True" Width="60"></TextBox>
         <Button Name="tsbSubRate" ToolTip="放大" Click="SupRate">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeEnlarge.png" Stretch="None" />
         </Button>
@@ -75,6 +76,19 @@
         <Separator />
         <Button Name="tsbCal" ToolTip="计算" Click="CalculateResult">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_play.png" Stretch="None" />
+        </Button>
+        <Separator />
+        <Button ToolTip="上移" Command="{x:Static c:TPISCommand.Up}">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeUpArrow.png" Stretch="None" />
+        </Button>
+        <Button ToolTip="下移" Command="{x:Static c:TPISCommand.Down}">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeDownArrow.png" Stretch="None" />
+        </Button>
+        <Button ToolTip="左移" Command="{x:Static c:TPISCommand.Left}">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeLeftArrow.png" Stretch="None" />
+        </Button>
+        <Button ToolTip="右移" Command="{x:Static c:TPISCommand.Right}">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeRightArrow.png" Stretch="None" />
         </Button>
     </ToolBar>
 </ResourceDictionary>

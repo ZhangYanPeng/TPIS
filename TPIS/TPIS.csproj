@@ -69,7 +69,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.KeyCut.cs">
-    <DependentUpon>MainWindow.xaml</DependentUpon>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.Message.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -202,7 +202,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\icon\icon_app.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeDownArrow.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeLeftArrow.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeRightArrow.png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeUpArrow.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_activeAllSelection.png" />
@@ -221,32 +224,6 @@
     <Resource Include="Images\icon\activeIcon\icon_activeSelection.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeUndo.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeOpen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icon\icon_close.png" />
-    <Resource Include="Images\icon\icon_copy.png" />
-    <Resource Include="Images\icon\icon_cut.png" />
-    <Resource Include="Images\icon\icon_delete.png" />
-    <Resource Include="Images\icon\icon_freehandSelection.png" />
-    <Resource Include="Images\icon\icon_new.png" />
-    <Resource Include="Images\icon\icon_open.png" />
-    <Resource Include="Images\icon\icon_paste.png" />
-    <Resource Include="Images\icon\icon_print.png" />
-    <Resource Include="Images\icon\icon_redo.png" />
-    <Resource Include="Images\icon\icon_save.png" />
-    <Resource Include="Images\icon\icon_saveAll.png" />
-    <Resource Include="Images\icon\icon_saveAs.png" />
-    <Resource Include="Images\icon\icon_selection.png" />
-    <Resource Include="Images\icon\icon_undo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icon\icon_exit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icon\icon_allSelection.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icon\tab_close.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_activeRect.png" />
@@ -352,14 +329,35 @@
     <Resource Include="Images\icon\activeIcon\icon_search.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\icon\window_show.png" />
-    <Resource Include="Images\icon\window_hide.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_play.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\icon_allSelection.png" />
+    <Resource Include="Images\icon\icon_close.png" />
+    <Resource Include="Images\icon\icon_copy.png" />
+    <Resource Include="Images\icon\icon_cut.png" />
+    <Resource Include="Images\icon\icon_delete.png" />
+    <Resource Include="Images\icon\icon_freehandSelection.png" />
+    <Resource Include="Images\icon\icon_new.png" />
+    <Resource Include="Images\icon\icon_open.png" />
+    <Resource Include="Images\icon\icon_paste.png" />
+    <Resource Include="Images\icon\icon_print.png" />
+    <Resource Include="Images\icon\icon_redo.png" />
+    <Resource Include="Images\icon\icon_save.png" />
+    <Resource Include="Images\icon\icon_saveAll.png" />
+    <Resource Include="Images\icon\icon_saveAs.png" />
+    <Resource Include="Images\icon\icon_selection.png" />
+    <Resource Include="Images\icon\icon_signout.png" />
+    <Resource Include="Images\icon\icon_undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\icon_exit.png" />
+    <Resource Include="Images\icon\tab_close.png" />
+    <Resource Include="Images\icon\window_hide.png" />
+    <Resource Include="Images\icon\window_show.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

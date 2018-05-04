@@ -6,7 +6,9 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Model.Common;
 
@@ -107,6 +109,32 @@ namespace TPIS.Project
             }
         }
 
+        #region 画布网格缩放
+        public double gridUintLength;
+        public double GridUintLength
+        {
+            get { return gridUintLength; }
+            set
+            {
+                gridUintLength = value;
+                OnPropertyChanged("GridUintLength");
+            }
+        }
+        #endregion
+
+        #region 画布网格线粗
+        public double gridThickness;
+        public double GridThickness
+        {
+            get { return gridThickness; }
+            set
+            {
+                gridThickness = value;
+                OnPropertyChanged("GridThickness");
+            }
+        }
+        #endregion
+
         #region 缩放比率
         public double rate;
         public double Rate
@@ -147,6 +175,7 @@ namespace TPIS.Project
 
         public ProjectItem(string name, ProjectCanvas pCanvas, long num, string p)
         {
+
             this.Name = name + ".tpis";
             this.Num = num;
             this.Canvas = pCanvas;
@@ -154,6 +183,8 @@ namespace TPIS.Project
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
             this.CalculateState = false;
+            this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
+            this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
             Path = p;
             PropertyGroup = CommonTypeService.InitProject();
             SaveProject();
@@ -180,6 +211,7 @@ namespace TPIS.Project
         internal void SupRate()
         {
             Rate = RateService.GetSupRate(Rate);
+            GridUintLength = 20 * Rate;
         }
 
         /// <summary>
@@ -188,6 +220,7 @@ namespace TPIS.Project
         internal void SubRate()
         {
             Rate = RateService.GetSubRate(Rate);
+            GridUintLength = 20 * Rate;
         }
         #endregion
 
@@ -639,6 +672,15 @@ namespace TPIS.Project
                 if (obj is TPISComponent)
                 {
                     TPISComponent component = ((TPISComponent)obj).Clone() as TPISComponent;
+                    component.SetRate(Rate);
+                    int n = 0;
+                    foreach (ObjectBase objc in this.Objects)
+                    {
+                        if (objc.No > n)
+                            n = objc.No;
+                    }
+                    n++;
+                    component.No = n;
                     component.PosChange((int)offset_x, (int)offset_y);
                     foreach (Port port in component.Ports)
                     {
@@ -648,6 +690,16 @@ namespace TPIS.Project
                 }
             }
             return;
+        }
+        #endregion
+
+        #region 网格
+        public void DrawGridSelection()
+        {
+            if (GridThickness == 0)
+                GridThickness = 0.2;
+            else
+                GridThickness = 0;
         }
         #endregion
 
@@ -751,7 +803,7 @@ namespace TPIS.Project
                 if (obj is ResultCross)
                 {
                     ResultCross cross = obj as ResultCross;
-                    if (WithinOrNot(x, y, w, h, cross.Position.V_x -5, cross.Position.V_y - 5, cross.Position.V_width + 5, cross.Position.V_height + 5))
+                    if (WithinOrNot(x, y, w, h, cross.Position.V_x - 5, cross.Position.V_y - 5, cross.Position.V_width + 5, cross.Position.V_height + 5))
                         return true;
                 }
             }

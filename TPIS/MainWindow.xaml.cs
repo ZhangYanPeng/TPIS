@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -32,8 +33,10 @@ namespace TPIS
         public int CurrentPojectIndex { get; set; }//当前激活工程
         public int ProjectNum { get; set; } // 新工程编号
 
-        public ProjectItem GetCurrentProject(){
-            try {
+        public ProjectItem GetCurrentProject()
+        {
+            try
+            {
                 return ProjectList.projects[CurrentPojectIndex];
             }
             catch
@@ -76,6 +79,7 @@ namespace TPIS
                 return false;
             }
             ProjectCanvas pCanvas = new ProjectCanvas(width, height);
+            //MessageBox.Show("rway3");
             ProjectItem project = new ProjectItem(pName, pCanvas, ProjectNum, System.IO.Path.GetFullPath(directoryPath));
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;

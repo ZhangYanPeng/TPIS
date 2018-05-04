@@ -8,6 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/activeicon/play.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/icon_exit.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/tab_close.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/window_hide.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon/window_show.png")]
 
 
