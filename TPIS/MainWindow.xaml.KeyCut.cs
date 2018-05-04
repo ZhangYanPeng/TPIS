@@ -139,5 +139,14 @@ namespace TPIS
         }
 
         #endregion
+
+        #region 全选
+
+        public void SeltAll_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.SeltAll_Excuted(sender, e);
+        }
+
+        #endregion
     }
 }

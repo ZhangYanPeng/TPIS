@@ -326,6 +326,7 @@ namespace TPIS.Project
         /// <param name="d_vy"></param>
         public void MoveSelection(double d_vx, double d_vy)
         {
+            bool flag=false;//解决选中线时，方向键只移动线
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -333,6 +334,7 @@ namespace TPIS.Project
                 {
                     if (((TPISComponent)obj).IsSelected && true)//选中
                     {
+                        flag = true;
                         ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
 
                         foreach (Port port in ((TPISComponent)obj).Ports)
@@ -353,7 +355,7 @@ namespace TPIS.Project
                 }
                 if (obj is TPISLine)
                 {
-                    if (((TPISLine)obj).IsSelected && true)//选中
+                    if (((TPISLine)obj).IsSelected && flag)//选中
                     {
                         ((TPISLine)Objects[i]).PosChange(d_vx, d_vy);
                     }
@@ -374,6 +376,20 @@ namespace TPIS.Project
         /// 选中
         /// </summary>
         /// <param name="components"></param>
+
+        public void SelectAll()
+        {
+            List<TPISComponent> components = new List<TPISComponent>();
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    components.Add((TPISComponent)obj);
+                }
+            }
+            Select(components);
+        }
+
         internal void Select(List<TPISComponent> components)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
@@ -459,6 +475,7 @@ namespace TPIS.Project
         /// <param name="component"></param>
         internal void Select(ObjectBase objectBase)
         {
+            
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is ResultCross)
@@ -700,6 +717,18 @@ namespace TPIS.Project
                 GridThickness = 0.2;
             else
                 GridThickness = 0;
+        }
+        #endregion
+
+        #region 关闭工程
+        public void ProjectCloseSelection()
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            mainwin.ProjectList.projects.Remove(this);
+            mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
+            mainwin.projectTab.Items.Refresh();
+            mainwin.ProjectTab_SelectionChanged();//解决关闭左侧工程，出现当前工程索引溢出
+            return;
         }
         #endregion
 

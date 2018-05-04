@@ -220,7 +220,7 @@
     <Resource Include="Images\icon\activeIcon\icon_activeRedo.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeSave.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeSaveAll.png" />
-    <Resource Include="Images\icon\activeIcon\icon_activeSaveAs .png" />
+    <Resource Include="Images\icon\activeIcon\icon_activeSaveAs.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeSelection.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeUndo.png" />
     <Resource Include="Images\icon\activeIcon\icon_activeOpen.png" />

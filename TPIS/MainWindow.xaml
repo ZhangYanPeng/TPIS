@@ -36,8 +36,6 @@
                         <DrawingBrush TileMode="Tile" ViewportUnits="Absolute">
                             <DrawingBrush.Viewport>
                                 <MultiBinding Converter="{StaticResource RectConverter}">
-                                    <Binding Path="GridUintLength"/>
-                                    <Binding Path="GridUintLength"/>
                                 </MultiBinding>
                             </DrawingBrush.Viewport>
                             <DrawingBrush.Drawing>
@@ -46,8 +44,6 @@
                                         <RectangleGeometry>
                                             <RectangleGeometry.Rect>
                                                 <MultiBinding Converter="{StaticResource RectConverter}">
-                                                    <Binding Path="GridUintLength"/>
-                                                    <Binding Path="GridUintLength"/>
                                                 </MultiBinding>
                                             </RectangleGeometry.Rect>
                                         </RectangleGeometry>
@@ -81,6 +77,7 @@
         <CommandBinding Command="c:TPISCommand.Right" Executed="Right_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Cut" Executed="Cut_Excuted"/>
         <CommandBinding Command="c:TPISCommand.DrawGrid" Executed="DrawGrid_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.SeltAll" Executed="SeltAll_Excuted"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+N" Command="{x:Static c:TPISCommand.NewProject}" />
@@ -98,6 +95,7 @@
         <KeyBinding Gesture="Right" Command="{x:Static c:TPISCommand.Right}" />
         <KeyBinding Gesture="Ctrl+X" Command="{x:Static c:TPISCommand.Cut}" />
         <KeyBinding Gesture="F1" Command="{x:Static c:TPISCommand.DrawGrid}" />
+        <KeyBinding Gesture="Ctrl+A" Command="{x:Static c:TPISCommand.SeltAll}" />
     </Window.InputBindings>
 
     <DockPanel>

@@ -70,6 +70,7 @@ namespace TPIS.Command
         public static RoutedCommand Left = new RoutedCommand();
         public static RoutedCommand Right = new RoutedCommand();
         public static RoutedCommand DrawGrid = new RoutedCommand();
+        public static RoutedCommand SeltAll = new RoutedCommand();
 
 
         #region 新建工程
@@ -148,7 +149,9 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-
+                if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    Save_Excuted(sender, e);//先保存后关闭
+                mainwin.GetCurrentProject().ProjectCloseSelection();
             }
 
         }
@@ -216,6 +219,7 @@ namespace TPIS.Command
             if (mainwin.GetCurrentProject() != null)
             {
                 mainwin.GetCurrentProject().SaveProject();
+                MessageBox.Show("项目已保存");
             }
         }
         #endregion
@@ -244,6 +248,7 @@ namespace TPIS.Command
                 {
                     project.SaveProject();
                 }
+                MessageBox.Show("所有项目已保存");
             }
         }
 
@@ -339,6 +344,21 @@ namespace TPIS.Command
             if (mainwin.GetCurrentProject() != null)
             {
                 mainwin.GetCurrentProject().MoveSelection(1, 0);
+            }
+        }
+        #endregion
+
+        #region 全部选择
+
+        public void SeltAll_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                foreach (ProjectItem project in mainwin.ProjectList.projects)
+                {
+                    mainwin.GetCurrentProject().SelectAll(); 
+                }
             }
         }
         #endregion

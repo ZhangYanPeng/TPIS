@@ -19,21 +19,22 @@
             <CommandBinding Command="s:TPISCommand.Exit" Executed="Exit_Excuted"/>
             <CommandBinding Command="s:TPISCommand.DrawGrid" Executed="DrawGrid_Excuted"/>
             <CommandBinding Command="s:TPISCommand.Cut" Executed="Cut_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.SeltAll" Executed="SeltAll_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
         <MenuItem Header="文件管理(M)" SubmenuOpened="OnSubMenuOpened">
-            <MenuItem Header="新建工程(N)" Command="{x:Static s:TPISCommand.NewProject}">
+            <MenuItem Header="新建工程(N)" InputGestureText="Ctrl+N" Command="{x:Static s:TPISCommand.NewProject}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_new.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="打开工程(O)" Command="{x:Static s:TPISCommand.OpenProject}">
+            <MenuItem Header="打开工程(O)" InputGestureText="Ctrl+O" Command="{x:Static s:TPISCommand.OpenProject}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_open.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="关闭工程(C)" Name="CloseOpe" Command="{x:Static s:TPISCommand.CloseProject}">
+            <MenuItem Header="关闭工程(Alt+C)" Name="CloseOpe" Command="{x:Static s:TPISCommand.CloseProject}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_close.png" />
                 </MenuItem.Icon>
@@ -104,7 +105,7 @@
                     <Image Source="pack://application:,,,/Images/icon/icon_delete.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="全选(A)" Name="SeltAllOpe" InputGestureText="Ctrl+A" >
+            <MenuItem Header="全选(A)" Name="SeltAllOpe" InputGestureText="Ctrl+A" Command="{x:Static s:TPISCommand.SeltAll}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_allSelection.png" />
                 </MenuItem.Icon>
