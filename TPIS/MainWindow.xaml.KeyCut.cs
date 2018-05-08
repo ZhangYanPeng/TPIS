@@ -142,16 +142,22 @@ namespace TPIS
 
         #region 撤销 重做
 
-        private void Undo_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Undo_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             tPISCommand.Undo_Excuted(sender, e);
         }
 
-        private void Redo_Excuted(object sender, ExecutedRoutedEventArgs e)
+        public void Redo_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             tPISCommand.Redo_Excuted(sender, e);
         }
+        #endregion
 
+        #region 全选
+        public void SeltAll_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.SeltAll_Excuted(sender, e);
+        }
         #endregion
     }
 }

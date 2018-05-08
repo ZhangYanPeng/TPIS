@@ -4,22 +4,16 @@
                     x:Class="TPIS.Views.Modules.TPISToolBar">
 
     <ToolBar x:Key="TPISToolBar" Height="30">
-        <Button Name="tsbNew"  ToolTip="新建工程" Command="{x:Static c:TPISCommand.NewProject}">
+        <Button Name="tsbNew"  ToolTip="新建工程(Ctrl+N)" Command="{x:Static c:TPISCommand.NewProject}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeNew.png" Stretch="None" />
         </Button>
-        <Button Name="tsbOpen" ToolTip="打开工程" Command="{x:Static c:TPISCommand.OpenProject}">
+        <Button Name="tsbOpen" ToolTip="打开工程(Ctrl+O)" Command="{x:Static c:TPISCommand.OpenProject}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeOpen.png" Stretch="None" />
         </Button>
-        <Button Name="tsbClose" ToolTip="关闭工程" Command="{x:Static c:TPISCommand.CloseProject}">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeClose.png" Stretch="None" />
-        </Button>
         <Separator />
-
+        
         <Button Name="tsbSave" ToolTip="存储(Ctrl+S)" Command="{x:Static c:TPISCommand.Save}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSave.png" Stretch="None" />
-        </Button>
-        <Button Name="tsbSaveAs" ToolTip="另存为" Command="{x:Static c:TPISCommand.SaveAs}">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSaveAs .png" Stretch="None" />
         </Button>
         <Button Name="tsbSaveAll" ToolTip="全部存储(Ctrl+Shift+S)" Command="{x:Static c:TPISCommand.SaveAll}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSaveAll.png" Stretch="None" />

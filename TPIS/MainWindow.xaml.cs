@@ -95,7 +95,26 @@ namespace TPIS
         /// <summary>
         /// 获取当前工程
         /// </summary>
-        private void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = projectTab.SelectedIndex;//当前工程索引
+            if (projectTab.Items.Count == 0)
+                CurrentPojectIndex = 0;
+            else
+            {
+                try
+                {
+                    CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
+                    UpdateRate();
+                }
+                catch
+                {
+                    return;
+                }
+            }
+        }
+
+        internal void ProjectTab_SelectionChanged()
         {
             int index = projectTab.SelectedIndex;//当前工程索引
             if (projectTab.Items.Count == 0)
@@ -117,7 +136,7 @@ namespace TPIS
         /// <summary>
         /// 关闭工程（当前或其他工程）
         /// </summary>
-        private void ProjectItem_Close(object sender, RoutedEventArgs e)
+        public void ProjectItem_Close(object sender, RoutedEventArgs e)
         {
             Button closeButton = sender as Button;
             string num = closeButton.Tag.ToString();
@@ -125,13 +144,16 @@ namespace TPIS
             {
                 if (item.Num == long.Parse(num))
                 {
-                    if (MessageBox.Show("关闭当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
-                        ProjectList.projects.Remove(item);
-                        projectTab.ItemsSource = ProjectList.projects;
-                        projectTab.Items.Refresh();
-                        return;
+                        item.SaveProject();//先保存后关闭
+                        MessageBox.Show("项目已保存");
                     }
+                    ProjectList.projects.Remove(item);
+                    ProjectTab_SelectionChanged();//解决关闭左侧工程，出现当前工程索引溢出；以及画布背景透明
+                    projectTab.ItemsSource = ProjectList.projects;
+                    projectTab.Items.Refresh();
+                    return;
                 }
             }
         }
