@@ -51,7 +51,7 @@ namespace TPIS.Command
                 RandSeltOpe.IsEnabled = true;
             }
         }
-
+        
         public static RoutedCommand NewProject = new RoutedCommand();
         public static RoutedCommand OpenProject = new RoutedCommand();
         public static RoutedCommand CloseProject = new RoutedCommand();
@@ -70,6 +70,8 @@ namespace TPIS.Command
         public static RoutedCommand Left = new RoutedCommand();
         public static RoutedCommand Right = new RoutedCommand();
         public static RoutedCommand DrawGrid = new RoutedCommand();
+        public static RoutedCommand Undo = new RoutedCommand();
+        public static RoutedCommand Redo = new RoutedCommand();
 
 
         #region 新建工程
@@ -339,6 +341,26 @@ namespace TPIS.Command
             if (mainwin.GetCurrentProject() != null)
             {
                 mainwin.GetCurrentProject().MoveSelection(1, 0);
+            }
+        }
+        #endregion
+
+        #region 撤销 重做
+        public void Undo_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().Undo();
+            }
+        }
+        
+        public void Redo_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().Redo();
             }
         }
         #endregion

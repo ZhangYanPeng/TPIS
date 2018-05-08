@@ -139,5 +139,19 @@ namespace TPIS
         }
 
         #endregion
+
+        #region 撤销 重做
+
+        private void Undo_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.Undo_Excuted(sender, e);
+        }
+
+        private void Redo_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.Redo_Excuted(sender, e);
+        }
+
+        #endregion
     }
 }

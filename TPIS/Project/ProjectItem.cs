@@ -79,7 +79,7 @@ namespace TPIS.Project
     #endregion
 
     [Serializable]
-    public class ProjectItem : INotifyPropertyChanged, ISerializable
+    public partial class ProjectItem : INotifyPropertyChanged, ISerializable
     {
         #region 属性更新
         public event PropertyChangedEventHandler PropertyChanged;
@@ -94,7 +94,6 @@ namespace TPIS.Project
         #endregion
 
         public String Name { get; set; }
-        public String V_name { get; set; }
         public long Num { get; set; }
         public ClipBoard clipBoard { get; set; }
         public String Path { get; set; }
@@ -108,6 +107,7 @@ namespace TPIS.Project
                 OnPropertyChanged("CalculateState");
             }
         }
+        public RecordStack Records { get; set; }
 
         #region 画布网格缩放
         public double gridUintLength;
@@ -182,6 +182,7 @@ namespace TPIS.Project
             Objects = new ObservableCollection<ObjectBase>();
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
+            Records = new RecordStack();
             this.CalculateState = false;
             this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
             this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
@@ -242,8 +243,10 @@ namespace TPIS.Project
         /// <summary>
         /// 翻转选中
         /// </summary>
-        public void VerticalReversedSelection()
+        public void VerticalReversedSelection(bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "VerticalReverse");
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -254,17 +257,24 @@ namespace TPIS.Project
                         if (obj is TPISComponent)
                         {
                             ((TPISComponent)Objects[i]).VerticalReverse();
+                            rec.ObjectsNo.Add(Objects[i].No);
                         }
                     }
                 }
+            }
+            if (record && rec.ObjectsNo.Count > 0)
+            {
+                Records.Push(rec);
             }
         }
 
         /// <summary>
         /// 翻转选中
         /// </summary>
-        public void HorizentalReversedSelection()
+        public void HorizentalReversedSelection(bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "HorizentalReverse");
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -275,9 +285,14 @@ namespace TPIS.Project
                         if (obj is TPISComponent)
                         {
                             ((TPISComponent)Objects[i]).HorizentalReverse();
+                            rec.ObjectsNo.Add(Objects[i].No);
                         }
                     }
                 }
+            }
+            if (record && rec.ObjectsNo.Count > 0)
+            {
+                Records.Push(rec);
             }
         }
 
@@ -285,8 +300,11 @@ namespace TPIS.Project
         /// 旋转选中
         /// </summary>
         /// <param name="n">n*90 为顺时针旋转角度</param>
-        public void RotateSelection(int n)
+        public void RotateSelection(int n, bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "Rotate");
+            rec.Param.Add("angle", n.ToString());
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -295,16 +313,27 @@ namespace TPIS.Project
                     if (((TPISComponent)obj).IsSelected && LinkOrNot(obj))//选中，切不含连接关系
                     {
                         ((TPISComponent)Objects[i]).Rotate(n);
+                        rec.ObjectsNo.Add(Objects[i].No);
                     }
                 }
+            }
+            if (record && rec.ObjectsNo.Count > 0)
+            {
+                Records.Push(rec);
             }
         }
 
         /// <summary>
         /// 改变大小
         /// </summary>
-        public void SizeChange(int np, double? width, double? height, double? x, double? y)
+        public void SizeChange(int np, double? width, double? height, double? x, double? y, bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "SizeChange");
+            rec.Param.Add("width", width.HasValue?"null":width.Value.ToString());
+            rec.Param.Add("height", height.HasValue ? "null" : height.Value.ToString());
+            rec.Param.Add("x", x.HasValue ? "null" : x.Value.ToString());
+            rec.Param.Add("y", y.HasValue ? "null" : y.Value.ToString());
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -314,8 +343,13 @@ namespace TPIS.Project
                     {
                         ((TPISComponent)Objects[i]).SizeChange(width, height);
                         ((TPISComponent)Objects[i]).PosChange(x, y);
+                        rec.ObjectsNo.Add(np);
                     }
                 }
+            }
+            if (record && rec.ObjectsNo.Count > 0)
+            {
+                Records.Push(rec);
             }
         }
 
@@ -324,17 +358,21 @@ namespace TPIS.Project
         /// </summary>
         /// <param name="d_vx"></param>
         /// <param name="d_vy"></param>
-        public void MoveSelection(double d_vx, double d_vy)
+        public void MoveSelection(double d_vx, double d_vy, bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "Move");
+            rec.Param.Add("x", (d_vx/Rate).ToString());
+            rec.Param.Add("y", (d_vy/Rate).ToString());
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
                 if (obj is TPISComponent)
                 {
-                    if (((TPISComponent)obj).IsSelected && true)//选中
+                    if (((TPISComponent)obj).IsSelected)//选中
                     {
                         ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
-
+                        rec.ObjectsNo.Add(Objects[i].No);
                         foreach (Port port in ((TPISComponent)obj).Ports)
                         {
                             if (port.link != null && !port.link.IsSelected)
@@ -353,18 +391,24 @@ namespace TPIS.Project
                 }
                 if (obj is TPISLine)
                 {
-                    if (((TPISLine)obj).IsSelected && true)//选中
+                    if (((TPISLine)obj).IsSelected)//选中
                     {
                         ((TPISLine)Objects[i]).PosChange(d_vx, d_vy);
+                        rec.ObjectsNo.Add(Objects[i].No);
                     }
                 }
                 if (obj is ResultCross)
                 {
-                    if (((ResultCross)obj).isSelected && true)//选中
+                    if (((ResultCross)obj).isSelected)//选中
                     {
                         ((ResultCross)Objects[i]).PosChange(d_vx, d_vy);
+                        rec.ObjectsNo.Add(Objects[i].No);
                     }
                 }
+            }
+            if (record && rec.ObjectsNo.Count > 0)
+            {
+                Records.Push(rec);
             }
         }
         #endregion
@@ -551,8 +595,10 @@ namespace TPIS.Project
 
         #region 添加
         //添加元件
-        public void AddComponent(int tx, int ty, int width, int height, ComponentType ct)
+        public void AddComponent(int tx, int ty, int width, int height, ComponentType ct, bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "AddComponent");
             int n = 0;
             foreach (ObjectBase obj in this.Objects)
             {
@@ -561,11 +607,16 @@ namespace TPIS.Project
             }
             n++;
             Objects.Add(new TPISComponent(n, Rate, tx, ty, width, height, ct));
+            rec.ObjectsNo.Add(n);
+            if(record)
+                Records.Push(rec);
         }
 
         //添加线
-        public void AddLine(TPISLine line)
+        public void AddLine(TPISLine line, bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "AddLine");
             int n = 0;
             foreach (ObjectBase obj in this.Objects)
             {
@@ -575,7 +626,9 @@ namespace TPIS.Project
             n--;
             line.No = n;
             Objects.Add(line);
-            return;
+            rec.ObjectsNo.Add(n);
+            if (record)
+                Records.Push(rec);
         }
         #endregion
 
@@ -594,8 +647,10 @@ namespace TPIS.Project
         }
 
         //删除
-        public void DeleteSelection()
+        public void DeleteSelection(bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "Delete");
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -616,6 +671,7 @@ namespace TPIS.Project
                     if (obj is TPISLine)//去TPISLine的锚点
                         ((TPISLine)obj).IsSelected = false;
                     Objects.Remove(obj);
+                    rec.Objects.Add(obj);
                 }
                 else
                 {
@@ -637,11 +693,15 @@ namespace TPIS.Project
                     }
                 }
             }
+            if(record && rec.Objects.Count > 0)
+                Records.Push(rec);
         }
 
         //粘贴
-        public void PasteSelection(double x, double y)
+        public void PasteSelection(double x, double y, bool record = true)
         {
+            Record rec = new Record();
+            rec.Param.Add("Operation", "Paste");
             Boolean init = false;
             double min_x = 0, min_y = 0;
             //计算粘贴后偏移量
@@ -666,7 +726,6 @@ namespace TPIS.Project
             double offset_y = y - min_y;
 
             //按偏移量粘贴并选中
-            Console.WriteLine(clipBoard.Objects.Count);
             foreach (ObjectBase obj in clipBoard.Objects)
             {
                 if (obj is TPISComponent)
@@ -687,9 +746,12 @@ namespace TPIS.Project
                         port.CrossNo = 1;
                     }
                     Objects.Add(component);
+                    rec.ObjectsNo.Add(component.No);
                 }
             }
-            return;
+
+            if (record && rec.ObjectsNo.Count > 0)
+                Records.Push(rec);
         }
         #endregion
 
@@ -853,6 +915,7 @@ namespace TPIS.Project
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
+            this.Records = new RecordStack();
         }
 
         public void RebuildLink()
@@ -906,6 +969,7 @@ namespace TPIS.Project
             }
         }
         #endregion
+        
 
     }
 }

@@ -105,6 +105,8 @@
     <Compile Include="Model\PropertyGroup.cs" />
     <Compile Include="Model\ResultCross.cs" />
     <Compile Include="Project\ClipBoard.cs" />
+    <Compile Include="Project\ProjectItemRecord.cs" />
+    <Compile Include="Project\RecordStack.cs" />
     <Compile Include="TPISCanvas\ChangeLine.cs" />
     <Compile Include="TPISCanvas\LineAnchorPoint.cs" />
     <Compile Include="TPISCanvas\SelectAdorner.cs" />

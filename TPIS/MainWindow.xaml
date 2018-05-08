@@ -81,6 +81,8 @@
         <CommandBinding Command="c:TPISCommand.Right" Executed="Right_Excuted"/>
         <CommandBinding Command="c:TPISCommand.Cut" Executed="Cut_Excuted"/>
         <CommandBinding Command="c:TPISCommand.DrawGrid" Executed="DrawGrid_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.Redo" Executed="Redo_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.Undo" Executed="Undo_Excuted"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+N" Command="{x:Static c:TPISCommand.NewProject}" />

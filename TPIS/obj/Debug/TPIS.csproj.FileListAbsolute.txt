@@ -30,7 +30,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.g.resources
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.Properties.Resources.resources
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateResource.Cache
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
 C:\Users\LW\Source\Repos\TPIS6\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
 C:\Users\LW\Source\Repos\TPIS6\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\LW\Source\Repos\TPIS6\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml

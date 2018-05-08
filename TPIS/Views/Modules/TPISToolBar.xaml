@@ -36,10 +36,10 @@
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activePaste.png" Stretch="None" />
         </Button>
         <Separator />
-        <Button Name="tsbUndo" ToolTip="撤销(Ctrl+Z)" Command="{x:Static c:TPISCommand.Up}">
+        <Button Name="tsbUndo" ToolTip="撤销(Ctrl+Z)" Command="{x:Static c:TPISCommand.Undo}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeUndo.png" Stretch="None" />
         </Button>
-        <Button Name="tsbRedo" ToolTip="重做(Ctrl+Y)" Command="{x:Static c:TPISCommand.Up}">
+        <Button Name="tsbRedo" ToolTip="重做(Ctrl+Y)" Command="{x:Static c:TPISCommand.Redo}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeRedo.png" Stretch="None" />
         </Button>
         <Separator />
