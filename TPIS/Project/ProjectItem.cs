@@ -954,7 +954,7 @@ namespace TPIS.Project
                     TPISComponent component = obj as TPISComponent;
                     foreach (Port port in component.Ports)
                     {
-                        if (port.LinkNo >= 0)
+                        if (port.LinkNo <= 0)
                         {
                             foreach (ObjectBase lobj in Objects)
                             {
