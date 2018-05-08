@@ -36,6 +36,7 @@
                         <DrawingBrush TileMode="Tile" ViewportUnits="Absolute">
                             <DrawingBrush.Viewport>
                                 <MultiBinding Converter="{StaticResource RectConverter}">
+                                    <Binding Path="GridUintLength"/>
                                 </MultiBinding>
                             </DrawingBrush.Viewport>
                             <DrawingBrush.Drawing>
@@ -44,6 +45,7 @@
                                         <RectangleGeometry>
                                             <RectangleGeometry.Rect>
                                                 <MultiBinding Converter="{StaticResource RectConverter}">
+                                                    <Binding Path="GridUintLength"/>
                                                 </MultiBinding>
                                             </RectangleGeometry.Rect>
                                         </RectangleGeometry>

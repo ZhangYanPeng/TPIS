@@ -11,7 +11,7 @@
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeOpen.png" Stretch="None" />
         </Button>
         <Separator />
-
+        
         <Button Name="tsbSave" ToolTip="存储(Ctrl+S)" Command="{x:Static c:TPISCommand.Save}">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSave.png" Stretch="None" />
         </Button>

@@ -145,11 +145,14 @@ namespace TPIS
                 if (item.Num == long.Parse(num))
                 {
                     if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
                         item.SaveProject();//先保存后关闭
+                        MessageBox.Show("项目已保存");
+                    }
                     ProjectList.projects.Remove(item);
+                    ProjectTab_SelectionChanged();//解决关闭左侧工程，出现当前工程索引溢出；以及画布背景透明
                     projectTab.ItemsSource = ProjectList.projects;
                     projectTab.Items.Refresh();
-                    ProjectTab_SelectionChanged();//解决关闭左侧工程，出现当前工程索引溢出
                     return;
                 }
             }

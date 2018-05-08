@@ -110,14 +110,14 @@ namespace TPIS.Command
                 {
                     MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
                     //检查是否已经打开
-                    foreach (ProjectItem project in mainwin.ProjectList.projects)
-                    {
-                        if (path == Path.GetFullPath(project.Path + "\\" + project.Name))
-                        {
-                            MessageBox.Show("工程已经打开！");
-                            return;
-                        }
-                    }
+                    //foreach (ProjectItem project in mainwin.ProjectList.projects)
+                    //{
+                    //    if (path == Path.GetFullPath(project.Path + "\\" + project.Name))
+                    //    {
+                    //        MessageBox.Show("工程已经打开！");
+                    //        return;
+                    //    }
+                    //}
 
                     FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     byte[] data = new byte[fileStream.Length];
@@ -127,6 +127,10 @@ namespace TPIS.Command
 
                     ((ProjectItem)obj).Num = mainwin.ProjectNum;
                     ((ProjectItem)obj).RebuildLink();
+                    {//解决在无新建工程时打开已有项目，出现的透明背景
+                        ((ProjectItem)obj).GridThickness = 0;//赋初值0，使初始画布为隐藏网格
+                        ((ProjectItem)obj).GridUintLength = 20;//赋初值20，使初始网格单元为20×20
+                    }
                     mainwin.ProjectList.projects.Add(obj as ProjectItem);
                     mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
                     mainwin.projectTab.Items.Refresh();
@@ -149,8 +153,12 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
+                //菜单关闭项目需先选中项目
                 if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
                     Save_Excuted(sender, e);//先保存后关闭
+                    MessageBox.Show("项目已保存");
+                }
                 mainwin.GetCurrentProject().ProjectCloseSelection();
             }
 
@@ -219,7 +227,6 @@ namespace TPIS.Command
             if (mainwin.GetCurrentProject() != null)
             {
                 mainwin.GetCurrentProject().SaveProject();
-                MessageBox.Show("项目已保存");
             }
         }
         #endregion

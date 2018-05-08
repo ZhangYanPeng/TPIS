@@ -727,8 +727,6 @@ namespace TPIS.Project
             mainwin.ProjectList.projects.Remove(this);
             mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
             mainwin.projectTab.Items.Refresh();
-            mainwin.ProjectTab_SelectionChanged();//解决关闭左侧工程，出现当前工程索引溢出
-            return;
         }
         #endregion
 
