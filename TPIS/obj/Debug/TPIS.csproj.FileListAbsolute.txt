@@ -96,3 +96,4 @@ C:\Users\LW\Source\Repos\TPIS7\TPIS\obj\Debug\TPIS.csproj.GenerateResource.cache
 C:\Users\LW\Source\Repos\TPIS7\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\LW\Source\Repos\TPIS7\TPIS\obj\Debug\TPIS.csproj.CopyComplete
 C:\Users\LW\Source\Repos\TPIS7\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

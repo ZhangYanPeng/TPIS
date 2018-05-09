@@ -323,6 +323,18 @@ namespace TPIS.Project
             }
         }
 
+        internal string DoubleNullToString(double ? value)
+        {
+            if (value.HasValue)
+            {
+                return value.Value.ToString();
+            }
+            else
+            {
+                return "null";
+            }
+        }
+
         /// <summary>
         /// 改变大小
         /// </summary>
@@ -330,10 +342,10 @@ namespace TPIS.Project
         {
             Record rec = new Record();
             rec.Param.Add("Operation", "SizeChange");
-            rec.Param.Add("width", width.HasValue?"null":width.Value.ToString());
-            rec.Param.Add("height", height.HasValue ? "null" : height.Value.ToString());
-            rec.Param.Add("x", x.HasValue ? "null" : x.Value.ToString());
-            rec.Param.Add("y", y.HasValue ? "null" : y.Value.ToString());
+            rec.Param.Add("width", DoubleNullToString(width));
+            rec.Param.Add("height", DoubleNullToString(height));
+            rec.Param.Add("x", DoubleNullToString(x));
+            rec.Param.Add("y", DoubleNullToString(y));
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -664,8 +676,9 @@ namespace TPIS.Project
         }
 
         //删除
-        public void DeleteSelection(bool record = true)
+        public List<ObjectBase> DeleteSelection(bool record = true)
         {
+            List<ObjectBase> DeleteContent = new List<ObjectBase>();
             Record rec = new Record();
             rec.Param.Add("Operation", "Delete");
             for (int i = 0; i < Objects.Count; i++)
@@ -689,6 +702,7 @@ namespace TPIS.Project
                         ((TPISLine)obj).IsSelected = false;
                     Objects.Remove(obj);
                     rec.Objects.Add(obj);
+                    DeleteContent.Add(obj);
                 }
                 else
                 {
@@ -702,8 +716,9 @@ namespace TPIS.Project
                 {
                     foreach (Port p in ((TPISComponent)obj).Ports)
                     {
-                        if (p.link == null)
+                        if (p.link == null || !Objects.Contains(p.link))
                         {
+                            p.link = null;
                             if (p.Type == NodType.DefIn || p.Type == NodType.DefOut)
                                 p.Type = NodType.Undef;
                         }
@@ -712,6 +727,7 @@ namespace TPIS.Project
             }
             if(record && rec.Objects.Count > 0)
                 Records.Push(rec);
+            return DeleteContent;
         }
 
         //粘贴
