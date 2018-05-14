@@ -15,11 +15,12 @@ using TPIS.Model.Common;
 namespace TPIS.Project
 {
     [Serializable]
-    public abstract class ObjectBase : ISerializable
+    public abstract class ObjectBase : ISerializable, ICloneable
     {
         public bool isSelected;
         public int No { get; set; }
 
+        public abstract object Clone();
         public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
     }
 
@@ -323,7 +324,7 @@ namespace TPIS.Project
             }
         }
 
-        internal string DoubleNullToString(double ? value)
+        internal string DoubleNullToString(double? value)
         {
             if (value.HasValue)
             {
@@ -374,9 +375,9 @@ namespace TPIS.Project
         {
             Record rec = new Record();
             rec.Param.Add("Operation", "Move");
-            rec.Param.Add("x", (d_vx/Rate).ToString());
-            rec.Param.Add("y", (d_vy/Rate).ToString());
-            bool flag=false;//解决选中线时，方向键只移动线
+            rec.Param.Add("x", (d_vx / Rate).ToString());
+            rec.Param.Add("y", (d_vy / Rate).ToString());
+            bool flag = false;//解决选中线时，方向键只移动线
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -531,7 +532,7 @@ namespace TPIS.Project
         /// <param name="component"></param>
         internal void Select(ObjectBase objectBase)
         {
-            
+
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is ResultCross)
@@ -637,7 +638,7 @@ namespace TPIS.Project
             n++;
             Objects.Add(new TPISComponent(n, Rate, tx, ty, width, height, ct));
             rec.ObjectsNo.Add(n);
-            if(record)
+            if (record)
                 Records.Push(rec);
         }
 
@@ -666,11 +667,21 @@ namespace TPIS.Project
         public void CopySelection()
         {
             clipBoard.Objects = new List<ObjectBase>();
-            foreach (ObjectBase obj in this.Objects)
+            List<TPISComponent> sl = new List<TPISComponent>();
+            foreach (ObjectBase obj in Objects)
             {
-                if (obj.isSelected && (obj is TPISComponent || obj is TPISLine))
+                if (obj.isSelected && obj is TPISComponent)
                 {
-                    clipBoard.Objects.Add(obj);
+                    sl.Add(obj as TPISComponent);
+                }
+            }
+            Select(sl);
+
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj.isSelected )
+                {
+                    clipBoard.Objects.Add(obj.Clone() as ObjectBase);
                 }
             }
         }
@@ -725,7 +736,7 @@ namespace TPIS.Project
                     }
                 }
             }
-            if(record && rec.Objects.Count > 0)
+            if (record && rec.Objects.Count > 0)
                 Records.Push(rec);
             return DeleteContent;
         }
@@ -759,11 +770,12 @@ namespace TPIS.Project
             double offset_y = y - min_y;
 
             //按偏移量粘贴并选中
+            Dictionary<int, int> NoMap = new Dictionary<int, int>();
             foreach (ObjectBase obj in clipBoard.Objects)
             {
                 if (obj is TPISComponent)
                 {
-                    TPISComponent component = ((TPISComponent)obj).Clone() as TPISComponent;
+                    TPISComponent component = (obj as TPISComponent).Clone() as TPISComponent;
                     component.SetRate(Rate);
                     int n = 0;
                     foreach (ObjectBase objc in this.Objects)
@@ -772,16 +784,78 @@ namespace TPIS.Project
                             n = objc.No;
                     }
                     n++;
+                    NoMap.Add(component.No, n);
                     component.No = n;
                     component.PosChange((int)offset_x, (int)offset_y);
-                    foreach (Port port in component.Ports)
-                    {
-                        port.CrossNo = 1;
-                    }
                     Objects.Add(component);
                     rec.ObjectsNo.Add(component.No);
                 }
+                if (obj is TPISLine)
+                {
+                    TPISLine line = obj.Clone() as TPISLine;
+                    line.SetRate(Rate);
+                    int n = 0;
+                    foreach (ObjectBase objc in Objects)
+                    {
+                        if (objc.No < n)
+                            n = objc.No;
+                    }
+                    n--;
+                    NoMap.Add(line.No, n);
+                    line.No = n;
+                    line.PosChange((int)offset_x, (int)offset_y);
+                    Objects.Add(line);
+                    rec.ObjectsNo.Add(line.No);
+                }
+                if (obj is ResultCross)
+                {
+                    ResultCross cross = obj.Clone() as ResultCross;
+                    cross.SetRate(Rate);
+                    int n = 0;
+                    foreach (ObjectBase objc in Objects)
+                    {
+                        if (objc.No < n)
+                            n = objc.No;
+                    }
+                    n--;
+                    NoMap.Add(cross.No, n);
+                    cross.No = n;
+                    cross.PosChange((int)offset_x, (int)offset_y);
+                    Objects.Add(cross);
+                    rec.ObjectsNo.Add(cross.No);
+                }
             }
+
+            //更改所有no
+            foreach (ObjectBase obj in Objects)
+            {
+                if(obj is TPISComponent)
+                {
+                    if (NoMap.ContainsValue(obj.No))
+                    {
+                        TPISComponent component = obj as TPISComponent;
+                        foreach (Port port in component.Ports)
+                        {
+                            if (port.LinkNo<=0)
+                            {
+                                if (NoMap.ContainsKey(port.LinkNo))
+                                    port.LinkNo = NoMap[port.LinkNo];
+                                else
+                                    port.LinkNo = 1;
+                            }
+                            if (port.CrossNo<=0)
+                            {
+                                if (NoMap.ContainsKey(port.CrossNo))
+                                    port.CrossNo = NoMap[port.CrossNo];
+                                else
+                                    port.CrossNo = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            RebuildLink();
 
             if (record && rec.ObjectsNo.Count > 0)
                 Records.Push(rec);
@@ -1001,7 +1075,7 @@ namespace TPIS.Project
                         {
                             foreach (ObjectBase objt in Objects)
                             {
-                                if (obj is ResultCross && objt.No == port.CrossNo)
+                                if (objt is ResultCross && objt.No == port.CrossNo)
                                 {
                                     ((ResultCross)objt).LinkPort = port;
                                 }
@@ -1012,7 +1086,7 @@ namespace TPIS.Project
             }
         }
         #endregion
-        
+
 
     }
 }

@@ -41,8 +41,14 @@
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeDelete.png" Stretch="None" />
         </Button>
         <Separator />
+        <ToggleButton ToolTip="直接连接线" HorizontalAlignment="Left" Click="TPISLineTypeSelected" x:Name="AddLine">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_line.png"/>
+        </ToggleButton>
+        <ToggleButton ToolTip="直角连接线" HorizontalAlignment="Left"  Click="TPISLineTypeSelected" Name="AddStraightLine">
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_straightLine.png"/>
+        </ToggleButton>
         <Button Name="tsbSelection" ToolTip="选择" Click="ToSelectMode">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSelection.png" Stretch="None" />
+            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeSelection.png" Stretch="None" Name="ToSelect"/>
         </Button>
         <Separator />
         <Button Name="tsbRotate" ToolTip="向右旋转" Click="TPISRotate" >

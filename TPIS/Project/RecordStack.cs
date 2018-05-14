@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TPIS.Project
 {
     public class RecordStack
     {
+        public static int MAX_SIZE = 50;
         public List<Record> UndoStack { get; set; }
         public List<Record> RedoStack { get; set; }
 
@@ -53,6 +55,18 @@ namespace TPIS.Project
             {
                 UndoStack.Add(record);
                 RedoStack.Clear();
+            }
+            ReSize();
+        }
+
+        private void ReSize()
+        {
+            while (UndoStack.Count > MAX_SIZE)
+            {
+                UndoStack.RemoveAt(0);
+            } while (RedoStack.Count > MAX_SIZE)
+            {
+                RedoStack.RemoveAt(0);
             }
         }
 

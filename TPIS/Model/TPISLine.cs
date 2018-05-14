@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,11 +57,8 @@ namespace TPIS.Model
         public Port inPort { get; set; }
         public Port outPort { get; set; }
 
-
-        /// <summary>
-        /// 序列化与反序列化
-        /// </summary>
-        #region
+        
+        #region 序列化与反序列化
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("no", No);
@@ -300,6 +299,17 @@ namespace TPIS.Model
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public override object Clone()
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(stream, this);
+            stream.Position = 0;
+            Object obj = bf.Deserialize(stream);
+            stream.Close();
+            return obj;
         }
 
         public static implicit operator TPISLine(System.Windows.Shapes.Line v)
