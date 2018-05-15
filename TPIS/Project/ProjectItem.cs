@@ -4,24 +4,22 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Model.Common;
 
 namespace TPIS.Project
 {
     [Serializable]
-    public abstract class ObjectBase : ISerializable
+    public abstract class ObjectBase : ISerializable, ICloneable
     {
         public bool isSelected;
         public int No { get; set; }
 
+        public abstract object Clone();
         public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
     }
 
@@ -101,7 +99,6 @@ namespace TPIS.Project
         public long Num { get; set; }
         public ClipBoard clipBoard { get; set; }
         public String Path { get; set; }
-
         public bool calculateState;
         public bool CalculateState
         {
@@ -329,6 +326,18 @@ namespace TPIS.Project
             }
         }
 
+        internal string DoubleNullToString(double? value)
+        {
+            if (value.HasValue)
+            {
+                return value.Value.ToString();
+            }
+            else
+            {
+                return "null";
+            }
+        }
+
         /// <summary>
         /// 改变大小
         /// </summary>
@@ -336,10 +345,10 @@ namespace TPIS.Project
         {
             Record rec = new Record();
             rec.Param.Add("Operation", "SizeChange");
-            rec.Param.Add("width", width.HasValue ? "null" : width.Value.ToString());
-            rec.Param.Add("height", height.HasValue ? "null" : height.Value.ToString());
-            rec.Param.Add("x", x.HasValue ? "null" : x.Value.ToString());
-            rec.Param.Add("y", y.HasValue ? "null" : y.Value.ToString());
+            rec.Param.Add("width", DoubleNullToString(width));
+            rec.Param.Add("height", DoubleNullToString(height));
+            rec.Param.Add("x", DoubleNullToString(x));
+            rec.Param.Add("y", DoubleNullToString(y));
             for (int i = 0; i < Objects.Count; i++)
             {
                 ObjectBase obj = Objects[i];
@@ -525,7 +534,6 @@ namespace TPIS.Project
         /// <param name="component"></param>
         internal void Select(ObjectBase objectBase)
         {
-
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is ResultCross)
@@ -660,18 +668,31 @@ namespace TPIS.Project
         public void CopySelection()
         {
             clipBoard.Objects = new List<ObjectBase>();
-            foreach (ObjectBase obj in this.Objects)
+            List<TPISComponent> sl = new List<TPISComponent>();
+            foreach (ObjectBase obj in Objects)
             {
-                if (obj.isSelected && (obj is TPISComponent || obj is TPISLine))
+                if (obj.isSelected && obj is TPISComponent)
                 {
-                    clipBoard.Objects.Add(obj);
+                    sl.Add(obj as TPISComponent);
+                }
+            }
+            Select(sl);
+
+            foreach (ObjectBase obj in Objects)
+            {
+
+                if (obj.isSelected)
+                {
+
+                    clipBoard.Objects.Add(obj.Clone() as ObjectBase);
                 }
             }
         }
 
         //删除
-        public void DeleteSelection(bool record = true)
+        public List<ObjectBase> DeleteSelection(bool record = true)
         {
+            List<ObjectBase> DeleteContent = new List<ObjectBase>();
             Record rec = new Record();
             rec.Param.Add("Operation", "Delete");
             for (int i = 0; i < Objects.Count; i++)
@@ -695,6 +716,7 @@ namespace TPIS.Project
                         ((TPISLine)obj).IsSelected = false;
                     Objects.Remove(obj);
                     rec.Objects.Add(obj);
+                    DeleteContent.Add(obj);
                 }
                 else
                 {
@@ -719,6 +741,7 @@ namespace TPIS.Project
             }
             if (record && rec.Objects.Count > 0)
                 Records.Push(rec);
+            return DeleteContent;
         }
 
         //粘贴
@@ -750,11 +773,12 @@ namespace TPIS.Project
             double offset_y = y - min_y;
 
             //按偏移量粘贴并选中
+            Dictionary<int, int> NoMap = new Dictionary<int, int>();
             foreach (ObjectBase obj in clipBoard.Objects)
             {
                 if (obj is TPISComponent)
                 {
-                    TPISComponent component = ((TPISComponent)obj).Clone() as TPISComponent;
+                    TPISComponent component = (obj as TPISComponent).Clone() as TPISComponent;
                     component.SetRate(Rate);
                     int n = 0;
                     foreach (ObjectBase objc in this.Objects)
@@ -763,359 +787,422 @@ namespace TPIS.Project
                             n = objc.No;
                     }
                     n++;
+                    NoMap.Add(component.No, n);
                     component.No = n;
                     component.PosChange((int)offset_x, (int)offset_y);
-                    foreach (Port port in component.Ports)
-                    {
-                        port.CrossNo = 1;
-                    }
                     Objects.Add(component);
                     rec.ObjectsNo.Add(component.No);
                 }
+                if (obj is TPISLine)
+                {
+                    TPISLine line = obj.Clone() as TPISLine;
+                    line.SetRate(Rate);
+                    int n = 0;
+                    foreach (ObjectBase objc in Objects)
+                    {
+                        if (objc.No < n)
+                            n = objc.No;
+                    }
+                    n--;
+                    NoMap.Add(line.No, n);
+                    line.No = n;
+                    line.PosChange((int)offset_x, (int)offset_y);
+                    Objects.Add(line);
+                    rec.ObjectsNo.Add(line.No);
+                }
+                if (obj is ResultCross)
+                {
+                    ResultCross cross = obj.Clone() as ResultCross;
+                    cross.SetRate(Rate);
+                    int n = 0;
+                    foreach (ObjectBase objc in Objects)
+                    {
+                        if (objc.No < n)
+                            n = objc.No;
+                    }
+                    n--;
+                    NoMap.Add(cross.No, n);
+                    cross.No = n;
+                    cross.PosChange((int)offset_x, (int)offset_y);
+                    Objects.Add(cross);
+                    rec.ObjectsNo.Add(cross.No);
+                }
             }
+
+            //更改所有no
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent)
+                {
+                    if (NoMap.ContainsValue(obj.No))
+                    {
+                        TPISComponent component = obj as TPISComponent;
+                        foreach (Port port in component.Ports)
+                        {
+                            if (port.LinkNo <= 0)
+                            {
+                                if (NoMap.ContainsKey(port.LinkNo))
+                                    port.LinkNo = NoMap[port.LinkNo];
+                                else
+                                    port.LinkNo = 1;
+                            }
+                            if (port.CrossNo <= 0)
+                            {
+                                if (NoMap.ContainsKey(port.CrossNo))
+                                    port.CrossNo = NoMap[port.CrossNo];
+                                else
+                                    port.CrossNo = 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            RebuildLink();
 
             if (record && rec.ObjectsNo.Count > 0)
                 Records.Push(rec);
         }
+
         #endregion
 
         #region 网格
         public void DrawGridSelection()
-        {
-            if (GridThickness == 0)
-                GridThickness = 0.2;
-            else
-                GridThickness = 0;
-        }
-        #endregion
+    {
+        if (GridThickness == 0)
+            GridThickness = 0.2;
+        else
+            GridThickness = 0;
+    }
+    #endregion
 
-        #region 关闭工程
-        public void ProjectCloseSelection()
+    #region 关闭工程
+    public void ProjectCloseSelection()
+    {
+        MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+        mainwin.ProjectList.projects.Remove(this);
+        mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
+        mainwin.projectTab.Items.Refresh();
+        if (mainwin.ProjectList.projects.Count == 0)
+        {//若无工程，状态栏显示空
+            mainwin.CurProjectShow("Null");//工程名为空
+            mainwin.CurWorkspaceSizeShow("0", "0");//工作区大小为空
+            mainwin.CurProjectAddressShow("Null", "Null");//工程地址为空
+        }
+    }
+    #endregion
+
+    #region 有效工作区大小-右下点
+    public Point WorkSpaceSize_RD()
+    {
+        Point p = new Point(0, 0);//无控件，边界为0×0
+        for (int i = 0; i < this.Objects.Count; i++)
         {
-            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            mainwin.ProjectList.projects.Remove(this);
-            mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
-            mainwin.projectTab.Items.Refresh();
-            if (mainwin.ProjectList.projects.Count == 0)
-            {//若无工程，状态栏显示空
-                mainwin.CurProjectShow("Null");//工程名为空
-                mainwin.CurWorkspaceSizeShow("0", "0");//工作区大小为空
-                mainwin.CurProjectAddressShow("Null", "Null");//工程地址为空
+            int x = (int)this.Canvas.V_width;
+            int y = (int)this.Canvas.V_height;
+            ObjectBase obj = this.Objects[i];
+            if (obj is TPISComponent)
+            {
+                x = (int)(((TPISComponent)obj).Position.V_x + ((TPISComponent)obj).Position.V_width + 10);
+                y = (int)(((TPISComponent)obj).Position.V_y + ((TPISComponent)obj).Position.V_height + 10);
             }
+            else if (obj is TPISLine)
+            {
+                x = (int)((TPISLine)obj).Points[0].X + 10;
+                y = (int)((TPISLine)obj).Points[0].Y + 10;
+                foreach (Point p1 in ((TPISLine)obj).Points)
+                {
+                    x = (int)(x > p1.X ? x : p1.X + 10);
+                    y = (int)(y > p1.Y ? y : p1.Y + 10);
+                }
+            }
+            p.X = p.X > x ? p.X : x;
+            p.Y = p.Y > y ? p.Y : y;
         }
-        #endregion
+        return p;
+    }
+    #endregion
 
-        #region 有效工作区大小-右下点
-        public Point WorkSpaceSize_RD()
+    #region 有效工作区大小-左上点
+    public Point WorkSpaceSize_LU()
+    {
+        Point p = new Point(0, 0);//无控件，边界为0×0
+        if (this.Objects.Count > 0)
         {
-            Point p = new Point(0, 0);//无控件，边界为0×0
+            int x = 10;
+            int y = 10;
+            ObjectBase obj0 = this.Objects[0];
+            if (obj0 is TPISComponent)
+            {
+                x = (int)((TPISComponent)obj0).Position.V_x - 10;
+                y = (int)((TPISComponent)obj0).Position.V_y - 10;
+            }
+            else if (obj0 is TPISLine)
+            {
+                x = (int)((TPISLine)obj0).Points[0].X - 10;
+                y = (int)((TPISLine)obj0).Points[0].Y - 10;
+                foreach (Point p1 in ((TPISLine)obj0).Points)
+                {
+                    x = (int)(x < p1.X ? x : p1.X - 10);
+                    y = (int)(y < p1.Y ? y : p1.Y - 10);
+                }
+            }
+            p.X = x;
+            p.Y = y;
             for (int i = 0; i < this.Objects.Count; i++)
             {
-                int x = (int)this.Canvas.V_width;
-                int y = (int)this.Canvas.V_height;
                 ObjectBase obj = this.Objects[i];
                 if (obj is TPISComponent)
                 {
-                    x = (int)(((TPISComponent)obj).Position.V_x + ((TPISComponent)obj).Position.V_width + 10);
-                    y = (int)(((TPISComponent)obj).Position.V_y + ((TPISComponent)obj).Position.V_height + 10);
+                    x = (int)((TPISComponent)obj).Position.V_x - 10;
+                    y = (int)((TPISComponent)obj).Position.V_y - 10;
                 }
                 else if (obj is TPISLine)
                 {
-                    x = (int)((TPISLine)obj).Points[0].X + 10;
-                    y = (int)((TPISLine)obj).Points[0].Y + 10;
+                    x = (int)((TPISLine)obj).Points[0].X - 10;
+                    y = (int)((TPISLine)obj).Points[0].Y - 10;
                     foreach (Point p1 in ((TPISLine)obj).Points)
-                    {
-                        x = (int)(x > p1.X ? x : p1.X + 10);
-                        y = (int)(y > p1.Y ? y : p1.Y + 10);
-                    }
-                }
-                p.X = p.X > x ? p.X : x;
-                p.Y = p.Y > y ? p.Y : y;
-            }
-            return p;
-        }
-        #endregion
-
-        #region 有效工作区大小-左上点
-        public Point WorkSpaceSize_LU()
-        {
-            Point p = new Point(0, 0);//无控件，边界为0×0
-            if (this.Objects.Count > 0)
-            {
-                int x = 10;
-                int y = 10;
-                ObjectBase obj0 = this.Objects[0];
-                if (obj0 is TPISComponent)
-                {
-                    x = (int)((TPISComponent)obj0).Position.V_x - 10;
-                    y = (int)((TPISComponent)obj0).Position.V_y - 10;
-                }
-                else if (obj0 is TPISLine)
-                {
-                    x = (int)((TPISLine)obj0).Points[0].X - 10;
-                    y = (int)((TPISLine)obj0).Points[0].Y - 10;
-                    foreach (Point p1 in ((TPISLine)obj0).Points)
                     {
                         x = (int)(x < p1.X ? x : p1.X - 10);
                         y = (int)(y < p1.Y ? y : p1.Y - 10);
                     }
                 }
-                p.X = x;
-                p.Y = y;
-                for (int i = 0; i < this.Objects.Count; i++)
+                p.X = p.X < x ? p.X : x;
+                p.Y = p.Y < y ? p.Y : y;
+            }
+        }
+
+        return p;
+    }
+    #endregion
+
+    #region 移动-边界限制
+    public void MoveChange(int x, int y)
+    {
+        Point tmp;
+        tmp = this.WorkSpaceSize_LU();
+        if (tmp.X - 10 <= 0 && tmp.Y - 10 <= 0)
+        {//限制超出左上边界
+            this.MoveSelection(1, 1);
+        }
+        else if (tmp.X - 10 <= 0)
+        {//限制超出左边界
+            this.MoveSelection(1, y);
+        }
+        else if (tmp.Y - 10 <= 0)
+        {//限制超出上边界
+            this.MoveSelection(x, 1);
+        }
+        else
+        {
+            this.MoveSelection(x, y);
+        }
+    }
+    #endregion
+
+    #region 查找元件并选中居中
+    internal bool FindComponent(int tn)
+    {
+        Boolean findOrNot = false;
+        foreach (ObjectBase obj in Objects)
+        {
+            if (obj is TPISComponent)
+            {
+                if (obj.No == tn)
                 {
-                    ObjectBase obj = this.Objects[i];
-                    if (obj is TPISComponent)
-                    {
-                        x = (int)((TPISComponent)obj).Position.V_x - 10;
-                        y = (int)((TPISComponent)obj).Position.V_y - 10;
-                    }
-                    else if (obj is TPISLine)
-                    {
-                        x = (int)((TPISLine)obj).Points[0].X - 10;
-                        y = (int)((TPISLine)obj).Points[0].Y - 10;
-                        foreach (Point p1 in ((TPISLine)obj).Points)
-                        {
-                            x = (int)(x < p1.X ? x : p1.X - 10);
-                            y = (int)(y < p1.Y ? y : p1.Y - 10);
-                        }
-                    }
-                    p.X = p.X < x ? p.X : x;
-                    p.Y = p.Y < y ? p.Y : y;
+                    findOrNot = true;
+                    ((TPISComponent)obj).IsSelected = true;
+
+                    MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                    Grid tabGrid = FindVisualChild<Grid>(mainwin.projectTab);
+                    Border contentBorder = tabGrid.FindName("ContentPanel") as Border;
+                    ContentPresenter contentPresenter = FindVisualChild<ContentPresenter>(contentBorder);
+                    ScrollViewer sv = contentPresenter.ContentTemplate.FindName("CanvasScrollViewer", contentPresenter) as ScrollViewer;
+
+                    //移动坐标
+                    sv.ScrollToHorizontalOffset(((TPISComponent)obj).Position.V_x - sv.ActualWidth / 2 + ((TPISComponent)obj).Position.V_width / 2);
+                    sv.ScrollToVerticalOffset(((TPISComponent)obj).Position.V_y - sv.ActualHeight / 2 + ((TPISComponent)obj).Position.V_height / 2);
                 }
-            }
-            
-            return p;
-        }
-        #endregion
-
-        #region 移动-边界限制
-        public void MoveChange(int x, int y)
-        {
-            Point tmp;
-            tmp = this.WorkSpaceSize_LU();
-            if (tmp.X - 10 <= 0 && tmp.Y - 10 <= 0)
-            {//限制超出左上边界
-                this.MoveSelection(1, 1);
-            }
-            else if (tmp.X - 10 <= 0)
-            {//限制超出左边界
-                this.MoveSelection(1, y);
-            }
-            else if (tmp.Y - 10 <= 0)
-            {//限制超出上边界
-                this.MoveSelection(x, 1);
-            }
-            else
-            {
-                this.MoveSelection(x, y);
-            }
-        }
-        #endregion
-
-        #region 查找元件并选中居中
-        internal bool FindComponent(int tn)
-        {
-            Boolean findOrNot = false;
-            foreach (ObjectBase obj in Objects)
-            {
-                if (obj is TPISComponent)
-                {
-                    if (obj.No == tn)
-                    {
-                        findOrNot = true;
-                        ((TPISComponent)obj).IsSelected = true;
-
-                        MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                        Grid tabGrid = FindVisualChild<Grid>(mainwin.projectTab);
-                        Border contentBorder = tabGrid.FindName("ContentPanel") as Border;
-                        ContentPresenter contentPresenter = FindVisualChild<ContentPresenter>(contentBorder);
-                        ScrollViewer sv = contentPresenter.ContentTemplate.FindName("CanvasScrollViewer", contentPresenter) as ScrollViewer;
-
-                        //移动坐标
-                        sv.ScrollToHorizontalOffset(((TPISComponent)obj).Position.V_x - sv.ActualWidth / 2 + ((TPISComponent)obj).Position.V_width / 2);
-                        sv.ScrollToVerticalOffset(((TPISComponent)obj).Position.V_y - sv.ActualHeight / 2 + ((TPISComponent)obj).Position.V_height / 2);
-                    }
-                    else
-                    {
-                        ((TPISComponent)obj).IsSelected = false;
-                    }
-                }
-            }
-            return findOrNot;
-        }
-
-        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is childItem)
-                    return (childItem)child;
                 else
                 {
-                    childItem childOfChild = FindVisualChild<childItem>(child);
-                    if (childOfChild != null)
-                        return childOfChild;
-                }
-            }
-            return null;
-        }
-        #endregion
-
-        #region cross操作 
-        public void AddCross(Port port)
-        {
-            int no = 0;
-            foreach (ObjectBase obj in Objects)
-            {
-                if (obj.No <= no)
-                {
-                    no = obj.No - 1;
-                }
-            }
-            foreach (ObjectBase obj in Objects)
-            {
-                if (obj is TPISComponent)
-                {
-                    TPISComponent component = obj as TPISComponent;
-                    if (component.Ports.Contains(port))
-                    {
-                        double vx, vy;
-                        for (double d = 20; ; d += 10)
-                        {
-                            for (int angle = 0; angle < 360; angle += 5)
-                            {
-                                vx = component.Position.V_x + component.Position.V_width / 2 + d * Math.Sin(angle);
-                                vy = component.Position.V_y + component.Position.V_height / 2 + d * Math.Cos(angle);
-                                if (!CoverOrNot(vx, vy, CrossSize.WIDTH * Rate, CrossSize.HEIGHT * Rate))
-                                {
-                                    Objects.Add(new ResultCross(port, no, Rate, vx, vy));
-                                    return;
-                                }
-                            }
-                        }
-                    }
+                    ((TPISComponent)obj).IsSelected = false;
                 }
             }
         }
-
-        public bool CoverOrNot(double x, double y, double w, double h)
-        {
-            foreach (ObjectBase obj in Objects)
-            {
-                if (obj is TPISComponent)
-                {
-                    TPISComponent component = obj as TPISComponent;
-                    if (WithinOrNot(x, y, w, h, component.Position.V_x - 5, component.Position.V_y - 5, component.Position.V_width + 5, component.Position.V_height + 5))
-                        return true;
-                }
-                if (obj is ResultCross)
-                {
-                    ResultCross cross = obj as ResultCross;
-                    if (WithinOrNot(x, y, w, h, cross.Position.V_x - 5, cross.Position.V_y - 5, cross.Position.V_width + 5, cross.Position.V_height + 5))
-                        return true;
-                }
-            }
-            return false;
-        }
-
-        internal bool WithinOrNot(double x1, double y1, double w1, double h1, double x2, double y2, double w2, double h2)
-        {
-            if (x1 + w1 > x2 && x2 + w2 > x1 && y1 + h1 > y2 && y2 + h2 > y1)
-                return true;
-            else
-                return false;
-
-        }
-
-        public void RemoveCross(int no)
-        {
-            for (int i = 0; i < Objects.Count; i++)
-            {
-                ObjectBase obj = Objects[i];
-                if (obj is ResultCross && obj.No == no)
-                {
-                    Objects.Remove(obj);
-                    return;
-                }
-            }
-        }
-        #endregion
-
-        #region 序列化与反序列化
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("name", Name);
-            info.AddValue("canvas", Canvas);
-            info.AddValue("objects", Objects);
-            info.AddValue("path", Path);
-            info.AddValue("properties", PropertyGroup);
-        }
-
-        public ProjectItem(SerializationInfo info, StreamingContext context)
-        {
-            this.Name = info.GetString("name");
-            this.Num = 2;
-            this.Path = info.GetString("path");
-            this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
-            this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
-            this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
-            this.Rate = 1;
-            this.clipBoard = new ClipBoard();
-            this.Records = new RecordStack();
-        }
-
-        public void RebuildLink()
-        {
-            foreach (ObjectBase obj in Objects)
-            {
-                if (obj is TPISComponent)
-                {
-                    TPISComponent component = obj as TPISComponent;
-                    foreach (Port port in component.Ports)
-                    {
-                        if (port.LinkNo <= 0)
-                        {
-                            foreach (ObjectBase lobj in Objects)
-                            {
-                                if (lobj is TPISLine)
-                                {
-                                    TPISLine line = lobj as TPISLine;
-                                    if (line.No == port.LinkNo)
-                                    {
-                                        if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
-                                            line.inPort = port;
-                                        else
-                                            line.outPort = port;
-                                        port.link = line;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            foreach (ObjectBase obj in Objects)
-            {
-                if (obj is TPISComponent)
-                {
-                    foreach (Port port in ((TPISComponent)obj).Ports)
-                    {
-                        if (port.CrossNo <= 0)
-                        {
-                            foreach (ObjectBase objt in Objects)
-                            {
-                                if (obj is ResultCross && objt.No == port.CrossNo)
-                                {
-                                    ((ResultCross)objt).LinkPort = port;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        #endregion
+        return findOrNot;
     }
+
+    private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+        {
+            DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+            if (child != null && child is childItem)
+                return (childItem)child;
+            else
+            {
+                childItem childOfChild = FindVisualChild<childItem>(child);
+                if (childOfChild != null)
+                    return childOfChild;
+            }
+        }
+        return null;
+    }
+    #endregion
+
+    #region cross操作 
+    public void AddCross(Port port)
+    {
+        int no = 0;
+        foreach (ObjectBase obj in Objects)
+        {
+            if (obj.No <= no)
+            {
+                no = obj.No - 1;
+            }
+        }
+        foreach (ObjectBase obj in Objects)
+        {
+            if (obj is TPISComponent)
+            {
+                TPISComponent component = obj as TPISComponent;
+                if (component.Ports.Contains(port))
+                {
+                    double vx, vy;
+                    for (double d = 20; ; d += 10)
+                    {
+                        for (int angle = 0; angle < 360; angle += 5)
+                        {
+                            vx = component.Position.V_x + component.Position.V_width / 2 + d * Math.Sin(angle);
+                            vy = component.Position.V_y + component.Position.V_height / 2 + d * Math.Cos(angle);
+                            if (!CoverOrNot(vx, vy, CrossSize.WIDTH * Rate, CrossSize.HEIGHT * Rate))
+                            {
+                                Objects.Add(new ResultCross(port, no, Rate, vx, vy));
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public bool CoverOrNot(double x, double y, double w, double h)
+    {
+        foreach (ObjectBase obj in Objects)
+        {
+            if (obj is TPISComponent)
+            {
+                TPISComponent component = obj as TPISComponent;
+                if (WithinOrNot(x, y, w, h, component.Position.V_x - 5, component.Position.V_y - 5, component.Position.V_width + 5, component.Position.V_height + 5))
+                    return true;
+            }
+            if (obj is ResultCross)
+            {
+                ResultCross cross = obj as ResultCross;
+                if (WithinOrNot(x, y, w, h, cross.Position.V_x - 5, cross.Position.V_y - 5, cross.Position.V_width + 5, cross.Position.V_height + 5))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    internal bool WithinOrNot(double x1, double y1, double w1, double h1, double x2, double y2, double w2, double h2)
+    {
+        if (x1 + w1 > x2 && x2 + w2 > x1 && y1 + h1 > y2 && y2 + h2 > y1)
+            return true;
+        else
+            return false;
+
+    }
+
+    public void RemoveCross(int no)
+    {
+        for (int i = 0; i < Objects.Count; i++)
+        {
+            ObjectBase obj = Objects[i];
+            if (obj is ResultCross && obj.No == no)
+            {
+                Objects.Remove(obj);
+                return;
+            }
+        }
+    }
+    #endregion
+
+    #region 序列化与反序列化
+    public void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        info.AddValue("name", Name);
+        info.AddValue("canvas", Canvas);
+        info.AddValue("objects", Objects);
+        info.AddValue("path", Path);
+        info.AddValue("properties", PropertyGroup);
+    }
+
+    public ProjectItem(SerializationInfo info, StreamingContext context)
+    {
+        this.Name = info.GetString("name");
+        this.Num = 2;
+        this.Path = info.GetString("path");
+        this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
+        this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
+        this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
+        this.Rate = 1;
+        this.clipBoard = new ClipBoard();
+        this.Records = new RecordStack();
+    }
+
+    public void RebuildLink()
+    {
+        foreach (ObjectBase obj in Objects)
+        {
+            if (obj is TPISComponent)
+            {
+                TPISComponent component = obj as TPISComponent;
+                foreach (Port port in component.Ports)
+                {
+                    if (port.LinkNo <= 0)
+                    {
+                        foreach (ObjectBase lobj in Objects)
+                        {
+                            if (lobj is TPISLine)
+                            {
+                                TPISLine line = lobj as TPISLine;
+                                if (line.No == port.LinkNo)
+                                {
+                                    if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
+                                        line.inPort = port;
+                                    else
+                                        line.outPort = port;
+                                    port.link = line;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        foreach (ObjectBase obj in Objects)
+        {
+            if (obj is TPISComponent)
+            {
+                foreach (Port port in ((TPISComponent)obj).Ports)
+                {
+                    if (port.CrossNo <= 0)
+                    {
+                        foreach (ObjectBase objt in Objects)
+                        {
+                            if (obj is ResultCross && objt.No == port.CrossNo)
+                            {
+                                ((ResultCross)objt).LinkPort = port;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #endregion
+}
 }
