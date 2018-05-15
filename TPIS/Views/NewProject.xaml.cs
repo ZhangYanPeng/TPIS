@@ -42,6 +42,11 @@ namespace TPIS
                     MessageBox.Show("画布像素只能为正整数！", "提示", MessageBoxButton.OKCancel);
                     return;
                 }
+                if (proj_name.Text.Contains("."))
+                {
+                    MessageBox.Show("命名包含特殊字符“.”！", "提示", MessageBoxButton.OKCancel);
+                    return;
+                }
             }
             catch
             {

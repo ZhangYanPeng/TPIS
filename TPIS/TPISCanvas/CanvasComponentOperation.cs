@@ -68,6 +68,7 @@ namespace TPIS.TPISCanvas
         /// <param name="e"></param>
         public void CanvasMouseLeave(object sender, MouseEventArgs e)
         {
+            mainwin.Canvas_MousePosition("0", "0");//状态栏显示工作区鼠标坐标
             this.Cursor = Cursors.Arrow;
             Children.Remove(AddComponentImage);
         }
@@ -99,7 +100,8 @@ namespace TPIS.TPISCanvas
 
         protected void ComponentMouseMove(object sender, MouseEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.Canvas_MousePosition(e.GetPosition(this).X.ToString(), ((int)(e.GetPosition(this).Y)).ToString());//状态栏显示工作区鼠标坐标
+            ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
             if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
             {
 

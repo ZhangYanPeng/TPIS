@@ -159,5 +159,12 @@ namespace TPIS
             tPISCommand.SeltAll_Excuted(sender, e);
         }
         #endregion
+
+        #region 改变工作区大小
+        public void WorkspaceSize_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.WorkspaceSize_Excuted(sender, e);
+        }
+        #endregion
     }
 }

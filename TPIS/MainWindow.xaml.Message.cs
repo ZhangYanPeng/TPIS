@@ -215,6 +215,7 @@ namespace TPIS
         }
         #endregion
 
+        #region
         /// <summary>
         /// binding 工具栏rate显示
         /// </summary>
@@ -253,7 +254,8 @@ namespace TPIS
                 return null;
             }
         }
-
+        #endregion
+        
         //显示隐藏属性窗口
         private void btn_PropertyStateChange(object sender, RoutedEventArgs e)
         {
@@ -302,7 +304,6 @@ namespace TPIS
             ftw.Owner = this;
             ftw.ShowDialog();
         }
-
     }
 
     //控制显示样式

@@ -55,8 +55,7 @@ namespace TPIS.TPISCanvas
                 if (this.moveType == MoveType.pos)
                 {
                     MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                    mainwin.GetCurrentProject().MoveSelection((int)x, (int)y);
-                    
+                    mainwin.GetCurrentProject().MoveChange((int)x, (int)y);
                 }
 
                 //改变大小
@@ -86,6 +85,7 @@ namespace TPIS.TPISCanvas
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+
             if (e.ClickCount == 2 && DataContext is TPISComponent)
             {
                 //双击时执行
@@ -94,6 +94,7 @@ namespace TPIS.TPISCanvas
             }
 
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            //mainwin.GetCurrentProject().ChangeWorkSpaceSize();
             if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
             {
                 return;
@@ -102,7 +103,7 @@ namespace TPIS.TPISCanvas
             pos = e.GetPosition(null);
 
             this.moveType = MoveType.pos;
-            if (this.DataContext is TPISComponent && ((TPISComponent)this.DataContext).IsSelected )
+            if (this.DataContext is TPISComponent && ((TPISComponent)this.DataContext).IsSelected)
             {
                 //已被选中，不改变选择范围
                 foreach (UIElement uie in this.Children)
@@ -131,11 +132,11 @@ namespace TPIS.TPISCanvas
                     }
                 }
             }
-            if ( !((ObjectBase)this.DataContext).isSelected || this.moveType != MoveType.pos)
+            if (!((ObjectBase)this.DataContext).isSelected || this.moveType != MoveType.pos)
             {
                 //之前未被选中，或改为改变大小操作，单独选中该元件
                 mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
-                if(this.DataContext is TPISComponent)
+                if (this.DataContext is TPISComponent)
                     BindingAnchorPoints();
             }
             if (this.moveType == MoveType.pos)
