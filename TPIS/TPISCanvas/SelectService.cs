@@ -22,7 +22,6 @@ namespace TPIS.TPISCanvas
             }
             mainwin.GetCurrentProject().Select();
             this.SelectStartPoint = new Point?(e.GetPosition(this));
-
             // if you click directly on the canvas all selected items are 'de-selected'
             Focus();
             e.Handled = true;

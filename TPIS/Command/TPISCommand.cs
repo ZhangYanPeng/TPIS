@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TPIS.Project;
+using TPIS.Views;
 
 namespace TPIS.Command
 {
@@ -15,7 +16,8 @@ namespace TPIS.Command
             System.Windows.Clipboard.Clear();
         }
 
-        private void OnSubMenuOpened(object sender, RoutedEventArgs e)
+        #region 下拉菜单显示
+        private void OnSubFileMenuOpened(object sender, RoutedEventArgs e)
         {
             MenuItem menuitem = sender as MenuItem;
             menuitem.IsSubmenuOpen = true;
@@ -27,6 +29,26 @@ namespace TPIS.Command
                 SaveAllOpe.IsEnabled = false;
                 CloseOpe.IsEnabled = false;
                 PrintOpe.IsEnabled = false;
+            }
+            else
+            {
+                SaveOpe.IsEnabled = true;
+                SaveAsOpe.IsEnabled = true;
+                SaveAllOpe.IsEnabled = true;
+                CloseOpe.IsEnabled = true;
+                PrintOpe.IsEnabled = true;
+            }
+        }
+
+        private void OnSubEditMenuOpened(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuitem = sender as MenuItem;
+            menuitem.IsSubmenuOpen = true;
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() == null)
+            {
+                UndoOpe.IsEnabled = false;
+                RedoOpe.IsEnabled = false;
                 CutOpe.IsEnabled = false;
                 CopyOpe.IsEnabled = false;
                 PasteOpe.IsEnabled = false;
@@ -37,14 +59,14 @@ namespace TPIS.Command
             }
             else
             {
-                SaveOpe.IsEnabled = true;
-                SaveAsOpe.IsEnabled = true;
+                UndoOpe.IsEnabled = true;
+                RedoOpe.IsEnabled = true;
                 SaveAllOpe.IsEnabled = true;
                 CloseOpe.IsEnabled = true;
                 PrintOpe.IsEnabled = true;
                 CutOpe.IsEnabled = true;
                 CopyOpe.IsEnabled = true;
-                PasteOpe.IsEnabled = true;
+                //PasteOpe.IsEnabled = true;
                 DelOpe.IsEnabled = true;
                 SeltAllOpe.IsEnabled = true;
                 SeltOpe.IsEnabled = true;
@@ -52,6 +74,25 @@ namespace TPIS.Command
             }
         }
 
+        private void OnSubViewMenuOpened(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuitem = sender as MenuItem;
+            menuitem.IsSubmenuOpen = true;
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() == null)
+            {
+                GridOpe.IsEnabled = false;
+                WorkspaceSizeOpe.IsEnabled = false;
+            }
+            else
+            {
+                GridOpe.IsEnabled = true;
+                WorkspaceSizeOpe.IsEnabled = true;
+            }
+        }
+        #endregion
+
+        #region 路由命令
         public static RoutedCommand NewProject = new RoutedCommand();
         public static RoutedCommand OpenProject = new RoutedCommand();
         public static RoutedCommand CloseProject = new RoutedCommand();
@@ -73,7 +114,8 @@ namespace TPIS.Command
         public static RoutedCommand Undo = new RoutedCommand();
         public static RoutedCommand Redo = new RoutedCommand();
         public static RoutedCommand SeltAll = new RoutedCommand();
-
+        public static RoutedCommand WorkspaceSize = new RoutedCommand();
+        #endregion
 
         #region 新建工程
 
@@ -177,7 +219,7 @@ namespace TPIS.Command
             {
                 mainwin.GetCurrentProject().CopySelection();
             }
-            //PasteOpe.IsEnabled = true;
+            //PasteOpe.IsEnabled = true;//先copy后paste
         }
 
         #endregion
@@ -325,7 +367,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveSelection(0, -1);
+                mainwin.GetCurrentProject().MoveChange(0, -1);
             }
         }
 
@@ -334,7 +376,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveSelection(0, 1);
+                mainwin.GetCurrentProject().MoveChange(0, 1);
             }
         }
 
@@ -343,7 +385,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveSelection(-1, 0);
+                mainwin.GetCurrentProject().MoveChange(-1, 0);
             }
         }
 
@@ -352,7 +394,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveSelection(1, 0);
+                mainwin.GetCurrentProject().MoveChange(1, 0);
             }
         }
         #endregion
@@ -386,6 +428,21 @@ namespace TPIS.Command
                 mainwin.GetCurrentProject().Redo();
             }
         }
+        #endregion
+
+        #region 改变工作区大小
+
+        public void WorkspaceSize_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                Window workspaceSize = new WorkspaceSize();
+                workspaceSize.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                workspaceSize.ShowDialog();
+            }
+        }
+
         #endregion
     }
 }

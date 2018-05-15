@@ -20,10 +20,11 @@
             <CommandBinding Command="s:TPISCommand.DrawGrid" Executed="DrawGrid_Excuted"/>
             <CommandBinding Command="s:TPISCommand.Cut" Executed="Cut_Excuted"/>
             <CommandBinding Command="s:TPISCommand.SeltAll" Executed="SeltAll_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.WorkspaceSize" Executed="WorkspaceSize_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
-        <MenuItem Header="文件管理(M)" SubmenuOpened="OnSubMenuOpened">
+        <MenuItem Header="文件管理(M)" SubmenuOpened="OnSubFileMenuOpened">
             <MenuItem Header="新建工程(N)" InputGestureText="Ctrl+N" Command="{x:Static s:TPISCommand.NewProject}">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_new.png"/>
@@ -72,13 +73,13 @@
         </MenuItem>
         
         <!--编辑-->
-        <MenuItem Header="编辑(E)" >
-            <MenuItem Header="撤销(U)" InputGestureText="Ctrl+Z" >
+        <MenuItem Header="编辑(E)" SubmenuOpened="OnSubEditMenuOpened">
+            <MenuItem Header="撤销(U)" Name="UndoOpe" InputGestureText="Ctrl+Z" >
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_undo.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="重做(R)" InputGestureText="Ctrl+Y" >
+            <MenuItem Header="重做(R)" Name="RedoOpe" InputGestureText="Ctrl+Y" >
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/icon/icon_redo.png" />
                 </MenuItem.Icon>
@@ -125,14 +126,16 @@
         </MenuItem>
         
         <!--视图-->
-        <MenuItem Header="视图(V)" >
-            <MenuItem Header="网格线" InputGestureText="F1" Command="{x:Static s:TPISCommand.DrawGrid}"/>
+        <MenuItem Header="视图(V)" SubmenuOpened="OnSubViewMenuOpened">
+            <MenuItem Header="网格线" Name="GridOpe" InputGestureText="F1(Ctrl+MouseWheel)" Command="{x:Static s:TPISCommand.DrawGrid}"/>
             <MenuItem Header="工具箱(X)" />
             <Separator />
         </MenuItem>
         
         <!--设置-->
         <MenuItem Header="设置(S)">
+            <MenuItem Header="工作区" Name="WorkspaceSizeOpe" InputGestureText="F2(Shift+MouseWheel)" Command="{x:Static s:TPISCommand.WorkspaceSize}"/>
+            <Separator />
         </MenuItem>
 
         <!--帮助-->

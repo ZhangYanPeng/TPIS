@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using TPIS.Project;
+
+namespace TPIS.Views
+{
+    /// <summary>
+    /// WorkspaceSize.xaml 的交互逻辑
+    /// </summary>
+    public partial class WorkspaceSize : Window
+    {
+        public WorkspaceSize()
+        {
+            InitializeComponent();
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            string[] strArray = mainwin.GetCurrentProject().Name.Split('.');
+            string projectName = strArray[0];
+            proj_name.Text = projectName;
+            canvas_width.Text = mainwin.GetCurrentProject().Canvas.Width.ToString();
+            canvas_height.Text = mainwin.GetCurrentProject().Canvas.Height.ToString();
+        }
+
+        public void Reset(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            ProjectItem item = mainwin.GetCurrentProject();
+            try
+            {
+                if (int.Parse(canvas_width.Text) <= 0 || int.Parse(canvas_height.Text) <= 0)
+                {
+                    MessageBox.Show("画布像素只能为正整数！", "提示", MessageBoxButton.OKCancel);
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("画布像素只能为正整数！", "提示", MessageBoxButton.OKCancel);
+                return;
+            }
+            if (item.Canvas.Width > 10 && item.Canvas.Height > 10)//画布最小10×10
+            {
+                item.Canvas.Width = item.WorkSpaceSize_RD().X < int.Parse(canvas_width.Text) ? int.Parse(canvas_width.Text) : (int)item.WorkSpaceSize_RD().X;
+                item.Canvas.Height = item.WorkSpaceSize_RD().Y < int.Parse(canvas_height.Text) ? int.Parse(canvas_height.Text) : (int)item.WorkSpaceSize_RD().Y;
+            }
+            mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
+            this.Close();
+        }
+
+        public void Cancel(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+    }
+}

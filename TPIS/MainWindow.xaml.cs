@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using MouseWheelEventArgs = System.Windows.Forms;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,6 +19,8 @@ using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Project;
 using TPIS.TPISCanvas;
+using TPIS.Views.Modules;
+using System.Windows.Controls.Primitives;
 // TPIS.TPISCanvas;
 
 
@@ -90,6 +93,7 @@ namespace TPIS
             ProjectCanvas pCanvas = new ProjectCanvas(width, height);
             //MessageBox.Show("rway3");
             ProjectItem project = new ProjectItem(pName, pCanvas, ProjectNum, System.IO.Path.GetFullPath(directoryPath));
+            //project.CurWorkspaceSizeShow();//状态栏显示工作区大小
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
@@ -102,7 +106,7 @@ namespace TPIS
 
 
         /// <summary>
-        /// 获取当前工程
+        /// 获取当前工程(工程切换)
         /// </summary>
         public void ProjectTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -115,6 +119,11 @@ namespace TPIS
                 {
                     CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
                     UpdateRate();
+                    MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+                    ProjectItem item = mainwin.GetCurrentProject();
+                    mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), mainwin.GetCurrentProject().Canvas.Height.ToString());//状态栏显示工作区大小
+                    mainwin.CurProjectShow(item.Name.Split('.')[0]);//状态栏显示当前工程
+                    mainwin.CurProjectAddressShow(item.Path, item.Path.Split('\\')[item.Path.Split('\\').Length - 2]);//状态栏显示当前工程地址
                 }
                 catch
                 {
@@ -162,6 +171,12 @@ namespace TPIS
                     ProjectTab_SelectionChanged();//解决关闭左侧工程，出现当前工程索引溢出；以及画布背景透明
                     projectTab.ItemsSource = ProjectList.projects;
                     projectTab.Items.Refresh();
+                    if (ProjectList.projects.Count == 0)
+                    {//若无工程，状态栏显示空
+                        this.CurProjectShow("Null");//工程名为空
+                        this.CurWorkspaceSizeShow("0", "0");//工作区大小为空
+                        this.CurProjectAddressShow("Null", "Null");//工程地址为空
+                    }
                     return;
                 }
             }
