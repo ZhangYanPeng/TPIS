@@ -126,7 +126,7 @@ namespace TPIS.Model.Common
         }
 
         //初始化 Project 的属性
-        public static ObservableCollection<PropertyGroup> InitProject()
+        public static ObservableCollection<PropertyGroup> InitProjectProperty()
         {
             Net BackEnd = new Net();
             ObservableCollection<PropertyGroup> PropertyGroups = new ObservableCollection<PropertyGroup>();
@@ -156,5 +156,7 @@ namespace TPIS.Model.Common
             }
             return PropertyGroups;
         }
+
+        
     }
 }

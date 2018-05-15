@@ -94,6 +94,8 @@ namespace TPIS.Project
         }
         #endregion
 
+        public ObservableCollection<string> logs { get; set; }
+
         public String Name { get; set; }
         public long Num { get; set; }
         public ClipBoard clipBoard { get; set; }
@@ -171,6 +173,7 @@ namespace TPIS.Project
 
         public ObservableCollection<ObjectBase> Objects { get; set; }
         public ObservableCollection<PropertyGroup> PropertyGroup { get; set; }
+        public ObservableCollection<PropertyGroup> ResultGroup { get; set; }
 
         public ProjectCanvas Canvas { get; set; }
 
@@ -188,7 +191,8 @@ namespace TPIS.Project
             this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
             this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
             Path = p;
-            PropertyGroup = CommonTypeService.InitProject();
+            PropertyGroup = CommonTypeService.InitProjectProperty();
+            ResultGroup = new ObservableCollection<PropertyGroup>();
             SaveProject();
             return;
         }

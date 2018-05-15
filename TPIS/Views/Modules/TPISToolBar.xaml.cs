@@ -200,10 +200,13 @@ namespace TPIS.Views.Modules
                         if (mainwin.ProjectList.projects[i].Num == result.Num)
                         {
                             mainwin.ProjectList.projects[i].Objects = result.Objects;
+                            mainwin.ProjectList.projects[i].logs = result.logs;
                             mainwin.ProjectList.projects[i].CalculateState = false;
+                            mainwin.ProjectList.AddLog(result.logs);
                         }
                     }
                 });
+                mainwin.LogView.ScrollToBottom();
             }
             catch
             {
