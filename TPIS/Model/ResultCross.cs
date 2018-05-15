@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using TPIS.Project;
 
@@ -12,6 +14,7 @@ namespace TPIS.Model
         public static double HEIGHT = 20;
     }
 
+    [Serializable]
     public class ResultCross : ObjectBase, INotifyPropertyChanged, ISerializable
     {
         #region 属性更新
@@ -42,19 +45,6 @@ namespace TPIS.Model
             this.Position.V_height = 30;
         }
 
-        #region 序列化与反序列化
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("no", No);
-            info.AddValue("position", Position);
-        }
-
-        public ResultCross(SerializationInfo info, StreamingContext context)
-        {
-            this.No = info.GetInt32("no");
-            this.Position = (Position)info.GetValue("position", typeof(Object));
-        }
-
         internal void PosChange(double? x, double? y)
         {
             if (x.HasValue)
@@ -66,6 +56,30 @@ namespace TPIS.Model
         internal void SetRate(double rate)
         {
             Position.Rate = rate;
+        }
+
+        public override object Clone()
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(stream, this);
+            stream.Position = 0;
+            Object obj = bf.Deserialize(stream);
+            stream.Close();
+            return obj;
+        }
+
+        #region 序列化与反序列化
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("no", No);
+            info.AddValue("position", Position);
+        }
+
+        public ResultCross(SerializationInfo info, StreamingContext context)
+        {
+            this.No = info.GetInt32("no");
+            this.Position = (Position)info.GetValue("position", typeof(Object));
         }
         #endregion
     }

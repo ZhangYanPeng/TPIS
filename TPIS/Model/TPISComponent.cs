@@ -287,28 +287,11 @@ namespace TPIS.Model
                 //修正偏移
                 p.P_x = tx - 5;
                 p.P_y = ty - 5;
-                //改变控件与Port连接线的大小
-                //if (p.link != null && !p.link.IsSelected)
-                //{
-                //    //MessageBox.Show(new Point(p.x, p.y).ToString());
-                //    //MessageBox.Show(new Point(p.link.points[0].X, p.link.points[0].Y).ToString());
-                //    if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
-                //    {
-                //        //p.link.PointTo(0, new Point(p.link.points[0].X + p.P_x, p.link.points[0].Y + p.P_y));
-                //        p.link.PointTo(0, new Point(Position.X+ tx, Position.Y + ty));
-                //    }
-                //    else
-                //    {
-                //        //p.link.PointTo(p.link.Points.Count - 1, new Point(p.link.points[p.link.Points.Count - 1].X + p.P_x, p.link.points[p.link.Points.Count - 1].Y + p.P_y));
-                //        p.link.PointTo(p.link.Points.Count - 1, new Point(Position.X + tx, Position.Y + ty));
-                //    }
-                //}
             }
         }
 
-        public object Clone()
+        public override object Clone()
         {
-
             MemoryStream stream = new MemoryStream();
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(stream, this);

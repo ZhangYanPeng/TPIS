@@ -74,9 +74,7 @@ namespace TPIS.Model
             Units = (string[])info.GetValue("units", typeof(Object));
             Type = (P_Type)info.GetValue("type", typeof(Object));
             Tips = info.GetString("tips");
-            UnitNum = info.GetInt32("unitNum");
             IsStrOrNum = info.GetBoolean("isStrOrNum");
-            IsKnown = info.GetBoolean("isKnown");
             bool vb = info.GetBoolean("visible");
             if (vb)
                 Visibility = Visibility.Visible;
@@ -93,6 +91,8 @@ namespace TPIS.Model
             {
                 showValue = ValueConvert(valNum, Units[0], Units[0]);
             }
+            IsKnown = info.GetBoolean("isKnown");
+            UnitNum = info.GetInt32("unitNum");
             Modes = (ObservableCollection<SelMode>)info.GetValue("modes", typeof(Object));
         }
         #endregion

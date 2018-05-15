@@ -319,10 +319,10 @@
     <Resource Include="Images\element\WaterValve.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\element\Line.png" />
+    <Resource Include="Images\icon\activeIcon\icon_line.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\element\StraightLine.png" />
+    <Resource Include="Images\icon\activeIcon\icon_straightLine.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_activeRotate.png" />

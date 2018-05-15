@@ -107,7 +107,7 @@
 
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
-        <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISToolBar}"/>
+        <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISToolBar}" x:Name="ToolBar"/>
         <ContentControl DockPanel.Dock="Left">
             <DockPanel >
                 <!--输入输出模块-->
@@ -122,28 +122,6 @@
                 </Border>
 
                 <!--元件模块-->
-                <Border BorderThickness="1" BorderBrush="Gray" DockPanel.Dock="Top">
-                    <GroupBox Header="连接线" Margin="3,0,0,0">
-                        <StackPanel Margin="3" Orientation="Horizontal">
-                            <ToggleButton ToolTip="直接连接线" Style="{DynamicResource ToggleButtonStyle}"  HorizontalAlignment="Left" Checked="TPISLineTypeSelected" Unchecked="TPISLineTypeUnSelected" Name="AddLine">
-                                <UserControl>
-                                    <DockPanel>
-                                        <TextBlock Text="直接连接" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
-                                        <Image Source="Images/element/Line.png" MaxHeight="60" MaxWidth="60" />
-                                    </DockPanel>
-                                </UserControl>
-                            </ToggleButton>
-                            <ToggleButton ToolTip="直角连接线" Style="{DynamicResource ToggleButtonStyle}"  HorizontalAlignment="Left" Checked="TPISLineTypeSelected" Unchecked="TPISLineTypeUnSelected" Name="AddStraightLine">
-                                <UserControl>
-                                    <DockPanel>
-                                        <TextBlock Text="直角连接" Height="20" DockPanel.Dock="Bottom" HorizontalAlignment="Center"></TextBlock>
-                                        <Image Source="Images/element/StraightLine.png" MaxHeight="60" MaxWidth="60" />
-                                    </DockPanel>
-                                </UserControl>
-                            </ToggleButton>
-                        </StackPanel>
-                    </GroupBox>
-                </Border>
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <GroupBox Header="元件" Margin="3,0,0,0">
                         <ScrollViewer Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
