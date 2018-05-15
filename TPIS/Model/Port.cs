@@ -36,7 +36,12 @@ namespace TPIS.Model
             info.AddValue("crossNo", CrossNo);
             info.AddValue("showResult", ShowResult);
             if (link == null)
-                info.AddValue("linkNo", 1);
+            {
+                if(LinkNo<=0)
+                    info.AddValue("linkNo", LinkNo);
+                else
+                    info.AddValue("linkNo", 1);
+            }
             else
                 info.AddValue("linkNo", link.No);
         }

@@ -29,6 +29,19 @@ namespace TPIS
         {
         }
 
+        internal void UnselectLine()
+        {
+            ToolBar toolBar = ToolBar.Content as ToolBar;
+            for (int i = 0; i < toolBar.Items.Count; i++)
+            {
+                if (toolBar.Items.GetItemAt(i) is ToggleButton)
+                {
+                    ToggleButton toggleButton = toolBar.Items.GetItemAt(i) as ToggleButton;
+                    toggleButton.IsChecked = false;
+                }
+            }
+        }
+
         //左侧工具栏切换
         #region
 
@@ -36,8 +49,7 @@ namespace TPIS
         {
             GetCurrentProject().Canvas.Operation = OperationType.SELECT;
             GetCurrentProject().Canvas.OperationParam.Clear();
-            AddStraightLine.IsChecked = false;
-            AddLine.IsChecked = false;
+            UnselectLine();
             GetCurrentProject().Select();
             foreach (BaseType bt in TypeList)
             {
@@ -58,19 +70,16 @@ namespace TPIS
         private void TPISComponentTypeSelected(object sender, RoutedEventArgs e)
         {
             TPISCompentView currEle = sender as TPISCompentView;
-            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            if (mainwin.GetCurrentProject() != null)
+            if (GetCurrentProject() != null)
             {
                 //工程不空可选择
                 GetCurrentProject().Select();
                 try
                 {
-                    this.GetCurrentProject().Canvas.Operation = OperationType.ADD_COMPONENT;
-                    this.GetCurrentProject().Canvas.OperationParam.Clear();
-                    this.GetCurrentProject().Canvas.OperationParam.Add("type", (int)currEle.Tag);
-
-                    this.AddLine.IsChecked = false;
-                    this.AddStraightLine.IsChecked = false;
+                    GetCurrentProject().Canvas.Operation = OperationType.ADD_COMPONENT;
+                    GetCurrentProject().Canvas.OperationParam.Clear();
+                    GetCurrentProject().Canvas.OperationParam.Add("type", (int)currEle.Tag);
+                    UnselectLine();
                     //取消其他选中
                     foreach (BaseType bt in this.TypeList)
                     {
@@ -141,27 +150,23 @@ namespace TPIS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TPISLineTypeSelected(object sender, RoutedEventArgs e)
+        public void TPISLineTypeSelected(object sender, RoutedEventArgs e)
         {
             ToggleButton currEle = sender as ToggleButton;
-            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            if (mainwin.GetCurrentProject() != null)
+            if (GetCurrentProject() != null)
             {
                 GetCurrentProject().Select();
                 try
                 {
-                    this.GetCurrentProject().Canvas.Operation = OperationType.ADD_LINE;
-                    this.GetCurrentProject().Canvas.OperationParam.Clear();
+                    GetCurrentProject().Canvas.Operation = OperationType.ADD_LINE;
+                    GetCurrentProject().Canvas.OperationParam.Clear();
                     if (currEle.Name == "AddLine")
                     {
-                        this.GetCurrentProject().Canvas.OperationParam.Add("type", 1);
-                        this.AddStraightLine.IsChecked = false;
+                        GetCurrentProject().Canvas.OperationParam.Add("type", 1);
                     }
                     else
                     {
-                        this.GetCurrentProject().Canvas.OperationParam.Add("type", 0);
-
-                        this.AddLine.IsChecked = false;
+                        GetCurrentProject().Canvas.OperationParam.Add("type", 0);
                     }
                     foreach (BaseType bt in this.TypeList)
                     {
@@ -184,35 +189,7 @@ namespace TPIS
                 currEle.Focusable = false;
             }
         }
-
-        /// <summary>
-        /// 取消画线
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TPISLineTypeUnSelected(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            if (mainwin.GetCurrentProject() != null)
-            {
-                ToggleButton currEle = sender as ToggleButton;
-                GetCurrentProject().Select();
-                try
-                {
-                    if (this.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE && this.AddStraightLine.IsChecked == false && this.AddLine.IsChecked == false)
-                    {
-                        this.GetCurrentProject().Canvas.Operation = OperationType.SELECT;
-                        this.GetCurrentProject().Canvas.OperationParam.Clear();
-                    }
-                }
-                catch
-                {
-                    currEle.IsChecked = false;
-                    currEle.Focusable = false;
-                    return;
-                }
-            }
-        }
+        
         #endregion
 
         #region

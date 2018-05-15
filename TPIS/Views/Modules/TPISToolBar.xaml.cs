@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using TPIS.Model;
 using TPIS.Model.Common;
 using TPIS.Project;
@@ -137,6 +138,44 @@ namespace TPIS.Views.Modules
             {
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 mainwin.ToSelectMode();
+                AddStraightLine.IsChecked = false;
+                AddLine.IsChecked = false;
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 画线
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TPISLineTypeSelected(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ToggleButton currEle = sender as ToggleButton;
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                if (mainwin.GetCurrentProject() != null)
+                {
+                    mainwin.TPISLineTypeSelected(sender, e);
+                    if (currEle.Name == "AddLine")
+                    {
+                        AddStraightLine.IsChecked = false;
+                        AddLine.IsChecked = true;
+                    }
+                    else
+                    {
+                        AddLine.IsChecked = false;
+                        AddStraightLine.IsChecked = true;
+                    }
+                }
+                else
+                {
+                    currEle.IsChecked = false;
+                }
             }
             catch
             {
