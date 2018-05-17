@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Project;
+using TPIS.TPISCanvas;
 
 namespace TPIS.Model
 {
@@ -121,6 +122,8 @@ namespace TPIS.Model
         }
 
         public ObservableCollection<Point> points { get; set; }
+
+        public ObservableCollection<LineAnchorPoint>  lAnchorPoints { get; set; }
 
         public List<Boolean> VorH { get; set; } //true 横 false 纵
 
@@ -274,6 +277,17 @@ namespace TPIS.Model
             }
             OnPropertyChanged("Points");
         }
+
+        public void ReSetRate(double lrate)
+        {
+            for (int i = 0; i < Points.Count; i++)
+            {
+                points[i] = new Point(points[i].X / lrate, points[i].Y / lrate);
+            }
+            OnPropertyChanged("Points");
+        }
+
+
 
         //整体平移
         internal void PosChange(double d_vx, double d_vy)

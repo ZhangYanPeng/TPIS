@@ -53,7 +53,7 @@ namespace TPIS.TPISCanvas
 
     public partial class LineAnchorPoint : UserControl
     {
-        long lineID;
+        public long lineID;
         int LineAnchorPointID;
         bool IsDrag { get; set; }
         public LineAnchorPoint(long lID, int apID)
@@ -105,9 +105,8 @@ namespace TPIS.TPISCanvas
                 if (!IsDrag)
                     return;
                 Point endPoint = e.GetPosition((ProjectDesignerCanvas)this.Parent);
-
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-
+                
                 foreach (ObjectBase obj in mainwin.GetCurrentProject().Objects)
                 {
                     if (obj.GetType() == typeof(TPISLine))
@@ -116,7 +115,8 @@ namespace TPIS.TPISCanvas
                         if (this.lineID == line.No)//确定线
                         {
                             //解决移动线条时出现的问题
-                            line.PointTo(LineAnchorPointID + 1, endPoint);
+                            mainwin.GetCurrentProject().LineAnchorPointsMoveChange(line, endPoint, LineAnchorPointID);
+                            ((ProjectDesignerCanvas)this.Parent).ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
                         }
                     }
                 }
@@ -143,6 +143,15 @@ namespace TPIS.TPISCanvas
         public void InitLineAnchorPoints(long lID, TPISLine line)
         {
             laps = new List<LineAnchorPoint>();
+            foreach (Object obj in Children)
+            {
+                if (obj is LineAnchorPoint)
+                {
+                    LineAnchorPoint ap = obj as LineAnchorPoint;
+                    if (ap.lineID == lID)
+                        return;
+                }
+            }
             for (int i = 0; i < line.Points.Count - 2; i++)
             {
                 laps.Add(new LineAnchorPoint(lID, i));
@@ -151,6 +160,18 @@ namespace TPIS.TPISCanvas
             RePosLineAnchorPoints(line);
         }
 
+        public void ReInitLineAnchorPoints()
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            for (int i = 0; i < mainwin.GetCurrentProject().Objects.Count; i++)
+            {
+                ObjectBase obj = mainwin.GetCurrentProject().Objects[i];
+                if (obj is TPISLine)
+                {
+                    InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
+                }
+            }
+        }
         public void RePosLineAnchorPoints(TPISLine line)
         {//重置锚点
             int i = 0;

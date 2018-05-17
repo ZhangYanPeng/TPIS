@@ -127,14 +127,14 @@
         
         <!--视图-->
         <MenuItem Header="视图(V)" SubmenuOpened="OnSubViewMenuOpened">
-            <MenuItem Header="网格线" Name="GridOpe" InputGestureText="F1(Ctrl+MouseWheel)" Command="{x:Static s:TPISCommand.DrawGrid}"/>
+            <MenuItem Header="网格线" Name="GridOpe" InputGestureText="F1" Command="{x:Static s:TPISCommand.DrawGrid}"/>
             <MenuItem Header="工具箱(X)" />
             <Separator />
         </MenuItem>
         
         <!--设置-->
         <MenuItem Header="设置(S)">
-            <MenuItem Header="工作区" Name="WorkspaceSizeOpe" InputGestureText="F2(Shift+MouseWheel)" Command="{x:Static s:TPISCommand.WorkspaceSize}"/>
+            <MenuItem Header="工作区" Name="WorkspaceSizeOpe" InputGestureText="F2(Ctrl+MouseWheel)" Command="{x:Static s:TPISCommand.WorkspaceSize}"/>
             <Separator />
         </MenuItem>
 

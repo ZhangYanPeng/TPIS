@@ -79,8 +79,8 @@ namespace TPIS.TPISCanvas
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             ProjectItem item = mainwin.GetCurrentProject();
-            //Shift+滚轮横纵等大小改变工作区大小
-            if (Key.Control.ModifierKeys == Key.Keys.Shift)
+            //Ctrl+滚轮横纵等大小改变工作区大小
+            if (Key.Control.ModifierKeys == Key.Keys.Control)
             {
                 ScrollViewer scrollViewer = new ScrollViewer();
                 scrollViewer = (ScrollViewer)this.Parent;
@@ -97,9 +97,9 @@ namespace TPIS.TPISCanvas
                 {
                     if (item.Canvas.Width > 10 && item.Canvas.Height > 10)//画布最小10×10
                     {
-                        if (item.WorkSpaceSize_RD().X < item.Canvas.Width - 10)
+                        if (item.WorkSpaceSize_RD().X <= item.Canvas.Width - 10)
                             item.Canvas.Width = item.Canvas.Width - 10;
-                        if (item.WorkSpaceSize_RD().Y < item.Canvas.Height - 10)
+                        if (item.WorkSpaceSize_RD().Y <= item.Canvas.Height - 10)
                             item.Canvas.Height = item.Canvas.Height - 10;
                     }
                 }
@@ -108,18 +108,18 @@ namespace TPIS.TPISCanvas
                 scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
             //Ctrl+滚轮实现工作区缩放(视图上的缩放，真实大小未变)
-            if (Key.Control.ModifierKeys == Key.Keys.Control)
-            {
-                if (e.Delta > 0)
-                {
-                    item.SupRate();
-                }
-                else
-                {
-                    item.SubRate();
-                }
-                mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
-            }
+            //if (Key.Control.ModifierKeys == Key.Keys.Control)
+            //{
+            //    if (e.Delta > 0)
+            //    {
+            //        item.SupRate();
+            //    }
+            //    else
+            //    {
+            //        item.SubRate();
+            //    }
+            //    mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
+            //}
         }
         #endregion
 
@@ -132,12 +132,12 @@ namespace TPIS.TPISCanvas
             scrollViewer = (ScrollViewer)this.Parent;
             Point p = new Point();
             p = item.WorkSpaceSize_RD();
-            if (p.X + 10 > item.Canvas.Width)
+            if (p.X >= item.Canvas.Width)
             {
                 item.Canvas.Width = (int)p.X + 10;
                 scrollViewer.ScrollToRightEnd();
             }
-            if (p.Y + 10 > item.Canvas.Height)
+            if (p.Y >= item.Canvas.Height)
             {
                 item.Canvas.Height = (int)p.Y + 10;
                 scrollViewer.ScrollToBottom();
