@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,63 @@ namespace TPIS.Model.Common
             //传入参数
             Init(project);
             BackEnd.Solve();
+            GetGlobalResult(project);
             return GetResult(project);
+        }
+
+        //初始化 Project 的属性
+        public static void GetGlobalResult(ProjectItem project)
+        {
+            ObservableCollection<PropertyGroup> PropertyGroups = new ObservableCollection<PropertyGroup>();
+            foreach (string key in BackEnd.DPResult.Keys)
+            {
+                TPISNet.Property property = BackEnd.DPResult[key];
+                bool check = false;
+                foreach (PropertyGroup pg in PropertyGroups)
+                {
+                    if (pg.Flag == property.GroupFlag)
+                    {
+                        check = true;
+                        Property p = CommonTypeService.InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
+                        p.SelectProperty(SelMode.None);
+                        pg.Properties.Add(p);
+                        break;
+                    }
+                }
+                if (!check)
+                {
+                    Property p = CommonTypeService.InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
+                    PropertyGroup baseGroup = new PropertyGroup() { Flag = property.GroupFlag };
+                    p.SelectProperty(SelMode.None);
+                    //属性传入值
+                    if (p.Type == P_Type.ToSetAsDouble)
+                    {
+                        if (BackEnd.DPResult[p.DicName].Data_string != "")
+                            p.IsKnown = true;
+                        p.valNum = BackEnd.DPResult[p.DicName].Data;
+                        p.UnitNum = 0;
+                        p.ShowValue = BackEnd.DPResult[p.DicName].Data_string;
+                    }
+                    else if (p.Type == P_Type.ToSetAsString)
+                        p.valStr = BackEnd.DPResult[p.DicName].Data_string;
+                    else if (p.Type == P_Type.ToSelect)
+                    {
+                        string unit = BackEnd.DPResult[p.DicName].SelectList[BackEnd.DPResult[p.DicName].SIndex];
+                        for (int i = 0; i < (p.Units).Count<string>(); i++)
+                        {
+                            if (p.Units[i] == unit)
+                                p.UnitNum = i;
+                        }
+                    }
+                    else if (p.Type == P_Type.ToCal)
+                    {
+                        p.valNum = BackEnd.DPResult[p.DicName].Data;
+                        p.ShowValue = BackEnd.DPResult[p.DicName].Data_string;
+                    }
+                    baseGroup.Properties.Add(p);
+                    PropertyGroups.Add(baseGroup);
+                }
+            }
         }
 
         private static ProjectItem GetResult(ProjectItem project)
@@ -40,6 +97,7 @@ namespace TPIS.Model.Common
                                     p.IsKnown = true;
                                 p.valNum = element.DPResult[p.DicName].Data;
                                 p.UnitNum = 0;
+                                p.ShowValue = element.DPResult[p.DicName].Data_string;
                             }
                             else if (p.Type == P_Type.ToSetAsString)
                                 p.valStr = element.DPResult[p.DicName].Data_string;
@@ -53,7 +111,10 @@ namespace TPIS.Model.Common
                                 }
                             }
                             else if (p.Type == P_Type.ToCal)
+                            {
                                 p.valNum = element.DPResult[p.DicName].Data;
+                                p.ShowValue = element.DPResult[p.DicName].Data_string;
+                            }
                         }
                     }
                     foreach(Port p in component.Ports)
@@ -72,6 +133,7 @@ namespace TPIS.Model.Common
                                             pr.IsKnown = true;
                                         pr.valNum = n.DProperty[pr.DicName].Data;
                                         pr.UnitNum = 0;
+                                        pr.ShowValue = n.DProperty[pr.DicName].Data_string;
                                     }
                                     else if (pr.Type == P_Type.ToSetAsString)
                                         pr.valStr = n.DProperty[pr.DicName].Data_string;
@@ -85,13 +147,17 @@ namespace TPIS.Model.Common
                                         }
                                     }
                                     else if (pr.Type == P_Type.ToCal)
+                                    {
                                         pr.valNum = n.DProperty[pr.DicName].Data;
+                                        pr.ShowValue = n.DProperty[pr.DicName].Data_string;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            project.logs = BackEnd.warnning;
             return project;
         }
 

@@ -112,10 +112,10 @@
             <DockPanel >
                 <!--输入输出模块-->
                 <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Gray">
-                    <GroupBox Header="I/O"  Margin="3,0,0,0">
-                        <ScrollViewer  Height="200" Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
+                    <GroupBox Header="日志"  Margin="3,0,0,0">
+                        <ScrollViewer Name="LogView" Height="200" Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
                             <DockPanel Margin="3">
-                                <TextBox TextWrapping="Wrap" AcceptsReturn="True"/>
+                                <TextBox IsEnabled="False" Name="Logs" TextWrapping="Wrap" AcceptsReturn="True"/>
                             </DockPanel>
                         </ScrollViewer>
                     </GroupBox>
@@ -182,6 +182,7 @@
                     </Button>
                 </DockPanel>
 
+                <!--结果窗-->
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="3" >
@@ -247,7 +248,7 @@
                                                                     <GridViewColumn.CellTemplate>
                                                                         <DataTemplate>
                                                                             <DockPanel Width="185">
-                                                                                <TextBox IsEnabled="True" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                                <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
                                                                                 <ComboBox IsEnabled="False" Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
                                                                                     <ComboBox.Visibility>
                                                                                         <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
@@ -278,6 +279,7 @@
                     </ScrollViewer>
                 </Border>
 
+                <!--属性窗-->
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <ListBox Name="PropertyWindow">
                         <ItemsControl.ItemTemplate>
