@@ -23,6 +23,7 @@ namespace TPIS.TPISCanvas
         /// <param name="e"></param>
         public void CanvasMouseEnter(object sender, MouseEventArgs e)
         {
+            ReInitLineAnchorPoints();
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             try
             {
@@ -100,7 +101,7 @@ namespace TPIS.TPISCanvas
 
         protected void ComponentMouseMove(object sender, MouseEventArgs e)
         {
-            mainwin.Canvas_MousePosition(e.GetPosition(this).X.ToString(), ((int)(e.GetPosition(this).Y)).ToString());//状态栏显示工作区鼠标坐标
+            mainwin.Canvas_MousePosition(((int)((e.GetPosition(this).X) / mainwin.GetCurrentProject().Rate)).ToString(), ((int)((e.GetPosition(this).Y) / mainwin.GetCurrentProject().Rate)).ToString());//状态栏显示工作区鼠标坐标
             ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
             if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
             {

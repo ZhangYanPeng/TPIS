@@ -24,8 +24,8 @@ namespace TPIS.TPISCanvas
         public void LineSelect(object sender, MouseButtonEventArgs e)
         {
             Polyline polyLine = sender as Polyline;
-            //TPISLine line = new TPISLine();
-            //line = (TPISLine)polyLine.DataContext;
+            TPISLine line = new TPISLine();
+            line = (TPISLine)polyLine.DataContext;
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.GetCurrentProject().Select((ObjectBase)polyLine.DataContext);
             e.Handled = true;
@@ -109,11 +109,6 @@ namespace TPIS.TPISCanvas
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             Ellipse uIElement = new Ellipse();
             uIElement = (Ellipse)sender;
-            //if (mainwin.GetCurrentProject().Canvas.LinkStartPoint == true)
-            //{
-            //    mainwin.GetCurrentProject().Canvas.CanLink = false;
-            //    mainwin.GetCurrentProject().Canvas.CanLink = true;
-            //}
         }
 
         public void Port_MouseRightButtonDown(object sender, MouseEventArgs e)

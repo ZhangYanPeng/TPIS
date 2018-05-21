@@ -91,9 +91,7 @@ namespace TPIS
                 return false;
             }
             ProjectCanvas pCanvas = new ProjectCanvas(width, height);
-            //MessageBox.Show("rway3");
             ProjectItem project = new ProjectItem(pName, pCanvas, ProjectNum, System.IO.Path.GetFullPath(directoryPath));
-            //project.CurWorkspaceSizeShow();//状态栏显示工作区大小
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();

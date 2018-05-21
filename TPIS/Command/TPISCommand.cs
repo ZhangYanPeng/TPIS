@@ -154,15 +154,14 @@ namespace TPIS.Command
                 {
                     MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
                     //检查是否已经打开
-                    //foreach (ProjectItem project in mainwin.ProjectList.projects)
-                    //{
-                    //    if (path == Path.GetFullPath(project.Path + "\\" + project.Name))
-                    //    {
-                    //        MessageBox.Show("工程已经打开！");
-                    //        return;
-                    //    }
-                    //}
-
+                    foreach (ProjectItem project in mainwin.ProjectList.projects)
+                    {
+                        if (path == Path.GetFullPath(project.Path + "\\" + project.Name))
+                        {
+                            //MessageBox.Show("工程已经打开！");
+                            return;
+                        }
+                    }
                     FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     byte[] data = new byte[fileStream.Length];
                     fileStream.Read(data, 0, data.Length);
@@ -171,6 +170,7 @@ namespace TPIS.Command
 
                     ((ProjectItem)obj).Num = mainwin.ProjectNum;
                     ((ProjectItem)obj).RebuildLink();
+                    //MessageBox.Show(((ProjectItem)obj).Rate.ToString());
                     {//解决在无新建工程时打开已有项目，出现的透明背景
                         ((ProjectItem)obj).GridThickness = 0;//赋初值0，使初始画布为隐藏网格
                         ((ProjectItem)obj).GridUintLength = 20;//赋初值20，使初始网格单元为20×20
@@ -180,6 +180,15 @@ namespace TPIS.Command
                     mainwin.projectTab.Items.Refresh();
                     mainwin.projectTab.SelectedItem = obj;
                     mainwin.ProjectNum++;
+
+                    {//隐藏属性窗、结果窗
+                        mainwin.PropertyStateChange.Tag = "hide";
+                        mainwin.PropertyWindow.Visibility = Visibility.Collapsed;
+
+                        mainwin.ResultStateChange.Tag = "hide";
+                        mainwin.ResultWindow.Visibility = Visibility.Collapsed;
+                        mainwin.PortResults.Visibility = Visibility.Collapsed;
+                    }
                 }
                 catch
                 {
@@ -197,12 +206,6 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                //菜单关闭项目需先选中项目
-                if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                {
-                    Save_Excuted(sender, e);//先保存后关闭
-                    MessageBox.Show("项目已保存");
-                }
                 mainwin.GetCurrentProject().ProjectCloseSelection();
             }
 
@@ -231,7 +234,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().PasteSelection(5, 5);
+                mainwin.GetCurrentProject().PasteSelection(10, 10);
             }
         }
 
@@ -282,7 +285,38 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                MessageBox.Show("NewProject");
+                Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Title = "另存为";
+                saveFileDialog.DefaultExt = ".tpis";
+                saveFileDialog.Filter = "TPIS工程 (.tpis)|*.tpis";
+                saveFileDialog.InitialDirectory = Path.GetFullPath(mainwin.GetCurrentProject().Path);
+                saveFileDialog.FileName = mainwin.GetCurrentProject().Name;
+                saveFileDialog.FilterIndex = 1;
+                saveFileDialog.ValidateNames = false;
+                saveFileDialog.CheckFileExists = false;
+                saveFileDialog.CheckPathExists = true;
+                bool? result = saveFileDialog.ShowDialog();
+                if (result != true)
+                {
+                    return;
+                }
+                else
+                {
+                    if (mainwin.GetCurrentProject().Name == saveFileDialog.FileName.Substring(saveFileDialog.FileName.LastIndexOf("\\") + 1))
+                    {
+                        if (MessageBox.Show(saveFileDialog.FileName + "已存在。/n要替换它吗？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            mainwin.GetCurrentProject().SaveProject();
+                        }
+                    }
+                    else
+                    {
+                        saveFileDialog.RestoreDirectory = true;
+                        mainwin.GetCurrentProject().Path = saveFileDialog.FileName.Substring(0, saveFileDialog.FileName.LastIndexOf("\\"));
+                        mainwin.GetCurrentProject().Name = saveFileDialog.FileName.Substring(saveFileDialog.FileName.LastIndexOf("\\") + 1);
+                        mainwin.GetCurrentProject().SaveProject();
+                    }
+                }
             }
         }
 
