@@ -36,7 +36,7 @@ namespace TPIS.Model.Common
                     {
                         check = true;
                         Property p = CommonTypeService.InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
-                        p.SelectProperty(SelMode.None);
+                        p.SelectProperty(SelMode.None,true);
                         pg.Properties.Add(p);
                         break;
                     }
@@ -45,7 +45,7 @@ namespace TPIS.Model.Common
                 {
                     Property p = CommonTypeService.InitProperty(key, property, new ObservableCollection<SelMode>() { SelMode.None });
                     PropertyGroup baseGroup = new PropertyGroup() { Flag = property.GroupFlag };
-                    p.SelectProperty(SelMode.None);
+                    p.SelectProperty(SelMode.None,true);
                     //属性传入值
                     if (p.Type == P_Type.ToSetAsDouble)
                     {

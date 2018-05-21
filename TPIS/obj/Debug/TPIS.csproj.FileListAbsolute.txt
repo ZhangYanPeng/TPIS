@@ -1,4 +1,4 @@
-﻿C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\NewProject.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISToolBar.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWin.g.cs
@@ -19,7 +19,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPIS.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\CurvesData.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.dll
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\App.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWin.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml
@@ -32,3 +31,5 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateR
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\WorkspaceSize.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\WorkspaceSize.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.pdb

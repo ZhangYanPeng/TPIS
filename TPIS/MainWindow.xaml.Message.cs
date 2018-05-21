@@ -189,7 +189,7 @@ namespace TPIS
                 currEle.Focusable = false;
             }
         }
-        
+
         #endregion
 
         #region
@@ -232,22 +232,34 @@ namespace TPIS
             }
         }
         #endregion
-        
-        //显示隐藏属性窗口
+
+        #region 显示隐藏属性窗口
         private void btn_PropertyStateChange(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             if (btn.Tag.ToString() == "show")
             {
-                btn.Tag = "hide";
-                btn.ToolTip = "显示属性窗";
+                PropertyWindowVisible(false);
+            }
+            else
+            {
+                PropertyWindowVisible(true);
+            }
+        }
+
+        public void PropertyWindowVisible(bool visible)
+        {
+            if (!visible)
+            {
+                PropertyStateChange.Tag = "hide";
+                PropertyStateChange.ToolTip = "显示属性窗";
                 PropertyWindow.Visibility = Visibility.Collapsed;
                 PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
             }
             else
             {
-                btn.Tag = "show";
-                btn.ToolTip = "隐藏属性窗";
+                PropertyStateChange.Tag = "show";
+                PropertyStateChange.ToolTip = "隐藏属性窗";
                 PropertyWindow.Visibility = Visibility.Visible;
                 PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
             }
@@ -258,21 +270,34 @@ namespace TPIS
             Button btn = sender as Button;
             if (btn.Tag.ToString() == "show")
             {
-                btn.Tag = "hide";
-                btn.ToolTip = "显示结果窗";
+                ResultWindowVisible(false);
+            }
+            else
+            {
+                ResultWindowVisible(true);
+            }
+        }
+
+        public void ResultWindowVisible(bool visible)
+        {
+            if (!visible)
+            {
+                ResultStateChange.Tag = "hide";
+                ResultStateChange.ToolTip = "显示结果窗";
                 ResultWindow.Visibility = Visibility.Collapsed;
                 PortResults.Visibility = Visibility.Collapsed;
                 ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
             }
             else
             {
-                btn.Tag = "show";
-                btn.ToolTip = "隐藏结果窗";
+                ResultStateChange.Tag = "show";
+                ResultStateChange.ToolTip = "隐藏结果窗";
                 ResultWindow.Visibility = Visibility.Visible;
                 PortResults.Visibility = Visibility.Visible;
                 ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
             }
         }
+        #endregion
 
         private void OpenCurveWindow_Click(object sender, RoutedEventArgs e)
         {

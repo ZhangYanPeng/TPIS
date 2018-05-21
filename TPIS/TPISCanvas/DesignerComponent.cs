@@ -86,14 +86,16 @@ namespace TPIS.TPISCanvas
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (e.ClickCount == 2 && DataContext is TPISComponent)
             {
                 //双击时执行
                 PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);
+                mainwin.PropertyWindowVisible(true);
+                mainwin.ResultWindowVisible(true);
                 propertyWindow.Show();
             }
 
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
             {
                 return;

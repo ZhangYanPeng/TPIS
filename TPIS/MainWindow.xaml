@@ -164,19 +164,19 @@
         </ContentControl>
         <ContentControl DockPanel.Dock="right" >
             <DockPanel>
-                <!--元件模块-->
+                <!--控制结果-->
                 <DockPanel DockPanel.Dock="Left" Width="10" Height="200">
-                    <Button Name="PropertyStateChange" DockPanel.Dock="Top" Height="100" Click="btn_PropertyStateChange" Tag="show" ToolTip="隐藏属性窗">
+                    <Button Name="PropertyStateChange" DockPanel.Dock="Top" Height="100" Click="btn_PropertyStateChange" Tag="hide" ToolTip="显示属性窗">
                         <Button.Content>
                             <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Image Name="PropertyStateChangeFig" Source="Images\icon\window_hide.png" ></Image>
+                                <Image Name="PropertyStateChangeFig" Source="Images\icon\window_show.png" ></Image>
                             </ContentControl>
                         </Button.Content>
                     </Button>
-                    <Button Name="ResultStateChange" Height="100" Click="btn_ResultStateChange" Tag="show" ToolTip="隐藏结果窗">
+                    <Button Name="ResultStateChange" Height="100" Click="btn_ResultStateChange" Tag="hide" ToolTip="显示结果窗">
                         <Button.Content>
                             <ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Image Name="ResultStateChangeFig" Source="Images\icon\window_hide.png" ></Image>
+                                <Image Name="ResultStateChangeFig" Source="Images\icon\window_show.png" ></Image>
                             </ContentControl>
                         </Button.Content>
                     </Button>
@@ -189,7 +189,7 @@
                             <ListBox Name="ResultWindow">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <GroupBox Header="{Binding Flag}">
+                                        <GroupBox Header="{Binding Flag}" >
                                             <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
                                                 <ListView.View>
                                                     <GridView>
@@ -284,7 +284,7 @@
                     <ListBox Name="PropertyWindow">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <GroupBox Header="{Binding Flag}">
+                                <GroupBox Header="{Binding Flag}"  Visibility="{Binding Visible}">
                                     <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
                                         <ListView.View>
                                             <GridView>

@@ -318,15 +318,17 @@ namespace TPIS.Model
                 {
                     foreach (Property p in pg.Properties)
                     {
-                        p.SelectProperty(Mode[selectedMode]);
+                        p.SelectProperty(Mode[selectedMode],false);
                     }
+                    pg.SelectProperty(false);
                 }
                 foreach (PropertyGroup pg in ResultGroups)
                 {
                     foreach (Property p in pg.Properties)
                     {
-                        p.SelectProperty(Mode[selectedMode]);
+                        p.SelectProperty(Mode[selectedMode],true);
                     }
+                    pg.SelectProperty(true);
                 }
                 OnPropertyChanged("SelectedMode");
             }

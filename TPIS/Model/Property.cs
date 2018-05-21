@@ -186,12 +186,17 @@ namespace TPIS.Model
             }
         }
 
-        public void SelectProperty(SelMode selMode)
+        public void SelectProperty(SelMode selMode, bool type)
         {
-            if (Modes.Contains(selMode))
+            if (type)
                 visible = true;
             else
-                visible = false;
+            {
+                if (Modes.Contains(selMode))
+                    visible = true;
+                else
+                    visible = false;
+            }
             OnPropertyChanged("Visibility");
         }
         #endregion
