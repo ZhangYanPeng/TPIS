@@ -86,15 +86,16 @@ namespace TPIS.TPISCanvas
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (e.ClickCount == 2 && DataContext is TPISComponent)
             {
                 //双击时执行
                 PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);
+                mainwin.PropertyWindowVisible(true);
+                mainwin.ResultWindowVisible(true);
                 propertyWindow.Show();
             }
 
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            //mainwin.GetCurrentProject().ChangeWorkSpaceSize();
             if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
             {
                 return;
@@ -103,7 +104,7 @@ namespace TPIS.TPISCanvas
             pos = e.GetPosition(null);
 
             this.moveType = MoveType.pos;
-            if (this.DataContext is TPISComponent && ((TPISComponent)this.DataContext).IsSelected)
+            if (this.DataContext is TPISComponent && ((TPISComponent)DataContext).IsSelected)
             {
                 //已被选中，不改变选择范围
                 foreach (UIElement uie in this.Children)

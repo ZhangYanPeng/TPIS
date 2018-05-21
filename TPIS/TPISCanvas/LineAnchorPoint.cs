@@ -56,6 +56,28 @@ namespace TPIS.TPISCanvas
         public long lineID;
         int LineAnchorPointID;
         bool IsDrag { get; set; }
+
+        public LineAnchorPoint() : base()
+        {
+            Rectangle rect = new Rectangle()
+            {
+                Width = 8,
+                Height = 8,
+                Fill = Brushes.LightGoldenrodYellow,
+                Stroke = Brushes.Black,
+                StrokeThickness = 1,
+            };
+            this.Width = 8;
+            this.Height = 8;
+            this.Content = rect;
+            base.MouseEnter += new MouseEventHandler(Element_MouseEnter);
+            base.MouseLeave += new MouseEventHandler(Element_MouseLeave);
+            base.MouseLeftButtonDown += new MouseButtonEventHandler(Anchor_MouseLeftDown);
+            base.MouseMove += new MouseEventHandler(Anchor_MouseMove);
+            base.MouseUp += new MouseButtonEventHandler(Anchor_MouseUp);
+            return;
+        }
+
         public LineAnchorPoint(long lID, int apID)
         {
             lineID = lID;

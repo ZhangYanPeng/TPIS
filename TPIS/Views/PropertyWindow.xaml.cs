@@ -42,6 +42,14 @@ namespace TPIS.Views
         {
 
         }
+
+        private void OpenCurveWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            CurvesData.FittingWin ftw = new CurvesData.FittingWin(btn.DataContext as CurvesData.Curves);
+            ftw.Owner = this;
+            ftw.ShowDialog();
+        }
     }
 
     public class ModeStringConverter : IValueConverter
@@ -65,6 +73,76 @@ namespace TPIS.Views
             return null;
         }
     }
+
+    //控制显示样式
+    public class ValVisualConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)value != P_Type.ToSelect && (P_Type)value != P_Type.ToLine)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制显示样式
+    public class MeasureVisualConverter : IMultiValueConverter
+    {
+        object IMultiValueConverter.Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values[0] == null || values[1] == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)values[1] == P_Type.ToLine)
+                    return Visibility.Collapsed;
+                string[] tmp = (string[])values[0];
+                if (tmp.Count<String>() == 1 && tmp[0] == "")
+                    return Visibility.Collapsed;
+                else
+                    return Visibility.Visible;
+            }
+        }
+
+        object[] IMultiValueConverter.ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制显示样式
+    public class LineVisualConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Visible;
+            else
+            {
+                if ((P_Type)value == P_Type.ToLine)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
 
 }
 
