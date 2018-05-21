@@ -1099,8 +1099,11 @@ namespace TPIS.Project
         #endregion
 
         #region 线锚点移动-边界限制
-        public void LineAnchorPointsMoveChange(TPISLine line, Point endPoint, int LineAnchorPointID)
+        public void LineAnchorPointsMoveChange(TPISLine line, Point endPoint, int LineAnchorPointID, bool record = true)
         {
+            List<ObjectBase> DeleteContent = new List<ObjectBase>();
+            Record rec = new Record();
+            rec.Param.Add("Operation", "MoveLine");
             if (endPoint.X - 10 < 0 && endPoint.Y - 10 < 0)
             {
                 endPoint.X = 10;
@@ -1111,6 +1114,14 @@ namespace TPIS.Project
             else if (endPoint.Y - 10 < 0)
                 endPoint.Y = 10;
             line.PointTo(LineAnchorPointID + 1, endPoint);
+            rec.Objects.Add(line);
+            rec.Param.Add("PointNo", (LineAnchorPointID).ToString());
+            rec.Param.Add("x", (endPoint.X/Rate).ToString());
+            rec.Param.Add("y", (endPoint.Y / Rate).ToString());
+            rec.Param.Add("ox", ((line.points[LineAnchorPointID + 1]).X / Rate).ToString());
+            rec.Param.Add("oy", ((line.points[LineAnchorPointID + 1]).Y / Rate).ToString());
+            if (record)
+                Records.Push(rec);
             ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
         }
         #endregion

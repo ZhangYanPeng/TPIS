@@ -65,6 +65,15 @@ namespace TPIS.Project
                         MoveSelection(x, y, false);
                         break;
                     }
+                case "MoveLine":
+                    {
+                        double ox = ParseDouble(record.Param["ox"]) * Rate;
+                        double oy = ParseDouble(record.Param["oy"]) * Rate;
+                        int pn = int.Parse(record.Param["PointNo"]);
+                        LineAnchorPointsMoveChange((TPISLine)record.Objects[0], new System.Windows.Point(ox,oy),pn, false);
+                        SelectByNo(record.ObjectsNo);
+                        break;
+                    }
                 case "AddComponent":
                     {
                         SelectByNo(record.ObjectsNo);
@@ -187,6 +196,15 @@ namespace TPIS.Project
                         double x = -ParseDouble(record.Param["x"]) * Rate;
                         double y = -ParseDouble(record.Param["y"]) * Rate;
                         MoveSelection(x, y, false);
+                        break;
+                    }
+                case "MoveLine":
+                    {
+                        double x = ParseDouble(record.Param["x"]) * Rate;
+                        double y = ParseDouble(record.Param["y"]) * Rate;
+                        int pn = int.Parse(record.Param["PointNo"]);
+                        LineAnchorPointsMoveChange((TPISLine)record.Objects[0], new System.Windows.Point(x, y), pn, false);
+                        SelectByNo(record.ObjectsNo);
                         break;
                     }
                 case "AddComponent":

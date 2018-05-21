@@ -51,6 +51,20 @@ namespace TPIS.Project
                     UndoStack[UndoStack.Count - 1].Param["y"] = MergeValue(record.Param["y"], UndoStack[UndoStack.Count - 1].Param["y"]);
                 }
             }
+            else if (UndoStack.Count > 0 && record.Param["Operation"] == "MoveLine" && UndoStack[UndoStack.Count - 1].Param["Operation"] == "MoveLine" )
+            {
+                if (record.Objects.Count == UndoStack[UndoStack.Count - 1].Objects.Count)
+                {
+                    if (UndoStack[UndoStack.Count - 1].Objects[0] != record.Objects[0] || UndoStack[UndoStack.Count - 1].Param["PointNo"] != record.Param["PointNo"])
+                    {
+                        UndoStack.Add(record);
+                        RedoStack.Clear();
+                        return;
+                    }
+                    UndoStack[UndoStack.Count - 1].Param["x"] = record.Param["x"];
+                    UndoStack[UndoStack.Count - 1].Param["y"] = record.Param["y"];
+                }
+            }
             else
             {
                 UndoStack.Add(record);
