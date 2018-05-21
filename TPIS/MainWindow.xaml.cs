@@ -35,6 +35,7 @@ namespace TPIS
         public ProjectSpace ProjectList { get; set; } //工程列表
         public int CurrentPojectIndex { get; set; }//当前激活工程
         public int ProjectNum { get; set; } // 新工程编号
+        public ScrollViewer scrollViewer { get; set; } // 工作区
 
         public ProjectItem GetCurrentProject()
         {
@@ -95,6 +96,11 @@ namespace TPIS
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
+
+            object obj0 = projectTab.ContentTemplate.GetType();
+            ScrollViewer scrollViewer = new ScrollViewer();
+            Console.WriteLine(obj0.GetType());
+            
 
             //设置当前工程为激活工程
             this.projectTab.SelectedItem = project;

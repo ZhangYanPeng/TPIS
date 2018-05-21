@@ -1094,6 +1094,7 @@ namespace TPIS.Project
             {
                 this.MoveSelection(x, y);
             }
+            ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
         }
         #endregion
 
@@ -1110,6 +1111,32 @@ namespace TPIS.Project
             else if (endPoint.Y - 10 < 0)
                 endPoint.Y = 10;
             line.PointTo(LineAnchorPointID + 1, endPoint);
+            ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
+        }
+        #endregion
+
+        #region 控件拖动放大工作区
+        private void ChangeWorkSpaceSize()
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            //滚动
+            //object obj0 = mainwin.projectTab.ContentTemplate.FindName("TPIS_ScrollViewer", mainwin.projectTab);
+            //ScrollViewer scrollViewer = new ScrollViewer();
+            //if (obj0 is ScrollViewer)
+            //    scrollViewer = (ScrollViewer)obj0;
+            Point p = new Point();
+            p = this.WorkSpaceSize_RD();
+            if (p.X >= this.Canvas.Width)
+            {
+                this.Canvas.Width = (int)p.X + 10;
+                //scrollViewer.ScrollToRightEnd();
+            }
+            if (p.Y >= this.Canvas.Height)
+            {
+                this.Canvas.Height = (int)p.Y + 10;
+                //scrollViewer.ScrollToBottom();
+            }
+            mainwin.CurWorkspaceSizeShow(this.Canvas.Width.ToString(), this.Canvas.Height.ToString());//状态栏显示工作区大小
         }
         #endregion
 
