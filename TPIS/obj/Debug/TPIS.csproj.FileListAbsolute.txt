@@ -201,3 +201,5 @@ C:\Users\LW\Source\Repos\TPIS8\TPIS\obj\Debug\TPIS.Properties.Resources.resource
 C:\Users\LW\Source\Repos\TPIS8\TPIS\obj\Debug\TPIS.csproj.GenerateResource.cache
 C:\Users\LW\Source\Repos\TPIS8\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\LW\Source\Repos\TPIS8\TPIS\obj\Debug\TPIS.csproj.CopyComplete
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\WorkspaceSize.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\WorkspaceSize.baml

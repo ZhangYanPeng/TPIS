@@ -123,29 +123,6 @@ namespace TPIS.TPISCanvas
         }
         #endregion
 
-        #region 控件拖动放大工作区
-        public void ChangeWorkSpaceSize()
-        {
-            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            ProjectItem item = mainwin.GetCurrentProject();
-            ScrollViewer scrollViewer = new ScrollViewer();
-            scrollViewer = (ScrollViewer)this.Parent;
-            Point p = new Point();
-            p = item.WorkSpaceSize_RD();
-            if (p.X + 10 > item.Canvas.Width)
-            {
-                item.Canvas.Width = (int)p.X + 10;
-                scrollViewer.ScrollToRightEnd();
-            }
-            if (p.Y + 10 > item.Canvas.Height)
-            {
-                item.Canvas.Height = (int)p.Y + 10;
-                scrollViewer.ScrollToBottom();
-            }
-            mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
-        }
-        #endregion
-
         public void MouseCanvasRightButtonDown(object sender, MouseEventArgs e)
         {
             if (mainwin.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE)

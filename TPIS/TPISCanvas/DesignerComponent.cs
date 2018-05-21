@@ -94,7 +94,6 @@ namespace TPIS.TPISCanvas
             }
 
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            //mainwin.GetCurrentProject().ChangeWorkSpaceSize();
             if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
             {
                 return;
@@ -103,7 +102,7 @@ namespace TPIS.TPISCanvas
             pos = e.GetPosition(null);
 
             this.moveType = MoveType.pos;
-            if (this.DataContext is TPISComponent && ((TPISComponent)this.DataContext).IsSelected)
+            if (this.DataContext is TPISComponent && ((TPISComponent)DataContext).IsSelected)
             {
                 //已被选中，不改变选择范围
                 foreach (UIElement uie in this.Children)
