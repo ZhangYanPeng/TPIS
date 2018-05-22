@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Model.Common;
+using TPIS.TPISCanvas;
 
 namespace TPIS.Project
 {
@@ -731,7 +732,7 @@ namespace TPIS.Project
 
                 if (obj.isSelected)
                 {
-                    CopyObjects.Add(obj);
+                    CopyObjects.Add(obj.Clone() as ObjectBase);//剪贴板对象集用于计算复制控件的有效边界
                     clipBoard.Objects.Add(obj.Clone() as ObjectBase);
                 }
             }
@@ -750,7 +751,7 @@ namespace TPIS.Project
                 {
                     foreach (Port p in ((TPISComponent)obj).Ports)
                     {
-                        if (p.link != null && Objects.Contains(p.link))//去TPISLine的锚点
+                        if (p.link != null && Objects.Contains(p.link))
                             p.link.IsSelected = true;
                     }
                 }
@@ -1042,48 +1043,51 @@ namespace TPIS.Project
         {
             Point p = new Point(0, 0);//无控件，边界为0×0
 
-            if (LUObjects.Count > 0)
+            if (LUObjects != null)
             {
-                int x = 0;
-                int y = 0;
-                ObjectBase obj0 = LUObjects[0];
-                if (obj0 is TPISComponent)
+                if (LUObjects.Count > 0)
                 {
-                    x = (int)((TPISComponent)obj0).Position.X;
-                    y = (int)((TPISComponent)obj0).Position.Y;
-                }
-                else if (obj0 is TPISLine)
-                {
-                    x = (int)((TPISLine)obj0).Points[0].X;
-                    y = (int)((TPISLine)obj0).Points[0].Y;
-                    foreach (Point p1 in ((TPISLine)obj0).Points)
+                    int x = 0;
+                    int y = 0;
+                    ObjectBase obj0 = LUObjects[0];
+                    if (obj0 is TPISComponent)
                     {
-                        x = (int)(x < p1.X ? x : p1.X);
-                        y = (int)(y < p1.Y ? y : p1.Y);
+                        x = (int)((TPISComponent)obj0).Position.X;
+                        y = (int)((TPISComponent)obj0).Position.Y;
                     }
-                }
-                p.X = x;
-                p.Y = y;
-                for (int i = 0; i < LUObjects.Count; i++)
-                {
-                    ObjectBase obj = LUObjects[i];
-                    if (obj is TPISComponent)
+                    else if (obj0 is TPISLine)
                     {
-                        x = (int)((TPISComponent)obj).Position.X;
-                        y = (int)((TPISComponent)obj).Position.Y;
-                    }
-                    else if (obj is TPISLine)
-                    {
-                        x = (int)((TPISLine)obj).Points[0].X;
-                        y = (int)((TPISLine)obj).Points[0].Y;
-                        foreach (Point p1 in ((TPISLine)obj).Points)
+                        x = (int)((TPISLine)obj0).Points[0].X;
+                        y = (int)((TPISLine)obj0).Points[0].Y;
+                        foreach (Point p1 in ((TPISLine)obj0).Points)
                         {
                             x = (int)(x < p1.X ? x : p1.X);
                             y = (int)(y < p1.Y ? y : p1.Y);
                         }
                     }
-                    p.X = p.X < x ? p.X : x;
-                    p.Y = p.Y < y ? p.Y : y;
+                    p.X = x;
+                    p.Y = y;
+                    for (int i = 0; i < LUObjects.Count; i++)
+                    {
+                        ObjectBase obj = LUObjects[i];
+                        if (obj is TPISComponent)
+                        {
+                            x = (int)((TPISComponent)obj).Position.X;
+                            y = (int)((TPISComponent)obj).Position.Y;
+                        }
+                        else if (obj is TPISLine)
+                        {
+                            x = (int)((TPISLine)obj).Points[0].X;
+                            y = (int)((TPISLine)obj).Points[0].Y;
+                            foreach (Point p1 in ((TPISLine)obj).Points)
+                            {
+                                x = (int)(x < p1.X ? x : p1.X);
+                                y = (int)(y < p1.Y ? y : p1.Y);
+                            }
+                        }
+                        p.X = p.X < x ? p.X : x;
+                        p.Y = p.Y < y ? p.Y : y;
+                    }
                 }
             }
             return p;
@@ -1091,7 +1095,7 @@ namespace TPIS.Project
         #endregion
 
         #region 元件移动-边界限制
-        public void MoveChange(int x, int y)
+        public void MoveChange(int x, int y, object sender)
         {
             Point tmp;
             tmp = this.WorkSpaceSize_LU();
@@ -1111,16 +1115,13 @@ namespace TPIS.Project
             {
                 this.MoveSelection(x, y);
             }
-            ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
+            ChangeWorkSpaceSize(sender);//移动控件时，超过边界自动改变画布大小
         }
         #endregion
 
         #region 线锚点移动-边界限制
-        public void LineAnchorPointsMoveChange(TPISLine line, Point endPoint, int LineAnchorPointID, bool record = true)
+        public void LineAnchorPointsMoveChange(TPISLine line, Point endPoint, int LineAnchorPointID, object sender)
         {
-            List<ObjectBase> DeleteContent = new List<ObjectBase>();
-            Record rec = new Record();
-            rec.Param.Add("Operation", "MoveLine");
             if (endPoint.X - 10 < 0 && endPoint.Y - 10 < 0)
             {
                 endPoint.X = 10;
@@ -1131,40 +1132,47 @@ namespace TPIS.Project
             else if (endPoint.Y - 10 < 0)
                 endPoint.Y = 10;
             line.PointTo(LineAnchorPointID + 1, endPoint);
-            rec.Objects.Add(line);
-            rec.Param.Add("PointNo", (LineAnchorPointID).ToString());
-            rec.Param.Add("x", (endPoint.X/Rate).ToString());
-            rec.Param.Add("y", (endPoint.Y / Rate).ToString());
-            rec.Param.Add("ox", ((line.points[LineAnchorPointID + 1]).X / Rate).ToString());
-            rec.Param.Add("oy", ((line.points[LineAnchorPointID + 1]).Y / Rate).ToString());
-            if (record)
-                Records.Push(rec);
-            ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
+            ChangeWorkSpaceSize(sender);//移动控件时，超过边界自动改变画布大小
         }
         #endregion
 
         #region 控件拖动放大工作区
-        private void ChangeWorkSpaceSize()
+        private void ChangeWorkSpaceSize(object sender)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            //滚动
-            //object obj0 = mainwin.projectTab.ContentTemplate.FindName("TPIS_ScrollViewer", mainwin.projectTab);
-            //ScrollViewer scrollViewer = new ScrollViewer();
-            //if (obj0 is ScrollViewer)
-            //    scrollViewer = (ScrollViewer)obj0;
+            ScrollViewer scrollViewer = (ScrollViewer)SelectProjectDesignerCanvas(sender).Parent;
             Point p = new Point();
             p = this.WorkSpaceSize_RD();
             if (p.X >= this.Canvas.Width)
             {
                 this.Canvas.Width = (int)p.X + 10;
-                //scrollViewer.ScrollToRightEnd();
+                scrollViewer.ScrollToRightEnd();
             }
             if (p.Y >= this.Canvas.Height)
             {
                 this.Canvas.Height = (int)p.Y + 10;
-                //scrollViewer.ScrollToBottom();
+                scrollViewer.ScrollToBottom();
             }
             mainwin.CurWorkspaceSizeShow(this.Canvas.Width.ToString(), this.Canvas.Height.ToString());//状态栏显示工作区大小
+        }
+        #endregion
+
+        #region 获取ProjectDesignerCanvas
+        private ProjectDesignerCanvas SelectProjectDesignerCanvas(object sender)
+        {
+            if (sender is LineAnchorPoint)
+            {
+                return (ProjectDesignerCanvas)((LineAnchorPoint)sender).Parent;
+            }
+            else if (sender is DesignerComponent)
+            {
+                DependencyObject obj = ((DesignerComponent)sender).TemplatedParent;
+                do
+                    obj = VisualTreeHelper.GetParent(obj);
+                while (obj.GetType() != typeof(ProjectDesignerCanvas));
+                return (ProjectDesignerCanvas)obj;
+            }
+            return null;
         }
         #endregion
 

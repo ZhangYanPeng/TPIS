@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\GeneratedInternalTypeHelper.g.cs
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\CalWin.xaml;;
@@ -7,4 +8,15 @@ FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Modules\TPISToolBar.xaml
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\MainWindow.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\PropertyWindow.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\WorkspaceSize.xaml;;
+=======
+﻿
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\App.xaml;;
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\Views\CalWin.xaml;;
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\Views\Modules\TPISCanvas.xaml;;
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\Views\Modules\TPISMenu.xaml;;
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\Views\Modules\TPISToolBar.xaml;;
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\MainWindow.xaml;;
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\Views\PropertyWindow.xaml;;
+FC:\Users\LW\Source\Repos\TPIS10\TPIS\Views\WorkspaceSize.xaml;;
+>>>>>>> 2ddac9e9ef8544fea58a1e85eca145dbbc566906
 

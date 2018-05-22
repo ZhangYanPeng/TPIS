@@ -137,7 +137,7 @@ namespace TPIS.TPISCanvas
                         if (this.lineID == line.No)//确定线
                         {
                             //解决移动线条时出现的问题
-                            mainwin.GetCurrentProject().LineAnchorPointsMoveChange(line, endPoint, LineAnchorPointID);
+                            mainwin.GetCurrentProject().LineAnchorPointsMoveChange(line, endPoint, LineAnchorPointID, sender);
                             //((ProjectDesignerCanvas)this.Parent).ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
                         }
                     }

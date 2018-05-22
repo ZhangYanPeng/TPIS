@@ -401,7 +401,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(0, -1);
+                mainwin.GetCurrentProject().MoveChange(0, -1, sender);
             }
         }
 
@@ -410,7 +410,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(0, 1);
+                mainwin.GetCurrentProject().MoveChange(0, 1, sender);
             }
         }
 
@@ -419,7 +419,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(-1, 0);
+                mainwin.GetCurrentProject().MoveChange(-1, 0, sender);
             }
         }
 
@@ -428,7 +428,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(1, 0);
+                mainwin.GetCurrentProject().MoveChange(1, 0, sender);
             }
         }
         #endregion
