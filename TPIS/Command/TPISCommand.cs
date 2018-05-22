@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using TPIS.Project;
 using TPIS.Views;
 
@@ -82,12 +83,27 @@ namespace TPIS.Command
             if (mainwin.GetCurrentProject() == null)
             {
                 GridOpe.IsEnabled = false;
-                WorkspaceSizeOpe.IsEnabled = false;
             }
             else
             {
                 GridOpe.IsEnabled = true;
+            }
+        }
+
+        private void OnSubSetMenuOpened(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuitem = sender as MenuItem;
+            menuitem.IsSubmenuOpen = true;
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() == null)
+            {
+                WorkspaceSizeOpe.IsEnabled = false;
+                BackGroundColorOpe.IsEnabled = false;
+            }
+            else
+            {
                 WorkspaceSizeOpe.IsEnabled = true;
+                BackGroundColorOpe.IsEnabled = true;
             }
         }
         #endregion
@@ -115,6 +131,7 @@ namespace TPIS.Command
         public static RoutedCommand Redo = new RoutedCommand();
         public static RoutedCommand SeltAll = new RoutedCommand();
         public static RoutedCommand WorkspaceSize = new RoutedCommand();
+        public static RoutedCommand BackGroundColor = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -174,6 +191,7 @@ namespace TPIS.Command
                     {//解决在无新建工程时打开已有项目，出现的透明背景
                         ((ProjectItem)obj).GridThickness = 0;//赋初值0，使初始画布为隐藏网格
                         ((ProjectItem)obj).GridUintLength = 20;//赋初值20，使初始网格单元为20×20
+                        ((ProjectItem)obj).backGroundColor = Brushes.White;
                     }
                     mainwin.ProjectList.projects.Add(obj as ProjectItem);
                     mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
@@ -401,7 +419,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(0, -1, sender);
+                mainwin.GetCurrentProject().MoveChange(0, -1);
             }
         }
 
@@ -410,7 +428,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(0, 1, sender);
+                mainwin.GetCurrentProject().MoveChange(0, 1);
             }
         }
 
@@ -419,7 +437,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(-1, 0, sender);
+                mainwin.GetCurrentProject().MoveChange(-1, 0);
             }
         }
 
@@ -428,7 +446,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().MoveChange(1, 0, sender);
+                mainwin.GetCurrentProject().MoveChange(1, 0);
             }
         }
         #endregion
@@ -474,6 +492,31 @@ namespace TPIS.Command
                 Window workspaceSize = new WorkspaceSize();
                 workspaceSize.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 workspaceSize.ShowDialog();
+            }
+        }
+
+        #endregion
+
+        #region 背景色
+
+        public void BackGroundColor_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                MenuItem item = (MenuItem)e.OriginalSource;
+                switch (item.Tag)
+                {
+                    case "White":
+                        mainwin.GetCurrentProject().BackGroundColor = Brushes.White;
+                        break;
+                    case "LightGray":
+                        mainwin.GetCurrentProject().BackGroundColor = Brushes.LightGray;
+                        break;
+                    case "LightBule":
+                        mainwin.GetCurrentProject().BackGroundColor = Brushes.LightBlue;
+                        break;
+                }
             }
         }
 

@@ -23,7 +23,7 @@ namespace TPIS.TPISCanvas
         /// <param name="e"></param>
         public void CanvasMouseEnter(object sender, MouseEventArgs e)
         {
-            ReInitLineAnchorPoints();
+            //ReInitLineAnchorPoints();
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             try
             {

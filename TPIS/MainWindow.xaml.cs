@@ -181,6 +181,34 @@ namespace TPIS
                 }
             }
         }
+        #region 获取ScrollViewer
+        public ScrollViewer SelectScrollViewer()
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            Grid tabGrid = FindVisualChild<Grid>(mainwin.projectTab);
+            Border contentBorder = tabGrid.FindName("ContentPanel") as Border;
+            ContentPresenter contentPresenter = FindVisualChild<ContentPresenter>(contentBorder);
+            ScrollViewer sv = contentPresenter.ContentTemplate.FindName("TPIS_ScrollViewer", contentPresenter) as ScrollViewer;
+            return sv;
+        }
+
+        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is childItem)
+                    return (childItem)child;
+                else
+                {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null)
+                        return childOfChild;
+                }
+            }
+            return null;
+        }
+        #endregion
     }
 
     /// <summary>

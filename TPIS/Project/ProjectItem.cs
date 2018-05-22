@@ -139,6 +139,19 @@ namespace TPIS.Project
         }
         #endregion
 
+        #region 画布背景色
+        public Brush backGroundColor;
+        public Brush BackGroundColor
+        {
+            get { return backGroundColor; }
+            set
+            {
+                backGroundColor = value;
+                OnPropertyChanged("BackGroundColor");
+            }
+        }
+        #endregion
+
         #region 缩放比率
         public double rate;
         public double Rate
@@ -191,6 +204,7 @@ namespace TPIS.Project
             this.CalculateState = false;
             this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
             this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
+            this.BackGroundColor = Brushes.White;
             Path = p;
             PropertyGroup = CommonTypeService.InitProjectProperty();
             ResultGroup = new ObservableCollection<PropertyGroup>();
@@ -1078,7 +1092,7 @@ namespace TPIS.Project
         #endregion
 
         #region 元件移动-边界限制
-        public void MoveChange(int x, int y, object sender)
+        public void MoveChange(int x, int y)
         {
             Point tmp;
             tmp = this.WorkSpaceSize_LU();
@@ -1098,7 +1112,7 @@ namespace TPIS.Project
             {
                 this.MoveSelection(x, y);
             }
-            ChangeWorkSpaceSize(sender);//移动控件时，超过边界自动改变画布大小
+            ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
         }
         #endregion
 
@@ -1115,15 +1129,15 @@ namespace TPIS.Project
             else if (endPoint.Y - 10 < 0)
                 endPoint.Y = 10;
             line.PointTo(LineAnchorPointID + 1, endPoint);
-            ChangeWorkSpaceSize(sender);//移动控件时，超过边界自动改变画布大小
+            ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
         }
         #endregion
 
         #region 控件拖动放大工作区
-        private void ChangeWorkSpaceSize(object sender)
+        private void ChangeWorkSpaceSize()
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            ScrollViewer scrollViewer = (ScrollViewer)SelectProjectDesignerCanvas(sender).Parent;
+            ScrollViewer scrollViewer = mainwin.SelectScrollViewer();
             Point p = new Point();
             p = this.WorkSpaceSize_RD();
             if (p.X >= this.Canvas.Width)
@@ -1140,28 +1154,36 @@ namespace TPIS.Project
         }
         #endregion
 
-        #region 获取ProjectDesignerCanvas
-        private ProjectDesignerCanvas SelectProjectDesignerCanvas(object sender)
-        {
-            if (sender is LineAnchorPoint)
-            {
-                return (ProjectDesignerCanvas)((LineAnchorPoint)sender).Parent;
-            }
-            else if (sender is DesignerComponent)
-            {
-                DependencyObject obj = ((DesignerComponent)sender).TemplatedParent;
-                do
-                    obj = VisualTreeHelper.GetParent(obj);
-                while (obj.GetType() != typeof(ProjectDesignerCanvas));
-                return (ProjectDesignerCanvas)obj;
-            }
-            return null;
-        }
-        #endregion
+        //#region 获取ProjectDesignerCanvas
+        //private ProjectDesignerCanvas SelectProjectDesignerCanvas(object sender)
+        //{
+        //    if (sender is LineAnchorPoint)
+        //    {
+        //        DependencyObject obj = ((DesignerLine)((LineAnchorPoint)sender).Parent).TemplatedParent;
+        //        do
+        //            obj = VisualTreeHelper.GetParent(obj);
+        //        while (obj.GetType() != typeof(ProjectDesignerCanvas));
+        //        return (ProjectDesignerCanvas)obj;
+        //        //return (ProjectDesignerCanvas)((LineAnchorPoint)sender).Parent;
+        //    }
+        //    else if (sender is DesignerComponent)
+        //    {
+        //        DependencyObject obj = ((DesignerComponent)sender).TemplatedParent;
+        //        do
+        //            obj = VisualTreeHelper.GetParent(obj);
+        //        while (obj.GetType() != typeof(ProjectDesignerCanvas));
+        //        return (ProjectDesignerCanvas)obj;
+        //    }
+        //    return null;
+        //}
+        //#endregion
+
+        
 
         #region 查找元件并选中居中
         internal bool FindComponent(int tn)
         {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             Boolean findOrNot = false;
             foreach (ObjectBase obj in Objects)
             {
@@ -1171,13 +1193,7 @@ namespace TPIS.Project
                     {
                         findOrNot = true;
                         ((TPISComponent)obj).IsSelected = true;
-
-                        MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                        Grid tabGrid = FindVisualChild<Grid>(mainwin.projectTab);
-                        Border contentBorder = tabGrid.FindName("ContentPanel") as Border;
-                        ContentPresenter contentPresenter = FindVisualChild<ContentPresenter>(contentBorder);
-                        ScrollViewer sv = contentPresenter.ContentTemplate.FindName("CanvasScrollViewer", contentPresenter) as ScrollViewer;
-
+                        ScrollViewer sv = mainwin.SelectScrollViewer();
                         //移动坐标
                         sv.ScrollToHorizontalOffset(((TPISComponent)obj).Position.V_x - sv.ActualWidth / 2 + ((TPISComponent)obj).Position.V_width / 2);
                         sv.ScrollToVerticalOffset(((TPISComponent)obj).Position.V_y - sv.ActualHeight / 2 + ((TPISComponent)obj).Position.V_height / 2);
@@ -1189,23 +1205,6 @@ namespace TPIS.Project
                 }
             }
             return findOrNot;
-        }
-
-        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is childItem)
-                    return (childItem)child;
-                else
-                {
-                    childItem childOfChild = FindVisualChild<childItem>(child);
-                    if (childOfChild != null)
-                        return childOfChild;
-                }
-            }
-            return null;
         }
         #endregion
 

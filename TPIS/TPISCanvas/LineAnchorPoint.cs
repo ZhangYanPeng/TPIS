@@ -126,7 +126,7 @@ namespace TPIS.TPISCanvas
                     this.CaptureMouse();
                 if (!IsDrag)
                     return;
-                Point endPoint = e.GetPosition((ProjectDesignerCanvas)this.Parent);
+                Point endPoint = e.GetPosition((DesignerLine)this.Parent);
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 
                 foreach (ObjectBase obj in mainwin.GetCurrentProject().Objects)
@@ -159,73 +159,73 @@ namespace TPIS.TPISCanvas
         }
     }
 
-    partial class ProjectDesignerCanvas : Canvas
-    {
-        public List<LineAnchorPoint> laps;
-        public void InitLineAnchorPoints(long lID, TPISLine line)
-        {
-            laps = new List<LineAnchorPoint>();
-            foreach (Object obj in Children)
-            {
-                if (obj is LineAnchorPoint)
-                {
-                    LineAnchorPoint ap = obj as LineAnchorPoint;
-                    if (ap.lineID == lID)
-                        return;
-                }
-            }
-            for (int i = 0; i < line.Points.Count - 2; i++)
-            {
-                laps.Add(new LineAnchorPoint(lID, i));
-                this.Children.Add(laps[i]);
-            }
-            RePosLineAnchorPoints(line);
-        }
+    //partial class ProjectDesignerCanvas : Canvas
+    //{
+    //    public List<LineAnchorPoint> laps;
+    //    public void InitLineAnchorPoints(long lID, TPISLine line)
+    //    {
+    //        laps = new List<LineAnchorPoint>();
+    //        foreach (Object obj in Children)
+    //        {
+    //            if (obj is LineAnchorPoint)
+    //            {
+    //                LineAnchorPoint ap = obj as LineAnchorPoint;
+    //                if (ap.lineID == lID)
+    //                    return;
+    //            }
+    //        }
+    //        for (int i = 0; i < line.Points.Count - 2; i++)
+    //        {
+    //            laps.Add(new LineAnchorPoint(lID, i));
+    //            this.Children.Add(laps[i]);
+    //        }
+    //        RePosLineAnchorPoints(line);
+    //    }
 
-        public void ReInitLineAnchorPoints()
-        {
-            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            for (int i = 0; i < mainwin.GetCurrentProject().Objects.Count; i++)
-            {
-                ObjectBase obj = mainwin.GetCurrentProject().Objects[i];
-                if (obj is TPISLine)
-                {
-                    InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
-                }
-            }
-        }
-        public void RePosLineAnchorPoints(TPISLine line)
-        {//重置锚点
-            int i = 0;
-            foreach (LineAnchorPoint lap in laps)
-            {
-                i++;
-                {
-                    //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].Y);
-                    Binding binding = new Binding();
-                    binding.Source = line;
-                    binding.Path = new PropertyPath("Points");
-                    binding.Converter = new AnchorPosConverter(i, "y");
-                    binding.Mode = BindingMode.OneWay;
-                    lap.SetBinding(Canvas.TopProperty, binding);
-                }
-                {
-                    //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].X);
-                    Binding binding = new Binding();
-                    binding.Source = line;
-                    binding.Path = new PropertyPath("Points");
-                    binding.Converter = new AnchorPosConverter(i, "x");
-                    binding.Mode = BindingMode.OneWay;
-                    lap.SetBinding(Canvas.LeftProperty, binding);
-                }
-                {
-                    Binding binding = new Binding();
-                    binding.Source = line;
-                    binding.Path = new PropertyPath("IsSelected");
-                    binding.Converter = new SelectConverter();
-                    lap.SetBinding(AnchorPoint.VisibilityProperty, binding);
-                }
-            }
-        }
-    }
+    //    public void ReInitLineAnchorPoints()
+    //    {
+    //        MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+    //        for (int i = 0; i < mainwin.GetCurrentProject().Objects.Count; i++)
+    //        {
+    //            ObjectBase obj = mainwin.GetCurrentProject().Objects[i];
+    //            if (obj is TPISLine)
+    //            {
+    //                InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
+    //            }
+    //        }
+    //    }
+    //    public void RePosLineAnchorPoints(TPISLine line)
+    //    {//重置锚点
+    //        int i = 0;
+    //        foreach (LineAnchorPoint lap in laps)
+    //        {
+    //            i++;
+    //            {
+    //                //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].Y);
+    //                Binding binding = new Binding();
+    //                binding.Source = line;
+    //                binding.Path = new PropertyPath("Points");
+    //                binding.Converter = new AnchorPosConverter(i, "y");
+    //                binding.Mode = BindingMode.OneWay;
+    //                lap.SetBinding(Canvas.TopProperty, binding);
+    //            }
+    //            {
+    //                //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].X);
+    //                Binding binding = new Binding();
+    //                binding.Source = line;
+    //                binding.Path = new PropertyPath("Points");
+    //                binding.Converter = new AnchorPosConverter(i, "x");
+    //                binding.Mode = BindingMode.OneWay;
+    //                lap.SetBinding(Canvas.LeftProperty, binding);
+    //            }
+    //            {
+    //                Binding binding = new Binding();
+    //                binding.Source = line;
+    //                binding.Path = new PropertyPath("IsSelected");
+    //                binding.Converter = new SelectConverter();
+    //                lap.SetBinding(AnchorPoint.VisibilityProperty, binding);
+    //            }
+    //        }
+    //    }
+    //}
 }

@@ -101,8 +101,12 @@
     </DataTemplate>
 
     <DataTemplate x:Key="template_line">
-        <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
-        </Polyline>
+        <!--<Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
+        </Polyline>-->
+        <s:DesignerLine>
+            <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
+            </Polyline>
+        </s:DesignerLine>
     </DataTemplate>
 
     <DataTemplate x:Key="template_selection">

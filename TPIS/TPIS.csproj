@@ -89,6 +89,7 @@
     <Compile Include="Command\SelectionService.cs" />
     <Compile Include="Command\ToolboxItem.cs" />
     <Compile Include="Command\TPISCommand.cs" />
+    <Compile Include="MainWindow.xaml.Config.cs" />
     <Compile Include="Model\BaseType.cs" />
     <Compile Include="Model\Common\CalculateInBackEnd.cs" />
     <Compile Include="Model\Common\EleType.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Project\ProjectItemRecord.cs" />
     <Compile Include="Project\RecordStack.cs" />
     <Compile Include="TPISCanvas\ChangeLine.cs" />
+    <Compile Include="TPISCanvas\DesignerLine.cs" />
     <Compile Include="TPISCanvas\LineAnchorPoint.cs" />
     <Compile Include="TPISCanvas\SelectAdorner.cs" />
     <Compile Include="TPISCanvas\AddLines.cs" />

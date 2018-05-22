@@ -65,10 +65,12 @@ namespace TPIS.TPISCanvas
             base.MouseRightButtonDown += new MouseButtonEventHandler(MouseCanvasRightButtonDown);
             base.MouseWheel += new MouseWheelEventHandler(Canvas_MouseWheel);
 
-            pline = new Polyline();
-            pline.Stroke = Brushes.Red;
-            pline.StrokeThickness = 2;
-            this.Children.Add(pline);
+            {//绘制中newTPISLine
+                pline = new Polyline();
+                pline.Stroke = Brushes.Red;
+                pline.StrokeThickness = 2;
+                this.Children.Add(pline);
+            }
 
             mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.Canvas_MousePosition("0", "0");//状态栏显示工作区鼠标坐标
