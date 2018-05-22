@@ -472,21 +472,14 @@ namespace TPIS.Project
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (components.Count > 0)
             {
-                if (mainwin.PropertyWindow.ItemsSource != components[0].PropertyGroups)
+                if (mainwin.PropertyContent.ItemsSource != components[0].PropertyGroups)
                 {
-                    mainwin.PropertyWindow.ItemsSource = components[0].PropertyGroups;
-                    mainwin.PropertyWindow.Items.Refresh();
-                    mainwin.ResultWindow.ItemsSource = components[0].ResultGroups;
-                    mainwin.ResultWindow.Items.Refresh();
-                    mainwin.PortResults.ItemsSource = components[0].Ports;
-                    mainwin.PortResults.Items.Refresh();
+                    BindingPropertyWindow(components[0]);
                 }
             }
             else
             {
-                mainwin.PropertyWindow.ItemsSource = PropertyGroup;
-                mainwin.PropertyWindow.Items.Refresh();
-                mainwin.ResultWindow.ItemsSource = null;
+                BindingPropertyWindow(null);
             }
 
             foreach (ObjectBase obj in Objects)
@@ -550,6 +543,42 @@ namespace TPIS.Project
                 }
             }
         }
+
+        private void BindingPropertyWindow(TPISComponent component)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (component == null)
+            {
+                mainwin.PropertyMode.DataContext = null;
+                mainwin.PropertyMode.Visibility = Visibility.Collapsed;
+                mainwin.PropertyContent.ItemsSource = PropertyGroup;
+                mainwin.PropertyContent.Items.Refresh();
+                mainwin.ResultWindow.ItemsSource = null;
+                mainwin.PortResults.ItemsSource = null;
+                mainwin.PortResults.Items.Refresh();
+                return;
+            }
+            BindingOperations.ClearBinding(mainwin.PropertyMode, ComboBox.SelectedIndexProperty);
+
+            mainwin.PropertyMode.ItemsSource = component.Mode;
+            mainwin.PropertyMode.Items.Refresh();
+            
+            mainwin.PropertyMode.Visibility = Visibility.Visible;
+            mainwin.PropertyContent.ItemsSource = component.PropertyGroups;
+            mainwin.PropertyContent.Items.Refresh();
+
+            mainwin.PropertyMode.SelectedIndex = component.selectedMode;
+            Binding modeBinding = new Binding();
+            modeBinding.Source = component;
+            modeBinding.Path = new PropertyPath("SelectedMode");
+            mainwin.PropertyMode.SetBinding(ComboBox.SelectedIndexProperty, modeBinding);
+
+            mainwin.ResultWindow.ItemsSource = component.ResultGroups;
+            mainwin.ResultWindow.Items.Refresh();
+            mainwin.PortResults.ItemsSource = component.Ports;
+            mainwin.PortResults.Items.Refresh();
+        }
+
         /// <summary>
         /// 重载
         /// </summary>
@@ -588,13 +617,7 @@ namespace TPIS.Project
                             }
                         }
                         //设置属性框显示该属性
-                        MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                        mainwin.PropertyWindow.ItemsSource = ((TPISComponent)obj).PropertyGroups;
-                        mainwin.PropertyWindow.Items.Refresh();
-                        mainwin.ResultWindow.ItemsSource = ((TPISComponent)obj).ResultGroups;
-                        mainwin.ResultWindow.Items.Refresh();
-                        mainwin.PortResults.ItemsSource = ((TPISComponent)obj).Ports;
-                        mainwin.PortResults.Items.Refresh();
+                        BindingPropertyWindow(obj as TPISComponent);
                     }
                     else
                     {
@@ -637,13 +660,7 @@ namespace TPIS.Project
                     ((TPISLine)obj).IsSelected = false;
                 obj.isSelected = false;
             }
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            mainwin.PropertyWindow.ItemsSource = PropertyGroup;
-            mainwin.PropertyWindow.Items.Refresh();
-            mainwin.ResultWindow.ItemsSource = null;
-            mainwin.ResultWindow.Items.Refresh();
-            mainwin.PortResults.ItemsSource = null;
-            mainwin.PortResults.Items.Refresh();
+            BindingPropertyWindow(null);
         }
         #endregion
 

@@ -90,10 +90,10 @@ namespace TPIS.TPISCanvas
             if (e.ClickCount == 2 && DataContext is TPISComponent)
             {
                 //双击时执行
-                PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);
+                //PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);
                 mainwin.PropertyWindowVisible(true);
                 mainwin.ResultWindowVisible(true);
-                propertyWindow.Show();
+                //propertyWindow.Show();
             }
 
             if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)

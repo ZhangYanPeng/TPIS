@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Command;
 using Key = System.Windows.Forms;
-using TPIS.Model;
 using TPIS.Project;
 using TPIS.Views;
-using System.Windows.Controls.Primitives;
 
 namespace TPIS.TPISCanvas
 {
@@ -107,45 +100,9 @@ namespace TPIS.TPISCanvas
                 scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
-            //Ctrl+滚轮实现工作区缩放(视图上的缩放，真实大小未变)
-            //if (Key.Control.ModifierKeys == Key.Keys.Control)
-            //{
-            //    if (e.Delta > 0)
-            //    {
-            //        item.SupRate();
-            //    }
-            //    else
-            //    {
-            //        item.SubRate();
-            //    }
-            //    mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
-            //}
         }
         #endregion
-
-        //#region 控件拖动放大工作区
-        //public void ChangeWorkSpaceSize()
-        //{
-        //    MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-        //    ProjectItem item = mainwin.GetCurrentProject();
-        //    ScrollViewer scrollViewer = new ScrollViewer();
-        //    scrollViewer = (ScrollViewer)this.Parent;
-        //    Point p = new Point();
-        //    p = item.WorkSpaceSize_RD();
-        //    if (p.X >= item.Canvas.Width)
-        //    {
-        //        item.Canvas.Width = (int)p.X + 10;
-        //        scrollViewer.ScrollToRightEnd();
-        //    }
-        //    if (p.Y >= item.Canvas.Height)
-        //    {
-        //        item.Canvas.Height = (int)p.Y + 10;
-        //        scrollViewer.ScrollToBottom();
-        //    }
-        //    mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
-        //}
-        //#endregion
-
+        
         public void MouseCanvasRightButtonDown(object sender, MouseEventArgs e)
         {
             if (mainwin.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE)

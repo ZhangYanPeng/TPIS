@@ -36,8 +36,8 @@ namespace TPIS
                     id++;
                     Element element = CommonTypeService.LoadElement(eleType);
                     ComponentType ct = new ComponentType { Id = id, PicPath = "pack://SiteofOrigin:,,," + Interface.GetPNGstr(eleType), Name = element.DProperty["Name"].data_string, Type = eleType, IsChecked = false };
-                    ct.Width = element.Nwidth[0]*15;
-                    ct.Height = element.Nheight[0]*15;
+                    ct.Width = element.Nwidth[0]*10;
+                    ct.Height = element.Nheight[0]*10;
                     bt.ComponentTypeList.Add(ct);
                 }
             }

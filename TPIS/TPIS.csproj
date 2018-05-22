@@ -38,6 +38,9 @@
     <Reference Include="CurvesData">
       <HintPath>link\CurvesData.exe</HintPath>
     </Reference>
+    <Reference Include="PhysicalPro">
+      <HintPath>link\PhysicalPro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -51,7 +54,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TPISNet">
+    <Reference Include="TPISNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>link\TPISNet.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
@@ -172,7 +176,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TPISCanvas\Choosen.cs" />
     <Compile Include="Model\TPISComponent.cs" />
     <Compile Include="Model\TPISLine.cs" />
     <Compile Include="TPISCanvas\DesignerComponent.cs" />

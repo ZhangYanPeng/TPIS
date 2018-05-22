@@ -313,7 +313,8 @@ namespace TPIS.Model
             get => selectedMode;
             set
             {
-                selectedMode = value;
+                if (value >= 0)
+                    selectedMode = value;
                 foreach (PropertyGroup pg in PropertyGroups)
                 {
                     foreach (Property p in pg.Properties)

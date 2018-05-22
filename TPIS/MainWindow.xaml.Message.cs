@@ -421,4 +421,28 @@ namespace TPIS
 
         #endregion
     }
+
+    public class ModeStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return DependencyProperty.UnsetValue;
+            if (value is string && (string)value == "")
+                return DependencyProperty.UnsetValue;
+            switch ((SelMode)value)
+            {
+                case SelMode.None: return "全部";
+                case SelMode.DesignMode: return "设计模式";
+                case SelMode.CalMode: return "计算模式";
+                case SelMode.InterMode: return "插值模式";
+            }
+            return "全部";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }
