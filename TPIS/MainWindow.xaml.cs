@@ -96,10 +96,6 @@ namespace TPIS
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
-
-            object obj0 = projectTab.ContentTemplate.GetType();
-            ScrollViewer scrollViewer = new ScrollViewer();
-            Console.WriteLine(obj0.GetType());
             
 
             //设置当前工程为激活工程

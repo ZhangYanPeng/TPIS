@@ -103,6 +103,8 @@
         <KeyBinding Gesture="F1" Command="{x:Static c:TPISCommand.DrawGrid}" />
         <KeyBinding Gesture="Ctrl+A" Command="{x:Static c:TPISCommand.SeltAll}" />
         <KeyBinding Gesture="F2" Command="{x:Static c:TPISCommand.WorkspaceSize}" />
+        <KeyBinding Gesture="Ctrl+Z" Command="{x:Static c:TPISCommand.Undo}" />
+        <KeyBinding Gesture="Ctrl+Y" Command="{x:Static c:TPISCommand.Redo}" />
     </Window.InputBindings>
 
     <DockPanel>
