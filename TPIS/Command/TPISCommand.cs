@@ -513,9 +513,6 @@ namespace TPIS.Command
                     case "LightGray":
                         mainwin.GetCurrentProject().BackGroundColor = Brushes.LightGray;
                         break;
-                    case "LightBule":
-                        mainwin.GetCurrentProject().BackGroundColor = Brushes.LightBlue;
-                        break;
                 }
             }
         }

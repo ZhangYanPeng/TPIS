@@ -139,8 +139,7 @@
             <MenuItem Header="背景色" Name="BackGroundColorOpe">
                 <MenuItem Tag="White"  Header="白底" Background="White" Command="{x:Static s:TPISCommand.BackGroundColor}"></MenuItem>
                 <MenuItem Tag="LightGray" Header="淡灰底" Background="LightGray" Command="{x:Static s:TPISCommand.BackGroundColor}"></MenuItem>
-                <MenuItem Tag="LightBule" Header="淡蓝底" Background="LightBlue" Command="{x:Static s:TPISCommand.BackGroundColor}"></MenuItem>
-            </MenuItem>
+                </MenuItem>
             <Separator />
         </MenuItem>
 
