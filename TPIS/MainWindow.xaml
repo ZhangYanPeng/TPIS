@@ -43,7 +43,7 @@
                                 </MultiBinding>
                             </DrawingBrush.Viewport>
                             <DrawingBrush.Drawing>
-                                <GeometryDrawing Brush="White">
+                                <GeometryDrawing Brush="{Binding BackGroundColor}">
                                     <GeometryDrawing.Geometry>
                                         <RectangleGeometry>
                                             <RectangleGeometry.Rect>
@@ -389,7 +389,7 @@
                         </TabControl.ItemTemplate>
                         <TabControl.ContentTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Name="sb">
                                     <ScrollViewer Name="TPIS_ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
                                         <!-- 画布-->
                                         <s:ProjectDesignerCanvas Visibility="Visible" Style="{StaticResource BackgroundGrid}" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">

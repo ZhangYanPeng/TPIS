@@ -55,7 +55,7 @@ namespace TPIS.TPISCanvas
                 if (this.moveType == MoveType.pos)
                 {
                     MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                    mainwin.GetCurrentProject().MoveChange((int)x, (int)y, sender);
+                    mainwin.GetCurrentProject().MoveChange((int)x, (int)y);
                 }
 
                 //改变大小

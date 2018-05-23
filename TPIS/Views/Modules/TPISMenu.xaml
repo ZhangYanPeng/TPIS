@@ -21,6 +21,7 @@
             <CommandBinding Command="s:TPISCommand.Cut" Executed="Cut_Excuted"/>
             <CommandBinding Command="s:TPISCommand.SeltAll" Executed="SeltAll_Excuted"/>
             <CommandBinding Command="s:TPISCommand.WorkspaceSize" Executed="WorkspaceSize_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.BackGroundColor" Executed="BackGroundColor_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -133,8 +134,12 @@
         </MenuItem>
         
         <!--设置-->
-        <MenuItem Header="设置(S)">
+        <MenuItem Header="设置(S)" SubmenuOpened="OnSubSetMenuOpened">
             <MenuItem Header="工作区" Name="WorkspaceSizeOpe" InputGestureText="F2(Ctrl+MouseWheel)" Command="{x:Static s:TPISCommand.WorkspaceSize}"/>
+            <MenuItem Header="背景色" Name="BackGroundColorOpe">
+                <MenuItem Tag="White"  Header="白底" Background="White" Command="{x:Static s:TPISCommand.BackGroundColor}"></MenuItem>
+                <MenuItem Tag="LightGray" Header="淡灰底" Background="LightGray" Command="{x:Static s:TPISCommand.BackGroundColor}"></MenuItem>
+                </MenuItem>
             <Separator />
         </MenuItem>
 

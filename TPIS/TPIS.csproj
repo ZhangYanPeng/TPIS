@@ -80,6 +80,9 @@
     <Compile Include="MainWindow.xaml.StatusBar.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow.xaml.Config.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Command\Connection.cs" />
     <Compile Include="Command\ConnectionAdorner.cs" />
     <Compile Include="Command\Connector.cs" />
@@ -114,6 +117,7 @@
     <Compile Include="Project\ProjectItemRecord.cs" />
     <Compile Include="Project\RecordStack.cs" />
     <Compile Include="TPISCanvas\ChangeLine.cs" />
+    <Compile Include="TPISCanvas\DesignerLine.cs" />
     <Compile Include="TPISCanvas\LineAnchorPoint.cs" />
     <Compile Include="TPISCanvas\SelectAdorner.cs" />
     <Compile Include="TPISCanvas\AddLines.cs" />
@@ -134,9 +138,6 @@
     <Compile Include="Views\TPISContextMenu.cs" />
     <Compile Include="Views\PropertyWindow.xaml.cs">
       <DependentUpon>PropertyWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WorkspaceSize.xaml.cs">
-      <DependentUpon>WorkspaceSize.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CalWin.xaml">
       <SubType>Designer</SubType>
@@ -187,6 +188,9 @@
       <DependentUpon>TPISToolBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewProject.xaml.cs">
+      <DependentUpon>NewProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkspaceSize.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project\ProjectItem.cs" />
