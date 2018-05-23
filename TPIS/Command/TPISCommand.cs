@@ -200,10 +200,7 @@ namespace TPIS.Command
                     mainwin.ProjectNum++;
 
                     {//隐藏属性窗、结果窗
-                        mainwin.PropertyStateChange.Tag = "hide";
                         mainwin.PropertyWindow.Visibility = Visibility.Collapsed;
-
-                        mainwin.ResultStateChange.Tag = "hide";
                         mainwin.ResultWindow.Visibility = Visibility.Collapsed;
                         mainwin.PortResults.Visibility = Visibility.Collapsed;
                     }

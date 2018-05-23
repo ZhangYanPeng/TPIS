@@ -91,8 +91,7 @@ namespace TPIS.TPISCanvas
             {
                 //双击时执行
                 //PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);
-                mainwin.PropertyWindowVisible(true);
-                mainwin.ResultWindowVisible(true);
+                mainwin.DetailsWindowVisible(true);
                 //propertyWindow.Show();
             }
 

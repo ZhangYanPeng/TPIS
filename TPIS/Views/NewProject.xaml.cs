@@ -29,10 +29,10 @@ namespace TPIS
             }
             proj_location.Text = Path.GetFullPath(directoryPath);
             {//隐藏属性窗、结果窗
-                mainwin.PropertyStateChange.Tag = "hide";
+               // mainwin.PropertyStateChange.Tag = "hide";
                 mainwin.PropertyWindow.Visibility = Visibility.Collapsed;
 
-                mainwin.ResultStateChange.Tag = "hide";
+                //mainwin.ResultStateChange.Tag = "hide";
                 mainwin.ResultWindow.Visibility = Visibility.Collapsed;
                 mainwin.PortResults.Visibility = Visibility.Collapsed;
             }
