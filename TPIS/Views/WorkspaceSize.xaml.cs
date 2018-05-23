@@ -28,6 +28,7 @@ namespace TPIS.Views
             string[] strArray = mainwin.GetCurrentProject().Name.Split('.');
             string projectName = strArray[0];
             proj_name.Text = projectName;
+            //获取当前工程工作区大小
             canvas_width.Text = mainwin.GetCurrentProject().Canvas.Width.ToString();
             canvas_height.Text = mainwin.GetCurrentProject().Canvas.Height.ToString();
         }
@@ -53,6 +54,10 @@ namespace TPIS.Views
             {
                 item.Canvas.Width = item.WorkSpaceSize_RD().X < int.Parse(canvas_width.Text) ? int.Parse(canvas_width.Text) : (int)item.WorkSpaceSize_RD().X;
                 item.Canvas.Height = item.WorkSpaceSize_RD().Y < int.Parse(canvas_height.Text) ? int.Parse(canvas_height.Text) : (int)item.WorkSpaceSize_RD().Y;
+                //存储工程配置
+                mainwin.TPISconfig.CANVAS_WIDTH = int.Parse(canvas_width.Text);
+                mainwin.TPISconfig.CANVAS_HEIGHT = int.Parse(canvas_height.Text);
+                mainwin.TPISconfig.SaveCfg();
             }
             mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
             this.Close();

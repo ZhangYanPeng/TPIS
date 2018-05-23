@@ -21,6 +21,7 @@ using TPIS.Project;
 using TPIS.TPISCanvas;
 using TPIS.Views.Modules;
 using System.Windows.Controls.Primitives;
+using TPIS.ConfigFile;
 // TPIS.TPISCanvas;
 
 
@@ -36,6 +37,7 @@ namespace TPIS
         public int CurrentPojectIndex { get; set; }//当前激活工程
         public int ProjectNum { get; set; } // 新工程编号
         public ScrollViewer scrollViewer { get; set; } // 工作区
+        public TPISConfig TPISconfig { get; set; }
 
         public ProjectItem GetCurrentProject()
         {
@@ -61,6 +63,8 @@ namespace TPIS
             InitLogs();
             InitWorkSpace();
             ProjectNum = 0;
+            //载入工程配置
+            TPISconfig = new TPISConfig();
         }
 
         private void InitLogs()
@@ -93,6 +97,7 @@ namespace TPIS
             }
             ProjectCanvas pCanvas = new ProjectCanvas(width, height);
             ProjectItem project = new ProjectItem(pName, pCanvas, ProjectNum, System.IO.Path.GetFullPath(directoryPath));
+            //TPISconfig.LoadCfg(project);
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();

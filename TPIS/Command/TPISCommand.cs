@@ -141,6 +141,7 @@ namespace TPIS.Command
             Window new_project = new NewProject();
             new_project.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             new_project.ShowDialog();
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
         }
 
         #endregion
@@ -187,11 +188,11 @@ namespace TPIS.Command
 
                     ((ProjectItem)obj).Num = mainwin.ProjectNum;
                     ((ProjectItem)obj).RebuildLink();
-                    //MessageBox.Show(((ProjectItem)obj).Rate.ToString());
                     {//解决在无新建工程时打开已有项目，出现的透明背景
                         ((ProjectItem)obj).GridThickness = 0;//赋初值0，使初始画布为隐藏网格
                         ((ProjectItem)obj).GridUintLength = 20;//赋初值20，使初始网格单元为20×20
-                        ((ProjectItem)obj).backGroundColor = Brushes.White;
+                        ((ProjectItem)obj).BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
+                        //((ProjectItem)obj).BackGroundColor = Brushes.White;
                     }
                     mainwin.ProjectList.projects.Add(obj as ProjectItem);
                     mainwin.projectTab.ItemsSource = mainwin.ProjectList.projects;
@@ -509,9 +510,14 @@ namespace TPIS.Command
                 {
                     case "White":
                         mainwin.GetCurrentProject().BackGroundColor = Brushes.White;
+                        //存储工程配置
+                        mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR = mainwin.GetCurrentProject().BackGroundColor;
+                        mainwin.TPISconfig.SaveCfg();
                         break;
                     case "LightGray":
                         mainwin.GetCurrentProject().BackGroundColor = Brushes.LightGray;
+                        mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR = mainwin.GetCurrentProject().BackGroundColor;
+                        mainwin.TPISconfig.SaveCfg();
                         break;
                 }
             }
