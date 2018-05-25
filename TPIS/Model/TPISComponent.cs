@@ -290,6 +290,8 @@ namespace TPIS.Model
             }
         }
 
+        #endregion
+
         public override object Clone()
         {
             MemoryStream stream = new MemoryStream();
@@ -300,7 +302,6 @@ namespace TPIS.Model
             stream.Close();
             return obj;
         }
-        #endregion
 
         public ObservableCollection<PropertyGroup> PropertyGroups { get; set; }
         public ObservableCollection<PropertyGroup> ResultGroups { get; set; }

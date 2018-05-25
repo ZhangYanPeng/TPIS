@@ -135,11 +135,15 @@
     <Compile Include="Views\CalWin.xaml.cs">
       <DependentUpon>CalWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TPISContextMenu.cs" />
-    <Compile Include="Views\PropertyWindow.xaml.cs">
-      <DependentUpon>PropertyWindow.xaml</DependentUpon>
+    <Compile Include="Views\CalWindow.xaml.cs">
+      <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TPISContextMenu.cs" />
     <Page Include="Views\CalWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,10 +168,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PropertyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -376,6 +376,10 @@
     <Resource Include="Images\icon\tab_close.png" />
     <Resource Include="Images\icon\window_hide.png" />
     <Resource Include="Images\icon\window_show.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button\play.png" />
+    <Resource Include="Images\button\stop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -186,39 +186,14 @@ namespace TPIS.Views.Modules
         #region 计算
         private void CalculateResult(object sender, RoutedEventArgs e)
         {
-            try
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            ProjectItem project = mainwin.GetCurrentProject();
+            if(project != null)
             {
-                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                ProjectItem project = mainwin.GetCurrentProject();
-                Task<ProjectItem> task = new Task<ProjectItem>(() => CalculateCurrent(project));
-                mainwin.GetCurrentProject().CalculateState = true;
-                task.Start();
-                Task cwt = task.ContinueWith(t => {
-                    ProjectItem result = t.Result;
-                    for (int i = 0; i < mainwin.ProjectList.projects.Count; i++)
-                    {
-                        if (mainwin.ProjectList.projects[i].Num == result.Num)
-                        {
-                            mainwin.ProjectList.projects[i].Objects = result.Objects;
-                            mainwin.ProjectList.projects[i].logs = result.logs;
-                            mainwin.ProjectList.projects[i].CalculateState = false;
-                            mainwin.ProjectList.AddLog(result.logs);
-                        }
-                    }
-                });
-                mainwin.LogView.ScrollToBottom();
-            }
-            catch
-            {
-                return;
+                CalWindow calWindow = new CalWindow(project);
+                calWindow.Show();
             }
         }
-
-        public static ProjectItem CalculateCurrent(object data)
-        {
-            return CalculateInBackEnd.Calculate(data as ProjectItem);
-        }
-
         #endregion
     }
 }

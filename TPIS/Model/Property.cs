@@ -65,6 +65,8 @@ namespace TPIS.Model
             info.AddValue("modes", Modes);
             info.AddValue("isKnown", IsKnown);
             info.AddValue("visible", visible);
+            info.AddValue("color", Color);
+            info.AddValue("curve", Curve);
         }
 
         public Property(SerializationInfo info, StreamingContext context)
@@ -73,6 +75,7 @@ namespace TPIS.Model
             Name = info.GetString("name");
             Units = (string[])info.GetValue("units", typeof(Object));
             Type = (P_Type)info.GetValue("type", typeof(Object));
+            Color = (TPISNet.PColor)info.GetValue("color", typeof(TPISNet.PColor));
             Tips = info.GetString("tips");
             IsStrOrNum = info.GetBoolean("isStrOrNum");
             bool vb = info.GetBoolean("visible");
@@ -83,6 +86,7 @@ namespace TPIS.Model
 
             valStr = info.GetString("valStr");
             valNum = info.GetDouble("valNum");
+            Curve = (Curves)info.GetValue("curve", typeof(Object));
             if (IsStrOrNum)
             {
                 showValue = valStr;
@@ -112,6 +116,7 @@ namespace TPIS.Model
         public string Tips { get; set; }
         public string[] Units { get; set; }
         public Curves Curve { get; set; }
+        public TPISNet.PColor Color { get; set; }
 
         public int unitNum;
         public int UnitNum
@@ -201,7 +206,7 @@ namespace TPIS.Model
         }
         #endregion
 
-        public Property(string dicName, string d_str, string name, string value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
+        public Property(string dicName, string d_str, string name, string value, string[] units, P_Type type, TPISNet.PColor pcolor, ObservableCollection<SelMode> modes = null, string tips = "")
         {
             SetKnown(d_str);
             DicName = dicName;
@@ -211,9 +216,11 @@ namespace TPIS.Model
             Tips = tips;
             UnitNum = 0;
             IsStrOrNum = true;
+            Color = pcolor;
 
             valStr = value;
             showValue = value;
+            Curve = null;
 
             if (modes != null)
                 Modes = modes;
@@ -221,7 +228,7 @@ namespace TPIS.Model
                 Modes = new ObservableCollection<SelMode>() { SelMode.None };
         }
 
-        public Property(string dicName, string d_str, string name, double value, string[] units, P_Type type, ObservableCollection<SelMode> modes = null, string tips = "")
+        public Property(string dicName, string d_str, string name, double value, string[] units, P_Type type, TPISNet.PColor pcolor, ObservableCollection<SelMode> modes = null, string tips = "")
         {
             SetKnown(d_str);
             DicName = dicName;
@@ -231,13 +238,14 @@ namespace TPIS.Model
             Tips = tips;
             UnitNum = 0;
             IsStrOrNum = false;
+            Color = pcolor;
 
             valNum = value;
             if (IsKnown)
                 showValue = ValueConvert(value, Units[0], Units[0]);
             else
                 showValue = "";
-
+            Curve = null;
 
             if (modes != null)
                 Modes = modes;
@@ -251,6 +259,7 @@ namespace TPIS.Model
             DicName = dicName;
             Name = name;
             Units = units;
+            Color = TPISNet.PColor.Whatever;
             Type = P_Type.ToLine;
             Tips = tips;
             Modes = new ObservableCollection<SelMode>() { SelMode.InterMode };

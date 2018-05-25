@@ -367,10 +367,36 @@ namespace TPIS
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         #endregion
+    }
+
+    //颜色控制
+    public class ColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Brushes.LightYellow;
+            else
+            {
+                TPISNet.PColor color = (TPISNet.PColor)value;
+                switch (color)
+                {
+                    case TPISNet.PColor.Weak: return Brushes.LightYellow;
+                    case TPISNet.PColor.Whatever: return Brushes.PaleTurquoise;
+                    case TPISNet.PColor.Super: return Brushes.DarkOrange;
+                }
+            }
+            return Brushes.LightYellow;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
     }
 
     public class ModeStringConverter : IValueConverter

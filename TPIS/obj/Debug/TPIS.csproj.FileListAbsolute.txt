@@ -7,7 +7,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\NewProject.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISMenu.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISToolBar.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\MainWindow.g.cs
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\PropertyWindow.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\App.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS_MarkupCompile.cache
@@ -24,7 +23,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWin.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISMenu.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\MainWindow.baml
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\PropertyWindow.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.g.resources
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.Properties.Resources.resources
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateResource.Cache
@@ -32,4 +30,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompi
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\WorkspaceSize.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\WorkspaceSize.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\PhysicalPro.dll
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWindow.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWindow.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

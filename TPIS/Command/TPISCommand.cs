@@ -198,12 +198,6 @@ namespace TPIS.Command
                     mainwin.projectTab.Items.Refresh();
                     mainwin.projectTab.SelectedItem = obj;
                     mainwin.ProjectNum++;
-
-                    {//隐藏属性窗、结果窗
-                        mainwin.PropertyWindow.Visibility = Visibility.Collapsed;
-                        mainwin.ResultWindow.Visibility = Visibility.Collapsed;
-                        mainwin.PortResults.Visibility = Visibility.Collapsed;
-                    }
                 }
                 catch
                 {

@@ -7,13 +7,11 @@
         xmlns:s="clr-namespace:TPIS.TPISCanvas"
         xmlns:cmd="clr-namespace:TPIS.TPISCommand"
         xmlns:c="clr-namespace:TPIS.Command"
-        xmlns:e="clr-namespace:TPIS.Views.Modules"
         mc:Ignorable="d"
         Title="TPIS" WindowStartupLocation="CenterScreen" ResizeMode="CanResize"
         MinHeight="600" MinWidth="800">
     <Window.Resources>
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Modules/TPISMenu.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISToolBar.xaml"/>
@@ -26,10 +24,15 @@
             <local:CalStateConverter x:Key="CalStateConverter" />
             <local:RectConverter x:Key="RectConverter" />
             <local:ModeStringConverter x:Key="ModeStringConverter"/>
-
+            <local:ColorConverter x:Key="ColorConverter"/>
 
             <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
                 <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>
+                <Setter Property="ToolTip">
+                    <Setter.Value>
+                        <ToolTip Background="{Binding Color,Converter={StaticResource ColorConverter}}" Content="{Binding Tips}" MinWidth="200" MinHeight="20"></ToolTip>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <!--网格线-->
@@ -114,17 +117,6 @@
         <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISToolBar}" x:Name="ToolBar"/>
         <ContentControl DockPanel.Dock="Left">
             <DockPanel >
-                <!--输入输出模块-->
-                <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Gray">
-                    <GroupBox Header="日志"  Margin="3,0,0,0">
-                        <ScrollViewer Name="LogView" Height="200" Width="250" MaxWidth="250" VerticalScrollBarVisibility="Auto">
-                            <DockPanel Margin="3">
-                                <TextBox IsEnabled="False" Name="Logs" TextWrapping="Wrap" AcceptsReturn="True"/>
-                            </DockPanel>
-                        </ScrollViewer>
-                    </GroupBox>
-                </Border>
-
                 <!--元件模块-->
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <GroupBox Header="元件" Margin="3,0,0,0">
@@ -216,6 +208,9 @@
                                             </ItemsControl>
                                         </s:ProjectDesignerCanvas>
                                     </ScrollViewer>
+                                    <AdornerDecorator HorizontalAlignment="Stretch" Opacity="0.5" Visibility="{Binding CalculateState, Converter={StaticResource CalStateConverter}}">
+                                        <UserControl Background="Gray"></UserControl>
+                                    </AdornerDecorator>
                                 </Grid>
                             </DataTemplate>
                         </TabControl.ContentTemplate>
@@ -223,200 +218,196 @@
                 </DockPanel>
             </Border>
 
+            <!--属性窗口-->
             <AdornerDecorator>
-                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Visibility="Visible" Name="DetailsWindow">
-                    <StackPanel Orientation="Vertical" FlowDirection="LeftToRight">
-                        <Border Margin="0 3 0 0">
-                            <UserControl Width="400" Height="800" Background="White" BorderBrush="Gray" BorderThickness="1">
-                                <DockPanel>
-                                    <UserControl DockPanel.Dock="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Height="20">
-                                        <DockPanel>
-                                            <Button Click="DetailsWindowClose" DockPanel.Dock="Right">
-                                                <Image Source="Images/icon/icon_close.png" ></Image>
-                                            </Button>
-                                            <TextBlock FontSize="15" Text="   元件详细信息"></TextBlock>
-                                        </DockPanel>
-                                    </UserControl>
-                                    <TabControl>
-                                        <TabItem>
-                                            <TabItem.Header>
-                                                <TextBlock Width="100">属性</TextBlock>
-                                            </TabItem.Header>
-                                            <TabItem.Content>
-                                                <!--属性窗-->
-                                                <Border BorderThickness="1" BorderBrush="Gray">
-                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                                        <StackPanel Margin="3" >
-                                                            <DockPanel Name="PropertyWindow" Visibility="Collapsed">
-                                                                <DockPanel DockPanel.Dock="Top" Height="25">
-                                                                    <TextBlock Text="模式选择:" Width="60" DockPanel.Dock="Left" VerticalAlignment="Center"></TextBlock>
-                                                                    <ComboBox Name="PropertyMode" DockPanel.Dock="Top"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                                        <ComboBox.ItemTemplate>
-                                                                            <DataTemplate>
-                                                                                <TextBlock Text="{Binding Converter={StaticResource ModeStringConverter}}">
-                                                                                </TextBlock>
-                                                                            </DataTemplate>
-                                                                        </ComboBox.ItemTemplate>
-                                                                    </ComboBox>
-                                                                </DockPanel>
-                                                                <GroupBox Header="属性">
-                                                                    <ListBox Name="PropertyContent" >
-                                                                        <ItemsControl.ItemTemplate>
-                                                                            <DataTemplate>
-                                                                                <GroupBox Header="{Binding Flag}"  Visibility="{Binding Visible}">
-                                                                                    <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
-                                                                                        <ListView.View>
-                                                                                            <GridView>
-                                                                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                                                                                <GridViewColumn Header="值" Width="200" >
-                                                                                                    <GridViewColumn.CellTemplate>
-                                                                                                        <DataTemplate>
-                                                                                                            <DockPanel Width="185">
-                                                                                                                <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
-                                                                                                                <ComboBox Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
-                                                                                                                    <ComboBox.Visibility>
-                                                                                                                        <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
-                                                                                                                            <Binding Path="Units"></Binding>
-                                                                                                                            <Binding Path="Type"></Binding>
-                                                                                                                        </MultiBinding>
-                                                                                                                    </ComboBox.Visibility>
-                                                                                                                    <ComboBox.ItemTemplate>
-                                                                                                                        <DataTemplate>
-                                                                                                                            <TextBlock Text="{Binding }"></TextBlock>
-                                                                                                                        </DataTemplate>
-                                                                                                                    </ComboBox.ItemTemplate>
-                                                                                                                </ComboBox>
-                                                                                                                <UserControl Visibility="{Binding Type, Converter={StaticResource LineVisualConverter}}">
-                                                                                                                    <Button Content="设置" DataContext="{Binding Curve}"  Click="OpenCurveWindow_Click"></Button>
-                                                                                                                </UserControl>
-                                                                                                            </DockPanel>
-                                                                                                        </DataTemplate>
-                                                                                                    </GridViewColumn.CellTemplate>
-                                                                                                </GridViewColumn>
-                                                                                            </GridView>
-                                                                                        </ListView.View>
-                                                                                    </ListView>
-                                                                                </GroupBox>
-                                                                            </DataTemplate>
-                                                                        </ItemsControl.ItemTemplate>
-                                                                    </ListBox>
-                                                                </GroupBox>
+                <Grid Visibility="Collapsed" Name="DetailsWindow" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Border Margin="2">
+                        <UserControl Width="400" Height="800" Background="White" BorderBrush="Gray" BorderThickness="1">
+                            <DockPanel>
+                                <UserControl DockPanel.Dock="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Height="20">
+                                    <DockPanel>
+                                        <Button Click="DetailsWindowClose" DockPanel.Dock="Right">
+                                            <Image Source="Images/icon/icon_close.png" ></Image>
+                                        </Button>
+                                        <TextBlock FontSize="15" Text="   元件详细信息"></TextBlock>
+                                    </DockPanel>
+                                </UserControl>
+                                <TabControl>
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            <TextBlock Width="100">属性</TextBlock>
+                                        </TabItem.Header>
+                                        <TabItem.Content>
+                                            <!--属性窗-->
+                                            <Border BorderThickness="1" BorderBrush="Gray">
+                                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                    <StackPanel Margin="3" >
+                                                        <DockPanel >
+                                                            <DockPanel DockPanel.Dock="Top" Height="25">
+                                                                <TextBlock Text="模式选择:" Width="60" DockPanel.Dock="Left" VerticalAlignment="Center"></TextBlock>
+                                                                <ComboBox Name="PropertyMode" DockPanel.Dock="Top"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                                    <ComboBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBlock Text="{Binding Converter={StaticResource ModeStringConverter}}">
+                                                                            </TextBlock>
+                                                                        </DataTemplate>
+                                                                    </ComboBox.ItemTemplate>
+                                                                </ComboBox>
                                                             </DockPanel>
-                                                        </StackPanel>
-                                                    </ScrollViewer>
-                                                </Border>
-                                            </TabItem.Content>
-                                        </TabItem>
-
-                                        <TabItem>
-                                            <TabItem.Header>
-                                                <TextBlock Width="100">计算结果</TextBlock>
-                                            </TabItem.Header>
-                                            <TabItem.Content>
-                                                <!--结果窗-->
-                                                <Border BorderThickness="1" BorderBrush="Gray">
-                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                                        <StackPanel Margin="3" >
-                                                            <ListBox Name="ResultWindow">
-                                                                <ItemsControl.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <GroupBox Header="{Binding Flag}" >
-                                                                            <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
-                                                                                <ListView.View>
-                                                                                    <GridView>
-                                                                                        <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                                                                        <GridViewColumn Header="值" Width="200" >
-                                                                                            <GridViewColumn.CellTemplate>
-                                                                                                <DataTemplate>
-                                                                                                    <DockPanel Width="185">
-                                                                                                        <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
-                                                                                                        <ComboBox Width="78" IsEnabled="False" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
-                                                                                                            <ComboBox.Visibility>
-                                                                                                                <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
-                                                                                                                    <Binding Path="Units"></Binding>
-                                                                                                                    <Binding Path="Type"></Binding>
-                                                                                                                </MultiBinding>
-                                                                                                            </ComboBox.Visibility>
-                                                                                                            <ComboBox.ItemTemplate>
-                                                                                                                <DataTemplate>
-                                                                                                                    <TextBlock Text="{Binding }"></TextBlock>
-                                                                                                                </DataTemplate>
-                                                                                                            </ComboBox.ItemTemplate>
-                                                                                                        </ComboBox>
-                                                                                                        <UserControl Visibility="{Binding Type, Converter={StaticResource LineVisualConverter}}">
-                                                                                                            <Button Content="设置" DataContext="{Binding Curve}"  Click="OpenCurveWindow_Click"></Button>
-                                                                                                        </UserControl>
-                                                                                                    </DockPanel>
-                                                                                                </DataTemplate>
-                                                                                            </GridViewColumn.CellTemplate>
-                                                                                        </GridViewColumn>
-                                                                                    </GridView>
-                                                                                </ListView.View>
-                                                                            </ListView>
-                                                                        </GroupBox>
-                                                                    </DataTemplate>
-                                                                </ItemsControl.ItemTemplate>
-                                                            </ListBox>
-
-                                                            <StackPanel Margin="3">
-                                                                <ItemsControl Name="PortResults" >
+                                                            <GroupBox Header="属性">
+                                                                <ListBox Name="PropertyContent" >
                                                                     <ItemsControl.ItemTemplate>
                                                                         <DataTemplate>
-                                                                            <Expander MinWidth="300">
-                                                                                <Expander.Header>
-                                                                                    <DockPanel>
-                                                                                        <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" FontSize="14" FontWeight="Bold" >
-                                                                                        </TextBlock>
-                                                                                        <CheckBox IsChecked="{Binding ShowResult}"></CheckBox>
-                                                                                    </DockPanel>
-                                                                                </Expander.Header>
-                                                                                <Expander.Content>
-                                                                                    <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Results}">
-                                                                                        <ListView.View>
-                                                                                            <GridView>
-                                                                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                                                                                <GridViewColumn Header="值" Width="200" >
-                                                                                                    <GridViewColumn.CellTemplate>
-                                                                                                        <DataTemplate>
-                                                                                                            <DockPanel Width="185">
-                                                                                                                <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
-                                                                                                                <ComboBox IsEnabled="False" Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
-                                                                                                                    <ComboBox.Visibility>
-                                                                                                                        <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
-                                                                                                                            <Binding Path="Units"></Binding>
-                                                                                                                            <Binding Path="Type"></Binding>
-                                                                                                                        </MultiBinding>
-                                                                                                                    </ComboBox.Visibility>
-                                                                                                                    <ComboBox.ItemTemplate>
-                                                                                                                        <DataTemplate>
-                                                                                                                            <TextBlock Text="{Binding }"></TextBlock>
-                                                                                                                        </DataTemplate>
-                                                                                                                    </ComboBox.ItemTemplate>
-                                                                                                                </ComboBox>
-                                                                                                            </DockPanel>
-                                                                                                        </DataTemplate>
-                                                                                                    </GridViewColumn.CellTemplate>
-                                                                                                </GridViewColumn>
-                                                                                            </GridView>
-                                                                                        </ListView.View>
-                                                                                    </ListView>
-                                                                                </Expander.Content>
-                                                                            </Expander>
+                                                                            <GroupBox Header="{Binding Flag}"  Visibility="{Binding Visible}">
+                                                                                <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
+                                                                                    <ListView.View>
+                                                                                        <GridView>
+                                                                                            <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                                                            <GridViewColumn Header="值" Width="200" >
+                                                                                                <GridViewColumn.CellTemplate>
+                                                                                                    <DataTemplate>
+                                                                                                        <DockPanel Width="185">
+                                                                                                            <TextBox DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                                                            <ComboBox Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                                                                <ComboBox.Visibility>
+                                                                                                                    <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                                                                        <Binding Path="Units"></Binding>
+                                                                                                                        <Binding Path="Type"></Binding>
+                                                                                                                    </MultiBinding>
+                                                                                                                </ComboBox.Visibility>
+                                                                                                                <ComboBox.ItemTemplate>
+                                                                                                                    <DataTemplate>
+                                                                                                                        <TextBlock Text="{Binding }"></TextBlock>
+                                                                                                                    </DataTemplate>
+                                                                                                                </ComboBox.ItemTemplate>
+                                                                                                            </ComboBox>
+                                                                                                            <UserControl Visibility="{Binding Type, Converter={StaticResource LineVisualConverter}}">
+                                                                                                                <Button Content="设置" DataContext="{Binding Curve}"  Click="OpenCurveWindow_Click"></Button>
+                                                                                                            </UserControl>
+                                                                                                        </DockPanel>
+                                                                                                    </DataTemplate>
+                                                                                                </GridViewColumn.CellTemplate>
+                                                                                            </GridViewColumn>
+                                                                                        </GridView>
+                                                                                    </ListView.View>
+                                                                                </ListView>
+                                                                            </GroupBox>
                                                                         </DataTemplate>
                                                                     </ItemsControl.ItemTemplate>
-                                                                </ItemsControl>
-                                                            </StackPanel>
+                                                                </ListBox>
+                                                            </GroupBox>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </ScrollViewer>
+                                            </Border>
+                                        </TabItem.Content>
+                                    </TabItem>
+
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            <TextBlock Width="100">计算结果</TextBlock>
+                                        </TabItem.Header>
+                                        <TabItem.Content>
+                                            <!--结果窗-->
+                                            <Border BorderThickness="1" BorderBrush="Gray">
+                                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                    <StackPanel Margin="3" >
+                                                        <ListBox Name="ResultWindow">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <GroupBox Header="{Binding Flag}" >
+                                                                        <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
+                                                                            <ListView.View>
+                                                                                <GridView>
+                                                                                    <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                                                    <GridViewColumn Header="值" Width="200" >
+                                                                                        <GridViewColumn.CellTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <DockPanel Width="185">
+                                                                                                    <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                                                    <ComboBox Width="78" IsEnabled="False" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                                                        <ComboBox.Visibility>
+                                                                                                            <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                                                                <Binding Path="Units"></Binding>
+                                                                                                                <Binding Path="Type"></Binding>
+                                                                                                            </MultiBinding>
+                                                                                                        </ComboBox.Visibility>
+                                                                                                        <ComboBox.ItemTemplate>
+                                                                                                            <DataTemplate>
+                                                                                                                <TextBlock Text="{Binding }"></TextBlock>
+                                                                                                            </DataTemplate>
+                                                                                                        </ComboBox.ItemTemplate>
+                                                                                                    </ComboBox>
+                                                                                                </DockPanel>
+                                                                                            </DataTemplate>
+                                                                                        </GridViewColumn.CellTemplate>
+                                                                                    </GridViewColumn>
+                                                                                </GridView>
+                                                                            </ListView.View>
+                                                                        </ListView>
+                                                                    </GroupBox>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ListBox>
+
+                                                        <StackPanel Margin="3">
+                                                            <ItemsControl Name="PortResults" >
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <Expander MinWidth="300">
+                                                                            <Expander.Header>
+                                                                                <DockPanel>
+                                                                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" FontSize="14" FontWeight="Bold" >
+                                                                                    </TextBlock>
+                                                                                    <CheckBox IsChecked="{Binding ShowResult}"></CheckBox>
+                                                                                </DockPanel>
+                                                                            </Expander.Header>
+                                                                            <Expander.Content>
+                                                                                <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Results}">
+                                                                                    <ListView.View>
+                                                                                        <GridView>
+                                                                                            <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                                                            <GridViewColumn Header="值" Width="200" >
+                                                                                                <GridViewColumn.CellTemplate>
+                                                                                                    <DataTemplate>
+                                                                                                        <DockPanel Width="185">
+                                                                                                            <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                                                            <ComboBox IsEnabled="False" Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                                                                <ComboBox.Visibility>
+                                                                                                                    <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                                                                        <Binding Path="Units"></Binding>
+                                                                                                                        <Binding Path="Type"></Binding>
+                                                                                                                    </MultiBinding>
+                                                                                                                </ComboBox.Visibility>
+                                                                                                                <ComboBox.ItemTemplate>
+                                                                                                                    <DataTemplate>
+                                                                                                                        <TextBlock Text="{Binding }"></TextBlock>
+                                                                                                                    </DataTemplate>
+                                                                                                                </ComboBox.ItemTemplate>
+                                                                                                            </ComboBox>
+                                                                                                        </DockPanel>
+                                                                                                    </DataTemplate>
+                                                                                                </GridViewColumn.CellTemplate>
+                                                                                            </GridViewColumn>
+                                                                                        </GridView>
+                                                                                    </ListView.View>
+                                                                                </ListView>
+                                                                            </Expander.Content>
+                                                                        </Expander>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
                                                         </StackPanel>
-                                                    </ScrollViewer>
-                                                </Border>
-                                            </TabItem.Content>
-                                        </TabItem>
-                                    </TabControl>
-                                </DockPanel>
-                            </UserControl>
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
+                                                    </StackPanel>
+                                                </ScrollViewer>
+                                            </Border>
+                                        </TabItem.Content>
+                                    </TabItem>
+                                </TabControl>
+                            </DockPanel>
+                        </UserControl>
+                    </Border>
+                </Grid>
             </AdornerDecorator>
         </Grid>
     </DockPanel>

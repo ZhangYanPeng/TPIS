@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("tpisnet.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/button/play%20(1).png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/button/stop.png")]
 
 
