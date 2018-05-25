@@ -68,6 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CommonFunction.cs" />
+    <Compile Include="ConfigFile\TPISConfig.cs" />
     <Compile Include="MainWindow.xaml.Intialize.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -78,9 +79,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.StatusBar.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.Config.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Command\Connection.cs" />
@@ -191,7 +189,7 @@
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkspaceSize.xaml.cs">
-      <DependentUpon>NewProject.xaml</DependentUpon>
+      <DependentUpon>WorkspaceSize.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project\ProjectItem.cs" />
     <Compile Include="Project\ProjectCanvas.cs" />

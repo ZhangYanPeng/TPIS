@@ -1,4 +1,5 @@
 ﻿
+<<<<<<< HEAD
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\CalWin.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\CalWindow.xaml;;
@@ -7,4 +8,14 @@ FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Modules\TPISMenu.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Modules\TPISToolBar.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\MainWindow.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\WorkspaceSize.xaml;;
+=======
+FC:\Users\LW\source\repos\TPIS\TPIS\App.xaml;;
+FC:\Users\LW\source\repos\TPIS\TPIS\Views\CalWin.xaml;;
+FC:\Users\LW\source\repos\TPIS\TPIS\Views\Modules\TPISCanvas.xaml;;
+FC:\Users\LW\source\repos\TPIS\TPIS\Views\Modules\TPISMenu.xaml;;
+FC:\Users\LW\source\repos\TPIS\TPIS\Views\Modules\TPISToolBar.xaml;;
+FC:\Users\LW\source\repos\TPIS\TPIS\MainWindow.xaml;;
+FC:\Users\LW\source\repos\TPIS\TPIS\Views\PropertyWindow.xaml;;
+FC:\Users\LW\source\repos\TPIS\TPIS\Views\WorkspaceSize.xaml;;
+>>>>>>> e5ff8335b13e1434d0dc7b26677f86c93cd6cf16
 

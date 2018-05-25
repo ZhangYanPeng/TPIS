@@ -28,6 +28,10 @@ namespace TPIS
                 Directory.CreateDirectory(directoryPath);//创建一个路径的文件夹
             }
             proj_location.Text = Path.GetFullPath(directoryPath);
+
+            //配置当前工程工作区大小
+            canvas_width.Text = mainwin.TPISconfig.CANVAS_WIDTH.ToString();
+            canvas_height.Text = mainwin.TPISconfig.CANVAS_HEIGHT.ToString();
         }
 
         /// <summary>
@@ -63,6 +67,10 @@ namespace TPIS
             {
                 if (mainwin.AddProject(proj_name.Text, proj_location.Text, int.Parse(canvas_width.Text), int.Parse(canvas_height.Text)))
                 {
+                    //存储工程配置
+                    mainwin.TPISconfig.CANVAS_WIDTH = int.Parse(canvas_width.Text);
+                    mainwin.TPISconfig.CANVAS_HEIGHT = int.Parse(canvas_height.Text);
+                    mainwin.TPISconfig.SaveCfg();
                     Close();
                 }
                 else

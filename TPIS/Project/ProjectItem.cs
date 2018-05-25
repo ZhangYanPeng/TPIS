@@ -207,6 +207,7 @@ namespace TPIS.Project
 
         public ProjectItem(string name, ProjectCanvas pCanvas, long num, string p)
         {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             this.Name = name + ".tpis";
             this.Num = num;
             this.Canvas = pCanvas;
@@ -217,7 +218,8 @@ namespace TPIS.Project
             this.CalculateState = false;
             this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
             this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
-            this.BackGroundColor = Brushes.White;
+            //this.BackGroundColor = Brushes.White;
+            this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
             Path = p;
             PropertyGroup = CommonTypeService.InitProjectProperty();
             ResultGroup = new ObservableCollection<PropertyGroup>();
@@ -252,6 +254,7 @@ namespace TPIS.Project
                     ((TPISLine)obj).SetRate(this.Rate);
                 }
             }
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
         }
         #endregion
 
@@ -1330,12 +1333,11 @@ namespace TPIS.Project
         public ProjectItem(SerializationInfo info, StreamingContext context)
         {
             this.Name = info.GetString("name");
-            this.Num = 2;
+            //this.Num = 2;
             this.Path = info.GetString("path");
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
-            this.Rate = 1;
             this.clipBoard = new ClipBoard();
             this.Records = new RecordStack();
         }

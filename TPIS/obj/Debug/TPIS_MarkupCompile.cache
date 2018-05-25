@@ -4,17 +4,30 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\
+=======
+C:\Users\LW\source\repos\TPIS\TPIS\obj\Debug\
+>>>>>>> e5ff8335b13e1434d0dc7b26677f86c93cd6cf16
 TPIS
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml
 9-1745267502
 
 691706816116
 181565648601
 Views\CalWin.xaml;Views\CalWindow.xaml;Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\WorkspaceSize.xaml;
+=======
+C:\Users\LW\source\repos\TPIS\TPIS\App.xaml
+9-2021040708
+
+69-342846869
+18-1777010777
+Views\CalWin.xaml;Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\PropertyWindow.xaml;Views\WorkspaceSize.xaml;
+>>>>>>> e5ff8335b13e1434d0dc7b26677f86c93cd6cf16
 
 False
 
