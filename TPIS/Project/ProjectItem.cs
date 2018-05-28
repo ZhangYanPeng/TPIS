@@ -995,6 +995,11 @@ namespace TPIS.Project
                         y = (int)(y / this.Rate);
                     }
                 }
+                else if (obj is ResultCross)
+                {//包含结果悬浮窗的有效区
+                    x = (int)(((ResultCross)obj).Position.X + ((ResultCross)obj).Position.Width + 10);
+                    y = (int)(((ResultCross)obj).Position.Y + ((ResultCross)obj).Position.Height + 10);
+                }
                 p.X = p.X > x ? p.X : x;
                 p.Y = p.Y > y ? p.Y : y;
             }
@@ -1326,6 +1331,7 @@ namespace TPIS.Project
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
+            this.Rate = 1;
             this.clipBoard = new ClipBoard();
             this.Records = new RecordStack();
         }
