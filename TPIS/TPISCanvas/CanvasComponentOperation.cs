@@ -47,9 +47,10 @@ namespace TPIS.TPISCanvas
                             }
                         }
                         AddComponentImage = new Image();
+                        AddComponentImage.Stretch = System.Windows.Media.Stretch.Fill;
                         AddComponentImage.Source = new BitmapImage(new Uri(targetType.PicPath, UriKind.RelativeOrAbsolute));
-                        AddComponentImage.Width = targetType.Width;
-                        AddComponentImage.Height = targetType.Height;
+                        AddComponentImage.Width = targetType.Width* mainwin.GetCurrentProject().Rate;
+                        AddComponentImage.Height = targetType.Height * mainwin.GetCurrentProject().Rate;
                         Children.Add(AddComponentImage);
                     }
                 }

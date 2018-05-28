@@ -1124,7 +1124,7 @@ namespace TPIS.Project
         #endregion
 
         #region 元件移动-边界限制
-        public void MoveChange(int x, int y)
+        public void MoveChange(double x, double y)
         {
             Point tmp;
             tmp = this.WorkSpaceSize_LU();
@@ -1328,6 +1328,7 @@ namespace TPIS.Project
             info.AddValue("objects", Objects);
             info.AddValue("path", Path);
             info.AddValue("properties", PropertyGroup);
+            info.AddValue("result", ResultGroup);
         }
 
         public ProjectItem(SerializationInfo info, StreamingContext context)
@@ -1338,8 +1339,20 @@ namespace TPIS.Project
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
+            this.ResultGroup = (ObservableCollection<PropertyGroup>)info.GetValue("result", typeof(Object));
             this.clipBoard = new ClipBoard();
             this.Records = new RecordStack();
+            this.Rate = 1;
+            this.CalculateState = false;
+            Logs = new ObservableCollection<string>();
+
+            this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
+            this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
+
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
+            
+            return;
         }
 
         public void RebuildLink()

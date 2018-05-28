@@ -48,9 +48,9 @@ namespace TPIS.Model
         internal void PosChange(double? x, double? y)
         {
             if (x.HasValue)
-                Position.V_x += x.Value;
+                Position.V_x = x.Value;
             if (y.HasValue)
-                Position.V_y += y.Value;
+                Position.V_y = y.Value;
         }
 
         internal void SetRate(double rate)

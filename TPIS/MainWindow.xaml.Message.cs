@@ -422,4 +422,35 @@ namespace TPIS
             return null;
         }
     }
+
+    //控制显示样式
+    public class MaterialConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value != null)
+            {
+                TPISNet.Material material = (TPISNet.Material)value;
+                switch (material)
+                {
+                    case TPISNet.Material.air: return "工质类型：空气";
+                    case TPISNet.Material.ash: return "工质类型：灰";
+                    case TPISNet.Material.coal: return "工质类型：煤";
+                    case TPISNet.Material.fluegas: return "工质类型：排烟";
+                    case TPISNet.Material.gas: return "工质类型：气体";
+                    case TPISNet.Material.NA: return "工质类型：未定义";
+                    case TPISNet.Material.oil: return "工质类型：油";
+                    case TPISNet.Material.power: return "工质类型：功率";
+                    case TPISNet.Material.water: return "工质类型：汽水";
+
+                }
+            }
+            return "工质类型：未定义";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }

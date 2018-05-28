@@ -66,7 +66,7 @@ namespace TPIS.Model
             info.AddValue("isKnown", IsKnown);
             info.AddValue("visible", visible);
             info.AddValue("color", Color);
-            info.AddValue("curve", Curve);
+            //info.AddValue("curve", Curve);
         }
 
         public Property(SerializationInfo info, StreamingContext context)
@@ -86,7 +86,7 @@ namespace TPIS.Model
 
             valStr = info.GetString("valStr");
             valNum = info.GetDouble("valNum");
-            Curve = (Curves)info.GetValue("curve", typeof(Object));
+            //Curve = (Curves)info.GetValue("curve", typeof(Object));
             if (IsStrOrNum)
             {
                 showValue = valStr;
@@ -149,15 +149,40 @@ namespace TPIS.Model
             get => showValue;
             set
             {
-                showValue = value;
-                if (value == "" || value == null)
-                    IsKnown = false;
+                if (Name == "干度")
+                {
+                    try
+                    {
+                        double.Parse(value as string);
+                        if (value == "" || value == null)
+                            IsKnown = false;
+                        else
+                            IsKnown = true;
+                        valNum = double.Parse(value as string);
+                        if (valNum > 1)
+                            showValue = "过热汽";
+                        else if (valNum < 0)
+                            showValue = "过冷水";
+                        else
+                            showValue = value;
+                    }
+                    catch
+                    {
+                        showValue = value;
+                    }
+                }
                 else
-                    IsKnown = true;
-                if (IsStrOrNum)
-                    valStr = (string)value;
-                else
-                    valNum = ValueConvertBack(value, Units[UnitNum], Units[0]);
+                {
+                    showValue = value;
+                    if (value == "" || value == null)
+                        IsKnown = false;
+                    else
+                        IsKnown = true;
+                    if (IsStrOrNum)
+                        valStr = (string)value;
+                    else
+                        valNum = ValueConvertBack(value, Units[UnitNum], Units[0]);
+                }
                 OnPropertyChanged("ShowValue");
             }
         }
@@ -242,7 +267,9 @@ namespace TPIS.Model
 
             valNum = value;
             if (IsKnown)
+            {
                 showValue = ValueConvert(value, Units[0], Units[0]);
+            }
             else
                 showValue = "";
             Curve = null;
@@ -364,7 +391,7 @@ namespace TPIS.Model
             //            else
             //                return value;
             //        }
-                
+
             //    //WaterQ Gas Q
             //    case "t/h":
             //        {

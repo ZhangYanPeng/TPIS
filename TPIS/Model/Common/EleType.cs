@@ -24,5 +24,10 @@ namespace TPIS.Model.Common
         {
             return Interface.NewElement(eleType, 0);
         }
+
+        internal static string InitComponentName(EleType eleType)
+        {
+            return Interface.NewElement(eleType, 0).Name;
+        }
     }
 }

@@ -49,10 +49,11 @@ namespace TPIS.Views
             {
                 SetCalState(true);
                 cancellationTokenSource = new CancellationTokenSource();
-                task = new Task<ProjectItem>(() => CalculateCurrent(project.Clone(), cancellationTokenSource.Token), cancellationTokenSource.Token);
+                ProjectItem pi = (ProjectItem)project.Clone();
+                task = new Task<ProjectItem>(() => CalculateCurrent(pi, cancellationTokenSource.Token), cancellationTokenSource.Token);
                 task.Start();
                 Task cwt = task.ContinueWith(t => {
-                    ProjectItem pi = t.Result;
+                    pi = t.Result;
                     if (pi != null)
                     {
                         //获取元件结果
@@ -77,10 +78,7 @@ namespace TPIS.Views
                         }
                         //获取系统结果
                         project.ResultGroup = pi.ResultGroup;
-                        if (project.Logs == null)
-                            project.Logs = pi.logs;
-                        else
-                            project.Logs = new ObservableCollection<string>(project.logs.Concat(pi.logs));
+                        project.Logs = pi.logs;
                         project.CalculateState = false;
                     }
                 });

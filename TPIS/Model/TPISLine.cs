@@ -290,11 +290,11 @@ namespace TPIS.Model
 
 
         //整体平移
-        internal void PosChange(double d_vx, double d_vy)
+        internal void PosChange(double vx, double vy)
         {
             for( int i=0; i<Points.Count; i++)
             {
-                Points[i] = new Point(Points[i].X + d_vx, Points[i].Y + d_vy);
+                Points[i] = new Point(vx, vy);
             }
             OnPropertyChanged("Points");
         }
