@@ -157,7 +157,7 @@ namespace TPIS.Model.Common
                     }
                 }
             }
-            project.logs = BackEnd.warnning;
+            project.Logs = BackEnd.warnning;
             return project;
         }
 

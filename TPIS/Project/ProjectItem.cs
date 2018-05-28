@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -81,7 +82,7 @@ namespace TPIS.Project
     #endregion
 
     [Serializable]
-    public partial class ProjectItem : INotifyPropertyChanged, ISerializable
+    public partial class ProjectItem : INotifyPropertyChanged, ISerializable, ICloneable
     {
         #region 属性更新
         public event PropertyChangedEventHandler PropertyChanged;
@@ -96,6 +97,18 @@ namespace TPIS.Project
         #endregion
 
         public ObservableCollection<string> logs { get; set; }
+        public ObservableCollection<string> Logs
+        {
+            get
+            {
+                return logs;
+            }
+            set
+            {
+                logs = value;
+                OnPropertyChanged("Logs");
+            }
+        }
 
         public String Name { get; set; }
         public long Num { get; set; }
@@ -210,6 +223,7 @@ namespace TPIS.Project
             Path = p;
             PropertyGroup = CommonTypeService.InitProjectProperty();
             ResultGroup = new ObservableCollection<PropertyGroup>();
+            Logs = new ObservableCollection<string>();
             SaveProject();
             return;
         }
@@ -568,7 +582,6 @@ namespace TPIS.Project
             if (component == null)
             {
                 mainwin.PropertyMode.DataContext = null;
-                mainwin.PropertyMode.Visibility = Visibility.Collapsed;
                 mainwin.PropertyContent.ItemsSource = PropertyGroup;
                 mainwin.PropertyContent.Items.Refresh();
                 mainwin.ResultWindow.ItemsSource = null;
@@ -581,7 +594,6 @@ namespace TPIS.Project
             mainwin.PropertyMode.ItemsSource = component.Mode;
             mainwin.PropertyMode.Items.Refresh();
             
-            mainwin.PropertyMode.Visibility = Visibility.Visible;
             mainwin.PropertyContent.ItemsSource = component.PropertyGroups;
             mainwin.PropertyContent.Items.Refresh();
 
@@ -995,11 +1007,6 @@ namespace TPIS.Project
                         y = (int)(y / this.Rate);
                     }
                 }
-                else if (obj is ResultCross)
-                {//包含结果悬浮窗的有效区
-                    x = (int)(((ResultCross)obj).Position.X + ((ResultCross)obj).Position.Width + 10);
-                    y = (int)(((ResultCross)obj).Position.Y + ((ResultCross)obj).Position.Height + 10);
-                }
                 p.X = p.X > x ? p.X : x;
                 p.Y = p.Y > y ? p.Y : y;
             }
@@ -1117,7 +1124,7 @@ namespace TPIS.Project
         #endregion
 
         #region 元件移动-边界限制
-        public void MoveChange(int x, int y)
+        public void MoveChange(double x, double y)
         {
             Point tmp;
             tmp = this.WorkSpaceSize_LU();
@@ -1321,6 +1328,7 @@ namespace TPIS.Project
             info.AddValue("objects", Objects);
             info.AddValue("path", Path);
             info.AddValue("properties", PropertyGroup);
+            info.AddValue("result", ResultGroup);
         }
 
         public ProjectItem(SerializationInfo info, StreamingContext context)
@@ -1331,9 +1339,20 @@ namespace TPIS.Project
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
-            this.Rate = 1;
+            this.ResultGroup = (ObservableCollection<PropertyGroup>)info.GetValue("result", typeof(Object));
             this.clipBoard = new ClipBoard();
             this.Records = new RecordStack();
+            this.Rate = 1;
+            this.CalculateState = false;
+            Logs = new ObservableCollection<string>();
+
+            this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
+            this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
+
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
+            
+            return;
         }
 
         public void RebuildLink()
@@ -1385,6 +1404,17 @@ namespace TPIS.Project
                     }
                 }
             }
+        }
+
+        public object Clone()
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(stream, this);
+            stream.Position = 0;
+            Object obj = bf.Deserialize(stream);
+            stream.Close();
+            return obj;
         }
         #endregion
     }

@@ -60,19 +60,10 @@ namespace TPIS
             InitializeMessage();//初始化主窗口事件
             //projectTab.SelectionChanged += new SelectionChangedEventHandler(onProjectChange);
             //初始化日志窗
-            InitLogs();
             InitWorkSpace();
             ProjectNum = 0;
             //载入工程配置
             TPISconfig = new TPISConfig();
-        }
-
-        private void InitLogs()
-        {
-            Binding binding = new Binding();
-            binding.Source = ProjectList;
-            binding.Path = new PropertyPath("LogStr");
-            Logs.SetBinding(TextBox.TextProperty, binding);
         }
 
         /// <summary>
@@ -214,6 +205,7 @@ namespace TPIS
             return null;
         }
         #endregion
+
     }
 
     /// <summary>

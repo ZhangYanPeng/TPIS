@@ -6,6 +6,50 @@
                     x:Class="TPIS.TPISCanvas.ChangeLine">
 
     <model:LinePosConverter x:Key="myPointsConverter"/>
+    <local:ValVisualConverter x:Key="ValVisualConverter"/>
+    <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
+    <local:ColorConverter x:Key="ColorConverter"/>
+    <local:MaterialConverter x:Key="MaterialConverter"/>
+
+    <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Background="{Binding Color,Converter={StaticResource ColorConverter}}" Content="{Binding Tips}" MinWidth="200" MinHeight="20"></ToolTip>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--网格线-->
+    <Style x:Key="BackgroundGrid" TargetType="{x:Type s:ProjectDesignerCanvas}">
+        <Setter Property ="Background">
+            <Setter.Value>
+                <DrawingBrush TileMode="Tile" ViewportUnits="Absolute">
+                    <DrawingBrush.Viewport>
+                        <MultiBinding Converter="{StaticResource RectConverter}">
+                            <Binding Path="GridUintLength"/>
+                        </MultiBinding>
+                    </DrawingBrush.Viewport>
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing Brush="{Binding BackGroundColor}">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry>
+                                    <RectangleGeometry.Rect>
+                                        <MultiBinding Converter="{StaticResource RectConverter}">
+                                            <Binding Path="GridUintLength"/>
+                                        </MultiBinding>
+                                    </RectangleGeometry.Rect>
+                                </RectangleGeometry>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Pen>
+                                <Pen Brush="LightGray" Thickness="{Binding GridThickness}"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="ComponentItemsControlStyle" TargetType="ItemsControl">
         <Setter Property="ItemsPanel">
@@ -44,7 +88,48 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Ellipse Width="10" Height="10" Fill="{Binding PortColor}" ToolTip="{Binding MaterialType}" MouseEnter="Port_MouseEnter" MouseLeftButtonDown="Port_MouseLeftButtonDown" MouseRightButtonDown="Port_MouseRightButtonDown" MouseLeftButtonUp="Port_MouseLeftButtonUp">
+                    <Ellipse Width="10" Height="10" Fill="{Binding PortColor}" MouseEnter="Port_MouseEnter" MouseLeftButtonDown="Port_MouseLeftButtonDown" MouseRightButtonDown="Port_MouseRightButtonDown" MouseLeftButtonUp="Port_MouseLeftButtonUp">
+                        <Ellipse.ToolTip>
+                            <DockPanel>
+                                <Grid DockPanel.Dock="Top" Margin="5 0 0 5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" FontSize="14" Text="{Binding Name}"></TextBlock>
+                                    <TextBlock Grid.Column="1" FontSize="14" Text="{Binding MaterialType, Converter={StaticResource MaterialConverter}}"></TextBlock>
+                                </Grid>
+                                <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Results}" >
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                            <GridViewColumn Header="值" Width="200" >
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DockPanel Width="185">
+                                                            <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                            <ComboBox IsEnabled="False" Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                <ComboBox.Visibility>
+                                                                    <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                        <Binding Path="Units"></Binding>
+                                                                        <Binding Path="Type"></Binding>
+                                                                    </MultiBinding>
+                                                                </ComboBox.Visibility>
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding }"></TextBlock>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                        </DockPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </DockPanel>
+                        </Ellipse.ToolTip>
                     </Ellipse>
                 </DataTemplate>
             </Setter.Value>
@@ -53,6 +138,58 @@
 
     <DataTemplate x:Key="template_component">
         <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+            <s:DesignerComponent.ToolTip>
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top" Margin="5 0 0 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" FontSize="14" Text="{Binding Name}"></TextBlock>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock  FontSize="14" Text="#"></TextBlock>
+                            <TextBlock  FontSize="14" Text="{Binding No}"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                    <ListBox ItemsSource="{Binding ResultGroups}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <GroupBox Header="{Binding Flag}" >
+                                    <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                                <GridViewColumn Header="值" Width="200" >
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <DockPanel Width="185">
+                                                                <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                                <ComboBox Width="78" IsEnabled="False" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                                    <ComboBox.Visibility>
+                                                                        <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                            <Binding Path="Units"></Binding>
+                                                                            <Binding Path="Type"></Binding>
+                                                                        </MultiBinding>
+                                                                    </ComboBox.Visibility>
+                                                                    <ComboBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBlock Text="{Binding }"></TextBlock>
+                                                                        </DataTemplate>
+                                                                    </ComboBox.ItemTemplate>
+                                                                </ComboBox>
+                                                            </DockPanel>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </GroupBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </s:DesignerComponent.ToolTip>
             <!--控件图片-->
             <s:DesignerComponent.Background>
                 <ImageBrush ImageSource="{Binding Pic}">

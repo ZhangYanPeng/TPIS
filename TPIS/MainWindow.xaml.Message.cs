@@ -234,69 +234,20 @@ namespace TPIS
         #endregion
 
         #region 显示隐藏属性窗口
-        private void btn_PropertyStateChange(object sender, RoutedEventArgs e)
+
+        private void DetailsWindowClose(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            if (btn.Tag.ToString() == "show")
-            {
-                PropertyWindowVisible(false);
-            }
-            else
-            {
-                PropertyWindowVisible(true);
-            }
+            DetailsWindowVisible(false);
         }
 
-        public void PropertyWindowVisible(bool visible)
+        public void DetailsWindowVisible(bool v)
         {
-            if (!visible)
-            {
-                PropertyStateChange.Tag = "hide";
-                PropertyStateChange.ToolTip = "显示属性窗";
-                PropertyWindow.Visibility = Visibility.Collapsed;
-                PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
-            }
+            if(v)
+                DetailsWindow.Visibility = Visibility.Visible;
             else
-            {
-                PropertyStateChange.Tag = "show";
-                PropertyStateChange.ToolTip = "隐藏属性窗";
-                PropertyWindow.Visibility = Visibility.Visible;
-                PropertyStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
-            }
+                DetailsWindow.Visibility = Visibility.Collapsed;
         }
 
-        private void btn_ResultStateChange(object sender, RoutedEventArgs e)
-        {
-            Button btn = sender as Button;
-            if (btn.Tag.ToString() == "show")
-            {
-                ResultWindowVisible(false);
-            }
-            else
-            {
-                ResultWindowVisible(true);
-            }
-        }
-
-        public void ResultWindowVisible(bool visible)
-        {
-            if (!visible)
-            {
-                ResultStateChange.Tag = "hide";
-                ResultStateChange.ToolTip = "显示结果窗";
-                ResultWindow.Visibility = Visibility.Collapsed;
-                PortResults.Visibility = Visibility.Collapsed;
-                ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_show.png", UriKind.Relative));
-            }
-            else
-            {
-                ResultStateChange.Tag = "show";
-                ResultStateChange.ToolTip = "隐藏结果窗";
-                ResultWindow.Visibility = Visibility.Visible;
-                PortResults.Visibility = Visibility.Visible;
-                ResultStateChangeFig.Source = new BitmapImage(new Uri(@"Images\icon\window_hide.png", UriKind.Relative));
-            }
-        }
         #endregion
 
         private void OpenCurveWindow_Click(object sender, RoutedEventArgs e)
@@ -416,10 +367,36 @@ namespace TPIS
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         #endregion
+    }
+
+    //颜色控制
+    public class ColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Brushes.LightYellow;
+            else
+            {
+                TPISNet.PColor color = (TPISNet.PColor)value;
+                switch (color)
+                {
+                    case TPISNet.PColor.Weak: return Brushes.LightYellow;
+                    case TPISNet.PColor.Whatever: return Brushes.PaleTurquoise;
+                    case TPISNet.PColor.Super: return Brushes.DarkOrange;
+                }
+            }
+            return Brushes.LightYellow;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
     }
 
     public class ModeStringConverter : IValueConverter
@@ -438,6 +415,37 @@ namespace TPIS
                 case SelMode.InterMode: return "插值模式";
             }
             return "全部";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //控制显示样式
+    public class MaterialConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value != null)
+            {
+                TPISNet.Material material = (TPISNet.Material)value;
+                switch (material)
+                {
+                    case TPISNet.Material.air: return "工质类型：空气";
+                    case TPISNet.Material.ash: return "工质类型：灰";
+                    case TPISNet.Material.coal: return "工质类型：煤";
+                    case TPISNet.Material.fluegas: return "工质类型：排烟";
+                    case TPISNet.Material.gas: return "工质类型：气体";
+                    case TPISNet.Material.NA: return "工质类型：未定义";
+                    case TPISNet.Material.oil: return "工质类型：油";
+                    case TPISNet.Material.power: return "工质类型：功率";
+                    case TPISNet.Material.water: return "工质类型：汽水";
+
+                }
+            }
+            return "工质类型：未定义";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

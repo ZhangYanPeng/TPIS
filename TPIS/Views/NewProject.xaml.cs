@@ -28,17 +28,10 @@ namespace TPIS
                 Directory.CreateDirectory(directoryPath);//创建一个路径的文件夹
             }
             proj_location.Text = Path.GetFullPath(directoryPath);
+
             //配置当前工程工作区大小
             canvas_width.Text = mainwin.TPISconfig.CANVAS_WIDTH.ToString();
             canvas_height.Text = mainwin.TPISconfig.CANVAS_HEIGHT.ToString();
-            {//隐藏属性窗、结果窗
-                mainwin.PropertyStateChange.Tag = "hide";
-                mainwin.PropertyWindow.Visibility = Visibility.Collapsed;
-
-                mainwin.ResultStateChange.Tag = "hide";
-                mainwin.ResultWindow.Visibility = Visibility.Collapsed;
-                mainwin.PortResults.Visibility = Visibility.Collapsed;
-            }
         }
 
         /// <summary>

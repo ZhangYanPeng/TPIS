@@ -85,12 +85,12 @@ namespace TPIS.Model.Common
 
             if (property.type == TPISNet.P_Type.ToSetAsDouble || property.type == TPISNet.P_Type.ToCal)
             {
-                Property p = new Property(key, property.Data_string, property.Name, property.Data, TransformUnit(property.Unit, units), P_Type.ToSetAsDouble, sm, property.Tips);
+                Property p = new Property(key, property.Data_string, property.Name, property.Data, TransformUnit(property.Unit, units), P_Type.ToSetAsDouble, property.pcolor, sm, property.Tips);
                 return p;
             }
             else if (property.type == TPISNet.P_Type.ToSetAsString)
             {
-                Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSetAsString, sm, property.Tips);
+                Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSetAsString, property.pcolor, sm, property.Tips);
                 return p;
             }
             else if (property.type == TPISNet.P_Type.NotNeed || property.type == TPISNet.P_Type.Notshow)
@@ -99,7 +99,7 @@ namespace TPIS.Model.Common
             }
             else
             {
-                Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSelect, sm, property.Tips);
+                Property p = new Property(key, property.Data_string, property.Name, property.data_string, TransformUnit(property.Unit, units), P_Type.ToSelect, property.pcolor, sm, property.Tips);
                 return p;
             }
         }

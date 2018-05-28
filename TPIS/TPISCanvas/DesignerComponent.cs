@@ -55,7 +55,7 @@ namespace TPIS.TPISCanvas
                 if (this.moveType == MoveType.pos)
                 {
                     MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                    mainwin.GetCurrentProject().MoveChange((int)x, (int)y);
+                    mainwin.GetCurrentProject().MoveChange(x, y);
                 }
 
                 //改变大小
@@ -91,8 +91,7 @@ namespace TPIS.TPISCanvas
             {
                 //双击时执行
                 //PropertyWindow propertyWindow = new PropertyWindow((TPISComponent)this.DataContext);
-                mainwin.PropertyWindowVisible(true);
-                mainwin.ResultWindowVisible(true);
+                mainwin.DetailsWindowVisible(true);
                 //propertyWindow.Show();
             }
 

@@ -32,6 +32,7 @@ namespace TPIS.Model
             info.AddValue("propertyGroups", PropertyGroups);
             info.AddValue("resultGroups", ResultGroups);
             info.AddValue("ports", Ports);
+            info.AddValue("name", Name);
         }
 
         public TPISComponent(SerializationInfo info, StreamingContext context)
@@ -39,6 +40,7 @@ namespace TPIS.Model
             this.No = info.GetInt32("no");
             this.Position = (Position)info.GetValue("position", typeof(Object));
             this.Pic = info.GetString("pic");
+            this.Name = info.GetString("name");
             this.eleType = (EleType)info.GetValue("eleType", typeof(Object));
             Ports = (ObservableCollection<Port>)info.GetValue("ports", typeof(Object));
             PropertyGroups = (ObservableCollection<PropertyGroup>)info.GetValue("propertyGroups", typeof(Object));
@@ -77,6 +79,7 @@ namespace TPIS.Model
         public Position Position { get; set; }//控件左上角位置
         public ObservableCollection<Port> Ports { get; set; }
         public string Pic { get; set; }
+        public string Name { get; set; }
 
         public TPISComponent(int no, double rate, int tx, int ty, int width, int height, ComponentType ct)
         {
@@ -85,8 +88,8 @@ namespace TPIS.Model
             this.Position = new Position { Rate = rate };
             this.Position.V_x = tx;
             this.Position.V_y = ty;
-            this.Position.V_width = width;
-            this.Position.V_height = height;
+            this.Position.Width = width;
+            this.Position.Height = height;
             this.eleType = ct.Type;
             this.ModelToView(ct);
             this.Position.IsVerticalReversed = 1;
@@ -290,6 +293,8 @@ namespace TPIS.Model
             }
         }
 
+        #endregion
+
         public override object Clone()
         {
             MemoryStream stream = new MemoryStream();
@@ -300,7 +305,6 @@ namespace TPIS.Model
             stream.Close();
             return obj;
         }
-        #endregion
 
         public ObservableCollection<PropertyGroup> PropertyGroups { get; set; }
         public ObservableCollection<PropertyGroup> ResultGroups { get; set; }
@@ -344,6 +348,7 @@ namespace TPIS.Model
         //根据后台数据构建component
         public TPISComponent ModelToView(ComponentType ct)
         {
+            Name = CommonTypeService.InitComponentName(ct.Type);
             Pic = CommonTypeService.InitComponentPic(ct.Type);
             Ports = CommonTypeService.InitComponentPort(ct.Type);
             PropertyGroups = CommonTypeService.InitComponentProperty(ct.Type);
