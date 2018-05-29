@@ -47,7 +47,11 @@ namespace TPIS.TPISCanvas
                 ObjectBase obj = mainwin.GetCurrentProject().Objects[i];
                 if (obj is TPISLine)
                 {
-                    InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
+                    if (!((TPISLine)obj).IsInitiAnchorPoints)
+                    {
+                        ((TPISLine)obj).IsInitiAnchorPoints = true;
+                        InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
+                    }
                 }
             }
         }

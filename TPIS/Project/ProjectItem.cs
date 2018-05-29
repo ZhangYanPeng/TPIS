@@ -593,7 +593,7 @@ namespace TPIS.Project
 
             mainwin.PropertyMode.ItemsSource = component.Mode;
             mainwin.PropertyMode.Items.Refresh();
-            
+
             mainwin.PropertyContent.ItemsSource = component.PropertyGroups;
             mainwin.PropertyContent.Items.Refresh();
 
@@ -1007,6 +1007,11 @@ namespace TPIS.Project
                         y = (int)(y / this.Rate);
                     }
                 }
+                else if (obj is ResultCross)
+                {
+                    x = (int)(((ResultCross)obj).Position.X + ((ResultCross)obj).Position.Width + 10);
+                    y = (int)(((ResultCross)obj).Position.Y + ((ResultCross)obj).Position.Height + 10);
+                }
                 p.X = p.X > x ? p.X : x;
                 p.Y = p.Y > y ? p.Y : y;
             }
@@ -1128,15 +1133,15 @@ namespace TPIS.Project
         {
             Point tmp;
             tmp = this.WorkSpaceSize_LU();
-            if (tmp.X - 10 < 0 && tmp.Y - 10 < 0)
+            if (tmp.X < 0 && tmp.Y < 0)
             {//限制超出左上边界
                 this.MoveSelection(1, 1);
             }
-            else if (tmp.X - 10 < 0)
+            else if (tmp.X < 0)
             {//限制超出左边界
                 this.MoveSelection(1, y);
             }
-            else if (tmp.Y - 10 < 0)
+            else if (tmp.Y < 0)
             {//限制超出上边界
                 this.MoveSelection(x, 1);
             }
@@ -1210,7 +1215,7 @@ namespace TPIS.Project
         //}
         //#endregion
 
-        
+
 
         #region 查找元件并选中居中
         internal bool FindComponent(int tn)
@@ -1351,7 +1356,7 @@ namespace TPIS.Project
 
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
-            
+
             return;
         }
 
