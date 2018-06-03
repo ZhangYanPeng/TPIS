@@ -30,7 +30,7 @@ namespace TPIS.Model
         #endregion
 
         public Port LinkPort { get; set; }
-        
+
         public Position Position { get; set; }
 
         public ResultCross(Port port, int no, double rate, double vx, double vy)
@@ -48,9 +48,9 @@ namespace TPIS.Model
         internal void PosChange(double? x, double? y)
         {
             if (x.HasValue)
-                Position.V_x = x.Value;
+                Position.V_x += x.Value;
             if (y.HasValue)
-                Position.V_y = y.Value;
+                Position.V_y += y.Value;
         }
 
         internal void SetRate(double rate)

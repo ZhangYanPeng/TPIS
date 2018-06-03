@@ -82,6 +82,7 @@ namespace TPIS.Model
         #endregion
 
         public bool IsCompleted { get; set; }
+        public bool IsInitiAnchorPoints { get; set; }
 
         public enum LineType
         {
@@ -294,7 +295,8 @@ namespace TPIS.Model
         {
             for( int i=0; i<Points.Count; i++)
             {
-                Points[i] = new Point(vx, vy);
+                Points[i] = new Point(Points[i].X + vx, Points[i].Y + vy);
+                //Points[i] = new Point(vx, vy);
             }
             OnPropertyChanged("Points");
         }
