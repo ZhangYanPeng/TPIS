@@ -1,7 +1,6 @@
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISToolBar.baml
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWin.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\NewProject.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISMenu.g.cs
@@ -19,7 +18,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\CurvesData.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.dll
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\App.baml
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWin.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISCanvas.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISMenu.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\MainWindow.baml
@@ -32,4 +30,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\WorkspaceSize.b
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\PhysicalPro.dll
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWindow.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWindow.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\QuickModeSelect.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\QuickModeSelect.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

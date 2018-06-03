@@ -11,7 +11,7 @@ namespace TPIS.Model
     public static class CrossSize
     {
         public static double WIDTH = 90;
-        public static double HEIGHT = 20;
+        public static double HEIGHT = 40;
     }
 
     [Serializable]
@@ -42,7 +42,7 @@ namespace TPIS.Model
             this.Position.V_x = vx;
             this.Position.V_y = vy;
             this.Position.Width = 90;
-            this.Position.V_height = 30;
+            this.Position.Height = 40;
         }
 
         internal void PosChange(double? x, double? y)

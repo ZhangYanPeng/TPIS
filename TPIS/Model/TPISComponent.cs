@@ -33,6 +33,7 @@ namespace TPIS.Model
             info.AddValue("resultGroups", ResultGroups);
             info.AddValue("ports", Ports);
             info.AddValue("name", Name);
+            info.AddValue("selectMode", selectedMode);
         }
 
         public TPISComponent(SerializationInfo info, StreamingContext context)
@@ -47,7 +48,7 @@ namespace TPIS.Model
             ResultGroups = (ObservableCollection<PropertyGroup>)info.GetValue("resultGroups", typeof(Object));
 
             Mode = (ObservableCollection<Common.SelMode>)info.GetValue("mode", typeof(Object));
-            SelectedMode = 0;
+            SelectedMode = info.GetInt32("selectMode"); ;
 
             RePosPort();
             OnPropertyChanged("Pic");

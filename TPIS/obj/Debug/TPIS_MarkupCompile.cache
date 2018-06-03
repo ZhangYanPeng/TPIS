@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml
-9-1745267502
+91600562742
 
-69-1576496091
+69-384265250
 181565648601
-Views\CalWin.xaml;Views\CalWindow.xaml;Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\WorkspaceSize.xaml;
+Views\CalWindow.xaml;Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\WorkspaceSize.xaml;
 
 False
 

@@ -132,6 +132,7 @@ namespace TPIS.Command
         public static RoutedCommand SeltAll = new RoutedCommand();
         public static RoutedCommand WorkspaceSize = new RoutedCommand();
         public static RoutedCommand BackGroundColor = new RoutedCommand();
+        public static RoutedCommand QuickModeSelect = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -514,6 +515,18 @@ namespace TPIS.Command
             }
         }
 
+        #endregion
+
+        #region 计算模式快速选择
+        public void QuickModeSelect_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                QuickModeSelect window = new QuickModeSelect(mainwin.GetCurrentProject());
+                window.ShowDialog();
+            }
+        }
         #endregion
     }
 }

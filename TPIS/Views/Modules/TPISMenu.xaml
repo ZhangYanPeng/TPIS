@@ -22,6 +22,7 @@
             <CommandBinding Command="s:TPISCommand.SeltAll" Executed="SeltAll_Excuted"/>
             <CommandBinding Command="s:TPISCommand.WorkspaceSize" Executed="WorkspaceSize_Excuted"/>
             <CommandBinding Command="s:TPISCommand.BackGroundColor" Executed="BackGroundColor_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.QuickModeSelect" Executed="QuickModeSelect_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -133,7 +134,13 @@
             <MenuItem Header="工具箱(X)" />
             <Separator />
         </MenuItem>
-        
+
+        <!--视图-->
+        <MenuItem Header="工具(T)">
+            <MenuItem Header="计算模式快速选择" Name="QuickModeSelectOpe" Command="{x:Static s:TPISCommand.QuickModeSelect}"/>
+            <Separator />
+        </MenuItem>
+
         <!--设置-->
         <MenuItem Header="设置(S)" SubmenuOpened="OnSubSetMenuOpened">
             <MenuItem Header="背景色" Name="BackGroundColorOpe">

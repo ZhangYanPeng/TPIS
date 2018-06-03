@@ -130,17 +130,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\CalWin.xaml.cs">
-      <DependentUpon>CalWin.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CalWindow.xaml.cs">
       <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\QuickModeSelect.xaml.cs">
+      <DependentUpon>QuickModeSelect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
-    <Page Include="Views\CalWin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\CalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -166,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuickModeSelect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
