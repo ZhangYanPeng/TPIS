@@ -22,6 +22,7 @@ using TPIS.TPISCanvas;
 using TPIS.Views.Modules;
 using System.Windows.Controls.Primitives;
 using TPIS.ConfigFile;
+using System.Collections.ObjectModel;
 // TPIS.TPISCanvas;
 
 
@@ -92,7 +93,7 @@ namespace TPIS
             this.ProjectList.projects.Add(project);
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
-            
+
 
             //设置当前工程为激活工程
             this.projectTab.SelectedItem = project;
@@ -158,10 +159,15 @@ namespace TPIS
             {
                 if (item.Num == long.Parse(num))
                 {
-                    if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    Record record = item.Records.PopUndo();
+                    if (record != null)
                     {
-                        item.SaveProject();//先保存后关闭
-                        MessageBox.Show("项目已保存");
+                        //项目变更时，关闭工程提醒是否保存
+                        if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            item.SaveProject();//先保存后关闭
+                            MessageBox.Show("项目已保存");
+                        }
                     }
                     ProjectList.projects.Remove(item);
                     ProjectTab_SelectionChanged();//解决关闭左侧工程，出现当前工程索引溢出；以及画布背景透明
@@ -188,7 +194,7 @@ namespace TPIS
             return sv;
         }
 
-        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        public childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
@@ -206,6 +212,14 @@ namespace TPIS
         }
         #endregion
 
+        private void View_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            //ObservableCollection<TPIS.Project.ObjectBase> SelectedObjects = new ObservableCollection<TPIS.Project.ObjectBase>();
+            //SelectedObjects = mainwin.GetCurrentProject().GetSelectedObjects();
+            //ScrollViewer sv = SelectViewScrollViewer();
+            mainwin.GetCurrentProject().GetSelectedObjects();
+        }
     }
 
     /// <summary>

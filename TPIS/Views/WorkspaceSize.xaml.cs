@@ -52,8 +52,8 @@ namespace TPIS.Views
             }
             if (item.Canvas.Width > 10 && item.Canvas.Height > 10)//画布最小10×10
             {
-                item.Canvas.Width = item.WorkSpaceSize_RD().X < int.Parse(canvas_width.Text) ? int.Parse(canvas_width.Text) : (int)item.WorkSpaceSize_RD().X;
-                item.Canvas.Height = item.WorkSpaceSize_RD().Y < int.Parse(canvas_height.Text) ? int.Parse(canvas_height.Text) : (int)item.WorkSpaceSize_RD().Y;
+                item.Canvas.Width = item.WorkSpaceSize_RD(mainwin.GetCurrentProject().Objects).X < int.Parse(canvas_width.Text) ? int.Parse(canvas_width.Text) : (int)item.WorkSpaceSize_RD(mainwin.GetCurrentProject().Objects).X;
+                item.Canvas.Height = item.WorkSpaceSize_RD(mainwin.GetCurrentProject().Objects).Y < int.Parse(canvas_height.Text) ? int.Parse(canvas_height.Text) : (int)item.WorkSpaceSize_RD(mainwin.GetCurrentProject().Objects).Y;
                 //存储工程配置
                 mainwin.TPISconfig.CANVAS_WIDTH = int.Parse(canvas_width.Text);
                 mainwin.TPISconfig.CANVAS_HEIGHT = int.Parse(canvas_height.Text);

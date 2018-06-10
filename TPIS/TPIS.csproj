@@ -169,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ViewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WorkspaceSize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,6 +191,9 @@
     </Compile>
     <Compile Include="Views\NewProject.xaml.cs">
       <DependentUpon>NewProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewWindow.xaml.cs">
+      <DependentUpon>ViewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkspaceSize.xaml.cs">
       <DependentUpon>WorkspaceSize.xaml</DependentUpon>

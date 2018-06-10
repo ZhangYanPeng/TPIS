@@ -23,6 +23,7 @@
             <CommandBinding Command="s:TPISCommand.WorkspaceSize" Executed="WorkspaceSize_Excuted"/>
             <CommandBinding Command="s:TPISCommand.BackGroundColor" Executed="BackGroundColor_Excuted"/>
             <CommandBinding Command="s:TPISCommand.QuickModeSelect" Executed="QuickModeSelect_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.View" Executed="View_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -131,7 +132,7 @@
         <MenuItem Header="视图(V)" SubmenuOpened="OnSubViewMenuOpened">
             <MenuItem Header="工作区" Name="WorkspaceSizeOpe" InputGestureText="F2(Ctrl+MouseWheel)" Command="{x:Static s:TPISCommand.WorkspaceSize}"/>
             <MenuItem Header="网格线" Name="GridOpe" InputGestureText="F1" Command="{x:Static s:TPISCommand.DrawGrid}"/>
-            <MenuItem Header="工具箱(X)" />
+            <MenuItem Header="局部视图" Name="ViewOpe" Command="{x:Static s:TPISCommand.View}"/>
             <Separator />
         </MenuItem>
 

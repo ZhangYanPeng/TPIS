@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Model.Common;
 using TPIS.TPISCanvas;
+using TPIS.Views;
 
 namespace TPIS.Project
 {
@@ -200,6 +201,16 @@ namespace TPIS.Project
 
         public ObservableCollection<ObjectBase> Objects { get; set; }
         public ObservableCollection<ObjectBase> CopyObjects { get; set; }
+        public ObservableCollection<ObjectBase> selectedObjects;
+        public ObservableCollection<ObjectBase> SelectedObjects
+        {
+            get { return selectedObjects; }
+            set
+            {
+                selectedObjects = value;
+                OnPropertyChanged("SelectedObjects");
+            }
+        }
         public ObservableCollection<PropertyGroup> PropertyGroup { get; set; }
         public ObservableCollection<PropertyGroup> ResultGroup { get; set; }
 
@@ -227,6 +238,42 @@ namespace TPIS.Project
             SaveProject();
             return;
         }
+
+        #region 获取已选中对象
+        public void ReSelect(TPISComponent component)
+        {
+            ObservableCollection<TPISLine> lines = new ObservableCollection<TPISLine>();
+            component.isSelected = true;
+            foreach (Port port in component.Ports)
+            {
+                if (port.link != null && !port.link.IsSelected)
+                    lines.Add(port.link);
+            }
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj.isSelected && obj is TPISComponent)
+                    if ((TPISComponent)obj != component)
+                        foreach (Port port in ((TPISComponent)obj).Ports)
+                            if (port.link != null && !port.link.IsSelected)
+                                foreach (TPISLine line in lines)
+                                    if (line.No == port.link.No)
+                                        port.link.IsSelected = true;
+            }
+            GetSelectedObjects();
+        }
+
+        public void GetSelectedObjects()
+        {
+            if (SelectedObjects != null)
+                SelectedObjects.Clear();
+            SelectedObjects = new ObservableCollection<ObjectBase>();
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj.isSelected)
+                    SelectedObjects.Add(obj);
+            }
+        }
+        #endregion
 
         #region 存储工程
         public void SaveProject()
@@ -574,6 +621,7 @@ namespace TPIS.Project
                     }
                 }
             }
+            GetSelectedObjects();
         }
 
         private void BindingPropertyWindow(TPISComponent component)
@@ -678,6 +726,7 @@ namespace TPIS.Project
                     }
                 }
             }
+            GetSelectedObjects();
         }
 
         internal void Select()
@@ -960,11 +1009,15 @@ namespace TPIS.Project
         #region 关闭工程
         public void ProjectCloseSelection()
         {
-            //菜单关闭项目需先选中项目
-            if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            Record record = Records.PopUndo();
+            if (record != null)
             {
-                SaveProject();//先保存后关闭
-                MessageBox.Show("项目已保存");
+                //项目变更时，关闭工程提醒是否保存
+                if (MessageBox.Show("是否保存当前工程？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    SaveProject();//先保存后关闭
+                    MessageBox.Show("项目已保存");
+                }
             }
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             mainwin.ProjectList.projects.Remove(this);
@@ -980,14 +1033,14 @@ namespace TPIS.Project
         #endregion
 
         #region 有效工作区大小-右下点
-        public Point WorkSpaceSize_RD()
+        public Point WorkSpaceSize_RD(ObservableCollection<ObjectBase> SelectObjects)
         {
             Point p = new Point(0, 0);//无控件，边界为0×0
-            for (int i = 0; i < this.Objects.Count; i++)
+            for (int i = 0; i < SelectObjects.Count; i++)
             {
                 int x = (int)this.Canvas.Width;
                 int y = (int)this.Canvas.Height;
-                ObjectBase obj = this.Objects[i];
+                ObjectBase obj = SelectObjects[i];
                 if (obj is TPISComponent)
                 {
                     x = (int)(((TPISComponent)obj).Position.X + ((TPISComponent)obj).Position.Width + 10);
@@ -1020,15 +1073,15 @@ namespace TPIS.Project
         #endregion
 
         #region 有效工作区大小-左上点
-        public Point WorkSpaceSize_LU()
+        public Point WorkSpaceSize_LU(ObservableCollection<ObjectBase> SelectObjects)
         {
             Point p = new Point(0, 0);//无控件，边界为0×0
 
-            if (this.Objects.Count > 0)
+            if (SelectObjects.Count > 0)
             {
                 int x = 0;
                 int y = 0;
-                ObjectBase obj0 = this.Objects[0];
+                ObjectBase obj0 = SelectObjects[0];
                 if (obj0 is TPISComponent)
                 {
                     x = (int)((TPISComponent)obj0).Position.X;
@@ -1046,9 +1099,9 @@ namespace TPIS.Project
                 }
                 p.X = x;
                 p.Y = y;
-                for (int i = 0; i < this.Objects.Count; i++)
+                for (int i = 0; i < SelectObjects.Count; i++)
                 {
-                    ObjectBase obj = this.Objects[i];
+                    ObjectBase obj = SelectObjects[i];
                     if (obj is TPISComponent)
                     {
                         x = (int)((TPISComponent)obj).Position.X;
@@ -1072,67 +1125,88 @@ namespace TPIS.Project
         }
         #endregion
 
-        #region Copy工作区大小-左上点
-        public Point WorkSpaceSize_LU(ObservableCollection<ObjectBase> LUObjects)
+        #region 有效工作区大小-中心点
+        public Point WorkSpaceSize_Center(ObservableCollection<ObjectBase> SelectObjects)
         {
-            Point p = new Point(0, 0);//无控件，边界为0×0
-
-            if (LUObjects != null)
-            {
-                if (LUObjects.Count > 0)
-                {
-                    int x = 0;
-                    int y = 0;
-                    ObjectBase obj0 = LUObjects[0];
-                    if (obj0 is TPISComponent)
-                    {
-                        x = (int)((TPISComponent)obj0).Position.X;
-                        y = (int)((TPISComponent)obj0).Position.Y;
-                    }
-                    else if (obj0 is TPISLine)
-                    {
-                        x = (int)((TPISLine)obj0).Points[0].X;
-                        y = (int)((TPISLine)obj0).Points[0].Y;
-                        foreach (Point p1 in ((TPISLine)obj0).Points)
-                        {
-                            x = (int)(x < p1.X ? x : p1.X);
-                            y = (int)(y < p1.Y ? y : p1.Y);
-                        }
-                    }
-                    p.X = x;
-                    p.Y = y;
-                    for (int i = 0; i < LUObjects.Count; i++)
-                    {
-                        ObjectBase obj = LUObjects[i];
-                        if (obj is TPISComponent)
-                        {
-                            x = (int)((TPISComponent)obj).Position.X;
-                            y = (int)((TPISComponent)obj).Position.Y;
-                        }
-                        else if (obj is TPISLine)
-                        {
-                            x = (int)((TPISLine)obj).Points[0].X;
-                            y = (int)((TPISLine)obj).Points[0].Y;
-                            foreach (Point p1 in ((TPISLine)obj).Points)
-                            {
-                                x = (int)(x < p1.X ? x : p1.X);
-                                y = (int)(y < p1.Y ? y : p1.Y);
-                            }
-                        }
-                        p.X = p.X < x ? p.X : x;
-                        p.Y = p.Y < y ? p.Y : y;
-                    }
-                }
-            }
+            Point p1 = WorkSpaceSize_RD(SelectObjects);
+            Point p2 = WorkSpaceSize_LU(SelectObjects);
+            Point p = new Point((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2);
             return p;
         }
         #endregion
 
+        #region 有效工作区大小(宽高)
+        public Point WorkSpaceSize_Size(ObservableCollection<ObjectBase> SelectObjects)
+        {
+            Point p1 = WorkSpaceSize_RD(SelectObjects);
+            Point p2 = WorkSpaceSize_LU(SelectObjects);
+            Point p = new Point((p1.X - p2.X) + 100, (p1.Y - p2.Y) + 100);
+            return p;
+        }
+        #endregion
+
+        //#region 已选对象-左上点
+        //public Point WorkSpaceSize_LU(ObservableCollection<ObjectBase> LUObjects)
+        //{
+        //    Point p = new Point(0, 0);//无控件，边界为0×0
+
+        //    if (LUObjects != null)
+        //    {
+        //        if (LUObjects.Count > 0)
+        //        {
+        //            int x = 0;
+        //            int y = 0;
+        //            ObjectBase obj0 = LUObjects[0];
+        //            if (obj0 is TPISComponent)
+        //            {
+        //                x = (int)((TPISComponent)obj0).Position.X;
+        //                y = (int)((TPISComponent)obj0).Position.Y;
+        //            }
+        //            else if (obj0 is TPISLine)
+        //            {
+        //                x = (int)((TPISLine)obj0).Points[0].X;
+        //                y = (int)((TPISLine)obj0).Points[0].Y;
+        //                foreach (Point p1 in ((TPISLine)obj0).Points)
+        //                {
+        //                    x = (int)(x < p1.X ? x : p1.X);
+        //                    y = (int)(y < p1.Y ? y : p1.Y);
+        //                }
+        //            }
+        //            p.X = x;
+        //            p.Y = y;
+        //            for (int i = 0; i < LUObjects.Count; i++)
+        //            {
+        //                ObjectBase obj = LUObjects[i];
+        //                if (obj is TPISComponent)
+        //                {
+        //                    x = (int)((TPISComponent)obj).Position.X;
+        //                    y = (int)((TPISComponent)obj).Position.Y;
+        //                }
+        //                else if (obj is TPISLine)
+        //                {
+        //                    x = (int)((TPISLine)obj).Points[0].X;
+        //                    y = (int)((TPISLine)obj).Points[0].Y;
+        //                    foreach (Point p1 in ((TPISLine)obj).Points)
+        //                    {
+        //                        x = (int)(x < p1.X ? x : p1.X);
+        //                        y = (int)(y < p1.Y ? y : p1.Y);
+        //                    }
+        //                }
+        //                p.X = p.X < x ? p.X : x;
+        //                p.Y = p.Y < y ? p.Y : y;
+        //            }
+        //        }
+        //    }
+        //    return p;
+        //}
+        //#endregion
+
         #region 元件移动-边界限制
         public void MoveChange(double x, double y)
         {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             Point tmp;
-            tmp = this.WorkSpaceSize_LU();
+            tmp = this.WorkSpaceSize_LU(mainwin.GetCurrentProject().Objects);
             if (tmp.X < 0 && tmp.Y < 0)
             {//限制超出左上边界
                 this.MoveSelection(1, 1);
@@ -1176,7 +1250,7 @@ namespace TPIS.Project
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             ScrollViewer scrollViewer = mainwin.SelectScrollViewer();
             Point p = new Point();
-            p = this.WorkSpaceSize_RD();
+            p = this.WorkSpaceSize_RD(mainwin.GetCurrentProject().Objects);
             if (p.X >= this.Canvas.Width)
             {
                 this.Canvas.Width = (int)p.X + 10;

@@ -408,6 +408,24 @@
                                             </Border>
                                         </TabItem.Content>
                                     </TabItem>
+
+                                    <!--<TabItem x:Name="viewTabItem">
+                                        <TabItem.Header>
+                                            <TextBlock Width="100">视图</TextBlock>
+                                        </TabItem.Header>
+                                        <TabItem.ContentTemplate>
+                                            <DataTemplate>
+                                                <Border BorderThickness="1" BorderBrush="Gray">
+                                                    <Grid Margin="3">
+                                                        <s:ProjectDesignerCanvas Visibility="Visible" Style="{StaticResource BackgroundGrid}" Width="{Binding Canvas.V_width}" Height="{Binding Canvas.V_height}">
+                                                            <ItemsControl ItemsSource="{Binding Objects}" Style="{StaticResource ComponentItemsControlStyle}" ItemTemplateSelector="{StaticResource SelectionOrLineOrComponent}">
+                                                            </ItemsControl>
+                                                        </s:ProjectDesignerCanvas>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </TabItem.ContentTemplate>
+                                    </TabItem>-->
                                 </TabControl>
                             </DockPanel>
                         </UserControl>

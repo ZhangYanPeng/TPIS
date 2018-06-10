@@ -99,11 +99,13 @@ namespace TPIS.Command
             {
                 WorkspaceSizeOpe.IsEnabled = false;
                 BackGroundColorOpe.IsEnabled = false;
+                ViewOpe.IsEnabled = false;
             }
             else
             {
                 WorkspaceSizeOpe.IsEnabled = true;
                 BackGroundColorOpe.IsEnabled = true;
+                ViewOpe.IsEnabled = true;
             }
         }
         #endregion
@@ -133,6 +135,7 @@ namespace TPIS.Command
         public static RoutedCommand WorkspaceSize = new RoutedCommand();
         public static RoutedCommand BackGroundColor = new RoutedCommand();
         public static RoutedCommand QuickModeSelect = new RoutedCommand();
+        public static RoutedCommand View = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -525,6 +528,21 @@ namespace TPIS.Command
             {
                 QuickModeSelect window = new QuickModeSelect(mainwin.GetCurrentProject());
                 window.ShowDialog();
+            }
+        }
+        #endregion
+
+        #region 视图窗口
+        public void View_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                ViewWindow viewwin = new ViewWindow();
+                viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                viewwin.Show();
+                if (mainwin.GetCurrentProject().SelectedObjects != null)
+                    viewwin.ViewCenter();
             }
         }
         #endregion
