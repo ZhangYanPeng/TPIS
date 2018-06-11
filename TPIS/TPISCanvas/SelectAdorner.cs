@@ -96,6 +96,9 @@ namespace TPIS.TPISCanvas
                 }
             }
             mainwin.GetCurrentProject().Select(selection);
+            bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
+            if (!flag)
+                mainwin.GetCurrentProject().GetSelectedObjects();
         }
     }
     

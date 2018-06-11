@@ -181,13 +181,26 @@ namespace TPIS.TPISCanvas
             if (!((ObjectBase)this.DataContext).isSelected || this.moveType != MoveType.pos)
             {
                 //之前未被选中，或改为改变大小操作，单独选中该元件(Ctrl复选)
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
-                {
-                    //((ObjectBase)this.DataContext).isSelected = true;
-                    mainwin.GetCurrentProject().ReSelect((TPISComponent)((ObjectBase)this.DataContext));
+                bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
+                if (!flag)
+                {//未打开视图窗
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    {
+                        //ViewWindow viewwin = (ViewWindow)System.Windows.Application.Current.ViewWindow;
+                        //((ObjectBase)this.DataContext).isSelected = true;
+                        mainwin.GetCurrentProject().ReSelect((TPISComponent)((ObjectBase)this.DataContext));
+                    }
+                    else
+                        mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                    mainwin.GetCurrentProject().GetSelectedObjects();
                 }
                 else
-                    mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                {
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                        mainwin.GetCurrentProject().ReSelect((TPISComponent)((ObjectBase)this.DataContext));
+                    else
+                        mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                }
                 if (this.DataContext is TPISComponent)
                     BindingAnchorPoints();
                 //mainwin.GetCurrentProject().GetSelectedObjects();//获取当前最新已选对象

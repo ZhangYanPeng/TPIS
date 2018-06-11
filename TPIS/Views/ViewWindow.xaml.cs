@@ -30,11 +30,6 @@ namespace TPIS.Views
             ProjectList = new ProjectSpace();//初始化工作空间
             InitilView();
         }
-        private void Window_Loaded()
-        {
-            Width = SystemParameters.WorkArea.Width;
-            Height = SystemParameters.WorkArea.Height;
-        }
 
         #region 视图居中
         public void ViewCenter()
@@ -71,6 +66,12 @@ namespace TPIS.Views
             this.Height = p.Y;
             this.MaxWidth = SystemParameters.WorkArea.Width;
             this.MaxHeight = SystemParameters.WorkArea.Height;
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            mainwin.GetCurrentProject().IsViewWindowsOpen = false;
         }
     }
 }

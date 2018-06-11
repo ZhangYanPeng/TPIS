@@ -7,7 +7,7 @@
         xmlns:s="clr-namespace:TPIS.TPISCanvas"
         xmlns:c="clr-namespace:TPIS"
         mc:Ignorable="d"
-        Title="局部视图" MinWidth="854" MinHeight="480">
+        Title="局部视图" MinWidth="854" MinHeight="480" Closing="Window_Closing">
 
     <Window.Resources>
         <ResourceDictionary>

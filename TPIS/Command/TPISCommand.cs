@@ -538,11 +538,17 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                ViewWindow viewwin = new ViewWindow();
-                viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                viewwin.Show();
-                if (mainwin.GetCurrentProject().SelectedObjects != null)
-                    viewwin.ViewCenter();
+                if(!mainwin.GetCurrentProject().IsViewWindowsOpen)
+                {
+                    ViewWindow viewwin = new ViewWindow();
+                    viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    viewwin.Show();
+                    if (mainwin.GetCurrentProject().SelectedObjects != null)
+                    {
+                        viewwin.ViewCenter();
+                        mainwin.GetCurrentProject().IsViewWindowsOpen = true;
+                    }
+                }
             }
         }
         #endregion

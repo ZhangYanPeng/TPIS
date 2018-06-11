@@ -214,6 +214,8 @@ namespace TPIS.Project
         public ObservableCollection<PropertyGroup> PropertyGroup { get; set; }
         public ObservableCollection<PropertyGroup> ResultGroup { get; set; }
 
+        public bool IsViewWindowsOpen { get; set; }
+
         public ProjectCanvas Canvas { get; set; }
 
         public ProjectItem(string name, ProjectCanvas pCanvas, long num, string p)
@@ -235,6 +237,7 @@ namespace TPIS.Project
             PropertyGroup = CommonTypeService.InitProjectProperty();
             ResultGroup = new ObservableCollection<PropertyGroup>();
             Logs = new ObservableCollection<string>();
+            IsViewWindowsOpen = false;
             SaveProject();
             return;
         }
@@ -259,11 +262,12 @@ namespace TPIS.Project
                                     if (line.No == port.link.No)
                                         port.link.IsSelected = true;
             }
-            GetSelectedObjects();
         }
 
         public void GetSelectedObjects()
         {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
             if (SelectedObjects != null)
                 SelectedObjects.Clear();
             SelectedObjects = new ObservableCollection<ObjectBase>();
@@ -272,6 +276,21 @@ namespace TPIS.Project
                 if (obj.isSelected)
                     SelectedObjects.Add(obj);
             }
+            //if (flag && SelectedObjects != null)
+            //{
+            //    for (int i = 0; i < SelectedObjects.Count; i++)
+            //    {
+            //        ObjectBase obj = SelectedObjects[i];
+            //        if (obj is TPISLine)
+            //        {
+            //            if (!((TPISLine)obj).IsInitiAnchorPoints)
+            //            {
+            //                //((TPISLine)obj).da.InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
+            //                ((TPISLine)obj).IsInitiAnchorPoints = true;
+            //            }
+            //        }
+            //    }
+            //}
         }
         #endregion
 
@@ -535,6 +554,7 @@ namespace TPIS.Project
 
         public void SelectAll()
         {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             List<TPISComponent> components = new List<TPISComponent>();
             foreach (ObjectBase obj in Objects)
             {
@@ -544,6 +564,10 @@ namespace TPIS.Project
                 }
             }
             Select(components);
+            GetSelectedObjects();
+            bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
+            if (!flag)
+                mainwin.GetCurrentProject().GetSelectedObjects();
         }
 
         internal void Select(List<TPISComponent> components)
@@ -621,7 +645,7 @@ namespace TPIS.Project
                     }
                 }
             }
-            GetSelectedObjects();
+            //GetSelectedObjects();
         }
 
         private void BindingPropertyWindow(TPISComponent component)
@@ -726,7 +750,7 @@ namespace TPIS.Project
                     }
                 }
             }
-            GetSelectedObjects();
+            //GetSelectedObjects();
         }
 
         internal void Select()
