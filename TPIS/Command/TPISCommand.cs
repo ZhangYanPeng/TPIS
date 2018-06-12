@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
@@ -133,6 +134,8 @@ namespace TPIS.Command
         public static RoutedCommand WorkspaceSize = new RoutedCommand();
         public static RoutedCommand BackGroundColor = new RoutedCommand();
         public static RoutedCommand QuickModeSelect = new RoutedCommand();
+        public static RoutedCommand CoalDataBaseOpe = new RoutedCommand();
+        public static RoutedCommand GasDataBaseOpe = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -528,5 +531,22 @@ namespace TPIS.Command
             }
         }
         #endregion
+
+        #region 数据库
+        public void CoalDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CoalDatabaseWin cdw = new CoalDatabaseWin();
+            cdw.Owner = Application.Current.MainWindow;
+            cdw.Show();
+        }
+        
+        public void GasDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            GasDatabaseWin gdw = new GasDatabaseWin();
+            gdw.Owner = Application.Current.MainWindow;
+            gdw.Show();
+        }
+        #endregion
+
     }
 }

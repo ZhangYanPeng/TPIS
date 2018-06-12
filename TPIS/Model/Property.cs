@@ -66,7 +66,12 @@ namespace TPIS.Model
             info.AddValue("isKnown", IsKnown);
             info.AddValue("visible", visible);
             info.AddValue("color", Color);
-            //info.AddValue("curve", Curve);
+            info.AddValue("isLine", IsLine);
+            if(IsLine)
+            {
+                CurveDatas curveDatas = new CurveDatas(Curve);
+                info.AddValue("curve", curveDatas);
+            }
         }
 
         public Property(SerializationInfo info, StreamingContext context)
@@ -86,7 +91,19 @@ namespace TPIS.Model
 
             valStr = info.GetString("valStr");
             valNum = info.GetDouble("valNum");
-            //Curve = (Curves)info.GetValue("curve", typeof(Object));
+
+
+            IsLine = info.GetBoolean("isLine");
+            if (IsLine)
+            {
+                Curve = new Curves(Name, Units[0], Units[1]);
+                Curve.Lx1x2.Add(new XYDataLine());
+                CurveDatas curveDatas = (CurveDatas)info.GetValue("curve", typeof(Object));
+                curveDatas.read(Curve);
+            }
+            else
+                Curve = null;
+            
             if (IsStrOrNum)
             {
                 showValue = valStr;
@@ -188,6 +205,7 @@ namespace TPIS.Model
         }
 
         public Boolean IsKnown { get; set; }
+        public Boolean IsLine { get; set; }
 
         //属性可见性
         #region
@@ -233,6 +251,7 @@ namespace TPIS.Model
 
         public Property(string dicName, string d_str, string name, string value, string[] units, P_Type type, TPISNet.PColor pcolor, ObservableCollection<SelMode> modes = null, string tips = "")
         {
+            IsLine = false;
             SetKnown(d_str);
             DicName = dicName;
             Name = name;
@@ -255,6 +274,7 @@ namespace TPIS.Model
 
         public Property(string dicName, string d_str, string name, double value, string[] units, P_Type type, TPISNet.PColor pcolor, ObservableCollection<SelMode> modes = null, string tips = "")
         {
+            IsLine = false;
             SetKnown(d_str);
             DicName = dicName;
             Name = name;
@@ -282,6 +302,7 @@ namespace TPIS.Model
 
         public Property(string dicName, string name, string[] units, string tips = "")
         {
+            IsLine = true;
             IsKnown = false;
             DicName = dicName;
             Name = name;

@@ -23,6 +23,8 @@
             <CommandBinding Command="s:TPISCommand.WorkspaceSize" Executed="WorkspaceSize_Excuted"/>
             <CommandBinding Command="s:TPISCommand.BackGroundColor" Executed="BackGroundColor_Excuted"/>
             <CommandBinding Command="s:TPISCommand.QuickModeSelect" Executed="QuickModeSelect_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.CoalDataBaseOpe" Executed="CoalDataBaseOpe_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.GasDataBaseOpe" Executed="GasDataBaseOpe_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -138,6 +140,9 @@
         <!--视图-->
         <MenuItem Header="工具(T)">
             <MenuItem Header="计算模式快速选择" Name="QuickModeSelectOpe" Command="{x:Static s:TPISCommand.QuickModeSelect}"/>
+            <Separator />
+            <MenuItem Header="煤种库" Command="{x:Static s:TPISCommand.CoalDataBaseOpe}"/>
+            <MenuItem Header="气体种类库" Command="{x:Static s:TPISCommand.GasDataBaseOpe}"/>
             <Separator />
         </MenuItem>
 

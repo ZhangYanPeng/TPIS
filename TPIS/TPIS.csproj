@@ -38,6 +38,9 @@
     <Reference Include="CurvesData">
       <HintPath>link\CurvesData.exe</HintPath>
     </Reference>
+    <Reference Include="Database">
+      <HintPath>link\Database.exe</HintPath>
+    </Reference>
     <Reference Include="PhysicalPro">
       <HintPath>link\PhysicalPro.dll</HintPath>
     </Reference>
