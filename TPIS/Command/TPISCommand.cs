@@ -100,11 +100,13 @@ namespace TPIS.Command
             {
                 WorkspaceSizeOpe.IsEnabled = false;
                 BackGroundColorOpe.IsEnabled = false;
+                ViewOpe.IsEnabled = false;
             }
             else
             {
                 WorkspaceSizeOpe.IsEnabled = true;
                 BackGroundColorOpe.IsEnabled = true;
+                ViewOpe.IsEnabled = true;
             }
         }
         #endregion
@@ -136,6 +138,7 @@ namespace TPIS.Command
         public static RoutedCommand QuickModeSelect = new RoutedCommand();
         public static RoutedCommand CoalDataBaseOpe = new RoutedCommand();
         public static RoutedCommand GasDataBaseOpe = new RoutedCommand();
+        public static RoutedCommand View = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -532,6 +535,7 @@ namespace TPIS.Command
         }
         #endregion
 
+<<<<<<< HEAD
         #region 数据库
         public void CoalDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -548,5 +552,27 @@ namespace TPIS.Command
         }
         #endregion
 
+=======
+        #region 视图窗口
+        public void View_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                if(!mainwin.GetCurrentProject().IsViewWindowsOpen)
+                {
+                    ViewWindow viewwin = new ViewWindow();
+                    viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    viewwin.Show();
+                    if (mainwin.GetCurrentProject().SelectedObjects != null)
+                    {
+                        viewwin.ViewCenter();
+                        mainwin.GetCurrentProject().IsViewWindowsOpen = true;
+                    }
+                }
+            }
+        }
+        #endregion
+>>>>>>> 1dc50a903d4f6ad5ce39542b2d9ef9733fcadb37
     }
 }

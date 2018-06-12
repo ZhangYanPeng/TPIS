@@ -92,9 +92,9 @@ namespace TPIS.TPISCanvas
                 {
                     if (item.Canvas.Width > 10 && item.Canvas.Height > 10)//画布最小10×10
                     {
-                        if (item.WorkSpaceSize_RD().X <= item.Canvas.Width - 10)
+                        if (item.WorkSpaceSize_RD(mainwin.GetCurrentProject().Objects).X <= item.Canvas.Width - 10)
                             item.Canvas.Width = item.Canvas.Width - 10;
-                        if (item.WorkSpaceSize_RD().Y <= item.Canvas.Height - 10)
+                        if (item.WorkSpaceSize_RD(mainwin.GetCurrentProject().Objects).Y <= item.Canvas.Height - 10)
                             item.Canvas.Height = item.Canvas.Height - 10;
                     }
                 }

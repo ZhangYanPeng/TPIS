@@ -10,6 +10,7 @@ using TPIS.Model;
 using TPIS.Project;
 using TPIS.Views;
 
+
 namespace TPIS.TPISCanvas
 {
     public enum MoveType
@@ -131,7 +132,6 @@ namespace TPIS.TPISCanvas
 
         void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (e.ClickCount == 2 && DataContext is TPISComponent)
             {
@@ -180,10 +180,30 @@ namespace TPIS.TPISCanvas
             }
             if (!((ObjectBase)this.DataContext).isSelected || this.moveType != MoveType.pos)
             {
-                //之前未被选中，或改为改变大小操作，单独选中该元件
-                mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                //之前未被选中，或改为改变大小操作，单独选中该元件(Ctrl复选)
+                bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
+                if (!flag)
+                {//未打开视图窗
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    {
+                        //ViewWindow viewwin = (ViewWindow)System.Windows.Application.Current.ViewWindow;
+                        //((ObjectBase)this.DataContext).isSelected = true;
+                        mainwin.GetCurrentProject().ReSelect((TPISComponent)((ObjectBase)this.DataContext));
+                    }
+                    else
+                        mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                    mainwin.GetCurrentProject().GetSelectedObjects();
+                }
+                else
+                {
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                        mainwin.GetCurrentProject().ReSelect((TPISComponent)((ObjectBase)this.DataContext));
+                    else
+                        mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                }
                 if (this.DataContext is TPISComponent)
                     BindingAnchorPoints();
+                //mainwin.GetCurrentProject().GetSelectedObjects();//获取当前最新已选对象
             }
             if (this.moveType == MoveType.pos)
                 fEle.Cursor = Cursors.SizeAll;
