@@ -1,11 +1,13 @@
 ﻿using Database;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using TPIS.Model;
 using TPIS.Project;
 using TPIS.Views;
 
@@ -535,7 +537,7 @@ namespace TPIS.Command
         }
         #endregion
 
-<<<<<<< HEAD
+
         #region 数据库
         public void CoalDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -543,7 +545,7 @@ namespace TPIS.Command
             cdw.Owner = Application.Current.MainWindow;
             cdw.Show();
         }
-        
+
         public void GasDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             GasDatabaseWin gdw = new GasDatabaseWin();
@@ -552,7 +554,6 @@ namespace TPIS.Command
         }
         #endregion
 
-=======
         #region 视图窗口
         public void View_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -561,18 +562,19 @@ namespace TPIS.Command
             {
                 if(!mainwin.GetCurrentProject().IsViewWindowsOpen)
                 {
+                    mainwin.GetCurrentProject().GetSelectedObjects();
                     ViewWindow viewwin = new ViewWindow();
                     viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     viewwin.Show();
                     if (mainwin.GetCurrentProject().SelectedObjects != null)
                     {
                         viewwin.ViewCenter();
+                        viewwin.RemoveAllAnchorPoints();
                         mainwin.GetCurrentProject().IsViewWindowsOpen = true;
                     }
                 }
             }
         }
         #endregion
->>>>>>> 1dc50a903d4f6ad5ce39542b2d9ef9733fcadb37
     }
 }

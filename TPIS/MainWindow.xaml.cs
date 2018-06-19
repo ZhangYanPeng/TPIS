@@ -212,14 +212,14 @@ namespace TPIS
         }
         #endregion
 
-        private void View_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            //ObservableCollection<TPIS.Project.ObjectBase> SelectedObjects = new ObservableCollection<TPIS.Project.ObjectBase>();
-            //SelectedObjects = mainwin.GetCurrentProject().GetSelectedObjects();
-            //ScrollViewer sv = SelectViewScrollViewer();
-            mainwin.GetCurrentProject().GetSelectedObjects();
-        }
+        //private void View_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+        //    //ObservableCollection<TPIS.Project.ObjectBase> SelectedObjects = new ObservableCollection<TPIS.Project.ObjectBase>();
+        //    //SelectedObjects = mainwin.GetCurrentProject().GetSelectedObjects();
+        //    //ScrollViewer sv = SelectViewScrollViewer();
+        //    mainwin.GetCurrentProject().GetSelectedObjects();
+        //}
     }
 
     /// <summary>

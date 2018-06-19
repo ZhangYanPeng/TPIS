@@ -192,7 +192,7 @@ namespace TPIS.TPISCanvas
                     }
                     else
                         mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
-                    mainwin.GetCurrentProject().GetSelectedObjects();
+                    //mainwin.GetCurrentProject().GetSelectedObjects();
                 }
                 else
                 {
