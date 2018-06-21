@@ -111,6 +111,7 @@ namespace TPIS.TPISCanvas
             {
                 flag = false;
                 pline.Points.Clear();
+                mainwin.GetCurrentProject().Canvas.CanLink = false;
             }
 
             if (mainwin.GetCurrentProject().Canvas.Operation != OperationType.SELECT)

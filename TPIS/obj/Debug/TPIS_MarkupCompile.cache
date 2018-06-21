@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\LW\Source\Repos\TPIS3\TPIS\obj\Debug\
+C:\Users\LW\source\Repos\TPIS3\TPIS\obj\Debug\
 TPIS
 none
 false
 DEBUG;TRACE
-C:\Users\LW\Source\Repos\TPIS3\TPIS\App.xaml
+C:\Users\LW\source\Repos\TPIS3\TPIS\App.xaml
 10-1382310460
 
 70121989980
-19966116427
+19118347669
 Views\CalWindow.xaml;Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\ViewWindow.xaml;Views\WorkspaceSize.xaml;
 
 False
