@@ -183,10 +183,15 @@ namespace TPIS.Command
                     //检查是否已经打开
                     foreach (ProjectItem project in mainwin.ProjectList.projects)
                     {
-                        if (path == Path.GetFullPath(project.Path + "\\" + project.Name))
+                        if (path.Equals(project.Path + "\\" + project.Name))
                         {
                             //MessageBox.Show("工程已经打开！");
-                            return;
+                            if (MessageBox.Show(project.Name + "已打开，要创建副本吗？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                            {
+                                SaveAs_Excuted(sender, e);
+                            }
+                            else
+                                return;
                         }
                     }
                     FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -323,10 +328,8 @@ namespace TPIS.Command
                 {
                     if (mainwin.GetCurrentProject().Name == saveFileDialog.FileName.Substring(saveFileDialog.FileName.LastIndexOf("\\") + 1))
                     {
-                        if (MessageBox.Show(saveFileDialog.FileName + "已存在。/n要替换它吗？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            mainwin.GetCurrentProject().SaveProject();
-                        }
+                        MessageBox.Show("该工程名已存在，请重新命名！");
+                        SaveAs_Excuted(sender, e);
                     }
                     else
                     {

@@ -141,7 +141,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        #region 画布网格线粗
+        #region 画布网格线粗（0：关闭网格线；1：打开网格线）
         public double gridThickness;
         public double GridThickness
         {
