@@ -1,13 +1,10 @@
 ﻿using Database;
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using TPIS.Model;
 using TPIS.Project;
 using TPIS.Views;
 
@@ -17,7 +14,7 @@ namespace TPIS.Command
     {
         public TPISCommand() : base()
         {
-            System.Windows.Clipboard.Clear();
+            Clipboard.Clear();
         }
 
         #region 下拉菜单显示

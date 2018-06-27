@@ -33,6 +33,50 @@ namespace TPIS.Model
 
         public Position Position { get; set; }
 
+        Point indicator;
+        Point indicatorRelated;
+        public Point Indicator
+        {
+            get => indicator;
+            set
+            {
+                indicator = value;
+                IndicatorRelated = GetIndicatorOtherPoint();
+                OnPropertyChanged("Indicator");
+            }
+        }
+        public Point IndicatorRelated
+        {
+            get => indicatorRelated;
+            set
+            {
+                indicatorRelated = value;
+                OnPropertyChanged("IndicatorRelated");
+            }
+        }
+
+        public Point GetIndicatorOtherPoint()
+        {
+            Point[] points = new Point[] { new Point(0, Position.V_height/2), new Point(Position.V_width / 2, 0), new Point(Position.V_width, Position.V_height / 2), new Point(Position.V_width / 2, Position.V_height) };
+            double mind = CalDis(points[0], Indicator);
+            int minIndex = 0;
+            for (int i=1; i<4; i++)
+            {
+                double dis= CalDis(points[i], Indicator);
+                if(mind > dis)
+                {
+                    mind = dis;
+                    minIndex = i;
+                }
+            }
+            return points[minIndex];
+        }
+
+        internal double CalDis(Point a, Point b)
+        {
+            return Math.Sqrt(Math.Pow(a.X - b.X,2) + Math.Pow(a.Y - b.Y,2));
+        }
+
         public ResultCross(Port port, int no, double rate, double vx, double vy)
         {
             LinkPort = port;
@@ -43,6 +87,7 @@ namespace TPIS.Model
             this.Position.V_y = vy;
             this.Position.Width = 90;
             this.Position.Height = 40;
+            Indicator = new Point(-Position.V_width / 2, Position.V_height);
         }
 
         internal void PosChange(double? x, double? y)
@@ -74,12 +119,14 @@ namespace TPIS.Model
         {
             info.AddValue("no", No);
             info.AddValue("position", Position);
+            info.AddValue("indicator",Indicator);
         }
 
         public ResultCross(SerializationInfo info, StreamingContext context)
         {
             this.No = info.GetInt32("no");
             this.Position = (Position)info.GetValue("position", typeof(Object));
+            this.Indicator = (Point)info.GetValue("indicator", typeof(Object));
         }
         #endregion
     }

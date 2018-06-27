@@ -4,30 +4,17 @@
 winexe
 C#
 .cs
-<<<<<<< HEAD
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\
-=======
-C:\Users\LW\source\Repos\TPIS3\TPIS\obj\Debug\
->>>>>>> 7f2c780c1bb991cd3512a2c6efd1dc2f9a84225d
 TPIS
 none
 false
 DEBUG;TRACE
-<<<<<<< HEAD
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml
 11357752572
 
-72-1067991082
+73-2101975993
 191183514768
 Views\CalWindow.xaml;Views\Modules\TPISCanvas.xaml;Views\Modules\TPISTextToolBar.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\ViewWindow.xaml;Views\WorkspaceSize.xaml;
-=======
-C:\Users\LW\source\Repos\TPIS3\TPIS\App.xaml
-10-1382310460
-
-70121989980
-19118347669
-Views\CalWindow.xaml;Views\Modules\TPISCanvas.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\ViewWindow.xaml;Views\WorkspaceSize.xaml;
->>>>>>> 7f2c780c1bb991cd3512a2c6efd1dc2f9a84225d
 
 False
 

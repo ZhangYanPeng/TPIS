@@ -36,6 +36,7 @@ namespace TPIS.TPISCanvas
             base.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
             base.MouseRightButtonDown += new MouseButtonEventHandler(Element_MouseRightButtonDown);
             base.Loaded += new RoutedEventHandler(InitAnchorPoints);
+            base.Loaded += new RoutedEventHandler(InitCrossIndicator);
 
             Focusable = true;
         }
