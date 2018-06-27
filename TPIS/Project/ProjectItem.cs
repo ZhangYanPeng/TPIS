@@ -113,6 +113,7 @@ namespace TPIS.Project
         }
 
         public String Name { get; set; }
+        public bool IsViewsMouseEnter { get; set; }
         public long Num { get; set; }
         public ClipBoard clipBoard { get; set; }
         public String Path { get; set; }
@@ -141,7 +142,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        #region 画布网格线粗
+        #region 画布网格线粗（0：关闭网格线；1：打开网格线）
         public double gridThickness;
         public double GridThickness
         {
@@ -231,6 +232,7 @@ namespace TPIS.Project
             this.Num = num;
             this.Canvas = pCanvas;
             Objects = new ObservableCollection<ObjectBase>();
+            //SelectedObjects = new ObservableCollection<ObjectBase>();
             this.Rate = 1;
             this.clipBoard = new ClipBoard();
             Records = new RecordStack();
@@ -273,30 +275,15 @@ namespace TPIS.Project
         public void GetSelectedObjects()
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            SelectedObjects = new ObservableCollection<ObjectBase>();
             bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
             if (SelectedObjects != null)
                 SelectedObjects.Clear();
-            SelectedObjects = new ObservableCollection<ObjectBase>();
             foreach (ObjectBase obj in Objects)
             {
                 if (obj.isSelected)
                     SelectedObjects.Add(obj);
             }
-            //if (flag && SelectedObjects != null)
-            //{
-            //    for (int i = 0; i < SelectedObjects.Count; i++)
-            //    {
-            //        ObjectBase obj = SelectedObjects[i];
-            //        if (obj is TPISLine)
-            //        {
-            //            if (!((TPISLine)obj).IsInitiAnchorPoints)
-            //            {
-            //                //((TPISLine)obj).da.InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
-            //                ((TPISLine)obj).IsInitiAnchorPoints = true;
-            //            }
-            //        }
-            //    }
-            //}
         }
         #endregion
 
@@ -503,6 +490,8 @@ namespace TPIS.Project
         /// <param name="d_vy"></param>
         public void MoveSelection(double d_vx, double d_vy, bool record = true)
         {
+            if (this.IsViewsMouseEnter == true)
+                return;
             Record rec = new Record();
             rec.Param.Add("Operation", "Move");
             rec.Param.Add("x", (d_vx / Rate).ToString());
@@ -727,12 +716,20 @@ namespace TPIS.Project
                     texts.Add((TPISText)obj);
                 }
             }
+<<<<<<< HEAD
             Select(components, texts);
             GetSelectedObjects();
             bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
             if (!flag)
                 mainwin.GetCurrentProject().GetSelectedObjects();
             UpdateText();
+=======
+            Select(components);
+            //GetSelectedObjects();
+            //bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
+            //if (!flag)
+            //    mainwin.GetCurrentProject().GetSelectedObjects();
+>>>>>>> 7f2c780c1bb991cd3512a2c6efd1dc2f9a84225d
         }
 
         internal void Select(List<TPISComponent> components, List<TPISText> texts)
@@ -1701,6 +1698,7 @@ namespace TPIS.Project
             info.AddValue("name", Name);
             info.AddValue("canvas", Canvas);
             info.AddValue("objects", Objects);
+            //info.AddValue("selectedObjects", SelectedObjects);
             info.AddValue("path", Path);
             info.AddValue("properties", PropertyGroup);
             info.AddValue("result", ResultGroup);
@@ -1713,6 +1711,7 @@ namespace TPIS.Project
             this.Path = info.GetString("path");
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
             this.Objects = (ObservableCollection<ObjectBase>)info.GetValue("objects", typeof(Object));
+            //this.SelectedObjects = (ObservableCollection<ObjectBase>)info.GetValue("selectedObjects", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
             this.ResultGroup = (ObservableCollection<PropertyGroup>)info.GetValue("result", typeof(Object));
             this.clipBoard = new ClipBoard();

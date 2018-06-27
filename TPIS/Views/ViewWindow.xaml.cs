@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TPIS.Model;
 using TPIS.Project;
 using TPIS.TPISCanvas;
 
@@ -36,16 +37,49 @@ namespace TPIS.Views
         public void ViewCenter()
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            ScrollViewer sv = GetViewScrollViewer();
             Point p = new Point();
-            Grid tabGrid = mainwin.FindVisualChild<Grid>(this.viewTab);
-            Border contentBorder = tabGrid.FindName("ContentPanel") as Border;
-            ContentPresenter contentPresenter = mainwin.FindVisualChild<ContentPresenter>(contentBorder);
-            ScrollViewer sv = contentPresenter.ContentTemplate.FindName("View_ScrollViewer", contentPresenter) as ScrollViewer;
             p = mainwin.GetCurrentProject().WorkSpaceSize_Center(mainwin.GetCurrentProject().SelectedObjects);
             sv.ScrollToHorizontalOffset(p.X - sv.ActualWidth / 2);
             sv.ScrollToVerticalOffset(p.Y - sv.ActualHeight / 2);
         }
         #endregion
+
+        public ScrollViewer GetViewScrollViewer()
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            Grid tabGrid = mainwin.FindVisualChild<Grid>(this.viewTab);
+            Border contentBorder = tabGrid.FindName("ContentPanel") as Border;
+            ContentPresenter contentPresenter = mainwin.FindVisualChild<ContentPresenter>(contentBorder);
+            ScrollViewer sv = contentPresenter.ContentTemplate.FindName("View_ScrollViewer", contentPresenter) as ScrollViewer;
+            return sv;
+        }
+
+        public void RemoveAllAnchorPoints()
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            ScrollViewer sv = GetViewScrollViewer();
+            ItemsPresenter itemsPresenter = mainwin.FindVisualChild<ItemsPresenter>(sv);
+            Canvas canvas = mainwin.FindVisualChild<Canvas>(itemsPresenter);
+            for (int i = 0; i < canvas.Children.Count; i++)
+            {
+                ContentPresenter contentPresenter1 = (ContentPresenter)(canvas.Children[i]);
+                DependencyObject obj = VisualTreeHelper.GetChild(contentPresenter1, 0);
+                if(obj is DesignerComponent)
+                {
+                    for (int j = 0; j < ((DesignerComponent)obj).Children.Count; j++)
+                    {
+                        if (((DesignerComponent)obj).Children[j] is AnchorPoint)
+                        {
+                            ((DesignerComponent)obj).Children.RemoveAt(j);
+                            j--;
+                        }
+                    }
+                }
+
+                
+            }
+        }
 
         public void InitilView()
         {
@@ -73,6 +107,18 @@ namespace TPIS.Views
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             mainwin.GetCurrentProject().IsViewWindowsOpen = false;
+        }
+
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            mainwin.GetCurrentProject().IsViewsMouseEnter = true;
+        }
+
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            mainwin.GetCurrentProject().IsViewsMouseEnter = false;
         }
     }
 }

@@ -113,6 +113,7 @@ namespace TPIS.TPISCanvas
             {
                 flag = false;
                 pline.Points.Clear();
+                mainwin.GetCurrentProject().Canvas.CanLink = false;//右键取消画线问题
             }
 
             if (mainwin.GetCurrentProject().Canvas.Operation != OperationType.SELECT)

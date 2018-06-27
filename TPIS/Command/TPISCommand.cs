@@ -1,11 +1,13 @@
 ﻿using Database;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using TPIS.Model;
 using TPIS.Project;
 using TPIS.Views;
 
@@ -181,10 +183,15 @@ namespace TPIS.Command
                     //检查是否已经打开
                     foreach (ProjectItem project in mainwin.ProjectList.projects)
                     {
-                        if (path == Path.GetFullPath(project.Path + "\\" + project.Name))
+                        if (path.Equals(project.Path + "\\" + project.Name))
                         {
                             //MessageBox.Show("工程已经打开！");
-                            return;
+                            if (MessageBox.Show(project.Name + "已打开，要创建副本吗？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                            {
+                                SaveAs_Excuted(sender, e);
+                            }
+                            else
+                                return;
                         }
                     }
                     FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -321,10 +328,8 @@ namespace TPIS.Command
                 {
                     if (mainwin.GetCurrentProject().Name == saveFileDialog.FileName.Substring(saveFileDialog.FileName.LastIndexOf("\\") + 1))
                     {
-                        if (MessageBox.Show(saveFileDialog.FileName + "已存在。/n要替换它吗？", "提示", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            mainwin.GetCurrentProject().SaveProject();
-                        }
+                        MessageBox.Show("该工程名已存在，请重新命名！");
+                        SaveAs_Excuted(sender, e);
                     }
                     else
                     {
@@ -534,7 +539,12 @@ namespace TPIS.Command
             }
         }
         #endregion
+<<<<<<< HEAD
         
+=======
+
+
+>>>>>>> 7f2c780c1bb991cd3512a2c6efd1dc2f9a84225d
         #region 数据库
         public void CoalDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -542,7 +552,7 @@ namespace TPIS.Command
             cdw.Owner = Application.Current.MainWindow;
             cdw.Show();
         }
-        
+
         public void GasDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             GasDatabaseWin gdw = new GasDatabaseWin();
@@ -559,12 +569,14 @@ namespace TPIS.Command
             {
                 if(!mainwin.GetCurrentProject().IsViewWindowsOpen)
                 {
+                    mainwin.GetCurrentProject().GetSelectedObjects();
                     ViewWindow viewwin = new ViewWindow();
                     viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     viewwin.Show();
                     if (mainwin.GetCurrentProject().SelectedObjects != null)
                     {
                         viewwin.ViewCenter();
+                        viewwin.RemoveAllAnchorPoints();
                         mainwin.GetCurrentProject().IsViewWindowsOpen = true;
                     }
                 }
