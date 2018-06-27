@@ -716,20 +716,12 @@ namespace TPIS.Project
                     texts.Add((TPISText)obj);
                 }
             }
-<<<<<<< HEAD
             Select(components, texts);
-            GetSelectedObjects();
-            bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
-            if (!flag)
-                mainwin.GetCurrentProject().GetSelectedObjects();
-            UpdateText();
-=======
-            Select(components);
             //GetSelectedObjects();
             //bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
             //if (!flag)
             //    mainwin.GetCurrentProject().GetSelectedObjects();
->>>>>>> 7f2c780c1bb991cd3512a2c6efd1dc2f9a84225d
+            UpdateText();
         }
 
         internal void Select(List<TPISComponent> components, List<TPISText> texts)

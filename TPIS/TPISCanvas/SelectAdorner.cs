@@ -103,17 +103,10 @@ namespace TPIS.TPISCanvas
                         selectionText.Add((TPISText)obj);
                 }
             }
-<<<<<<< HEAD
             mainwin.GetCurrentProject().Select(selection, selectionText);
-            bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
-            if (!flag)
-                mainwin.GetCurrentProject().GetSelectedObjects();
-=======
-            mainwin.GetCurrentProject().Select(selection);
             //bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
             //if (!flag)
             //    mainwin.GetCurrentProject().GetSelectedObjects();
->>>>>>> 7f2c780c1bb991cd3512a2c6efd1dc2f9a84225d
         }
     }
     

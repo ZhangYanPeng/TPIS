@@ -539,12 +539,7 @@ namespace TPIS.Command
             }
         }
         #endregion
-<<<<<<< HEAD
-        
-=======
 
-
->>>>>>> 7f2c780c1bb991cd3512a2c6efd1dc2f9a84225d
         #region 数据库
         public void CoalDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
