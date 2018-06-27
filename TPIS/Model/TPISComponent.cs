@@ -34,6 +34,8 @@ namespace TPIS.Model
             info.AddValue("ports", Ports);
             info.AddValue("name", Name);
             info.AddValue("selectMode", selectedMode);
+            info.AddValue("isGrid", IsGrid);
+            info.AddValue("pairName", PairName);
         }
 
         public TPISComponent(SerializationInfo info, StreamingContext context)
@@ -41,6 +43,7 @@ namespace TPIS.Model
             this.No = info.GetInt32("no");
             this.Position = (Position)info.GetValue("position", typeof(Object));
             this.Pic = info.GetString("pic");
+            this.PairName = info.GetString("pairName");
             this.Name = info.GetString("name");
             this.eleType = (EleType)info.GetValue("eleType", typeof(Object));
             Ports = (ObservableCollection<Port>)info.GetValue("ports", typeof(Object));
@@ -49,6 +52,8 @@ namespace TPIS.Model
 
             Mode = (ObservableCollection<Common.SelMode>)info.GetValue("mode", typeof(Object));
             SelectedMode = info.GetInt32("selectMode"); ;
+
+            IsGrid = info.GetBoolean("isGrid");
 
             RePosPort();
             OnPropertyChanged("Pic");
@@ -75,12 +80,36 @@ namespace TPIS.Model
                 OnPropertyChanged("IsSelected");
             }
         }
+        public bool IsGrid { get=>isGrid; set
+            {
+                isGrid = value;
+                Position.IsGrid = isGrid;
+            }
+        }
         #endregion
 
         public Position Position { get; set; }//控件左上角位置
         public ObservableCollection<Port> Ports { get; set; }
         public string Pic { get; set; }
         public string Name { get; set; }
+        public string pairName;
+        public String PairName {
+            get => pairName;
+            set
+            {
+                pairName = value;
+                foreach(PropertyGroup pg in PropertyGroups)
+                {
+                    foreach(Property p in pg.Properties)
+                    {
+                        if (p.Name == "标志字符")
+                            p.ShowValue = value;
+                        OnPropertyChanged("PairName");
+                        return;
+                    }
+                }
+            }
+        }
 
         public TPISComponent(int no, double rate, int tx, int ty, int width, int height, ComponentType ct)
         {
@@ -104,7 +133,6 @@ namespace TPIS.Model
                 this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Pic"));
             }
         }
-
 
         //缩放操作
         internal void SetRate(double rate)
@@ -151,10 +179,11 @@ namespace TPIS.Model
         /// <param name="height">视觉高度增量</param>
         internal void SizeChange(double? width, double? height)
         {
+            Position.IsGrid = this.IsGrid;
             if (width.HasValue)
-                Position.V_width = Position.V_width + width.Value > 0 ? Position.V_width + width.Value : 1;
+                Position.Width = Position.Width + width.Value / Position.Rate > 0 ? Position.Width + width.Value / Position.Rate : 1;
             if (height.HasValue)
-                Position.V_height = Position.V_height + height.Value > 0 ? Position.V_height + height.Value : 1;
+                Position.Height = Position.Height + height.Value / Position.Rate > 0 ? Position.Height + height.Value / Position.Rate : 1;
             RePosPort();
         }
 
@@ -165,10 +194,11 @@ namespace TPIS.Model
         /// <param name="d_vy"></param>
         internal void PosChange(double? x, double? y)
         {
+            Position.IsGrid = this.IsGrid;
             if (x.HasValue)
-                Position.V_x += x.Value;
+                Position.X += x.Value / Position.Rate;
             if (y.HasValue)
-                Position.V_y += y.Value;
+                Position.Y += y.Value / Position.Rate;
         }
 
         /// <summary>
@@ -220,80 +250,18 @@ namespace TPIS.Model
                 {
                     ty = Position.V_height - ty;
                 }
-                //修正偏移
-                p.P_x = tx - 5;
-                p.P_y = ty - 5;
-                //改变控件与Port连接线的大小
-                //if (p.link != null && !p.link.IsSelected)
-                //{
-                //    //MessageBox.Show(new Point(p.x, p.y).ToString());
-                //    //MessageBox.Show(new Point(p.link.points[0].X, p.link.points[0].Y).ToString());
-                //    if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
-                //    {
-                //        //p.link.PointTo(0, new Point(p.link.points[0].X + p.P_x, p.link.points[0].Y + p.P_y));
-                //        p.link.PointTo(0, new Point(Position.X+ tx, Position.Y + ty));
-                //    }
-                //    else
-                //    {
-                //        //p.link.PointTo(p.link.Points.Count - 1, new Point(p.link.points[p.link.Points.Count - 1].X + p.P_x, p.link.points[p.link.Points.Count - 1].Y + p.P_y));
-                //        p.link.PointTo(p.link.Points.Count - 1, new Point(Position.X + tx, Position.Y + ty));
-                //    }
-                //}
-            }
-        }
 
-        private void RePosLink()
-        {
-
-            foreach (Port p in this.Ports)
-            {
-                double tx = 0;
-                double ty = 0;
-                //考虑旋转
-                switch (Position.Angle)
-                {
-                    case 0:
-                        {
-                            tx = Position.V_width * p.x;
-                            ty = Position.V_height * p.y;
-                        }
-                        break;
-                    case 90:
-                        {
-                            ty = Position.V_height * p.x;
-                            tx = Position.V_width * (1 - p.y);
-                        }
-                        break;
-                    case 180:
-                        {
-                            ty = Position.V_height * (1 - p.y);
-                            tx = Position.V_width * (1 - p.x);
-                        }
-                        break;
-                    case 270:
-                        {
-                            double t = ty;
-                            ty = Position.V_height * (1 - p.x);
-                            tx = Position.V_width * p.y;
-                        }
-                        break;
-                    default: break;
-                }
-                //考虑翻转
-                if (Position.IsHorizentalReversed == -1)
-                {
-                    tx = Position.V_width - tx;
-                }
-                if (Position.isVerticalReversed == -1)
-                {
-                    ty = Position.V_height - ty;
-                }
+                int gw = MainWindow.GRID_WIDTH;
                 //修正偏移
+                if (IsGrid)
+                {
+                    tx = tx - tx % gw;
+                    ty = ty - ty % gw;
+                }
                 p.P_x = tx - 5;
                 p.P_y = ty - 5;
             }
         }
-
         #endregion
 
         public override object Clone()

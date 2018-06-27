@@ -122,14 +122,19 @@ namespace TPIS.Project
             if(objectsNo.Count > 1)
             {
                 List<TPISComponent> cl = new List<TPISComponent>();
-                foreach(ObjectBase obj in Objects)
+                List<TPISText> texts = new List<TPISText>();
+                foreach (ObjectBase obj in Objects)
                 {
                     if(obj is TPISComponent && objectsNo.Contains(obj.No))
                     {
                         cl.Add(obj as TPISComponent);
                     }
+                    if (obj is TPISText && objectsNo.Contains(obj.No))
+                    {
+                        texts.Add((TPISText)obj);
+                    }
                 }
-                this.Select(cl);
+                this.Select(cl,texts);
                 return;
             }
             else if(objectsNo.Count == 1)
@@ -253,14 +258,19 @@ namespace TPIS.Project
                 case "Delete":
                     {
                         List<TPISComponent> deleteContent = new List<TPISComponent>();
-                        foreach(ObjectBase obj in record.Objects)
+                        List<TPISText> texts = new List<TPISText>();
+                        foreach (ObjectBase obj in record.Objects)
                         {
                             if(obj is TPISComponent)
                             {
                                 deleteContent.Add(obj as TPISComponent);
                             }
+                            if (obj is TPISText)
+                            {
+                                texts.Add(obj as TPISText);
+                            }
                         }
-                        Select(deleteContent);
+                        Select(deleteContent, texts);
                         DeleteSelection(false);
                         break;
                     }

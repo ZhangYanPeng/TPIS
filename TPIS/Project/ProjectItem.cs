@@ -22,6 +22,7 @@ namespace TPIS.Project
     {
         public bool isSelected;
         public int No { get; set; }
+        public bool isGrid;
 
         public abstract object Clone();
         public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
@@ -148,6 +149,11 @@ namespace TPIS.Project
             set
             {
                 gridThickness = value;
+                foreach (ObjectBase obj in Objects)
+                {
+                    if (value != 0)
+                        obj.isGrid = true;
+                }
                 OnPropertyChanged("GridThickness");
             }
         }
@@ -477,6 +483,12 @@ namespace TPIS.Project
                         rec.ObjectsNo.Add(np);
                     }
                 }
+                if (obj is TPISText && ((TPISText)obj).IsSelected)
+                {
+                    ((TPISText)Objects[i]).SizeChange(width, height);
+                    ((TPISText)Objects[i]).PosChange(x, y);
+                    rec.ObjectsNo.Add(np);
+                }
             }
             if (record && rec.ObjectsNo.Count > 0)
             {
@@ -538,11 +550,158 @@ namespace TPIS.Project
                         rec.ObjectsNo.Add(Objects[i].No);
                     }
                 }
+                if (obj is TPISText)
+                {
+                    if (((TPISText)obj).isSelected)//选中
+                    {
+                        ((TPISText)Objects[i]).PosChange(d_vx, d_vy);
+                        rec.ObjectsNo.Add(Objects[i].No);
+                    }
+                }
             }
             if (record && rec.ObjectsNo.Count > 0)
             {
                 Records.Push(rec);
             }
+        }
+        #endregion
+
+        #region 文字操作
+        public void AmpText(bool record = true)
+        {
+            Record rec = new Record();
+            String origin = "";
+            String current = "";
+            foreach (TPISText text in Objects)
+            {
+                if (text.IsSelected)
+                {
+                    double cf = FonsSizeTransfor(text.FontSize, true);
+                    if (cf > 0)
+                    {
+                        origin += text.FontSize + "||";
+                        text.FontSize = cf;
+                        rec.ObjectsNo.Add(text.No);
+                        current += text.FontSize + "||";
+                    }
+                }
+            }
+            if (record && rec.Objects.Count != 0)
+            {
+                rec.Param.Add("origin", origin);
+                rec.Param.Add("current", current);
+                Records.Push(rec);
+            }
+        }
+
+
+        public void ShkText(bool record = true)
+        {
+            Record rec = new Record();
+            String origin = "";
+            String current = "";
+            foreach (TPISText text in Objects)
+            {
+                if (text.IsSelected)
+                {
+                    double cf = FonsSizeTransfor(text.FontSize, false);
+                    if (cf > 0)
+                    {
+                        origin += text.FontSize + "||";
+                        text.FontSize = cf;
+                        rec.ObjectsNo.Add(text.No);
+                        current += text.FontSize + "||";
+                    }
+                }
+            }
+            if (record && rec.Objects.Count != 0)
+            {
+                rec.Param.Add("origin", origin);
+                rec.Param.Add("current", current);
+                Records.Push(rec);
+            }
+        }
+
+        public void ToSizeText(double size, bool record = true)
+        {
+            Record rec = new Record();
+            String origin = "";
+            String current = "";
+            foreach (TPISText text in Objects)
+            {
+                if (text.IsSelected)
+                {
+                    origin += text.FontSize + "||";
+                    text.FontSize = size;
+                    rec.ObjectsNo.Add(text.No);
+                    current += text.FontSize + "||";
+                }
+            }
+            if (record && rec.Objects.Count != 0)
+            {
+                rec.Param.Add("origin", origin);
+                rec.Param.Add("current", current);
+                Records.Push(rec);
+            }
+        }
+
+        public static double[] FONSIZE = { 5, 5.5, 6.5, 7.5, 8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
+
+        internal double FonsSizeTransfor(double cs, bool amp)
+        {
+            for (int i = 0; i < FONSIZE.Length; i++)
+            {
+                if (cs == FONSIZE[i])
+                {
+                    if (amp)
+                    {
+                        if (i + 1 < FONSIZE.Length)
+                            return FONSIZE[i + 1];
+                        else
+                            return -1;
+                    }
+                    if (!amp)
+                    {
+                        if (i > 0)
+                            return FONSIZE[i - 1];
+                        else
+                            return -1;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        internal void UpdateText()
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            double fsize = -1;
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISText && obj.isSelected)
+                {
+                    TPISText text = (TPISText)obj;
+                    if (fsize < 0)
+                        fsize = text.fontSize;
+                    else
+                    {
+                        if (fsize != text.fontSize)
+                        {
+                            mainwin.SetToolBarFontSize(-1);
+                            return;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < FONSIZE.Length; i++)
+            {
+                if (FONSIZE[i] == fsize)
+                {
+                    mainwin.SetToolBarFontSize(i);
+                    return;
+                }
+            }
+            mainwin.SetToolBarFontSize(-1);
         }
         #endregion
 
@@ -556,21 +715,27 @@ namespace TPIS.Project
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             List<TPISComponent> components = new List<TPISComponent>();
+            List<TPISText> texts = new List<TPISText>();
             foreach (ObjectBase obj in Objects)
             {
                 if (obj is TPISComponent)
                 {
                     components.Add((TPISComponent)obj);
                 }
+                if (obj is TPISText)
+                {
+                    texts.Add((TPISText)obj);
+                }
             }
-            Select(components);
+            Select(components, texts);
             GetSelectedObjects();
             bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
             if (!flag)
                 mainwin.GetCurrentProject().GetSelectedObjects();
+            UpdateText();
         }
 
-        internal void Select(List<TPISComponent> components)
+        internal void Select(List<TPISComponent> components, List<TPISText> texts)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (components.Count > 0)
@@ -591,6 +756,8 @@ namespace TPIS.Project
                     ((TPISComponent)obj).IsSelected = false;
                 if (obj is TPISLine)
                     ((TPISLine)obj).IsSelected = false;
+                if (obj is TPISText)
+                    ((TPISText)obj).IsSelected = false;
                 obj.isSelected = false;
             }
 
@@ -614,6 +781,16 @@ namespace TPIS.Project
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+                else if (obj is TPISText)
+                {
+                    if (texts.Contains(obj as TPISText))
+                    {
+                        if (!((TPISText)obj).IsSelected)
+                        {
+                            ((TPISText)obj).IsSelected = true;
                         }
                     }
                 }
@@ -679,6 +856,7 @@ namespace TPIS.Project
             mainwin.ResultWindow.Items.Refresh();
             mainwin.PortResults.ItemsSource = component.Ports;
             mainwin.PortResults.Items.Refresh();
+            UpdateText();
         }
 
         /// <summary>
@@ -700,6 +878,17 @@ namespace TPIS.Project
                     if (objectBase == obj)
                     {
                         ((ResultCross)obj).isSelected = true;
+                    }
+                }
+                else if (obj is TPISText)
+                {
+                    if (objectBase == obj)
+                    {
+                        ((TPISText)obj).IsSelected = true;
+                    }
+                    else
+                    {
+                        ((TPISText)obj).IsSelected = false;
                     }
                 }
                 else if (obj is TPISComponent)
@@ -751,6 +940,7 @@ namespace TPIS.Project
                 }
             }
             //GetSelectedObjects();
+            UpdateText();
         }
 
         internal void Select()
@@ -761,6 +951,8 @@ namespace TPIS.Project
                     ((TPISComponent)obj).IsSelected = false;
                 if (obj is TPISLine)
                     ((TPISLine)obj).IsSelected = false;
+                if (obj is TPISText)
+                    ((TPISText)obj).IsSelected = false;
                 obj.isSelected = false;
             }
             BindingPropertyWindow(null);
@@ -780,10 +972,69 @@ namespace TPIS.Project
                     n = obj.No;
             }
             n++;
-            Objects.Add(new TPISComponent(n, Rate, tx, ty, width, height, ct));
+            TPISComponent component = new TPISComponent(n, Rate, tx, ty, width, height, ct);
+            if (this.GridThickness == 0)
+                component.IsGrid = false;
+            else
+                component.IsGrid = true;
+            if(component.eleType == TPISNet.EleType.WaterTag)
+            {
+                for(string pn ="A"; ; pn = IncreasePN(pn))
+                {
+                    int sum = 0;
+                    foreach(ObjectBase obj in Objects)
+                    {
+                        if (obj is TPISComponent && ((TPISComponent)obj).eleType == TPISNet.EleType.WaterTag && ((TPISComponent)obj).PairName == pn)
+                            sum++;
+                    }
+                    if(sum < 2)
+                    {
+                        component.PairName = pn;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                component.PairName = "";
+            }
+
+            Objects.Add(component);
             rec.ObjectsNo.Add(n);
             if (record)
                 Records.Push(rec);
+        }
+        internal string IncreasePN(string pn)
+        {
+            string result = "";
+            int en = 1;
+            for(int i=pn.Length-1; i>=0; i--)
+            {
+                if (en == 0) {
+                    char c = pn[i];
+                    result = c + result;
+                    en = 0;
+                }
+                else
+                {
+                    char c = (char)(pn[i] + 1);
+                    if (c > 'Z')
+                    {
+                        c = 'A';
+                        en = 1;
+                    }
+                    else
+                    {
+                        en = 0;
+                    }
+                    result = c + result;
+                }
+            }
+            if(en == 1)
+            {
+                result = 'A' + result;
+            }
+            return result;
         }
 
         //添加线
@@ -820,18 +1071,22 @@ namespace TPIS.Project
             }
             clipBoard.Objects = new List<ObjectBase>();
             List<TPISComponent> sl = new List<TPISComponent>();
+            List<TPISText> texts = new List<TPISText>();
             foreach (ObjectBase obj in Objects)
             {
                 if (obj.isSelected && obj is TPISComponent)
                 {
                     sl.Add(obj as TPISComponent);
                 }
+                if (obj.isSelected && obj is TPISText)
+                {
+                    texts.Add((TPISText)obj);
+                }
             }
-            Select(sl);
+            Select(sl,texts);
 
             foreach (ObjectBase obj in Objects)
             {
-
                 if (obj.isSelected)
                 {
                     CopyObjects.Add(obj.Clone() as ObjectBase);//剪贴板对象集用于计算复制控件的有效边界
@@ -1089,6 +1344,11 @@ namespace TPIS.Project
                     x = (int)(((ResultCross)obj).Position.X + ((ResultCross)obj).Position.Width + 10);
                     y = (int)(((ResultCross)obj).Position.Y + ((ResultCross)obj).Position.Height + 10);
                 }
+                else if (obj is TPISText)
+                {
+                    x = (int)(((TPISText)obj).Position.X + ((TPISText)obj).Position.Width + 10);
+                    y = (int)(((TPISText)obj).Position.Y + ((TPISText)obj).Position.Height + 10);
+                }
                 p.X = p.X > x ? p.X : x;
                 p.Y = p.Y > y ? p.Y : y;
             }
@@ -1313,8 +1573,6 @@ namespace TPIS.Project
         //}
         //#endregion
 
-
-
         #region 查找元件并选中居中
         internal bool FindComponent(int tn)
         {
@@ -1378,6 +1636,20 @@ namespace TPIS.Project
                     }
                 }
             }
+        }
+
+
+        public void AddText(int vx, int vy, double fontsize)
+        {
+            int no = 0;
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj.No <= no)
+                {
+                    no = obj.No - 1;
+                }
+            }
+            Objects.Add(new TPISText(fontsize, no, Rate, vx, vy));
         }
 
         public bool CoverOrNot(double x, double y, double w, double h)
@@ -1454,6 +1726,7 @@ namespace TPIS.Project
 
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
+
 
             return;
         }

@@ -124,8 +124,10 @@ namespace TPIS.TPISCanvas
     {
         public void InitAnchorPoints(object sender, RoutedEventArgs e)
         {
-            if (this.DataContext is TPISComponent)
+            if (this.DataContext is TPISComponent || this.DataContext is TPISText)
             {
+                if (this.DataContext is TPISComponent && ((TPISComponent)DataContext).eleType == TPISNet.EleType.WaterTag)
+                    return;
                 this.Children.Add(new AnchorPoint(AnchorPointType.UL));
                 this.Children.Add(new AnchorPoint(AnchorPointType.U));
                 this.Children.Add(new AnchorPoint(AnchorPointType.UR));
@@ -150,7 +152,10 @@ namespace TPIS.TPISCanvas
                     else if (ap.Type == AnchorPointType.L || ap.Type == AnchorPointType.R)
                     {
                         Binding posbinding = new Binding();
-                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        if(this.DataContext is TPISComponent)
+                            posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        else if(this.DataContext is TPISText)
+                            posbinding.Source = ((TPISText)this.DataContext).Position;
                         posbinding.Path = new PropertyPath("V_height");
                         posbinding.Converter = new HalfConverter();
                         posbinding.Mode = BindingMode.OneWay;
@@ -159,7 +164,10 @@ namespace TPIS.TPISCanvas
                     else
                     {
                         Binding posbinding = new Binding();
-                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        if (this.DataContext is TPISComponent)
+                            posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        else if (this.DataContext is TPISText)
+                            posbinding.Source = ((TPISText)this.DataContext).Position;
                         posbinding.Path = new PropertyPath("V_height");
                         posbinding.Converter = new TotalConverter();
                         posbinding.Mode = BindingMode.OneWay;
@@ -171,7 +179,10 @@ namespace TPIS.TPISCanvas
                     else if (ap.Type == AnchorPointType.U || ap.Type == AnchorPointType.D)
                     {
                         Binding posbinding = new Binding();
-                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        if (this.DataContext is TPISComponent)
+                            posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        else if (this.DataContext is TPISText)
+                            posbinding.Source = ((TPISText)this.DataContext).Position;
                         posbinding.Path = new PropertyPath("V_width");
                         posbinding.Converter = new HalfConverter();
                         posbinding.Mode = BindingMode.OneWay;
@@ -180,7 +191,10 @@ namespace TPIS.TPISCanvas
                     else
                     {
                         Binding posbinding = new Binding();
-                        posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        if (this.DataContext is TPISComponent)
+                            posbinding.Source = ((TPISComponent)this.DataContext).Position;
+                        else if (this.DataContext is TPISText)
+                            posbinding.Source = ((TPISText)this.DataContext).Position;
                         posbinding.Path = new PropertyPath("V_width");
                         posbinding.Converter = new TotalConverter();
                         posbinding.Mode = BindingMode.OneWay;

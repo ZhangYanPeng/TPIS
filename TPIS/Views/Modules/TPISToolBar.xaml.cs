@@ -190,8 +190,17 @@ namespace TPIS.Views.Modules
             ProjectItem project = mainwin.GetCurrentProject();
             if(project != null)
             {
+                foreach(CalWindow cw in mainwin.CalWins)
+                {
+                    if (cw.project == project)
+                    {
+                        cw.Show();
+                        return;
+                    }
+                }
                 CalWindow calWindow = new CalWindow(project);
                 calWindow.Show();
+                mainwin.CalWins.Add(calWindow);
             }
         }
         #endregion

@@ -114,6 +114,7 @@
     <Compile Include="Model\Property.cs" />
     <Compile Include="Model\PropertyGroup.cs" />
     <Compile Include="Model\ResultCross.cs" />
+    <Compile Include="Model\TPISText.cs" />
     <Compile Include="Project\ClipBoard.cs" />
     <Compile Include="Project\ProjectItemRecord.cs" />
     <Compile Include="Project\RecordStack.cs" />
@@ -136,6 +137,9 @@
     <Compile Include="Views\CalWindow.xaml.cs">
       <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Modules\TPISTextToolBar.xaml.cs">
+      <DependentUpon>TPISTextToolBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\QuickModeSelect.xaml.cs">
       <DependentUpon>QuickModeSelect.xaml</DependentUpon>
     </Compile>
@@ -147,6 +151,10 @@
     <Page Include="Views\Modules\TPISCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Modules\TPISTextToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\NewProject.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -388,6 +396,15 @@
   <ItemGroup>
     <Resource Include="Images\button\play.png" />
     <Resource Include="Images\button\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeText.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeTextAmp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_activeTextShrink.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

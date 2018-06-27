@@ -21,6 +21,7 @@ namespace TPIS
         public NewProject()
         {
             InitializeComponent();
+            this.Owner = (MainWindow)Application.Current.MainWindow;
 
             string directoryPath = @".\WorkSpace";
             if (!Directory.Exists(directoryPath))//如果路径不存在

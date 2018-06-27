@@ -35,6 +35,7 @@ namespace TPIS.Views
             project = pi;
             this.Title += " - " + pi.Name;
             CalProject.DataContext = project;
+            this.Owner = (MainWindow)Application.Current.MainWindow;
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
@@ -128,7 +129,14 @@ namespace TPIS.Views
             task = null;
             project.CalculateState = false;
         }
-        
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.CalWins.Remove(this);
+        }
+
     }
 
     //颜色控制

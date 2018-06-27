@@ -40,6 +40,46 @@ namespace TPIS
                     toggleButton.IsChecked = false;
                 }
             }
+
+            ToolBar textToolBar = TextToolBar.Content as ToolBar;
+            for (int i = 0; i < textToolBar.Items.Count; i++)
+            {
+                if (textToolBar.Items.GetItemAt(i) is ToggleButton)
+                {
+                    ToggleButton toggleButton = textToolBar.Items.GetItemAt(i) as ToggleButton;
+                    toggleButton.IsChecked = false;
+                }
+            }
+        }
+
+        internal void SetToolBarFontSize(int op)
+        {
+            ToolBar textToolBar = TextToolBar.Content as ToolBar;
+            for (int i = 0; i < textToolBar.Items.Count; i++)
+            {
+                if (textToolBar.Items.GetItemAt(i) is ComboBox)
+                {
+                    ComboBox comboBox = textToolBar.Items.GetItemAt(i) as ComboBox;
+                    if (op >= 0)
+                        comboBox.SelectedIndex = op;
+                    else
+                        comboBox.SelectedIndex = -1;
+                    comboBox.Items.Refresh();
+                }
+            }
+        }
+
+        internal void UnselectText()
+        {
+            ToolBar textToolBar = TextToolBar.Content as ToolBar;
+            for (int i = 0; i < textToolBar.Items.Count; i++)
+            {
+                if (textToolBar.Items.GetItemAt(i) is ToggleButton)
+                {
+                    ToggleButton toggleButton = textToolBar.Items.GetItemAt(i) as ToggleButton;
+                    toggleButton.IsChecked = false;
+                }
+            }
         }
 
         //左侧工具栏切换
@@ -50,6 +90,7 @@ namespace TPIS
             GetCurrentProject().Canvas.Operation = OperationType.SELECT;
             GetCurrentProject().Canvas.OperationParam.Clear();
             UnselectLine();
+            UnselectText();
             GetCurrentProject().Select();
             foreach (BaseType bt in TypeList)
             {
@@ -80,6 +121,7 @@ namespace TPIS
                     GetCurrentProject().Canvas.OperationParam.Clear();
                     GetCurrentProject().Canvas.OperationParam.Add("type", (int)currEle.Tag);
                     UnselectLine();
+                    UnselectText();
                     //取消其他选中
                     foreach (BaseType bt in this.TypeList)
                     {
@@ -156,6 +198,7 @@ namespace TPIS
             if (GetCurrentProject() != null)
             {
                 GetCurrentProject().Select();
+                UnselectText();
                 try
                 {
                     GetCurrentProject().Canvas.Operation = OperationType.ADD_LINE;
@@ -180,6 +223,39 @@ namespace TPIS
                 {
                     currEle.IsChecked = false;
                     currEle.Focusable = false;
+                    return;
+                }
+            }
+            else
+            {
+                currEle.IsChecked = false;
+                currEle.Focusable = false;
+            }
+        }
+
+        public void TPISTextSelected(object sender, RoutedEventArgs e)
+        {
+            ToggleButton currEle = sender as ToggleButton;
+            if (GetCurrentProject() != null)
+            {
+                GetCurrentProject().Select();
+                try
+                {
+                    GetCurrentProject().Canvas.Operation = OperationType.ADD_TEXT;
+                    GetCurrentProject().Canvas.OperationParam.Clear();
+                    foreach (BaseType bt in this.TypeList)
+                    {
+                        foreach (ComponentType ct in bt.ComponentTypeList)
+                        {
+                            ct.IsChecked = false;
+                        }
+                    }
+                }
+                catch
+                {
+                    currEle.IsChecked = false;
+                    currEle.Focusable = false;
+                    UnselectLine();
                     return;
                 }
             }
@@ -446,6 +522,29 @@ namespace TPIS
                 }
             }
             return "工质类型：未定义";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    //线性
+    public class LineTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return new DoubleCollection() { 1, 0 };
+            else
+            {
+                bool s = (bool)value;
+                if(s)
+                    return new DoubleCollection() { 2, 3 };
+                else
+                    return new DoubleCollection() { 1, 0 };
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

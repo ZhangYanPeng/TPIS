@@ -23,6 +23,7 @@ using TPIS.Views.Modules;
 using System.Windows.Controls.Primitives;
 using TPIS.ConfigFile;
 using System.Collections.ObjectModel;
+using TPIS.Views;
 // TPIS.TPISCanvas;
 
 
@@ -39,6 +40,7 @@ namespace TPIS
         public int ProjectNum { get; set; } // 新工程编号
         public ScrollViewer scrollViewer { get; set; } // 工作区
         public TPISConfig TPISconfig { get; set; }
+        public List<CalWindow> CalWins { get; set; }
 
         public ProjectItem GetCurrentProject()
         {
@@ -65,6 +67,7 @@ namespace TPIS
             ProjectNum = 0;
             //载入工程配置
             TPISconfig = new TPISConfig();
+            CalWins = new List<CalWindow>();
         }
 
         /// <summary>
@@ -116,11 +119,17 @@ namespace TPIS
                 {
                     CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
                     UpdateRate();
-                    MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-                    ProjectItem item = mainwin.GetCurrentProject();
-                    mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), mainwin.GetCurrentProject().Canvas.Height.ToString());//状态栏显示工作区大小
-                    mainwin.CurProjectShow(item.Name.Split('.')[0]);//状态栏显示当前工程
-                    mainwin.CurProjectAddressShow(item.Path, item.Path.Split('\\')[item.Path.Split('\\').Length - 2]);//状态栏显示当前工程地址
+                    ProjectItem item = GetCurrentProject();
+                    CurWorkspaceSizeShow(item.Canvas.Width.ToString(), GetCurrentProject().Canvas.Height.ToString());//状态栏显示工作区大小
+                    CurProjectShow(item.Name.Split('.')[0]);//状态栏显示当前工程
+                    CurProjectAddressShow(item.Path, item.Path.Split('\\')[item.Path.Split('\\').Length - 2]);//状态栏显示当前工程地址
+                    foreach(CalWindow cw in CalWins)
+                    {
+                        if (cw.project == GetCurrentProject())
+                            cw.Show();
+                        else
+                            cw.Hide();
+                    }
                 }
                 catch
                 {
@@ -140,6 +149,13 @@ namespace TPIS
                 {
                     CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
                     UpdateRate();
+                    foreach (CalWindow cw in CalWins)
+                    {
+                        if (cw.project == GetCurrentProject())
+                            cw.Show();
+                        else
+                            cw.Hide();
+                    }
                 }
                 catch
                 {
@@ -257,6 +273,14 @@ namespace TPIS
             set { _crossTemplate = value; }
         }
 
+
+        private DataTemplate _textTemplate = null;
+        public DataTemplate TextTemplate
+        {
+            get { return _textTemplate; }
+            set { _textTemplate = value; }
+        }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is TPISComponent)
@@ -270,6 +294,10 @@ namespace TPIS
             if (item is ResultCross)
             {
                 return _crossTemplate;
+            }
+            if (item is TPISText)
+            {
+                return _textTemplate;
             }
             else
             {

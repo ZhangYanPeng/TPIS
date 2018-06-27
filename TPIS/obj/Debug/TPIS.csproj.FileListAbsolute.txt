@@ -33,4 +33,8 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWindow.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\QuickModeSelect.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\QuickModeSelect.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\Database.exe
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\ViewWindow.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\ViewWindow.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISTextToolBar.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISTextToolBar.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

@@ -53,6 +53,10 @@ namespace TPIS.TPISCanvas
                         AddComponentImage.Height = targetType.Height * mainwin.GetCurrentProject().Rate;
                         Children.Add(AddComponentImage);
                     }
+                    else if(mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_TEXT)
+                    {
+                        Cursor = Cursors.IBeam;
+                    }
                 }
                 else
                     this.Cursor = Cursors.Arrow;
@@ -97,6 +101,29 @@ namespace TPIS.TPISCanvas
                 }
                 mainwin.GetCurrentProject().AddComponent((int)sp.X, (int)sp.Y, targetType.Width, targetType.Height, targetType);
                 e.Handled = true;
+            }
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_TEXT)
+            {
+                Point sp = e.GetPosition(this);
+                ToolBar textToolBar = mainwin.TextToolBar.Content as ToolBar;
+                for (int i = 0; i < textToolBar.Items.Count; i++)
+                {
+                    if (textToolBar.Items.GetItemAt(i) is ComboBox)
+                    {
+                        ComboBox comboBox = textToolBar.Items.GetItemAt(i) as ComboBox;
+                        ComboBoxItem si = (ComboBoxItem)comboBox.SelectedItem;
+                        if(si == null)
+                            mainwin.GetCurrentProject().AddText((int)sp.X, (int)sp.Y, 20);
+                        else
+                            mainwin.GetCurrentProject().AddText((int)sp.X, (int)sp.Y, double.Parse(si.Content.ToString()));
+                        break;
+                    }
+                }
+            }
+
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT)
+            {
+                this.Focus();
             }
         }
 

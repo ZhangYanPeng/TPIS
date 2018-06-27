@@ -78,6 +78,7 @@ namespace TPIS.TPISCanvas
         private void UpdateSelection()
         {
             List<TPISComponent> selection = new List<TPISComponent>();
+            List<TPISText> selectionText = new List<TPISText>();
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
 
             Rect rubberBand = new Rect(startPoint.Value, endPoint.Value);
@@ -94,8 +95,15 @@ namespace TPIS.TPISCanvas
                         && ((TPISComponent)obj).Position.V_y + ((TPISComponent)obj).Position.V_height < Max_Y)
                         selection.Add((TPISComponent)obj);
                 }
+                if (obj is TPISText)
+                {
+                    if (((TPISText)obj).Position.V_x > Min_X && ((TPISText)obj).Position.V_y > Min_Y
+                        && ((TPISText)obj).Position.V_x + ((TPISText)obj).Position.V_width < Max_X
+                        && ((TPISText)obj).Position.V_y + ((TPISText)obj).Position.V_height < Max_Y)
+                        selectionText.Add((TPISText)obj);
+                }
             }
-            mainwin.GetCurrentProject().Select(selection);
+            mainwin.GetCurrentProject().Select(selection, selectionText);
             bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
             if (!flag)
                 mainwin.GetCurrentProject().GetSelectedObjects();

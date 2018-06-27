@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="Views/Modules/TPISMenu.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISToolBar.xaml"/>
                 <ResourceDictionary Source="Views/Modules/TPISCanvas.xaml"/>
+                <ResourceDictionary Source="Views/Modules/TPISTextToolBar.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <local:ValVisualConverter x:Key="ValVisualConverter"/>
@@ -115,20 +116,18 @@
     <DockPanel>
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISToolBar}" x:Name="ToolBar"/>
+        <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISTextToolBar}" x:Name="TextToolBar"/>
         <ContentControl DockPanel.Dock="Left">
             <DockPanel >
                 <!--元件模块-->
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <GroupBox Header="元件" Margin="3,0,0,0">
-                        <ScrollViewer Width="270" MaxWidth="270" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer Width="300" MaxWidth="300" VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="3" >
-                                <TabControl Name="ElementList" TabStripPlacement="Left">
+                                <TabControl Name="ElementList" TabStripPlacement="Top">
                                     <TabControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" Width="90" TextAlignment="Center">
-                                                <TextBlock.LayoutTransform>
-                                                    <RotateTransform Angle="270" />
-                                                </TextBlock.LayoutTransform>
+                                            <TextBlock Text="{Binding Name}" Width="80"  TextAlignment="Center">
                                             </TextBlock>
                                         </DataTemplate>
                                     </TabControl.ItemTemplate>
@@ -237,6 +236,20 @@
                                         <TextBlock FontSize="15" Text="   元件详细信息"></TextBlock>
                                     </DockPanel>
                                 </UserControl>
+                                <Border DockPanel.Dock="Top">
+                                    <DockPanel Height="25" Margin="5 5 5 5">
+                                        <TextBlock Text="模式选择:" Width="60" DockPanel.Dock="Left" VerticalAlignment="Center"></TextBlock>
+                                        <ComboBox Name="PropertyMode" DockPanel.Dock="Top"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource ModeStringConverter}}">
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </DockPanel>
+                                </Border>
+
                                 <TabControl>
                                     <TabItem>
                                         <TabItem.Header>
@@ -248,17 +261,6 @@
                                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                                     <StackPanel Margin="3" >
                                                         <DockPanel >
-                                                            <DockPanel DockPanel.Dock="Top" Height="25">
-                                                                <TextBlock Text="模式选择:" Width="60" DockPanel.Dock="Left" VerticalAlignment="Center"></TextBlock>
-                                                                <ComboBox Name="PropertyMode" DockPanel.Dock="Top"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                                    <ComboBox.ItemTemplate>
-                                                                        <DataTemplate>
-                                                                            <TextBlock Text="{Binding Converter={StaticResource ModeStringConverter}}">
-                                                                            </TextBlock>
-                                                                        </DataTemplate>
-                                                                    </ComboBox.ItemTemplate>
-                                                                </ComboBox>
-                                                            </DockPanel>
                                                             <GroupBox Header="属性">
                                                                 <ListBox Name="PropertyContent" >
                                                                     <ItemsControl.ItemTemplate>
@@ -320,7 +322,7 @@
                                                         <ListBox Name="ResultWindow">
                                                             <ItemsControl.ItemTemplate>
                                                                 <DataTemplate>
-                                                                    <GroupBox Header="{Binding Flag}" >
+                                                                    <GroupBox Header="{Binding Flag}"  Visibility="{Binding Visible}">
                                                                         <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
                                                                             <ListView.View>
                                                                                 <GridView>

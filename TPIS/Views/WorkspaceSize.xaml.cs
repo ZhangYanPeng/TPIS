@@ -25,6 +25,8 @@ namespace TPIS.Views
         {
             InitializeComponent();
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            this.Owner = mainwin;
+
             string[] strArray = mainwin.GetCurrentProject().Name.Split('.');
             string projectName = strArray[0];
             proj_name.Text = projectName;

@@ -26,6 +26,7 @@ namespace TPIS.Views
         public ViewWindow()
         {
             InitializeComponent();
+            this.Owner = (MainWindow)Application.Current.MainWindow;
             //Window_Loaded();
             ProjectList = new ProjectSpace();//初始化工作空间
             InitilView();

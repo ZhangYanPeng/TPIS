@@ -67,6 +67,7 @@ namespace TPIS.Model
         private double v_width;
         private double v_height;
         private double rate;
+        public bool IsGrid { get; set; }
 
         public int angle;
         public int Angle
@@ -131,6 +132,8 @@ namespace TPIS.Model
             {
                 x = value;
                 this.v_x = (int)(value * this.Rate);
+                if (IsGrid)
+                    this.v_x = this.v_x - this.v_x % MainWindow.GRID_WIDTH;
                 OnPropertyChanged("V_x");
             }
         }
@@ -140,6 +143,8 @@ namespace TPIS.Model
             {
                 y = value;
                 this.v_y = (int)(value * this.Rate);
+                if (IsGrid)
+                    this.v_y = this.v_y - this.v_y % MainWindow.GRID_WIDTH;
                 OnPropertyChanged("V_y");
             }
         }
@@ -213,6 +218,11 @@ namespace TPIS.Model
             {
                 v_width = (int)(Width * Rate);
                 v_height = (int)(Height * Rate);
+            }
+
+            if (IsGrid) {
+                this.v_width = this.v_width - this.v_width % MainWindow.GRID_WIDTH;
+                this.v_height = this.v_height - this.v_height % MainWindow.GRID_WIDTH;
             }
             OnPropertyChanged("V_width");
             OnPropertyChanged("V_height");

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Project;
+using TPIS.Views;
 
 namespace TPIS.TPISCanvas
 {
@@ -17,6 +19,7 @@ namespace TPIS.TPISCanvas
         public DesignerLine()
         {
             base.Loaded += new RoutedEventHandler(ReInitLineAnchorPoints);
+            base.MouseRightButtonDown += new MouseButtonEventHandler(Element_MouseRightButtonDown);
         }
         public List<LineAnchorPoint> laps;
         public void InitLineAnchorPoints(long lID, TPISLine line)
@@ -87,6 +90,29 @@ namespace TPIS.TPISCanvas
                     lap.SetBinding(AnchorPoint.VisibilityProperty, binding);
                 }
             }
+        }
+
+        void Element_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject().Canvas.Operation != Project.OperationType.SELECT)
+            {
+                return;
+            }
+            if (((TPISLine)this.DataContext).IsSelected)
+            {
+                //已被选中，不改变选择范围
+                ContextMenu contextMenu = new TPISContextMenu(1);
+                this.ContextMenu = contextMenu;
+            }
+            if (!((TPISLine)this.DataContext).IsSelected)
+            {
+                //之前未被选中，或改为改变大小操作，单独选中该元件
+                mainwin.GetCurrentProject().Select((ObjectBase)this.DataContext);
+                ContextMenu contextMenu = new TPISContextMenu(1);
+                this.ContextMenu = contextMenu;
+            }
+            e.Handled = true;
         }
     }
 }

@@ -67,6 +67,8 @@ namespace TPIS.TPISCanvas
 
             mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.Canvas_MousePosition("0", "0");//状态栏显示工作区鼠标坐标
+
+            Focusable = true;
         }
 
         #region 滚轮操作

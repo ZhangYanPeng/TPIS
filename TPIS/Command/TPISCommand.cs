@@ -534,8 +534,7 @@ namespace TPIS.Command
             }
         }
         #endregion
-
-<<<<<<< HEAD
+        
         #region 数据库
         public void CoalDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -552,7 +551,6 @@ namespace TPIS.Command
         }
         #endregion
 
-=======
         #region 视图窗口
         public void View_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -573,6 +571,5 @@ namespace TPIS.Command
             }
         }
         #endregion
->>>>>>> 1dc50a903d4f6ad5ce39542b2d9ef9733fcadb37
     }
 }

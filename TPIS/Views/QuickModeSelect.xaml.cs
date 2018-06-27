@@ -30,6 +30,9 @@ namespace TPIS.Views
         public QuickModeSelect(ProjectItem pi)
         {
             InitializeComponent();
+
+            this.Owner = (MainWindow)Application.Current.MainWindow;
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Topmost = true;
             DesignComponents = new List<TPISComponent>();

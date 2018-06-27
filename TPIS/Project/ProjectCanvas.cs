@@ -18,7 +18,8 @@ namespace TPIS.Project
         Null,
         ADD_COMPONENT,
         SELECT,
-        ADD_LINE
+        ADD_LINE,
+        ADD_TEXT
     }
 
     [Serializable]

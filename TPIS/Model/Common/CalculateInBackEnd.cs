@@ -17,6 +17,7 @@ namespace TPIS.Model.Common
         {
             //传入参数
             Init(project);
+            BackEnd.ResultSetDef();
             BackEnd.Solve();
             GetGlobalResult(project);
             return GetResult(project);
@@ -220,6 +221,13 @@ namespace TPIS.Model.Common
                                 element.DLines[p.DicName] = p.Curve;
                             }
                         }
+                    }
+                    foreach(Port p in component.Ports)
+                    {
+                        if (p.link != null)
+                            element.IOPoints[p.DicName].IsLinked = true;
+                        else
+                            element.IOPoints[p.DicName].IsLinked = false;
                     }
                 }
             }

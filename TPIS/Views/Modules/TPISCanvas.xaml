@@ -10,6 +10,7 @@
     <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
     <local:ColorConverter x:Key="ColorConverter"/>
     <local:MaterialConverter x:Key="MaterialConverter"/>
+    <local:LineTypeConverter x:Key="LineTypeConverter"/>
 
     <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
         <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>
@@ -203,6 +204,7 @@
                 </ImageBrush>
             </s:DesignerComponent.Background>
             <TextBlock Text="{Binding No}" Canvas.Left="0" Canvas.Top="{Binding Position.V_height}" Width="{Binding Position.V_width}" TextAlignment="Center"></TextBlock>
+            <TextBlock Text="{Binding PairName}" Canvas.Left="0" Canvas.Top="0"  TextAlignment="Center" FontSize="15"></TextBlock>
             <ItemsControl ItemsSource="{Binding Ports}" Style="{StaticResource PortItemsControlStyle}">
             </ItemsControl>
         </s:DesignerComponent>
@@ -220,16 +222,16 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Stretch">
+                    <Border BorderBrush="Black" BorderThickness="0 0 1 1" Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[0].ShowValue}"></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch">
+                    <Border BorderBrush="Black" BorderThickness="1 0 0 1" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[1].ShowValue}"></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Stretch">
+                    <Border BorderBrush="Black" BorderThickness="0 1 1 0" Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[2].ShowValue}"></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch">
+                    <Border BorderBrush="Black" BorderThickness="1 1 0 0" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[3].ShowValue}"></TextBlock>
                     </Border>
                 </Grid>
@@ -237,11 +239,20 @@
         </s:DesignerComponent>
     </DataTemplate>
 
+    <DataTemplate x:Key="template_text">
+        <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+            <StackPanel>
+                <TextBlock Visibility="Visible" Text="{Binding Text}" FontSize="{Binding FontSize}" Width="{Binding Position.V_width}" Height="{Binding Position.V_height}" Canvas.Top="0" Canvas.Left="0"></TextBlock>
+                <TextBox Visibility="Collapsed" Text="{Binding Text}" FontSize="{Binding FontSize}" Width="{Binding Position.V_width}" Height="{Binding Position.V_height}" Canvas.Top="0" Canvas.Left="0"></TextBox>
+            </StackPanel>
+        </s:DesignerComponent>
+    </DataTemplate>
+
     <DataTemplate x:Key="template_line">
         <!--<Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
         </Polyline>-->
         <s:DesignerLine>
-            <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
+            <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
             </Polyline>
         </s:DesignerLine>
     </DataTemplate>
@@ -261,5 +272,6 @@
                 SelectionTemplate="{StaticResource template_selection}"
                 LineTemplate="{StaticResource template_line}"
                 CrossTemplate="{StaticResource template_cross}"
+                TextTemplate="{StaticResource template_text}"
                 />
 </ResourceDictionary>
