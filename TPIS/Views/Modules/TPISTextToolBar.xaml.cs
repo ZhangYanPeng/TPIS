@@ -19,7 +19,7 @@ namespace TPIS.Views.Modules
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TPISTextSelected(object sender, RoutedEventArgs e)
+        public void TPISTextSelected(object sender, RoutedEventArgs e)
         {
             try
             {

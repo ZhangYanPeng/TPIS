@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using TPIS.Project;
+using TPIS.Views.Modules;
 
 namespace TPIS.Views
 {
@@ -24,38 +28,112 @@ namespace TPIS.Views
         /// <param name="type"> 1: 控件右键 2：画布右键</param>
         public TPISContextMenu(int type)
         {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            
             MenuItem copyMenuItem = new MenuItem();
-            copyMenuItem.Header = "复制";
+            Image copyImage = new Image();
+            copyImage.Source = new BitmapImage(new System.Uri(@"pack://application:,,,/Images/icon/icon_copy.png"));
+            copyMenuItem.Header = "复制 Ctrl+C";
+            copyMenuItem.Icon = copyImage;
+
             MenuItem pasteMenuItem = new MenuItem();
-            pasteMenuItem.Header = "粘贴";
+            Image pasteImage = new Image();
+            pasteImage.Source = new BitmapImage(new System.Uri(@"pack://application:,,,/Images/icon/icon_paste.png"));
+            pasteMenuItem.Header = "粘贴 Ctrl+V";
+            pasteMenuItem.Icon = pasteImage;
+
             MenuItem deleteMenuItem = new MenuItem();
-            deleteMenuItem.Header = "删除";
+            Image deleteImage = new Image();
+            deleteImage.Source = new BitmapImage(new System.Uri(@"pack://application:,,,/Images/icon/icon_delete.png"));
+            deleteMenuItem.Header = "删除 Del";
+            deleteMenuItem.Icon = deleteImage;
+
+            MenuItem cutMenuItem = new MenuItem();
+            Image cutImage = new Image();
+            cutImage.Source = new BitmapImage(new System.Uri(@"pack://application:,,,/Images/icon/icon_cut.png"));
+            cutMenuItem.Header = "剪切 Ctrl+X";
+            cutMenuItem.Icon = cutImage;
+
+            MenuItem undoMenuItem = new MenuItem();
+            Image undoImage = new Image();
+            undoImage.Source = new BitmapImage(new System.Uri(@"pack://application:,,,/Images/icon/icon_undo.png"));
+            undoMenuItem.Header = "撤销 Ctrl+Z";
+            undoMenuItem.Icon = undoImage;
+
+            MenuItem redoMenuItem = new MenuItem();
+            Image redoImage = new Image();
+            redoImage.Source = new BitmapImage(new System.Uri(@"pack://application:,,,/Images/icon/icon_redo.png"));
+            redoMenuItem.Header = "重做 Ctrl+Y";
+            redoMenuItem.Icon = redoImage;
+
+            MenuItem selectAllMenuItem = new MenuItem();
+            Image selectImage = new Image();
+            selectImage.Source = new BitmapImage(new System.Uri(@"pack://application:,,,/Images/icon/icon_allSelection.png"));
+            selectAllMenuItem.Header = "全选 Ctrl+A";
+            selectAllMenuItem.Icon = selectImage;
+
+            MenuItem gridMenuItem = new MenuItem();
+            gridMenuItem.Header = "网格 Ctrl+G";
+
             copyMenuItem.Click += btCopy_Click;
             pasteMenuItem.Click += btPaste_Click;
             deleteMenuItem.Click += btDel_Click;
+            cutMenuItem.Click += btCut_Click;
+            undoMenuItem.Click += btUndo_Click;
+            redoMenuItem.Click += btRedo_Click;
+            selectAllMenuItem.Click += btSelectAll_Click;
+            gridMenuItem.Click += btGrid_Click;
+
+            selectAllMenuItem.IsEnabled = true;
+            gridMenuItem.IsEnabled = true;
             if (type != 2)
             {
                 pasteMenuItem.IsEnabled = false;
                 copyMenuItem.IsEnabled = true;
                 deleteMenuItem.IsEnabled = true;
+                cutMenuItem.IsEnabled = true;
+                undoMenuItem.IsEnabled = false;
+                redoMenuItem.IsEnabled = false;
             }
-            if (type != 1 )
+            if (type != 1)
             {
                 copyMenuItem.IsEnabled = false;
                 deleteMenuItem.IsEnabled = false;
-                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-                if(mainwin.GetCurrentProject().clipBoard.Objects.Count == 0)
+                cutMenuItem.IsEnabled = false;
+
+                if (mainwin.GetCurrentProject().Records.UndoStack.Count > 0)
+                    undoMenuItem.IsEnabled = true;
+                else
+                    undoMenuItem.IsEnabled = false;
+
+                if (mainwin.GetCurrentProject().Records.RedoStack.Count > 0)
+                    redoMenuItem.IsEnabled = true;
+                else
+                    redoMenuItem.IsEnabled = false;
+
+                if (mainwin.GetCurrentProject().clipBoard.Objects.Count == 0)
                 {
                     pasteMenuItem.IsEnabled = false;
+
                 }
                 else
                 {
                     pasteMenuItem.IsEnabled = true;
                 }
             }
+
             Items.Add(copyMenuItem);
+            Items.Add(cutMenuItem);
             Items.Add(deleteMenuItem);
             Items.Add(pasteMenuItem);
+            Items.Add(new Separator());
+            Items.Add(undoMenuItem);
+            Items.Add(redoMenuItem);
+            Items.Add(new Separator());
+            Items.Add(selectAllMenuItem);
+            Items.Add(new Separator());
+            Items.Add(gridMenuItem);
+
         }
 
         private void btDel_Click(object sender, RoutedEventArgs e)
@@ -74,6 +152,36 @@ namespace TPIS.Views
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.GetCurrentProject().CopySelection();
+        }
+
+        private void btCut_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().CutSelection();
+        }
+
+        private void btUndo_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().Undo();
+        }
+
+        private void btRedo_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().Redo();
+        }
+
+        private void btSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().SelectAll();
+        }
+
+        private void btGrid_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().DrawGridSelection();
         }
     }
 }
