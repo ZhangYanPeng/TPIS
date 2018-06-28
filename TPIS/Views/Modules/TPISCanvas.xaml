@@ -3,14 +3,15 @@
                     xmlns:local="clr-namespace:TPIS"
                     xmlns:model="clr-namespace:TPIS.Model"
                     xmlns:s="clr-namespace:TPIS.TPISCanvas"
+                    xmlns:modules="clr-namespace:TPIS.Views.Modules"
                     x:Class="TPIS.TPISCanvas.ChangeLine">
 
     <model:LinePosConverter x:Key="myPointsConverter"/>
-    <local:ValVisualConverter x:Key="ValVisualConverter"/>
-    <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
-    <local:ColorConverter x:Key="ColorConverter"/>
-    <local:MaterialConverter x:Key="MaterialConverter"/>
-    <local:LineTypeConverter x:Key="LineTypeConverter"/>
+    <modules:ValVisualConverter x:Key="ValVisualConverter"/>
+    <modules:MeasureVisualConverter x:Key="MeasureVisualConverter" />
+    <modules:ColorConverter x:Key="ColorConverter"/>
+    <modules:MaterialConverter x:Key="MaterialConverter"/>
+    <modules:LineTypeConverter x:Key="LineTypeConverter"/>
 
     <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
         <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>

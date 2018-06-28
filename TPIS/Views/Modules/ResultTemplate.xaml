@@ -1,0 +1,53 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TPIS.Views.Modules"
+                    x:Class="TPIS.Views.Modules.ResultTemplate">
+
+    <local:ValVisualConverter x:Key="ValVisualConverter"/>
+    <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
+    <local:ColorConverter x:Key="ColorConverter"/>
+
+    <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Background="{Binding Color,Converter={StaticResource ColorConverter}}" Content="{Binding Tips}" MinWidth="200" MinHeight="20"></ToolTip>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate  x:Key="ResultTemplate">
+        <GroupBox Header="{Binding Flag}"  Visibility="{Binding Visible}">
+            <ListView HorizontalAlignment="Left" MinWidth="320" ItemsSource="{Binding Properties}"  ItemContainerStyle="{StaticResource StyleSelectedProperty}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                        <GridViewColumn Header="值" Width="200" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel Width="185">
+                                        <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                        <ComboBox Width="78" IsEnabled="False" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                            <ComboBox.Visibility>
+                                                <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                    <Binding Path="Units"></Binding>
+                                                    <Binding Path="Type"></Binding>
+                                                </MultiBinding>
+                                            </ComboBox.Visibility>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding }"></TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+    </DataTemplate>
+
+</ResourceDictionary>

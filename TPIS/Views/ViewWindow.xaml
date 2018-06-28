@@ -16,13 +16,6 @@
                 <ResourceDictionary Source="Modules/TPISToolBar.xaml"/>
                 <ResourceDictionary Source="Modules/TPISCanvas.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <c:ValVisualConverter x:Key="ValVisualConverter"/>
-            <c:MeasureVisualConverter x:Key="MeasureVisualConverter" />
-            <c:LineVisualConverter x:Key="LineVisualConverter" />
-            <c:CalStateConverter x:Key="CalStateConverter" />
-            <c:RectConverter x:Key="RectConverter" />
-            <c:ModeStringConverter x:Key="ModeStringConverter"/>
         </ResourceDictionary>
     </Window.Resources>
 
