@@ -1,0 +1,51 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TPIS.Views.Modules">
+
+    <local:ValVisualConverter x:Key="ValVisualConverter"/>
+    <local:MeasureVisualConverter x:Key="MeasureVisualConverter" />
+
+    <DataTemplate x:Key="PortResultTemplate">
+        <Expander MinWidth="300" IsExpanded="True">
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" FontSize="14" FontWeight="Bold" >
+                    </TextBlock>
+                    <CheckBox IsChecked="{Binding ShowResult}"></CheckBox>
+                </DockPanel>
+            </Expander.Header>
+            <Expander.Content>
+                <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding Results}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                            <GridViewColumn Header="值" Width="200" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Width="185">
+                                            <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                            <ComboBox IsEnabled="False" Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                <ComboBox.Visibility>
+                                                    <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                        <Binding Path="Units"></Binding>
+                                                        <Binding Path="Type"></Binding>
+                                                    </MultiBinding>
+                                                </ComboBox.Visibility>
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding }"></TextBlock>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Expander.Content>
+        </Expander>
+    </DataTemplate>
+
+</ResourceDictionary>

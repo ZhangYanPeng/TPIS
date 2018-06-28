@@ -97,6 +97,8 @@ namespace TPIS.Model
             get => pairName;
             set
             {
+                if (eleType != EleType.WaterTag)
+                    return;
                 pairName = value;
                 foreach(PropertyGroup pg in PropertyGroups)
                 {
