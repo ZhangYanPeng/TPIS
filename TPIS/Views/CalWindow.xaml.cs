@@ -137,6 +137,14 @@ namespace TPIS.Views
             mainwin.CalWins.Remove(this);
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            Rect workArea = SystemParameters.WorkArea;
+            Left = (workArea.Width - Width) / 2 + workArea.Left;
+            Top = (workArea.Height - Height) / 2 + workArea.Top;
+        }
+
     }
 
     //颜色控制

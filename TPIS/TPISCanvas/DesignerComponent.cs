@@ -71,8 +71,27 @@ namespace TPIS.TPISCanvas
                     {
                         if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl) && currEle.DataContext is TPISComponent)
                         {
-                            double r = Math.Max(x / ((TPISComponent)currEle.DataContext).Position.V_width, y / ((TPISComponent)currEle.DataContext).Position.V_height);
-                            y = r * ((TPISComponent)currEle.DataContext).Position.V_height;
+                            if(sizeType == AnchorPointType.L || sizeType == AnchorPointType.DL || sizeType == AnchorPointType.UL) {
+                                double r = x / ((TPISComponent)currEle.DataContext).Position.V_width;
+                                y = r * ((TPISComponent)currEle.DataContext).Position.V_height;
+                            }
+                            else if (sizeType == AnchorPointType.R || sizeType == AnchorPointType.DR || sizeType == AnchorPointType.UR)
+                            {
+                                double r = x / ((TPISComponent)currEle.DataContext).Position.V_width;
+                                y = r * ((TPISComponent)currEle.DataContext).Position.V_height;
+                            }
+                            else if (sizeType == AnchorPointType.U)
+                            {
+                                double r = y / ((TPISComponent)currEle.DataContext).Position.V_height;
+                                x = r * ((TPISComponent)currEle.DataContext).Position.V_width;
+
+                            }
+                            else
+                            {
+                                double r = y / ((TPISComponent)currEle.DataContext).Position.V_height;
+                                x = r * ((TPISComponent)currEle.DataContext).Position.V_width;
+
+                            }
                             if (this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.R || this.sizeType == AnchorPointType.DR)
                             {
                                 mainwin.GetCurrentProject().SizeChange(no, x, y, null, null);

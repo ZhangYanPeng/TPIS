@@ -81,3 +81,4 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\ResultTemplate.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\ResultTemplate.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\PortResultTemplate.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
