@@ -11,7 +11,10 @@ namespace TPIS.Project
 {
     public partial class ProjectItem : INotifyPropertyChanged, ISerializable
     {
+        public RecordStack Records { get; set; }
+
         #region 撤销 和 重做
+        //撤销
         public void Undo()
         {
             Record record = Records.PopUndo();
@@ -42,18 +45,18 @@ namespace TPIS.Project
                     {
                         SelectByNo(record.ObjectsNo);
                         int n = int.Parse(record.Param["angle"]);
-                        RotateSelection(4-n,false);
+                        RotateSelection(4 - n, false);
                         break;
                     }
                 case "SizeChange":
                     {
                         SelectByNo(record.ObjectsNo);
                         int np = record.ObjectsNo[0];
-                        double? width = -ParseDoubleNull(record.Param["width"])*Rate;
+                        double? width = -ParseDoubleNull(record.Param["width"]) * Rate;
                         double? height = -ParseDoubleNull(record.Param["height"]) * Rate;
                         double? x = -ParseDoubleNull(record.Param["x"]) * Rate;
                         double? y = -ParseDoubleNull(record.Param["y"]) * Rate;
-                        SizeChange(np, width, height,x, y, false);
+                        SizeChange(np, width, height, x, y, false);
                         break;
                     }
                 case "Move":
@@ -70,14 +73,14 @@ namespace TPIS.Project
                         double ox = ParseDouble(record.Param["ox"]) * Rate;
                         double oy = ParseDouble(record.Param["oy"]) * Rate;
                         int pn = int.Parse(record.Param["PointNo"]);
-                        LineAnchorPointsMoveChange((TPISLine)record.Objects[0], new System.Windows.Point(ox,oy),pn, false);
+                        LineAnchorPointsMoveChange((TPISLine)record.Objects[0], new System.Windows.Point(ox, oy), pn, false);
                         SelectByNo(record.ObjectsNo);
                         break;
                     }
                 case "AddComponent":
                     {
                         SelectByNo(record.ObjectsNo);
-                        Records.RedoStack[Records.RedoStack.Count-1].Objects = DeleteSelection(false);
+                        Records.RedoStack[Records.RedoStack.Count - 1].Objects = DeleteSelection(false);
                         break;
                     }
                 case "AddLine":
@@ -119,13 +122,13 @@ namespace TPIS.Project
 
         private void SelectByNo(List<int> objectsNo)
         {
-            if(objectsNo.Count > 1)
+            if (objectsNo.Count > 1)
             {
                 List<TPISComponent> cl = new List<TPISComponent>();
                 List<TPISText> texts = new List<TPISText>();
                 foreach (ObjectBase obj in Objects)
                 {
-                    if(obj is TPISComponent && objectsNo.Contains(obj.No))
+                    if (obj is TPISComponent && objectsNo.Contains(obj.No))
                     {
                         cl.Add(obj as TPISComponent);
                     }
@@ -134,14 +137,14 @@ namespace TPIS.Project
                         texts.Add((TPISText)obj);
                     }
                 }
-                this.Select(cl,texts);
+                this.Select(cl, texts);
                 return;
             }
-            else if(objectsNo.Count == 1)
+            else if (objectsNo.Count == 1)
             {
                 foreach (ObjectBase obj in Objects)
                 {
-                    if ( obj.No == objectsNo[0])
+                    if (obj.No == objectsNo[0])
                     {
                         this.Select(obj);
                         return;
@@ -150,6 +153,7 @@ namespace TPIS.Project
             }
         }
 
+        //重做
         public void Redo()
         {
             Record record = Records.PopRedo();
@@ -214,13 +218,14 @@ namespace TPIS.Project
                     }
                 case "AddComponent":
                     {
-                        foreach(ObjectBase obj in record.Objects){
+                        foreach (ObjectBase obj in record.Objects)
+                        {
                             Objects.Add(obj);
-                            if(obj is TPISLine)
+                            if (obj is TPISLine)
                             {
                                 TPISLine line = obj as TPISLine;
                                 line.inPort.link = line;
-                                if(line.inPort.Type == Model.Common.NodType.Undef)
+                                if (line.inPort.Type == Model.Common.NodType.Undef)
                                 {
                                     line.inPort.Type = Model.Common.NodType.DefOut;
                                 }
@@ -261,7 +266,7 @@ namespace TPIS.Project
                         List<TPISText> texts = new List<TPISText>();
                         foreach (ObjectBase obj in record.Objects)
                         {
-                            if(obj is TPISComponent)
+                            if (obj is TPISComponent)
                             {
                                 deleteContent.Add(obj as TPISComponent);
                             }
@@ -299,7 +304,6 @@ namespace TPIS.Project
             }
         }
         #endregion
-
 
         internal double? ParseDoubleNull(string str)
         {

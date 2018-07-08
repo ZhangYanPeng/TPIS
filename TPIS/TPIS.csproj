@@ -116,7 +116,12 @@
     <Compile Include="Model\ResultCross.cs" />
     <Compile Include="Model\TPISText.cs" />
     <Compile Include="Project\ClipBoard.cs" />
+    <Compile Include="Project\ProjectItemCanvas.cs" />
+    <Compile Include="Project\ProjectItemClipBoard.cs" />
+    <Compile Include="Project\ProjectItemElement.cs" />
     <Compile Include="Project\ProjectItemRecord.cs" />
+    <Compile Include="Project\ProjectItemSelect.cs" />
+    <Compile Include="Project\ProjectItemTrans.cs" />
     <Compile Include="Project\RecordStack.cs" />
     <Compile Include="TPISCanvas\ChangeLine.cs" />
     <Compile Include="TPISCanvas\CrossComponent.cs" />

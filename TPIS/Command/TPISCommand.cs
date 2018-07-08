@@ -281,8 +281,7 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                mainwin.GetCurrentProject().CopySelection();
-                mainwin.GetCurrentProject().DeleteSelection();
+                mainwin.GetCurrentProject().CutSelection();
             }
         }
 
