@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Shapes;
 using TPIS.Model;
 using TPIS.Model.Common;
-using TPIS.TPISCanvas;
-using TPIS.Views;
 
 namespace TPIS.Project
 {
@@ -98,7 +91,7 @@ namespace TPIS.Project
         }
         #endregion
 
-        public ObservableCollection<string> logs { get; set; }
+        public ObservableCollection<string> logs;
         public ObservableCollection<string> Logs
         {
             get
