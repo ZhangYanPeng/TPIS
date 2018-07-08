@@ -153,6 +153,7 @@
     <Compile Include="Views\Modules\TPISTextToolBar.xaml.cs">
       <DependentUpon>TPISTextToolBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PortContext.cs" />
     <Compile Include="Views\QuickModeSelect.xaml.cs">
       <DependentUpon>QuickModeSelect.xaml</DependentUpon>
     </Compile>

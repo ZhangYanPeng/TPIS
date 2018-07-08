@@ -16,6 +16,7 @@ using TPIS.Model;
 using TPIS.Model.Common;
 using TPIS.Project;
 using TPIS.TPISCanvas;
+using TPIS.Views;
 
 namespace TPIS.TPISCanvas
 {
@@ -41,6 +42,23 @@ namespace TPIS.TPISCanvas
 
                 frameworkElement.Cursor = Cursors.Hand;
                 Mouse.OverrideCursor = null;
+            }
+        }
+
+        public void Port_MouseRightButtonDown(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT)
+            {
+                Ellipse uIElement = new Ellipse();
+                uIElement = (Ellipse)sender;
+                Port port = (Port)(uIElement.DataContext);
+                if(port.type == NodType.DefIn || port.type == NodType.Undef || port.type == NodType.DefOut && port.link == null)
+                {
+                    PortContext pcontext = new PortContext(port);
+                    uIElement.ContextMenu = pcontext;
+                }
+                e.Handled = true;
             }
         }
 
@@ -109,10 +127,6 @@ namespace TPIS.TPISCanvas
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             Ellipse uIElement = new Ellipse();
             uIElement = (Ellipse)sender;
-        }
-
-        public void Port_MouseRightButtonDown(object sender, MouseEventArgs e)
-        {
         }
     }
 }

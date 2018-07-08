@@ -108,7 +108,10 @@ namespace TPIS.TPISCanvas
         private void SubstitutionLine()
         {
             //判断线是否反了
-            if(mainwin.GetCurrentProject().Canvas.StartPort.Type == Model.Common.NodType.Inlet || mainwin.GetCurrentProject().Canvas.EndPort.Type == Model.Common.NodType.Outlet)
+            if(mainwin.GetCurrentProject().Canvas.StartPort.Type == Model.Common.NodType.Inlet ||
+                mainwin.GetCurrentProject().Canvas.StartPort.Type == Model.Common.NodType.DefIn ||
+                mainwin.GetCurrentProject().Canvas.EndPort.Type == Model.Common.NodType.DefOut || 
+                mainwin.GetCurrentProject().Canvas.EndPort.Type == Model.Common.NodType.Outlet)
             {
                 Polyline tp = new Polyline();
                 for (int i = pline.Points.Count-1; i >=0 ; i--)
