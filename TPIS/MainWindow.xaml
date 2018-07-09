@@ -56,6 +56,32 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <!--GridSplitter样式-->
+            <Style x:Key="GridSplitterPreviewStyle">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle Fill="#80000000"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="GridSplitterStyle1" TargetType="{x:Type GridSplitter}">
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GridSplitter}">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <Grid>
+                                    <Button Name="btnExpend" Content=":" VerticalAlignment="Center" Height="50" Panel.ZIndex="0" Cursor="Hand"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -107,7 +133,7 @@
         <ContentControl DockPanel.Dock="Top" Name="Menu" Content="{StaticResource TPISMenu}"/>
         <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISToolBar}" x:Name="ToolBar"/>
         <ContentControl DockPanel.Dock="Top" Content="{DynamicResource TPISTextToolBar}" x:Name="TextToolBar"/>
-        <ContentControl DockPanel.Dock="Left">
+        <ContentControl DockPanel.Dock="Left" Name="grdWorkbench">
             <DockPanel >
                 <!--元件模块-->
                 <Border BorderThickness="1" BorderBrush="Gray">
@@ -151,6 +177,9 @@
                     </GroupBox>
                 </Border>
             </DockPanel>
+        </ContentControl>
+        <ContentControl DockPanel.Dock="Left">
+            <GridSplitter x:Name="gsSplitterr" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" Style="{DynamicResource GridSplitterStyle1}"/>
         </ContentControl>
         <Grid>
             <Border BorderThickness="1" BorderBrush="Black" Margin="2">

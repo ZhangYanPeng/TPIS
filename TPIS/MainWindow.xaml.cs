@@ -68,6 +68,7 @@ namespace TPIS
             //载入工程配置
             TPISconfig = new TPISConfig();
             CalWins = new List<CalWindow>();
+            this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
         }
 
         /// <summary>
@@ -199,6 +200,36 @@ namespace TPIS
                 }
             }
         }
+
+        #region 元件模块窗口折叠
+        double m_WidthCache;
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            //获取GridSplitterr的cotrolTemplate中的按钮btn，必须在Loaded之后才能获取到
+            Button btnGrdSplitter = gsSplitterr.Template.FindName("btnExpend", gsSplitterr) as Button;
+            if (btnGrdSplitter != null)
+                btnGrdSplitter.Click += new RoutedEventHandler(btnGrdSplitter_Click);
+        }
+        
+        void btnGrdSplitter_Click(object sender, RoutedEventArgs e)
+        {
+            double temp = grdWorkbench.Width;
+            double def = 0;
+            if (temp.Equals(def))
+            {
+                //恢复
+                grdWorkbench.Width = m_WidthCache;
+            }
+            else
+            {
+                //折叠
+                m_WidthCache = grdWorkbench.Width;
+                grdWorkbench.Width = def;
+            }
+        }
+        #endregion
+
         #region 获取ScrollViewer
         public ScrollViewer SelectScrollViewer()
         {
