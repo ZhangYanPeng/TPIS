@@ -214,7 +214,7 @@
     <DataTemplate x:Key="template_cross">
         <s:DesignerComponent >
             <Viewbox Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
-                <Grid Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
+                <Grid Width="{Binding Position.Width}" Height="{Binding Position.Height}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -224,16 +224,16 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border BorderBrush="Black" BorderThickness="0 0 1 1" Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Stretch">
-                        <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[0].ShowValue}"></TextBlock>
+                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding LinkPort.Results[0].ShowValue}" Margin="1 1 1 1"></TextBlock>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1 0 0 1" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch">
-                        <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[1].ShowValue}"></TextBlock>
+                        <TextBlock HorizontalAlignment="left" VerticalAlignment="Bottom" Text="{Binding LinkPort.Results[1].ShowValue}" Margin="1 1 1 1"></TextBlock>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0 1 1 0" Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Stretch">
-                        <TextBlock HorizontalAlignment="Right" Text="{Binding LinkPort.Results[2].ShowValue}"></TextBlock>
+                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding LinkPort.Results[2].ShowValue}" Margin="1 1 1 1"></TextBlock>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1 1 0 0" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch">
-                        <TextBlock HorizontalAlignment="left" Text="{Binding LinkPort.Results[3].ShowValue}"></TextBlock>
+                        <TextBlock HorizontalAlignment="left" VerticalAlignment="Top" Text="{Binding LinkPort.Results[3].ShowValue}" Margin="1 1 1 1"></TextBlock>
                     </Border>
                 </Grid>
             </Viewbox>
@@ -253,7 +253,7 @@
         <!--<Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
         </Polyline>-->
         <s:DesignerLine>
-            <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
+            <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="10" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
             </Polyline>
         </s:DesignerLine>
     </DataTemplate>

@@ -11,9 +11,6 @@ namespace TPIS.Views.Modules
 {
     partial class TPISTextToolBar : ResourceDictionary
     {
-
-        
-
         /// <summary>
         /// 插入文本
         /// </summary>

@@ -112,7 +112,7 @@
                 <!--元件模块-->
                 <Border BorderThickness="1" BorderBrush="Gray">
                     <GroupBox Header="元件" Margin="3,0,0,0">
-                        <ScrollViewer Width="300" MaxWidth="300" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer Width="230" MaxWidth="230" VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="3" >
                                 <TabControl Name="ElementList" TabStripPlacement="Top">
                                     <TabControl.ItemTemplate>

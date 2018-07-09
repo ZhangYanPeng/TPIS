@@ -312,19 +312,22 @@ namespace TPIS.TPISCanvas
             {
                 return;
             }
-            if (((TPISComponent)this.DataContext).IsSelected)
+            if (DataContext is TPISComponent)
             {
-                //已被选中，不改变选择范围
-                ContextMenu contextMenu = new TPISContextMenu(1);
-                this.ContextMenu = contextMenu;
-            }
-            if (!((TPISComponent)this.DataContext).IsSelected || this.moveType != MoveType.pos)
-            {
-                //之前未被选中，或改为改变大小操作，单独选中该元件
-                mainwin.GetCurrentProject().Select((TPISComponent)this.DataContext);
-                BindingAnchorPoints();
-                ContextMenu contextMenu = new TPISContextMenu(1);
-                this.ContextMenu = contextMenu;
+                if (((TPISComponent)this.DataContext).IsSelected)
+                {
+                    //已被选中，不改变选择范围
+                    ContextMenu contextMenu = new TPISContextMenu(1);
+                    this.ContextMenu = contextMenu;
+                }
+                if (!((TPISComponent)this.DataContext).IsSelected || this.moveType != MoveType.pos)
+                {
+                    //之前未被选中，或改为改变大小操作，单独选中该元件
+                    mainwin.GetCurrentProject().Select((TPISComponent)this.DataContext);
+                    BindingAnchorPoints();
+                    ContextMenu contextMenu = new TPISContextMenu(1);
+                    this.ContextMenu = contextMenu;
+                }
             }
             isDragDropInEffect = false;
             e.Handled = true;

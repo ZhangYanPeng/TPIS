@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using TPIS.Project;
 using TPIS.TPISCanvas;
+using TPISNet;
 
 namespace TPIS.Model
 {
@@ -55,10 +56,66 @@ namespace TPIS.Model
     [Serializable]
     public class TPISLine : ObjectBase, INotifyPropertyChanged, ISerializable
     {
-        public Port inPort { get; set; }
-        public Port outPort { get; set; }
+        Port inport;
+        Port outport;
+        public Port inPort {
+            get =>inport;
+            set
+            {
+                inport = value;
+                if (outPort == null)
+                    return;
+                if (inport.MaterialType == Material.NA && outPort.MaterialType != Material.NA)
+                    LineColor = GetColor(outPort.MaterialType);
+                else if (inport.MaterialType != Material.NA && outPort.MaterialType == Material.NA)
+                    LineColor = GetColor(inport.MaterialType);
+                else if(inport.MaterialType == outPort.MaterialType)
+                    LineColor = GetColor(outPort.MaterialType);
+            }
+        }
+        public Port outPort
+        {
+            get => outport;
+            set
+            {
+                outport = value;
+                if (inport == null)
+                    return;
+                if (inport.MaterialType == Material.NA && outPort.MaterialType != Material.NA)
+                    LineColor = GetColor(outPort.MaterialType);
+                else if (inport.MaterialType != Material.NA && outPort.MaterialType == Material.NA)
+                    LineColor = GetColor(inport.MaterialType);
+                else if (inport.MaterialType == outPort.MaterialType)
+                    LineColor = GetColor(outPort.MaterialType);
+            }
+        }
 
-        
+        internal Brush GetColor(Material m)
+        {
+            switch (m)
+            {
+                case Material.air: return Brushes.LightSkyBlue;
+                case Material.ash: return Brushes.Gray;
+                case Material.coal: return Brushes.Black;
+                case Material.fluegas: return Brushes.Wheat;
+                case Material.gas: return Brushes.Cyan;
+                case Material.NA: return Brushes.LimeGreen;
+                case Material.oil: return Brushes.Orange;
+                case Material.power: return Brushes.Red;
+                case Material.water: return Brushes.DodgerBlue;
+            }
+            return Brushes.LimeGreen;
+        }
+
+        public Brush lineColor;
+        public Brush LineColor {
+            get=>lineColor;
+            set {
+                lineColor = value;
+                OnPropertyChanged("LineColor");
+            }
+        }
+
         #region 序列化与反序列化
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -287,9 +344,7 @@ namespace TPIS.Model
             }
             OnPropertyChanged("Points");
         }
-
-
-
+        
         //整体平移
         internal void PosChange(double vx, double vy)
         {
@@ -304,6 +359,7 @@ namespace TPIS.Model
         public TPISLine()
         {
             points = new ObservableCollection<Point>();
+            LineColor = Brushes.LimeGreen;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

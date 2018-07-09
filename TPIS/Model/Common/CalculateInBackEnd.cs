@@ -18,6 +18,7 @@ namespace TPIS.Model.Common
             //传入参数
             Init(project);
             BackEnd.ResultSetDef();
+            BackEnd.MaxIter = 10;
             BackEnd.Solve();
             GetGlobalResult(project);
             return GetResult(project);

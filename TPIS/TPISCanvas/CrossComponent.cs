@@ -92,7 +92,6 @@ namespace TPIS.TPISCanvas
             {
                 Point tmp = e.GetPosition(this);
                 ((ResultCross)DataContext).Indicator = tmp;
-                Console.WriteLine(tmp);
                 e.Handled = true;
             }
         }

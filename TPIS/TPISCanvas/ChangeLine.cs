@@ -89,7 +89,7 @@ namespace TPIS.TPISCanvas
                 }
                 else if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == true)
                 {
-                    if ( port.MaterialType == mainwin.GetCurrentProject().Canvas.StartPort.MaterialType )
+                    if ( port.MaterialType == mainwin.GetCurrentProject().Canvas.StartPort.MaterialType || port.MaterialType == TPISNet.Material.NA || mainwin.GetCurrentProject().Canvas.StartPort.MaterialType == TPISNet.Material.NA)
                     {
                         if(CheckPort(port.Type, mainwin.GetCurrentProject().Canvas.StartPort.Type)) { 
                             mainwin.GetCurrentProject().Canvas.endPoint = point;//折线终点

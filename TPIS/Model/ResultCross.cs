@@ -42,6 +42,10 @@ namespace TPIS.Model
             {
                 indicator = value;
                 IndicatorRelated = GetIndicatorOtherPoint();
+                if (Math.Abs(indicator.X - indicatorRelated.X) < 5 && indicator.Y != indicatorRelated.Y && (indicator.X - indicatorRelated.X) / (indicator.Y - indicatorRelated.Y) < 0.2)
+                    indicator.X = indicatorRelated.X;
+                if (Math.Abs(indicator.Y - indicatorRelated.Y) < 5 && indicator.X != indicatorRelated.X && (indicator.Y - indicatorRelated.Y) / (indicator.X - indicatorRelated.X) < 0.2)
+                    indicator.Y = indicatorRelated.Y;
                 OnPropertyChanged("Indicator");
             }
         }
@@ -101,6 +105,7 @@ namespace TPIS.Model
         internal void SetRate(double rate)
         {
             Position.Rate = rate;
+            Indicator = new Point(-Position.V_width / 2, Position.V_height);
         }
 
         public override object Clone()
