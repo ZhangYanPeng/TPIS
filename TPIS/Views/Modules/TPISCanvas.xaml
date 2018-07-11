@@ -254,6 +254,47 @@
         </Polyline>-->
         <s:DesignerLine>
             <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="10" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
+                <Polyline.ToolTip>
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" Margin="5 0 0 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontSize="14" Text="{Binding InPort.Name}"></TextBlock>
+                            <TextBlock Grid.Column="1" FontSize="14" Text="{Binding InPort.MaterialType, Converter={StaticResource MaterialConverter}}"></TextBlock>
+                        </Grid>
+                        <ListView HorizontalAlignment="Left" MinWidth="300" ItemsSource="{Binding InPort.Results}" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="属性" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                    <GridViewColumn Header="值" Width="200" >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <DockPanel Width="185">
+                                                    <TextBox IsEnabled="False" DockPanel.Dock="Left" Text="{Binding ShowValue}" Width="100" Margin="2 0 2 0" Visibility="{Binding Type, Converter={StaticResource ValVisualConverter}}"></TextBox>
+                                                    <ComboBox IsEnabled="False" Width="78" HorizontalAlignment="Stretch" ItemsSource="{Binding Units}" SelectedIndex="{Binding UnitNum}">
+                                                        <ComboBox.Visibility>
+                                                            <MultiBinding  Converter="{StaticResource MeasureVisualConverter}">
+                                                                <Binding Path="Units"></Binding>
+                                                                <Binding Path="Type"></Binding>
+                                                            </MultiBinding>
+                                                        </ComboBox.Visibility>
+                                                        <ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding }"></TextBlock>
+                                                            </DataTemplate>
+                                                        </ComboBox.ItemTemplate>
+                                                    </ComboBox>
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
+                </Polyline.ToolTip>
             </Polyline>
         </s:DesignerLine>
     </DataTemplate>

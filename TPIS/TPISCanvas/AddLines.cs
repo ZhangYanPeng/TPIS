@@ -165,8 +165,8 @@ namespace TPIS.TPISCanvas
                 line.Points.Add(p);
             }
             pline.Points.Clear();
-            line.inPort = mainwin.GetCurrentProject().Canvas.StartPort;
-            line.outPort = mainwin.GetCurrentProject().Canvas.EndPort;
+            line.InPort = mainwin.GetCurrentProject().Canvas.StartPort;
+            line.OutPort = mainwin.GetCurrentProject().Canvas.EndPort;
             
             mainwin.GetCurrentProject().Canvas.StartPort.link = line;
             mainwin.GetCurrentProject().Canvas.EndPort.link = line;

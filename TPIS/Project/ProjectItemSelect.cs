@@ -153,11 +153,11 @@ namespace TPIS.Project
                     Boolean checkin = false, checkout = false;
                     foreach (TPISComponent cp in components)
                     {
-                        if (cp.Ports.Contains(((TPISLine)obj).inPort))
+                        if (cp.Ports.Contains(((TPISLine)obj).InPort))
                         {
                             checkin = true;
                         }
-                        if (cp.Ports.Contains(((TPISLine)obj).outPort))
+                        if (cp.Ports.Contains(((TPISLine)obj).OutPort))
                         {
                             checkout = true;
                         }

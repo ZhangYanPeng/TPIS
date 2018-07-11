@@ -249,11 +249,11 @@ namespace TPIS.Model.Common
                                     if (tobj is TPISComponent)
                                     {
                                         TPISComponent tcomponent = tobj as TPISComponent;
-                                        if (tcomponent.Ports.Contains(port.link.inPort))
+                                        if (tcomponent.Ports.Contains(port.link.InPort))
                                         {
                                             TPISLine line = port.link;
                                             Pipe pipe = new Pipe(line.No);
-                                            pipe.init(component.No, line.outPort.DicName, BackEnd.elements[component.No].IOPoints[line.outPort.DicName], tcomponent.No, line.inPort.DicName, BackEnd.elements[tcomponent.No].IOPoints[line.inPort.DicName]);
+                                            pipe.init(component.No, line.OutPort.DicName, BackEnd.elements[component.No].IOPoints[line.OutPort.DicName], tcomponent.No, line.InPort.DicName, BackEnd.elements[tcomponent.No].IOPoints[line.InPort.DicName]);
                                             BackEnd.Pipes.Add(port.link.No, pipe);
                                         }
                                     }

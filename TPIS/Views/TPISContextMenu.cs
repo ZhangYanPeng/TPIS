@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using TPIS.Model;
 
 namespace TPIS.Views
 {
@@ -16,6 +17,24 @@ namespace TPIS.Views
             point_y = (int)point.Y;
         }
 
+        public TPISLine line;
+        public void  setLine(TPISLine l)
+        {
+            line = l;
+            MenuItem addCross = new MenuItem();
+            addCross.Header = "添加CROSS";
+
+            addCross.Click += btAddCross_Click;
+
+            Items.Add(new Separator());
+            Items.Add(addCross);
+        }
+
+        private void btAddCross_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            mainwin.GetCurrentProject().AddCross(line.InPort, new Point?(new Point(point_x, point_y)));
+        }
 
         /// <summary>
         /// 

@@ -264,9 +264,9 @@ namespace TPIS.Project
                                     if (line.No == port.LinkNo)
                                     {
                                         if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
-                                            line.inPort = port;
+                                            line.InPort = port;
                                         else
-                                            line.outPort = port;
+                                            line.OutPort = port;
                                         port.link = line;
                                     }
                                 }

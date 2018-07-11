@@ -295,7 +295,7 @@ namespace TPIS.Project
         #endregion
 
         #region cross操作 
-        public void AddCross(Port port)
+        public void AddCross(Port port, Point? point = null)
         {
             int no = 0;
             foreach (ObjectBase obj in Objects)
@@ -312,19 +312,26 @@ namespace TPIS.Project
                     TPISComponent component = obj as TPISComponent;
                     if (component.Ports.Contains(port))
                     {
-                        double vx, vy;
-                        for (double d = 20; ; d += 10)
-                        {
-                            for (int angle = 0; angle < 360; angle += 5)
+                        if( point == null) {
+                            double vx, vy;
+                            for (double d = 20; ; d += 10)
                             {
-                                vx = component.Position.V_x + component.Position.V_width / 2 + d * Math.Sin(angle);
-                                vy = component.Position.V_y + component.Position.V_height / 2 + d * Math.Cos(angle);
-                                if (!CoverOrNot(vx, vy, CrossSize.WIDTH * Rate, CrossSize.HEIGHT * Rate))
+                                for (int angle = 0; angle < 360; angle += 5)
                                 {
-                                    Objects.Add(new ResultCross(port, no, Rate, vx, vy));
-                                    return;
+                                    vx = component.Position.V_x + component.Position.V_width / 2 + d * Math.Sin(angle);
+                                    vy = component.Position.V_y + component.Position.V_height / 2 + d * Math.Cos(angle);
+                                    if (!CoverOrNot(vx, vy, CrossSize.WIDTH * Rate, CrossSize.HEIGHT * Rate))
+                                    {
+                                        Objects.Add(new ResultCross(port, no, Rate, vx , vy));
+                                        return;
+                                    }
                                 }
                             }
+                        }
+                        else
+                        {
+                            Objects.Add(new ResultCross(port, no, Rate, point.Value.X + 45 / Rate, point.Value.Y - 40 / Rate));
+                            return;
                         }
                     }
                 }

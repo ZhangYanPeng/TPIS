@@ -97,15 +97,15 @@ namespace TPIS.Project
                             if (obj is TPISLine)
                             {
                                 TPISLine line = obj as TPISLine;
-                                line.inPort.link = line;
-                                if (line.inPort.Type == Model.Common.NodType.Undef)
+                                line.InPort.link = line;
+                                if (line.InPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.inPort.Type = Model.Common.NodType.DefOut;
+                                    line.InPort.Type = Model.Common.NodType.DefOut;
                                 }
-                                line.outPort.link = line;
-                                if (line.outPort.Type == Model.Common.NodType.Undef)
+                                line.OutPort.link = line;
+                                if (line.OutPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.outPort.Type = Model.Common.NodType.DefIn;
+                                    line.OutPort.Type = Model.Common.NodType.DefIn;
                                 }
                             }
                         }
@@ -224,15 +224,15 @@ namespace TPIS.Project
                             if (obj is TPISLine)
                             {
                                 TPISLine line = obj as TPISLine;
-                                line.inPort.link = line;
-                                if (line.inPort.Type == Model.Common.NodType.Undef)
+                                line.InPort.link = line;
+                                if (line.InPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.inPort.Type = Model.Common.NodType.DefOut;
+                                    line.InPort.Type = Model.Common.NodType.DefOut;
                                 }
-                                line.outPort.link = line;
-                                if (line.outPort.Type == Model.Common.NodType.Undef)
+                                line.OutPort.link = line;
+                                if (line.OutPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.outPort.Type = Model.Common.NodType.DefIn;
+                                    line.OutPort.Type = Model.Common.NodType.DefIn;
                                 }
                             }
                         }
@@ -246,15 +246,15 @@ namespace TPIS.Project
                             if (obj is TPISLine)
                             {
                                 TPISLine line = obj as TPISLine;
-                                line.inPort.link = line;
-                                if (line.inPort.Type == Model.Common.NodType.Undef)
+                                line.InPort.link = line;
+                                if (line.InPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.inPort.Type = Model.Common.NodType.DefOut;
+                                    line.InPort.Type = Model.Common.NodType.DefOut;
                                 }
-                                line.outPort.link = line;
-                                if (line.outPort.Type == Model.Common.NodType.Undef)
+                                line.OutPort.link = line;
+                                if (line.OutPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.outPort.Type = Model.Common.NodType.DefIn;
+                                    line.OutPort.Type = Model.Common.NodType.DefIn;
                                 }
                             }
                         }
@@ -287,15 +287,15 @@ namespace TPIS.Project
                             if (obj is TPISLine)
                             {
                                 TPISLine line = obj as TPISLine;
-                                line.inPort.link = line;
-                                if (line.inPort.Type == Model.Common.NodType.Undef)
+                                line.InPort.link = line;
+                                if (line.InPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.inPort.Type = Model.Common.NodType.DefOut;
+                                    line.InPort.Type = Model.Common.NodType.DefOut;
                                 }
-                                line.outPort.link = line;
-                                if (line.outPort.Type == Model.Common.NodType.Undef)
+                                line.OutPort.link = line;
+                                if (line.OutPort.Type == Model.Common.NodType.Undef)
                                 {
-                                    line.outPort.Type = Model.Common.NodType.DefIn;
+                                    line.OutPort.Type = Model.Common.NodType.DefIn;
                                 }
                             }
                         }

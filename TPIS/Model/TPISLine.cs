@@ -58,22 +58,23 @@ namespace TPIS.Model
     {
         Port inport;
         Port outport;
-        public Port inPort {
+        public Port InPort {
             get =>inport;
             set
             {
                 inport = value;
-                if (outPort == null)
+                if (OutPort == null)
                     return;
-                if (inport.MaterialType == Material.NA && outPort.MaterialType != Material.NA)
-                    LineColor = GetColor(outPort.MaterialType);
-                else if (inport.MaterialType != Material.NA && outPort.MaterialType == Material.NA)
+                if (InPort.MaterialType == Material.NA && OutPort.MaterialType != Material.NA)
+                    LineColor = GetColor(OutPort.MaterialType);
+                else if (InPort.MaterialType != Material.NA && OutPort.MaterialType == Material.NA)
                     LineColor = GetColor(inport.MaterialType);
-                else if(inport.MaterialType == outPort.MaterialType)
-                    LineColor = GetColor(outPort.MaterialType);
+                else if(InPort.MaterialType == OutPort.MaterialType)
+                    LineColor = GetColor(OutPort.MaterialType);
+                OnPropertyChanged("InPort");
             }
         }
-        public Port outPort
+        public Port OutPort
         {
             get => outport;
             set
@@ -81,12 +82,12 @@ namespace TPIS.Model
                 outport = value;
                 if (inport == null)
                     return;
-                if (inport.MaterialType == Material.NA && outPort.MaterialType != Material.NA)
-                    LineColor = GetColor(outPort.MaterialType);
-                else if (inport.MaterialType != Material.NA && outPort.MaterialType == Material.NA)
+                if (InPort.MaterialType == Material.NA && OutPort.MaterialType != Material.NA)
+                    LineColor = GetColor(OutPort.MaterialType);
+                else if (InPort.MaterialType != Material.NA && OutPort.MaterialType == Material.NA)
                     LineColor = GetColor(inport.MaterialType);
-                else if (inport.MaterialType == outPort.MaterialType)
-                    LineColor = GetColor(outPort.MaterialType);
+                else if (InPort.MaterialType == OutPort.MaterialType)
+                    LineColor = GetColor(OutPort.MaterialType);
             }
         }
 
