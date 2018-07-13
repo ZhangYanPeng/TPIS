@@ -138,6 +138,7 @@ namespace TPIS.Command
         public static RoutedCommand CoalDataBaseOpe = new RoutedCommand();
         public static RoutedCommand GasDataBaseOpe = new RoutedCommand();
         public static RoutedCommand View = new RoutedCommand();
+        public static RoutedCommand Helper = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -572,6 +573,13 @@ namespace TPIS.Command
                     }
                 }
             }
+        }
+        #endregion
+
+        #region 视图窗口
+        public void Helper_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("Helper\\chm.CHM");
         }
         #endregion
     }

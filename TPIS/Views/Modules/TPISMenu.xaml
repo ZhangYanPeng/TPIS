@@ -26,6 +26,7 @@
             <CommandBinding Command="s:TPISCommand.CoalDataBaseOpe" Executed="CoalDataBaseOpe_Excuted"/>
             <CommandBinding Command="s:TPISCommand.GasDataBaseOpe" Executed="GasDataBaseOpe_Excuted"/>
             <CommandBinding Command="s:TPISCommand.View" Executed="View_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.Helper" Executed="Helper_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -157,7 +158,7 @@
         </MenuItem>
 
         <!--帮助-->
-        <MenuItem Header="帮助(H)" />
+        <MenuItem Header="帮助(H)" Command="{x:Static s:TPISCommand.Helper}"/>
         
         <!--关于-->
         <MenuItem Header="关于(A)" />

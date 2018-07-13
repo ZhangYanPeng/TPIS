@@ -42,3 +42,5 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.GenerateR
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompileInputs.cache
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\Helper\chm.CHM
