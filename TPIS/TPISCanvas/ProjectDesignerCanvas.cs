@@ -57,6 +57,7 @@ namespace TPIS.TPISCanvas
             base.MouseMove += new MouseEventHandler(MouseLBtnSelectMove);
             base.MouseRightButtonDown += new MouseButtonEventHandler(MouseCanvasRightButtonDown);
             base.MouseWheel += new MouseWheelEventHandler(Canvas_MouseWheel);
+            base.MouseWheel += new MouseWheelEventHandler(Canvas_MouseWheelChangeSize);
 
             {//绘制中newTPISLine
                 pline = new Polyline();
@@ -105,8 +106,37 @@ namespace TPIS.TPISCanvas
                 scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
         }
+
+        public void Canvas_MouseWheelChangeSize(object sender, MouseWheelEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            ProjectItem item = mainwin.GetCurrentProject();
+            //Ctrl+滚轮缩放
+            if (Key.Control.ModifierKeys == Key.Keys.Shift)
+            {
+                if (e.Delta > 0)
+                    try
+                    {
+                        mainwin.GetCurrentProject().SupRate();
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                else if (e.Delta < 0)
+                    try
+                    {
+                        mainwin.GetCurrentProject().SubRate();
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
+            }
+        }
         #endregion
-        
+
         public void MouseCanvasRightButtonDown(object sender, MouseEventArgs e)
         {
             if (mainwin.GetCurrentProject().Canvas.Operation == OperationType.ADD_LINE)
