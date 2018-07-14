@@ -27,6 +27,7 @@
             <CommandBinding Command="s:TPISCommand.GasDataBaseOpe" Executed="GasDataBaseOpe_Excuted"/>
             <CommandBinding Command="s:TPISCommand.View" Executed="View_Excuted"/>
             <CommandBinding Command="s:TPISCommand.Helper" Executed="Helper_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.ResultAnalyse" Executed="ResultAnalyse_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -145,6 +146,8 @@
             <Separator />
             <MenuItem Header="煤种库" Command="{x:Static s:TPISCommand.CoalDataBaseOpe}"/>
             <MenuItem Header="气体种类库" Command="{x:Static s:TPISCommand.GasDataBaseOpe}"/>
+            <Separator />
+            <MenuItem Header="结果分析" Command="{x:Static s:TPISCommand.ResultAnalyse}"/>
             <Separator />
         </MenuItem>
 

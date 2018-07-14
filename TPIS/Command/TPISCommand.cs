@@ -1,10 +1,12 @@
 ﻿using Database;
+using ResultAnalysis;
 using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using TPIS.Model.Common;
 using TPIS.Project;
 using TPIS.Views;
 using TPIS.Views.Tool;
@@ -140,6 +142,7 @@ namespace TPIS.Command
         public static RoutedCommand GasDataBaseOpe = new RoutedCommand();
         public static RoutedCommand View = new RoutedCommand();
         public static RoutedCommand Helper = new RoutedCommand();
+        public static RoutedCommand ResultAnalyse = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -554,6 +557,19 @@ namespace TPIS.Command
             GasDatabaseWin gdw = new GasDatabaseWin();
             gdw.Owner = Application.Current.MainWindow;
             gdw.Show();
+        }
+        #endregion
+
+        #region 结果分析
+        public void ResultAnalyse_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                ResultAnalysisWin ra = new ResultAnalysisWin(CalculateInBackEnd.BackEnd);
+                ra.Owner = Application.Current.MainWindow;
+                ra.Show();
+            }
         }
         #endregion
 
