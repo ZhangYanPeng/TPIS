@@ -109,6 +109,7 @@
     <Compile Include="Model\Common\Unit.cs" />
     <Compile Include="Model\Common\IViewModel.cs" />
     <Compile Include="Model\ComponentType.cs" />
+    <Compile Include="Model\Coal.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Property.cs" />
@@ -157,6 +158,9 @@
     <Compile Include="Views\QuickModeSelect.xaml.cs">
       <DependentUpon>QuickModeSelect.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tool\CoalWin.xaml.cs">
+      <DependentUpon>CoalWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Page Include="Views\CalWindow.xaml">
       <SubType>Designer</SubType>
@@ -203,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\QuickModeSelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tool\CoalWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

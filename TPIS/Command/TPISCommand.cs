@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using TPIS.Project;
 using TPIS.Views;
+using TPIS.Views.Tool;
 
 namespace TPIS.Command
 {
@@ -540,9 +541,9 @@ namespace TPIS.Command
         #region 数据库
         public void CoalDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            CoalDatabaseWin cdw = new CoalDatabaseWin();
-            cdw.Owner = Application.Current.MainWindow;
-            cdw.Show();
+            CoalWin cw = new CoalWin();
+            cw.Owner = Application.Current.MainWindow;
+            cw.Show();
         }
 
         public void GasDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)

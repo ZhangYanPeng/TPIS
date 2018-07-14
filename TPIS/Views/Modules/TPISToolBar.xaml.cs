@@ -139,7 +139,7 @@ namespace TPIS.Views.Modules
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 mainwin.ToSelectMode();
                 AddStraightLine.IsChecked = false;
-                AddLine.IsChecked = false;
+                //AddLine.IsChecked = false;
             }
             catch
             {
@@ -164,11 +164,11 @@ namespace TPIS.Views.Modules
                     if (currEle.Name == "AddLine")
                     {
                         AddStraightLine.IsChecked = false;
-                        AddLine.IsChecked = true;
+                        //AddLine.IsChecked = true;
                     }
                     else
                     {
-                        AddLine.IsChecked = false;
+                        //AddLine.IsChecked = false;
                         AddStraightLine.IsChecked = true;
                     }
                 }

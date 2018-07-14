@@ -1,0 +1,47 @@
+﻿<Window x:Class="TPIS.Views.Tool.CoalWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TPIS.Views.Tool"
+        mc:Ignorable="d"
+        Title="煤种库" Height="600" Width="620" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <DockPanel>
+            <UserControl DockPanel.Dock="Bottom" Height="20">
+                <TextBlock Text="收到基低位发热量为29308kJ/kg的煤称为标准煤"></TextBlock>
+            </UserControl>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="新增" Grid.Column="0" Click="AddCoal"></Button>
+                            <Button Content="删除" Grid.Column="1" Click="DeleteCoal"></Button>
+                            <Button Content="保存" Grid.Column="2"></Button>
+                        </Grid>
+                    </DockPanel>
+                    <DataGrid Name="CoalView" ItemsSource="{Binding CoalLib}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Header="名称" Width="100" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="C" Width="50" Binding="{Binding P_C}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="H" Width="50" Binding="{Binding P_H}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="O" Width="50" Binding="{Binding P_O}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="N" Width="50" Binding="{Binding P_N}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="S" Width="50" Binding="{Binding P_S}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="A" Width="50" Binding="{Binding P_A}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="M" Width="50" Binding="{Binding P_M}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="V" Width="50" Binding="{Binding P_V}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="LHV (kJ/kg)" Width="80" Binding="{Binding P_LHV}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</Window>
