@@ -145,6 +145,7 @@
       <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Modules\ConvertorLib.cs" />
+    <Compile Include="Views\Modules\Gas.cs" />
     <Compile Include="Views\Modules\PropertyTemplate.xaml.cs">
       <DependentUpon>PropertyTemplate.xaml</DependentUpon>
     </Compile>
