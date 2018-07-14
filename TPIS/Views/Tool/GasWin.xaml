@@ -1,0 +1,62 @@
+﻿<Window x:Class="TPIS.Views.Tool.GasWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TPIS.Views.Tool"
+        mc:Ignorable="d"
+        Title="气体种类库" Height="600" Width="1090" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="新增" Grid.Column="0" Click="AddGas"></Button>
+                            <Button Content="删除" Grid.Column="1" Click="DeleteGas"></Button>
+                            <Button Content="保存" Grid.Column="3" Click="SaveGasLib"></Button>
+                            <Button Content="选中" Grid.Column="2" Click="ChooseGas"></Button>
+                        </Grid>
+                    </DockPanel>
+                    <DataGrid Name="GasView" ItemsSource="{Binding GasLib}" AutoGenerateColumns="False" Width="1070" HorizontalScrollBarVisibility="Auto">
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Grid TextBlock.Foreground="Black">
+                                    <TextBlock Text="{Binding Gas_EvalResult}" />
+                                </Grid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  Header="名称" Width="100" Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="N2" Width="50" Binding="{Binding N2,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="O2" Width="50" Binding="{Binding O2,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="CO2" Width="50" Binding="{Binding CO2,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="H2O" Width="50" Binding="{Binding H2O,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="CO" Width="50" Binding="{Binding CO,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="H2S" Width="50" Binding="{Binding H2S,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="H2" Width="50" Binding="{Binding H2,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="He" Width="50" Binding="{Binding He,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="Ar" Width="50" Binding="{Binding Ar,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="SO2" Width="50" Binding="{Binding SO2,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="CH4" Width="50" Binding="{Binding CH4,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="C2H6" Width="50" Binding="{Binding C2H6,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="C3H8" Width="50" Binding="{Binding C3H8,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="C4H10" Width="60" Binding="{Binding C4H10,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="C5H12" Width="60" Binding="{Binding C5H12,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="LHV (kJ/Nm3)" Width="100" Binding="{Binding LHV_KJ_Nm3,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="HHV (kJ/Nm3)" Width="100" Binding="{Binding HHV_KJ_Nm3,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</Window>
+

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using TPIS.Model;
+using TPIS.Model.Common;
 
 namespace TPIS.Views
 {
@@ -14,21 +15,21 @@ namespace TPIS.Views
 
             MenuItem MenuItemUnDef = new MenuItem();
             MenuItemUnDef.Header = "设为未定义";
-            if (port.type == Model.Common.NodType.DefOut || port.type == Model.Common.NodType.DefIn && port.link == null)
+            if (port.type == NodType.DefOut || port.type == NodType.DefIn && port.link == null)
                 MenuItemUnDef.IsEnabled = true;
             else
                 MenuItemUnDef.IsEnabled = false;
 
             MenuItem MenuItemDefIn = new MenuItem();
             MenuItemDefIn.Header = "设为进口";
-            if (port.type == Model.Common.NodType.Undef || port.type == Model.Common.NodType.DefOut && port.link == null)
+            if (port.type == NodType.Undef || port.type == NodType.DefOut && port.link == null)
                 MenuItemDefIn.IsEnabled = true;
             else
                 MenuItemDefIn.IsEnabled = false;
 
             MenuItem MenuItemDefOut = new MenuItem();
             MenuItemDefOut.Header = "设为出口";
-            if (port.type == Model.Common.NodType.Undef || port.type == Model.Common.NodType.DefIn && port.link == null)
+            if (port.type == NodType.Undef || port.type == NodType.DefIn && port.link == null)
                 MenuItemDefOut.IsEnabled = true;
             else
                 MenuItemDefOut.IsEnabled = false;
@@ -44,17 +45,17 @@ namespace TPIS.Views
 
         private void btUnDef_Click(object sender, RoutedEventArgs e)
         {
-            port.Type = Model.Common.NodType.Undef;
+            port.Type = NodType.Undef;
         }
 
         private void btDefIn_Click(object sender, RoutedEventArgs e)
         {
-            port.Type = Model.Common.NodType.DefIn;
+            port.Type = NodType.DefIn;
         }
 
         private void btDefOut_Click(object sender, RoutedEventArgs e)
         {
-            port.Type = Model.Common.NodType.DefOut;
+            port.Type = NodType.DefOut;
         }
     }
 }

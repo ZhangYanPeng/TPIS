@@ -554,9 +554,12 @@ namespace TPIS.Command
 
         public void GasDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
-            GasDatabaseWin gdw = new GasDatabaseWin();
-            gdw.Owner = Application.Current.MainWindow;
-            gdw.Show();
+            GasWin gw = new GasWin();
+            gw.Owner = Application.Current.MainWindow;
+            gw.Show();
+            //GasDatabaseWin gdw = new GasDatabaseWin();
+            //gdw.Owner = Application.Current.MainWindow;
+            //gdw.Show();
         }
         #endregion
 

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPIS.Model;
+using TPIS.Model.Common;
 using TPIS.Project;
 
 namespace TPIS.Views
@@ -43,11 +44,11 @@ namespace TPIS.Views
                 if (obj is TPISComponent)
                 {
                     TPISComponent component = obj as TPISComponent;
-                    if (component.Mode.Contains(Model.Common.SelMode.DesignMode))
+                    if (component.Mode.Contains(SelMode.DesignMode))
                         DesignComponents.Add(component);
-                    if (component.Mode.Contains(Model.Common.SelMode.CalMode))
+                    if (component.Mode.Contains(SelMode.CalMode))
                         CalComponents.Add(component);
-                    if (component.Mode.Contains(Model.Common.SelMode.InterMode))
+                    if (component.Mode.Contains(SelMode.InterMode))
                         InterComponents.Add(component);
                 }
             }
@@ -70,12 +71,12 @@ namespace TPIS.Views
         {
             CheckBox checkBox = sender as CheckBox;
             checkBox.IsChecked = true;
-            Model.Common.SelMode sm = new Model.Common.SelMode();
+            SelMode sm = new SelMode();
             switch (checkBox.Tag)
             {
-                case "Design": sm = Model.Common.SelMode.DesignMode; break;
-                case "Cal": sm = Model.Common.SelMode.CalMode; break;
-                case "Inter": sm = Model.Common.SelMode.InterMode; break;
+                case "Design": sm = SelMode.DesignMode; break;
+                case "Cal": sm = SelMode.CalMode; break;
+                case "Inter": sm = SelMode.InterMode; break;
             }
             foreach (TPISComponent c in DesignComponents)
             {
@@ -94,12 +95,12 @@ namespace TPIS.Views
         #region 整体的勾选
         private void InitTotalCheck()
         {
-            DesignCheckBox.IsChecked = TotalChecked(DesignComponents, Model.Common.SelMode.DesignMode);
-            CalCheckBox.IsChecked = TotalChecked(CalComponents, Model.Common.SelMode.CalMode);
-            InterCheckBox.IsChecked = TotalChecked(InterComponents, Model.Common.SelMode.InterMode);
+            DesignCheckBox.IsChecked = TotalChecked(DesignComponents, SelMode.DesignMode);
+            CalCheckBox.IsChecked = TotalChecked(CalComponents, SelMode.CalMode);
+            InterCheckBox.IsChecked = TotalChecked(InterComponents, SelMode.InterMode);
         }
 
-        private bool? TotalChecked(List<TPISComponent> list, Model.Common.SelMode mode)
+        private bool? TotalChecked(List<TPISComponent> list, SelMode mode)
         {
             if (list.Count == 0)
                 return false;
@@ -126,12 +127,12 @@ namespace TPIS.Views
         {
             CheckBox checkBox = sender as CheckBox;
             checkBox.IsChecked = true;
-            Model.Common.SelMode sm = new Model.Common.SelMode();
+            SelMode sm = new SelMode();
             switch (checkBox.Tag)
             {
-                case "Design": sm = Model.Common.SelMode.DesignMode; break;
-                case "Cal": sm = Model.Common.SelMode.CalMode; break;
-                case "Inter": sm = Model.Common.SelMode.InterMode; break;
+                case "Design": sm = SelMode.DesignMode; break;
+                case "Cal": sm = SelMode.CalMode; break;
+                case "Inter": sm = SelMode.InterMode; break;
             }
             TPISComponent c = checkBox.DataContext as TPISComponent;
             for (int i = 0; i < c.Mode.Count; i++)
@@ -155,9 +156,9 @@ namespace TPIS.Views
                 return false;
             else
             {
-                ObservableCollection<Model.Common.SelMode> modes = values[0] as ObservableCollection<Model.Common.SelMode>;
+                ObservableCollection<SelMode> modes = values[0] as ObservableCollection<SelMode>;
                 int sel = (int)values[1];
-                if (modes[sel] == Model.Common.SelMode.DesignMode)
+                if (modes[sel] == SelMode.DesignMode)
                     return true;
                 else
                     return false;
@@ -178,9 +179,9 @@ namespace TPIS.Views
                 return false;
             else
             {
-                ObservableCollection<Model.Common.SelMode> modes = values[0] as ObservableCollection<Model.Common.SelMode>;
+                ObservableCollection<SelMode> modes = values[0] as ObservableCollection<SelMode>;
                 int sel = (int)values[1];
-                if (modes[sel] == Model.Common.SelMode.CalMode)
+                if (modes[sel] == SelMode.CalMode)
                     return true;
                 else
                     return false;
@@ -201,9 +202,9 @@ namespace TPIS.Views
                 return false;
             else
             {
-                ObservableCollection<Model.Common.SelMode> modes = values[0] as ObservableCollection<Model.Common.SelMode>;
+                ObservableCollection<SelMode> modes = values[0] as ObservableCollection<SelMode>;
                 int sel = (int)values[1];
-                if (modes[sel] == Model.Common.SelMode.InterMode)
+                if (modes[sel] == SelMode.InterMode)
                     return true;
                 else
                     return false;
