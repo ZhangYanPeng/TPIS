@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPIS.Model;
+using TPIS.Project;
 
 namespace TPIS.Views.Tool
 {
@@ -27,6 +28,8 @@ namespace TPIS.Views.Tool
         {
             InitializeComponent();
             CoalLib = LoadData();
+            CoalView.ItemsSource = CoalLib;
+            CoalView.Items.Refresh();
         }
 
         /// <summary>
@@ -54,15 +57,16 @@ namespace TPIS.Views.Tool
         /// <summary>
         /// 保存煤种库
         /// </summary>
-        public void SaveGasLib()
+        public void SaveCoalLib(object sender, RoutedEventArgs e)
         {
-            string path = "GasLib";
+            string path = "CoalLib";
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
             byte[] data = CommonFunction.SerializeToBinary(CoalLib);
             BinaryWriter bw = new BinaryWriter(fs);
             bw.Write(data);
             bw.Close();
             fs.Close();
+            MessageBox.Show("保存成功！");
         }
         
         /// <summary>
@@ -85,9 +89,50 @@ namespace TPIS.Views.Tool
             CoalView.Items.Refresh();
         }
 
-        private void Coal_Selected(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 选中退出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChooseCoal(object sender, RoutedEventArgs e)
         {
-
+            Coal coal = (Coal)CoalView.SelectedItem;
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                foreach(ObjectBase obj in mainwin.GetCurrentProject().Objects)
+                {
+                    if(obj is TPISComponent && obj.isSelected)
+                    {
+                        TPISComponent c = obj as TPISComponent;
+                        if(c.eleType == TPISNet.EleType.CoalSource)
+                        {
+                            foreach(PropertyGroup pg in c.PropertyGroups)
+                            {
+                                if(pg.Flag == "燃料性质")
+                                {
+                                    foreach (Property p in pg.Properties)
+                                    {
+                                        switch (p.DicName)
+                                        {
+                                            case "C" : p.ShowValue = coal.P_C.ToString();break;
+                                            case "H": p.ShowValue = coal.P_H.ToString();break;
+                                            case "O": p.ShowValue = coal.P_O.ToString();break;
+                                            case "N": p.ShowValue = coal.P_N.ToString();break;
+                                            case "S": p.ShowValue = coal.P_S.ToString();break;
+                                            case "A": p.ShowValue = coal.P_A.ToString();break;
+                                            case "M": p.ShowValue = coal.P_M.ToString();break;
+                                            case "V": p.ShowValue = coal.P_V.ToString();break;
+                                            case "LHV": p.ShowValue = coal.P_LHV.ToString(); break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Close();
         }
     }
 }

@@ -544,6 +544,9 @@ namespace TPIS.Command
             CoalWin cw = new CoalWin();
             cw.Owner = Application.Current.MainWindow;
             cw.Show();
+            //CoalDatabaseWin gdw = new CoalDatabaseWin();
+            //gdw.Owner = Application.Current.MainWindow;
+            //gdw.Show();
         }
 
         public void GasDataBaseOpe_Excuted(object sender, ExecutedRoutedEventArgs e)

@@ -65,15 +65,137 @@ namespace TPIS.Model
             P_LHV = 0.0;
         }
 
-        public String Name { get; set; }
-        public double P_C { get; set; }
-        public double P_H { get; set; }
-        public double P_O { get; set; }
-        public double P_N { get; set; }
-        public double P_S { get; set; }
-        public double P_A { get; set; }
-        public double P_M { get; set; }
-        public double P_V { get; set; }
-        public double P_LHV { get; set; }
+        private void Evaluation()
+        {
+            TPISNet.Coal c = new TPISNet.Coal();
+            c.DProperty["C"].Data = P_C;
+            c.DProperty["H"].Data = P_H;
+            c.DProperty["O"].Data = P_O;
+            c.DProperty["N"].Data = P_N;
+            c.DProperty["S"].Data = P_S;
+            c.DProperty["A"].Data = P_A;
+            c.DProperty["M"].Data = P_M;
+            c.DProperty["V"].Data = P_V;
+            c.DProperty["LHV"].Data = P_LHV;
+            string warning = "";
+            c.IsHundred(out warning);
+            EvalResult = warning;
+        }
+
+        public string evalResult;
+        public string EvalResult { get=>evalResult; set
+            {
+                evalResult = value;
+                OnPropertyChanged("EvalResult");
+            }
+        }
+
+        public string name;
+        public String Name {
+            get => name;
+            set {
+                name = value;
+                Evaluation();
+            }
+        }
+
+        public double p_c;
+        public double P_C
+        {
+            get => p_c;
+            set
+            {
+                p_c = value;
+                Evaluation();
+            }
+        }
+
+        public double p_h;
+        public double P_H
+        {
+            get => p_h;
+            set
+            {
+                p_h = value;
+                Evaluation();
+            }
+        }
+
+        public double p_o;
+        public double P_O
+        {
+            get => p_o;
+            set
+            {
+                p_o = value;
+                Evaluation();
+            }
+        }
+
+        public double p_n;
+        public double P_N
+        {
+            get => p_n;
+            set
+            {
+                p_n = value;
+                Evaluation();
+            }
+        }
+
+        public double p_s;
+        public double P_S
+        {
+            get => p_s;
+            set
+            {
+                p_s = value;
+                Evaluation();
+            }
+        }
+
+        public double p_a;
+        public double P_A
+        {
+            get => p_a;
+            set
+            {
+                p_a = value;
+                Evaluation();
+            }
+        }
+
+        public double p_m;
+        public double P_M
+        {
+            get => p_m;
+            set
+            {
+                p_m = value;
+                Evaluation();
+            }
+        }
+
+        public double p_v;
+        public double P_V
+        {
+            get => p_v;
+            set
+            {
+                p_v = value;
+                Evaluation();
+            }
+        }
+
+        public double p_lhv;
+        public double P_LHV
+        {
+            get => p_lhv;
+            set
+            {
+                p_lhv = value;
+                Evaluation();
+            }
+        }
     }
 }

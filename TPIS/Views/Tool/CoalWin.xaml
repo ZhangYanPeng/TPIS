@@ -20,24 +20,33 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Button Content="新增" Grid.Column="0" Click="AddCoal"></Button>
                             <Button Content="删除" Grid.Column="1" Click="DeleteCoal"></Button>
-                            <Button Content="保存" Grid.Column="2"></Button>
+                            <Button Content="保存" Grid.Column="3" Click="SaveCoalLib"></Button>
+                            <Button Content="选中" Grid.Column="2" Click="ChooseCoal"></Button>
                         </Grid>
                     </DockPanel>
-                    <DataGrid Name="CoalView" ItemsSource="{Binding CoalLib}" AutoGenerateColumns="False">
+                    <DataGrid Name="CoalView" ItemsSource="{Binding CoalLib}" AutoGenerateColumns="False" Width="600" HorizontalScrollBarVisibility="Auto">
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Grid TextBlock.Foreground="Black">
+                                    <TextBlock Text="{Binding EvalResult}" />
+                                </Grid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
                         <DataGrid.Columns>
-                            <DataGridTextColumn  Header="名称" Width="100" Binding="{Binding Name}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="C" Width="50" Binding="{Binding P_C}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="H" Width="50" Binding="{Binding P_H}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="O" Width="50" Binding="{Binding P_O}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="N" Width="50" Binding="{Binding P_N}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="S" Width="50" Binding="{Binding P_S}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="A" Width="50" Binding="{Binding P_A}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="M" Width="50" Binding="{Binding P_M}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="V" Width="50" Binding="{Binding P_V}"></DataGridTextColumn>
-                            <DataGridTextColumn  Header="LHV (kJ/kg)" Width="80" Binding="{Binding P_LHV}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="名称" Width="100" Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="C" Width="50" Binding="{Binding P_C,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="H" Width="50" Binding="{Binding P_H,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="O" Width="50" Binding="{Binding P_O,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="N" Width="50" Binding="{Binding P_N,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="S" Width="50" Binding="{Binding P_S,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="A" Width="50" Binding="{Binding P_A,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="M" Width="50" Binding="{Binding P_M,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="V" Width="50" Binding="{Binding P_V,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn  Header="LHV (kJ/kg)" Width="80" Binding="{Binding P_LHV,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
