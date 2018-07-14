@@ -290,7 +290,7 @@ namespace TPIS.Model
 
         public Gas(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("Name", Name);
+            Name = info.GetString("Name");
             N2 = info.GetDouble("N2");
             O2 = info.GetDouble("O2");
             CO2 = info.GetDouble("CO2");

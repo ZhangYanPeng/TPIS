@@ -105,7 +105,7 @@ namespace TPIS.Views.Tool
                     if (obj is TPISComponent && obj.isSelected)
                     {
                         TPISComponent c = obj as TPISComponent;
-                        if (c.eleType == TPISNet.EleType.CoalSource)
+                        if (c.eleType == TPISNet.EleType.GasSoource)
                         {
                             foreach (PropertyGroup pg in c.PropertyGroups)
                             {
@@ -130,8 +130,8 @@ namespace TPIS.Views.Tool
                                             case "C3H8": p.ShowValue = gas.C3H8.ToString(); break;
                                             case "C4H10": p.ShowValue = gas.C4H10.ToString(); break;
                                             case "C5H12": p.ShowValue = gas.C5H12.ToString(); break;
-                                            case "LHV_KJ_Nm3": p.ShowValue = gas.LHV_KJ_Nm3.ToString(); break;
-                                            case "HHV_KJ_Nm3": p.ShowValue = gas.HHV_KJ_Nm3.ToString(); break;
+                                            case "LHV": p.ShowValue = gas.LHV_KJ_Nm3.ToString(); break;
+                                            case "HHV": p.ShowValue = gas.HHV_KJ_Nm3.ToString(); break;
                                         }
                                     }
                                 }
