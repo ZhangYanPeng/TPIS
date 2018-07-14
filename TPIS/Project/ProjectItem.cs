@@ -263,7 +263,7 @@ namespace TPIS.Project
                                     TPISLine line = lobj as TPISLine;
                                     if (line.No == port.LinkNo)
                                     {
-                                        if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
+                                        if (port.Type == NodType.DefOut || port.Type == NodType.Outlet)
                                             line.InPort = port;
                                         else
                                             line.OutPort = port;

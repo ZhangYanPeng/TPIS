@@ -110,6 +110,7 @@
     <Compile Include="Model\Common\IViewModel.cs" />
     <Compile Include="Model\ComponentType.cs" />
     <Compile Include="Model\Coal.cs" />
+    <Compile Include="Model\Gas.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Property.cs" />
@@ -144,8 +145,10 @@
     <Compile Include="Views\CalWindow.xaml.cs">
       <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GasWindow.xaml.cs">
+      <DependentUpon>GasWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Modules\ConvertorLib.cs" />
-    <Compile Include="Views\Modules\Gas.cs" />
     <Compile Include="Views\Modules\PropertyTemplate.xaml.cs">
       <DependentUpon>PropertyTemplate.xaml</DependentUpon>
     </Compile>
@@ -162,8 +165,15 @@
     <Compile Include="Views\Tool\CoalWin.xaml.cs">
       <DependentUpon>CoalWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tool\GasWin.xaml.cs">
+      <DependentUpon>GasWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Page Include="Views\CalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GasWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tool\CoalWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tool\GasWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
