@@ -46,6 +46,15 @@ namespace TPIS.Project
                 {
                     if (value != 0)
                         obj.isGrid = true;
+                    else { 
+                        if(obj != null)
+                            obj.isGrid = false;
+                    }
+                    if (obj is TPISComponent)
+                        ((TPISComponent)obj).GridForm();
+                    if (obj is TPISLine)
+                        ((TPISLine)obj).GridForm();
+
                 }
                 OnPropertyChanged("GridThickness");
             }
@@ -213,8 +222,6 @@ namespace TPIS.Project
             mainwin.CurWorkspaceSizeShow(this.Canvas.Width.ToString(), this.Canvas.Height.ToString());//状态栏显示工作区大小
         }
         #endregion
-
-
 
         #region 查找元件并选中居中
         internal bool FindComponent(int tn)

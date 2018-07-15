@@ -136,6 +136,7 @@ namespace TPIS.Model
             this.LNum = (long)info.GetValue("lNum", typeof(long));
             this.Points = (ObservableCollection<Point>)info.GetValue("points", typeof(ObservableCollection<Point>));
             this.VorH = (List<Boolean>)info.GetValue("vorH", typeof(List<Boolean>));
+            GridForm();
         }
         #endregion
 
@@ -194,8 +195,68 @@ namespace TPIS.Model
             }
             set
             {
-                this.points = value;
+                points = value;
+                GridForm();
                 OnPropertyChanged("Points");
+            }
+        }
+
+        public ObservableCollection<Point> v_points;
+        public ObservableCollection<Point> V_points
+        {
+            get
+            {
+                return v_points;
+            }
+            set
+            {
+                v_points = value;
+                OnPropertyChanged("V_points");
+            }
+        }
+        
+        internal void GridForm()
+        {
+            if(v_points == null)
+            {
+                V_points = new ObservableCollection<Point>();
+            }
+            if (v_points.Count != points.Count)
+            {
+                v_points.Clear();
+                for (int i = 0; i < points.Count; i++)
+                {
+                    Point p = new Point(points[i].X, points[i].Y);
+                    V_points.Add(p);
+                }
+            }
+            if (isGrid)
+            {
+                for (int i = 0; i < points.Count; i++)
+                {
+                    Point p = new Point(points[i].X, points[i].Y);
+                    p.X = p.X - p.X % MainWindow.GRID_WIDTH;
+                    p.Y = p.Y - p.Y % MainWindow.GRID_WIDTH;
+                    V_points[i] = p;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < points.Count; i++)
+                {
+                    Point p = new Point(points[i].X, points[i].Y);
+                    V_points[i] = p;
+                }
+            }
+            OnPropertyChanged("V_points");
+        }
+
+        public bool IsGrid
+        {
+            get => isGrid; set
+            {
+                isGrid = value;
+                GridForm();
             }
         }
 
@@ -322,7 +383,7 @@ namespace TPIS.Model
             {
                 points[pn] = p; ;//确定点
             }
-            OnPropertyChanged("Points");
+            GridForm();
             if (tn > points.Count)
                 return true;
             return false;
@@ -334,7 +395,7 @@ namespace TPIS.Model
             {
                 points[i] = new Point(points[i].X * lrate, points[i].Y * lrate);
             }
-            OnPropertyChanged("Points");
+            GridForm();
         }
 
         public void ReSetRate(double lrate)
@@ -343,7 +404,7 @@ namespace TPIS.Model
             {
                 points[i] = new Point(points[i].X / lrate, points[i].Y / lrate);
             }
-            OnPropertyChanged("Points");
+            GridForm();
         }
         
         //整体平移
@@ -352,14 +413,14 @@ namespace TPIS.Model
             for( int i=0; i<Points.Count; i++)
             {
                 Points[i] = new Point(Points[i].X + vx, Points[i].Y + vy);
-                //Points[i] = new Point(vx, vy);
             }
-            OnPropertyChanged("Points");
+            GridForm();
         }
 
         public TPISLine()
         {
             points = new ObservableCollection<Point>();
+            V_points = new ObservableCollection<Point>();
             LineColor = Brushes.LimeGreen;
         }
 

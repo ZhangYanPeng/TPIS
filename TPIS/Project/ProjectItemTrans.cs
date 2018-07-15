@@ -231,7 +231,11 @@ namespace TPIS.Project
                                 }
                                 else
                                 {
-                                    port.link.PointTo(port.link.Points.Count - 1, new Point(port.link.Points[port.link.Points.Count - 1].X + d_vx, port.link.Points[port.link.Points.Count - 1].Y + d_vy));
+                                    //port.link.PointTo(port.link.Points.Count - 1, new Point(port.link.Points[port.link.Points.Count - 1].X + d_vx, port.link.Points[port.link.Points.Count - 1].Y + d_vy));
+                                    Point p = new Point();
+                                    p.X = ((TPISComponent)obj).Position.V_x + port.P_x+5;
+                                    p.Y = ((TPISComponent)obj).Position.V_y + port.P_y+5;
+                                    port.link.PointTo(port.link.Points.Count - 1, p);
                                 }
                             }
                         }

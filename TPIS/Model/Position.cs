@@ -67,7 +67,25 @@ namespace TPIS.Model
         private double v_width;
         private double v_height;
         private double rate;
-        public bool IsGrid { get; set; }
+        public bool isGrid;
+        public bool IsGrid {
+            get =>isGrid;
+            set {
+                isGrid = value;
+                GridForm();
+            }
+        }
+
+        public void GridForm() {
+            ReSizeAll();
+            if (IsGrid)
+            {
+                this.v_x = this.v_x - this.v_x % MainWindow.GRID_WIDTH;
+                this.v_y = this.v_y - this.v_y % MainWindow.GRID_WIDTH;
+                OnPropertyChanged("V_y");
+                OnPropertyChanged("V_x");
+            }
+        }
 
         public int angle;
         public int Angle

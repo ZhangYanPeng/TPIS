@@ -1,7 +1,7 @@
 ﻿
-<<<<<<< HEAD
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\CalWindow.xaml;;
+FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\GasWindow.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Modules\PortResultTemplate.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Modules\PropertyTemplate.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Modules\ResultTemplate.xaml;;
@@ -12,24 +12,7 @@ FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Modules\TPISToolBar.xaml
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\MainWindow.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\QuickModeSelect.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Tool\CoalWin.xaml;;
+FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\Tool\GasWin.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\ViewWindow.xaml;;
 FC:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\Views\WorkspaceSize.xaml;;
-=======
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\App.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\CalWindow.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\GasWindow.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Modules\PortResultTemplate.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Modules\PropertyTemplate.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Modules\ResultTemplate.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Modules\TPISCanvas.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Modules\TPISTextToolBar.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Modules\TPISMenu.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Modules\TPISToolBar.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\MainWindow.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\QuickModeSelect.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Tool\CoalWin.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\Tool\GasWin.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\ViewWindow.xaml;;
-FC:\Users\LW\Source\Repos\TPIS5\TPIS\Views\WorkspaceSize.xaml;;
->>>>>>> 40719146890c8411383e6b8c8fb405d130843373
 

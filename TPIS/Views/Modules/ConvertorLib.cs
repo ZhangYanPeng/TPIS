@@ -162,4 +162,31 @@ namespace TPIS.Views.Modules
             return null;
         }
     }
+
+
+    public class SelectConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return DependencyProperty.UnsetValue;
+            if ((bool)value)
+                return Visibility.Visible;
+            else
+                return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value != null)
+            {
+                Visibility visibility = (Visibility)value;
+                if (visibility == Visibility.Visible)
+                    return true;
+                else
+                    return false;
+            }
+            return DependencyProperty.UnsetValue;
+        }
+    }
 }

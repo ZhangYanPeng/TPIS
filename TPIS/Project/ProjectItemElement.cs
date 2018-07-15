@@ -53,6 +53,11 @@ namespace TPIS.Project
             {
                 component.PairName = "";
             }
+            if (GridThickness != 0)
+                component.isGrid = true;
+            else
+                component.isGrid = false;
+            component.GridForm();
             Objects.Add(component);
             rec.ObjectsNo.Add(n);
             if (record)
@@ -132,6 +137,10 @@ namespace TPIS.Project
             }
             n--;
             line.No = n;
+            if (GridThickness != 0)
+                line.isGrid = true;
+            else
+                line.isGrid = false;
             Objects.Add(line);
             rec.ObjectsNo.Add(n);
             if (record)
@@ -161,17 +170,20 @@ namespace TPIS.Project
             Record rec = new Record();
             String origin = "";
             String current = "";
-            foreach (TPISText text in Objects)
+            foreach (ObjectBase obj in Objects)
             {
-                if (text.IsSelected)
-                {
-                    double cf = FonsSizeTransfor(text.FontSize, true);
-                    if (cf > 0)
+                if(obj is TPISText) {
+                    TPISText text = obj as TPISText;
+                    if (text.IsSelected)
                     {
-                        origin += text.FontSize + "||";
-                        text.FontSize = cf;
-                        rec.ObjectsNo.Add(text.No);
-                        current += text.FontSize + "||";
+                        double cf = FonsSizeTransfor(text.FontSize, true);
+                        if (cf > 0)
+                        {
+                            origin += text.FontSize + "||";
+                            text.FontSize = cf;
+                            rec.ObjectsNo.Add(text.No);
+                            current += text.FontSize + "||";
+                        }
                     }
                 }
             }
@@ -189,17 +201,21 @@ namespace TPIS.Project
             Record rec = new Record();
             String origin = "";
             String current = "";
-            foreach (TPISText text in Objects)
+            foreach (ObjectBase obj in Objects)
             {
-                if (text.IsSelected)
+                if (obj is TPISText)
                 {
-                    double cf = FonsSizeTransfor(text.FontSize, false);
-                    if (cf > 0)
+                    TPISText text = obj as TPISText;
+                    if (text.IsSelected)
                     {
-                        origin += text.FontSize + "||";
-                        text.FontSize = cf;
-                        rec.ObjectsNo.Add(text.No);
-                        current += text.FontSize + "||";
+                        double cf = FonsSizeTransfor(text.FontSize, false);
+                        if (cf > 0)
+                        {
+                            origin += text.FontSize + "||";
+                            text.FontSize = cf;
+                            rec.ObjectsNo.Add(text.No);
+                            current += text.FontSize + "||";
+                        }
                     }
                 }
             }
@@ -216,14 +232,19 @@ namespace TPIS.Project
             Record rec = new Record();
             String origin = "";
             String current = "";
-            foreach (TPISText text in Objects)
+
+            foreach (ObjectBase obj in Objects)
             {
-                if (text.IsSelected)
+                if (obj is TPISText)
                 {
-                    origin += text.FontSize + "||";
-                    text.FontSize = size;
-                    rec.ObjectsNo.Add(text.No);
-                    current += text.FontSize + "||";
+                    TPISText text = obj as TPISText;
+                    if (text.IsSelected)
+                    {
+                        origin += text.FontSize + "||";
+                        text.FontSize = size;
+                        rec.ObjectsNo.Add(text.No);
+                        current += text.FontSize + "||";
+                    }
                 }
             }
             if (record && rec.Objects.Count != 0)
@@ -394,5 +415,6 @@ namespace TPIS.Project
             }
         }
         #endregion
+
     }
 }

@@ -329,5 +329,11 @@ namespace TPIS.Model
             return null;
         }
         #endregion
+
+        public void GridForm()
+        {
+            Position.IsGrid = isGrid;
+            RePosPort();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,34 @@ namespace TPIS.TPISCanvas
                     return false;
             }
             return DependencyProperty.UnsetValue;
+        }
+    }
+
+    public class SelectComponentConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (values[0] == null)
+                return Visibility.Visible;
+            if (values[1] == null)
+                return Visibility.Visible;
+            if ((bool)values[0])
+            {
+                ObservableCollection<Port> ports = (ObservableCollection<Port>)values[1];
+                foreach (Port p in ports)
+                {
+                    if (p.link != null)
+                        return Visibility.Collapsed;
+                }
+                return Visibility.Visible;
+            }
+            else
+                return Visibility.Collapsed;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -200,12 +229,25 @@ namespace TPIS.TPISCanvas
                         posbinding.Mode = BindingMode.OneWay;
                         ap.SetBinding(Canvas.LeftProperty, posbinding);
                     }
-
-                    Binding binding = new Binding();
-                    binding.Source = this.DataContext;
-                    binding.Path = new PropertyPath("IsSelected");
-                    binding.Converter = new SelectConverter();
-                    ap.SetBinding(AnchorPoint.VisibilityProperty, binding);
+                    if(DataContext is TPISComponent)
+                    {
+                        MultiBinding mbinding = new MultiBinding();
+                        Binding b1 = new Binding("IsSelected") { Source = DataContext };
+                        Binding b2 = new Binding("Ports") { Source = DataContext };
+                        mbinding.Bindings.Add(b1);
+                        mbinding.Bindings.Add(b2);
+                        mbinding.Converter = new SelectComponentConverter();
+                        ap.SetBinding(AnchorPoint.VisibilityProperty, mbinding);
+                    }
+                    else
+                    {
+                        Binding binding = new Binding();
+                        binding.Source = DataContext;
+                        binding.Path = new PropertyPath("IsSelected");
+                        binding.Converter = new SelectConverter();
+                        ap.SetBinding(AnchorPoint.VisibilityProperty, binding);
+                    }
+                    
                 }
             }
         }

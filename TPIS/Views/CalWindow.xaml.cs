@@ -36,7 +36,38 @@ namespace TPIS.Views
             this.Title += " - " + pi.Name;
             CalProject.DataContext = project;
             this.Owner = (MainWindow)Application.Current.MainWindow;
+            InitComponentType();
         }
+
+        #region 选择属性
+        private void InitComponentType()
+        {
+            List<TPISNet.EleType> types = new List<TPISNet.EleType>();
+            foreach(ObjectBase obj in project.Objects)
+            {
+                if(obj is TPISComponent)
+                {
+                    TPISComponent c = obj as TPISComponent;
+                    if (!types.Contains(c.eleType))
+                        types.Add(c.eleType);
+                }
+            }
+            foreach(TPISNet.EleType t in types)
+            {
+                ComboBoxItem comboBoxItem = new ComboBoxItem();
+                comboBoxItem.Content = CommonTypeService.InitComponentName(t);
+                comboBoxItem.DataContext = t;
+                ComponentType.Items.Add(comboBoxItem);
+            }
+            ComponentType.Items.Refresh();
+        }
+
+        private void ComponentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Object si = ComponentType.SelectedItem;
+        }
+        #endregion
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             if(project.CalculateState)
@@ -89,6 +120,7 @@ namespace TPIS.Views
                 return;
             }
         }
+
         private void SetCalState(bool v)
         {
             if (v)

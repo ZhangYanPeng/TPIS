@@ -45,5 +45,9 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\Helper\chm.CHM
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Tool\CoalWin.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Tool\CoalWin.baml
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\ResultAnalysis.exe
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\GasWindow.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Tool\GasWin.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\GasWindow.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Tool\GasWin.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojResolveAssemblyReference.cache

@@ -58,9 +58,7 @@ namespace TPIS.Views.Modules
                 return;
             }
         }
-
-
-
+        
         private void TPISTextShk(object sender, RoutedEventArgs e)
         {
             try

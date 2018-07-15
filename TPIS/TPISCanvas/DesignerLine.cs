@@ -69,7 +69,7 @@ namespace TPIS.TPISCanvas
                     //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].Y);
                     Binding binding = new Binding();
                     binding.Source = line;
-                    binding.Path = new PropertyPath("Points");
+                    binding.Path = new PropertyPath("V_points");
                     binding.Converter = new AnchorPosConverter(i, "y");
                     binding.Mode = BindingMode.OneWay;
                     lap.SetBinding(Canvas.TopProperty, binding);
@@ -78,7 +78,7 @@ namespace TPIS.TPISCanvas
                     //laps[i].SetValue(Canvas.TopProperty, line.Points[i + 1].X);
                     Binding binding = new Binding();
                     binding.Source = line;
-                    binding.Path = new PropertyPath("Points");
+                    binding.Path = new PropertyPath("V_points");
                     binding.Converter = new AnchorPosConverter(i, "x");
                     binding.Mode = BindingMode.OneWay;
                     lap.SetBinding(Canvas.LeftProperty, binding);

@@ -4,23 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\LW\Source\Repos\TPIS5\TPIS\obj\Debug\
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\
 TPIS
 none
 false
 DEBUG;TRACE
-C:\Users\LW\Source\Repos\TPIS5\TPIS\App.xaml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml
 17704234158
 
-<<<<<<< HEAD
-85-2103770464
-201001354396
-Views\CalWindow.xaml;Views\Modules\PortResultTemplate.xaml;Views\Modules\PropertyTemplate.xaml;Views\Modules\ResultTemplate.xaml;Views\Modules\TPISCanvas.xaml;Views\Modules\TPISTextToolBar.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\Tool\CoalWin.xaml;Views\ViewWindow.xaml;Views\WorkspaceSize.xaml;
-=======
 872124459084
-191733151700
+201001354396
 Views\CalWindow.xaml;Views\GasWindow.xaml;Views\Modules\PortResultTemplate.xaml;Views\Modules\PropertyTemplate.xaml;Views\Modules\ResultTemplate.xaml;Views\Modules\TPISCanvas.xaml;Views\Modules\TPISTextToolBar.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\Tool\CoalWin.xaml;Views\Tool\GasWin.xaml;Views\ViewWindow.xaml;Views\WorkspaceSize.xaml;
->>>>>>> 40719146890c8411383e6b8c8fb405d130843373
 
 False
 

@@ -75,7 +75,7 @@
                         <ControlTemplate TargetType="{x:Type GridSplitter}">
                             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                                 <Grid>
-                                    <Button Name="btnExpend" Content=":" VerticalAlignment="Center" Height="50" Panel.ZIndex="0" Cursor="Hand"/>
+                                    <Button Name="btnExpend" Content="&lt;&gt;" VerticalAlignment="Center" Height="50" Panel.ZIndex="0" Cursor="Hand"/>
                                 </Grid>
                             </Border>
                         </ControlTemplate>
@@ -179,7 +179,7 @@
             </DockPanel>
         </ContentControl>
         <ContentControl DockPanel.Dock="Left">
-            <GridSplitter x:Name="gsSplitterr" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" Style="{DynamicResource GridSplitterStyle1}"/>
+            <GridSplitter x:Name="gsSplitterr" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" Width="20" Style="{DynamicResource GridSplitterStyle1}"/>
         </ContentControl>
         <Grid>
             <Border BorderThickness="1" BorderBrush="Black" Margin="2">

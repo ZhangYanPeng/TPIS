@@ -170,7 +170,7 @@ namespace TPIS.TPISCanvas
             
             mainwin.GetCurrentProject().Canvas.StartPort.link = line;
             mainwin.GetCurrentProject().Canvas.EndPort.link = line;
-
+            line.GridForm();
             mainwin.GetCurrentProject().AddLine(line);
             //InitLineAnchorPoints(line.No, line);//初始化锚点
         }

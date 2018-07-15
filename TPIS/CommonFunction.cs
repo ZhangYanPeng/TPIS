@@ -43,8 +43,8 @@ namespace TPIS
                 e = new TeeGas(id);
             else if (s == EleType.Compressor)
                 e = new Compressor(id);
-            else if (s == EleType.Pump)
-                e = new Pump(id);
+           // else if (s == EleType.Pump)
+           //     e = new Pump(id);
             else if (s == EleType.WaterPool)
                 e = new WaterPool(id);
             else if (s == EleType.SteamHeader)

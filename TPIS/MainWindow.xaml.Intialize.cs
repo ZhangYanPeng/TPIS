@@ -15,7 +15,7 @@ namespace TPIS
 {
     public partial class MainWindow : Window
     {
-        static public int GRID_WIDTH = 20;
+        static public int GRID_WIDTH = 4;
 
         /// <summary>
         /// 加载所有元件类型

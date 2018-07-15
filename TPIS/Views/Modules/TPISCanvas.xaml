@@ -12,6 +12,7 @@
     <modules:ColorConverter x:Key="ColorConverter"/>
     <modules:MaterialConverter x:Key="MaterialConverter"/>
     <modules:LineTypeConverter x:Key="LineTypeConverter"/>
+    <modules:SelectConverter x:Key="SelectConverter"/>
 
     <Style x:Key="StyleSelectedProperty" TargetType="{x:Type ListViewItem}">
         <Setter Property="Visibility" Value="{Binding Visibility}"></Setter>
@@ -204,6 +205,7 @@
                     </ImageBrush.RelativeTransform>
                 </ImageBrush>
             </s:DesignerComponent.Background>
+            <Rectangle Canvas.Top="0" Canvas.Left="0" Width="{Binding Position.V_width}" Height="{Binding Position.V_height}" StrokeThickness="4" Stroke="#FF706145" Visibility="{Binding IsSelected,Converter={StaticResource SelectConverter}}"></Rectangle>
             <TextBlock Text="{Binding No}" Canvas.Left="0" Canvas.Top="{Binding Position.V_height}" Width="{Binding Position.V_width}" TextAlignment="Center"></TextBlock>
             <TextBlock Text="{Binding PairName}" Canvas.Left="0" Canvas.Top="0"  TextAlignment="Center" FontSize="15"></TextBlock>
             <ItemsControl ItemsSource="{Binding Ports}" Style="{StaticResource PortItemsControlStyle}">
@@ -253,7 +255,7 @@
         <!--<Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
         </Polyline>-->
         <s:DesignerLine>
-            <Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="6" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
+            <Polyline Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="6" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
                 <Polyline.ToolTip>
                     <DockPanel>
                         <Grid DockPanel.Dock="Top" Margin="5 0 0 5">

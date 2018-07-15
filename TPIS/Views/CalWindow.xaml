@@ -49,11 +49,21 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                                     <TextBlock Text="元件类型：" VerticalAlignment="Center"></TextBlock>
-                                    <ComboBox Width="100"></ComboBox>
+                                    <ComboBox Name="ComponentType" Width="100" Height="21" VerticalAlignment="Top" SelectionChanged="ComponentType_SelectionChanged">
+                                        <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                                     <TextBlock Text="元件名称：" VerticalAlignment="Center"></TextBlock>
-                                    <ComboBox Width="100"></ComboBox>
+                                    <ComboBox Width="100">
+                                        <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Text="属性名称：" VerticalAlignment="Center"></TextBlock>
+                                    <ComboBox Width="100">
+                                        <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
+                                    </ComboBox>
                                 </StackPanel>
                                 <Button Grid.Column="2">添加监视</Button>
                             </Grid>
