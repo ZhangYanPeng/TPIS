@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using TPIS.Model;
 using TPIS.Model.Common;
+using TPIS.Views.Tool;
 
 namespace TPIS.Project
 {
@@ -120,6 +121,14 @@ namespace TPIS.Project
                 this.MoveSelection(x, y);
             }
             ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
+        }
+
+        //MovePort
+        public void MovePort(Port p)
+        {
+            PortLocation plw = new PortLocation(p);
+            plw.Owner = Application.Current.MainWindow;
+            plw.Show();
         }
         #endregion
 

@@ -1,0 +1,47 @@
+﻿<Window x:Class="TPIS.Views.Tool.PortLocation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TPIS.Views.Tool"
+        mc:Ignorable="d"
+        Title="PortLocation" Height="251.625" Width="436.659">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="32*"></ColumnDefinition>
+            <ColumnDefinition Width="111*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="49*"></RowDefinition>
+            <RowDefinition Height="52*"></RowDefinition>
+            <RowDefinition Height="146*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Port_X" Grid.Row="0" Grid.Column="0" Margin="22,13,23,13"></TextBlock>
+        <TextBlock Text="Port_Y" Grid.Row="1" Grid.Column="0" Margin="22,13,23,13"></TextBlock>
+        <Button Content="Move" Grid.Row="2" Grid.Column="0" Click="PortMove" Margin="18,50,18,51"></Button>
+        <TextBox Name="Port_X" Grid.Row="0" Grid.Column="1" Margin="110,5,112,5"></TextBox>
+        <TextBox Name="Port_Y" Grid.Row="1" Grid.Column="1" Margin="110,5,112,5"></TextBox>
+        <GroupBox Grid.Row="2" Grid.Column="1" Header="Position">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <RadioButton Name="LU" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">LU</RadioButton>
+                <RadioButton Name="U" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">U</RadioButton>
+                <RadioButton Name="RU" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">RU</RadioButton>
+                <RadioButton Name="L" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.075,0.624" Margin="18,10,28,10">L</RadioButton>
+                <RadioButton Name="R" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="17,10,26,10">R</RadioButton>
+                <RadioButton Name="LD" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">LD</RadioButton>
+                <RadioButton Name="D" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">D</RadioButton>
+                <RadioButton Name="RD" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">RD</RadioButton>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

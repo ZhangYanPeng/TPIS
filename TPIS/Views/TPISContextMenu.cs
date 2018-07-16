@@ -97,7 +97,7 @@ namespace TPIS.Views
             redoMenuItem.Click += btRedo_Click;
             selectAllMenuItem.Click += btSelectAll_Click;
             gridMenuItem.Click += btGrid_Click;
-
+            
             selectAllMenuItem.IsEnabled = true;
             gridMenuItem.IsEnabled = true;
             if (type != 2)
@@ -196,6 +196,13 @@ namespace TPIS.Views
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             mainwin.GetCurrentProject().DrawGridSelection();
+        }
+
+        private void btMovePort_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            Port p = (Port)sender;
+            mainwin.GetCurrentProject().MovePort(p);
         }
     }
 }
