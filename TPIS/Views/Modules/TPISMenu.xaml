@@ -163,7 +163,5 @@
         <!--帮助-->
         <MenuItem Header="帮助(H)" Command="{x:Static s:TPISCommand.Helper}"/>
         
-        <!--关于-->
-        <MenuItem Header="关于(A)" />
     </Menu>
 </ResourceDictionary>

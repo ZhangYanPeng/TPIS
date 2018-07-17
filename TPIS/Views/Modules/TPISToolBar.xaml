@@ -77,18 +77,5 @@
         <Button Name="tsbCal" ToolTip="计算" Click="CalculateResult">
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_play.png" Stretch="None" />
         </Button>
-        <Separator />
-        <Button ToolTip="上移" Command="{x:Static c:TPISCommand.Up}">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeUpArrow.png" Stretch="None" />
-        </Button>
-        <Button ToolTip="下移" Command="{x:Static c:TPISCommand.Down}">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeDownArrow.png" Stretch="None" />
-        </Button>
-        <Button ToolTip="左移" Command="{x:Static c:TPISCommand.Left}">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeLeftArrow.png" Stretch="None" />
-        </Button>
-        <Button ToolTip="右移" Command="{x:Static c:TPISCommand.Right}">
-            <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeRightArrow.png" Stretch="None" />
-        </Button>
     </ToolBar>
 </ResourceDictionary>

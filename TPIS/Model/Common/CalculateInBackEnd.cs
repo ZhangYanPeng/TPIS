@@ -11,21 +11,34 @@ namespace TPIS.Model.Common
 {
     public class CalculateInBackEnd
     {
-        public static Net BackEnd;
+        public Net BackEnd;
 
-        public static ProjectItem Calculate(ProjectItem project)
+        public CalculateInBackEnd(ProjectItem project)
         {
+            BackEnd = new Net();
             //传入参数
             Init(project);
-            BackEnd.ResultSetDef();
-            BackEnd.MaxIter = 10;
+        }
+
+        public CalculateInBackEnd(Net backend)
+        {
+            BackEnd = backend;
+        }
+
+        public ProjectItem Calculate(ProjectItem project)
+        {
+            //传入参数
+            BackEnd.MaxIter = project.MaxIter;
+            BackEnd.WaterStand = project.WaterStand;
+            BackEnd.GasStand = project.GasStand;
+            Init(project);
             BackEnd.Solve();
             GetGlobalResult(project);
             return GetResult(project);
         }
 
         //初始化 Project 的属性
-        public static void GetGlobalResult(ProjectItem project)
+        public void GetGlobalResult(ProjectItem project)
         {
             ObservableCollection<PropertyGroup> PropertyGroups = new ObservableCollection<PropertyGroup>();
             foreach (string key in BackEnd.DPResult.Keys)
@@ -79,7 +92,7 @@ namespace TPIS.Model.Common
             }
         }
 
-        private static ProjectItem GetResult(ProjectItem project)
+        private ProjectItem GetResult(ProjectItem project)
         {
             foreach (ObjectBase obj in project.Objects)
             {
@@ -163,9 +176,10 @@ namespace TPIS.Model.Common
             return project;
         }
 
-        public static void Init(ProjectItem project)
+        public void Init(ProjectItem project)
         {
-            BackEnd = new Net();
+            BackEnd.elements.Clear();
+            BackEnd.Pipes.Clear();
             //传入参数
             foreach (PropertyGroup pg in project.PropertyGroup)
             {
@@ -225,6 +239,10 @@ namespace TPIS.Model.Common
                     }
                     foreach(Port p in component.Ports)
                     {
+                        if (p.Type == NodType.DefIn)
+                            element.IOPoints[p.DicName].nodtype = TPISNet.NodType.Inlet;
+                        else if(p.Type == NodType.DefOut)
+                            element.IOPoints[p.DicName].nodtype = TPISNet.NodType.Outlet;
                         if (p.link != null)
                             element.IOPoints[p.DicName].IsLinked = true;
                         else

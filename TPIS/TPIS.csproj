@@ -148,9 +148,6 @@
     <Compile Include="Views\CalWindow.xaml.cs">
       <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GasWindow.xaml.cs">
-      <DependentUpon>GasWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Modules\ConvertorLib.cs" />
     <Compile Include="Views\Modules\PropertyTemplate.xaml.cs">
       <DependentUpon>PropertyTemplate.xaml</DependentUpon>
@@ -173,10 +170,6 @@
     </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Page Include="Views\CalWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\GasWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

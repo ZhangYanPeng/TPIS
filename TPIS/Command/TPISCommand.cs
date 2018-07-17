@@ -569,7 +569,9 @@ namespace TPIS.Command
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             if (mainwin.GetCurrentProject() != null)
             {
-                ResultAnalysisWin ra = new ResultAnalysisWin(CalculateInBackEnd.BackEnd);
+                CalculateInBackEnd backEnd = new CalculateInBackEnd(mainwin.GetCurrentProject());
+                mainwin.GetCurrentProject().BackEnd = backEnd.BackEnd;
+                ResultAnalysisWin ra = new ResultAnalysisWin(mainwin.GetCurrentProject().BackEnd);
                 ra.Owner = Application.Current.MainWindow;
                 ra.Show();
             }
@@ -599,7 +601,7 @@ namespace TPIS.Command
         }
         #endregion
 
-        #region 视图窗口
+        #region 帮助窗口
         public void Helper_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("Helper\\chm.CHM");

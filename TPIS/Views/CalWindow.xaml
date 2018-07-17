@@ -14,16 +14,41 @@
         <DockPanel>
             <DockPanel DockPanel.Dock="Top">
                 <DockPanel DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Border Margin="5" Name="StartCal" Visibility="{Binding CalculateState, Converter={StaticResource StartCalVisualConverter}}">
-                        <Button ToolTip="开始计算" Width="50" Click="StartCalBtn">
-                            <Image Source="/Images/button/play.png"></Image>
-                        </Button>
-                    </Border>
-                    <Border Margin="5" Name="EndCal" Visibility="{Binding CalculateState, Converter={StaticResource EndCalVisualConverter}}">
-                        <Button ToolTip="停止计算" Width="50" Click="EndCalBtn">
-                            <Image Source="/Images/button/stop.png"></Image>
-                        </Button>
-                    </Border>
+                    <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border Margin="5" Name="StartCal" Visibility="{Binding CalculateState, Converter={StaticResource StartCalVisualConverter}}">
+                            <Button ToolTip="开始计算" Width="50" Click="StartCalBtn">
+                                <Image Source="/Images/button/play.png"></Image>
+                            </Button>
+                        </Border>
+                        <Border Margin="5" Name="EndCal" Visibility="{Binding CalculateState, Converter={StaticResource EndCalVisualConverter}}">
+                            <Button ToolTip="停止计算" Width="50" Click="EndCalBtn">
+                                <Image Source="/Images/button/stop.png"></Image>
+                            </Button>
+                        </Border>
+                    </DockPanel>
+                    <Grid Margin="3 50 3 3" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">最大迭代次数</TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="0" Name="MaxIter" Text="{Binding MaxIter}" VerticalAlignment="Center"></TextBox>
+                        <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">水物性计算标准</TextBlock>
+                        <ComboBox Grid.Column="1" Grid.Row="1" Name="WaterStand" SelectedIndex="{Binding WaterStand}" VerticalAlignment="Center">
+                            <ComboBoxItem Content="IF97标准"></ComboBoxItem>
+                            <ComboBoxItem Content="IFC67标准"></ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Name="GasStand" VerticalAlignment="Center">气体物性计算标准</TextBlock>
+                        <ComboBox Grid.Column="1" Grid.Row="2" SelectedIndex="{Binding GasStand}" VerticalAlignment="Center">
+                            <ComboBoxItem Content="理想气体"></ComboBoxItem>
+                            <ComboBoxItem Content="NIST库"></ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
                 </DockPanel>
                 <!--输入输出模块-->
                 <Border DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Gray">
@@ -43,8 +68,9 @@
                         <Border Margin="2">
                             <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"></ColumnDefinition>
-                                    <ColumnDefinition Width="200"></ColumnDefinition>
+                                    <ColumnDefinition Width="170"></ColumnDefinition>
+                                    <ColumnDefinition Width="170"></ColumnDefinition>
+                                    <ColumnDefinition Width="170"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
@@ -55,17 +81,17 @@
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                                     <TextBlock Text="元件名称：" VerticalAlignment="Center"></TextBlock>
-                                    <ComboBox Width="100">
+                                    <ComboBox Width="100" Name="ComponentSel" SelectionChanged="Component_SelectionChanged">
                                         <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
                                     </ComboBox>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <StackPanel Grid.Column="2" Orientation="Horizontal">
                                     <TextBlock Text="属性名称：" VerticalAlignment="Center"></TextBlock>
-                                    <ComboBox Width="100">
+                                    <ComboBox Width="100" Name="PropSel" >
                                         <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
                                     </ComboBox>
                                 </StackPanel>
-                                <Button Grid.Column="2">添加监视</Button>
+                                <Button Grid.Column="3">添加监视</Button>
                             </Grid>
                         </Border>
                     </DockPanel>

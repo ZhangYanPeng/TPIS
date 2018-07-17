@@ -41,7 +41,6 @@ namespace TPIS
         public ScrollViewer scrollViewer { get; set; } // 工作区
         public TPISConfig TPISconfig { get; set; }
         public List<CalWindow> CalWins { get; set; }
-        public List<GasWindow> GasWins { get; set; }
 
         public ProjectItem GetCurrentProject()
         {
@@ -69,7 +68,6 @@ namespace TPIS
             //载入工程配置
             TPISconfig = new TPISConfig();
             CalWins = new List<CalWindow>();
-            GasWins = new List<GasWindow>();
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
         }
 
@@ -133,13 +131,6 @@ namespace TPIS
                         else
                             cw.Hide();
                     }
-                    foreach (GasWindow gw in GasWins)
-                    {
-                        if (gw.project == GetCurrentProject())
-                            gw.Show();
-                        else
-                            gw.Hide();
-                    }
                 }
                 catch
                 {
@@ -165,13 +156,6 @@ namespace TPIS
                             cw.Show();
                         else
                             cw.Hide();
-                    }
-                    foreach (GasWindow gw in GasWins)
-                    {
-                        if (gw.project == GetCurrentProject())
-                            gw.Show();
-                        else
-                            gw.Hide();
                     }
                 }
                 catch

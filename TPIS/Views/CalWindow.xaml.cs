@@ -64,7 +64,65 @@ namespace TPIS.Views
 
         private void ComponentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Object si = ComponentType.SelectedItem;
+            try {
+                ComboBoxItem si = ComponentType.SelectedItem as ComboBoxItem;
+                ComponentSel.Items.Clear();
+
+                ComboBoxItem def = new ComboBoxItem();
+                def.Content = "--请选择--";
+                def.DataContext = null;
+                def.IsSelected = true;
+                ComponentSel.Items.Add(def);
+
+                if (si.DataContext == null)
+                    return;
+                foreach (ObjectBase obj in project.Objects)
+                {
+                    if(obj is TPISComponent && ((TPISComponent)obj).eleType == (TPISNet.EleType)si.DataContext)
+                    {
+                        ComboBoxItem cbi = new ComboBoxItem();
+                        cbi.Content = "#"+((TPISComponent)obj).No + " "+((TPISComponent)obj).Name;
+                        cbi.DataContext = obj;
+                        ComponentSel.Items.Add(cbi);
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void Component_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                ComboBoxItem si = ComponentSel.SelectedItem as ComboBoxItem;
+                PropSel.Items.Clear();
+
+                ComboBoxItem def = new ComboBoxItem();
+                def.Content = "--请选择--";
+                def.DataContext = null;
+                def.IsSelected = true;
+                PropSel.Items.Add(def);
+
+                if (si.DataContext == null)
+                    return;
+                foreach (PropertyGroup pg in ((TPISComponent)si.DataContext).PropertyGroups)
+                {
+                    foreach(Property p in pg.Properties)
+                    {
+                        ComboBoxItem cbi = new ComboBoxItem();
+                        cbi.Content = p.Name;
+                        cbi.DataContext = p;
+                        PropSel.Items.Add(cbi);
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
         }
         #endregion
 
@@ -139,7 +197,8 @@ namespace TPIS.Views
 
                 ProjectItem pi = data as ProjectItem;
                 pi.RebuildLink();
-                pi = CalculateInBackEnd.Calculate(pi);
+                CalculateInBackEnd  cal = new CalculateInBackEnd(pi.BackEnd);
+                pi = cal.Calculate(pi);
                 token.ThrowIfCancellationRequested();
                 return pi;
             }
@@ -152,6 +211,8 @@ namespace TPIS.Views
 
         private void StartCalBtn(object sender, RoutedEventArgs e)
         {
+            if (!MaxIter_Check())
+                return;
             CalculateResult();
         }
 
@@ -177,9 +238,26 @@ namespace TPIS.Views
             Top = (workArea.Height - Height) / 2 + workArea.Top;
         }
 
+        /// <summary>
+        /// 检查最大迭代次数输入合法性
+        /// </summary>
+        /// <returns></returns>
+        private bool MaxIter_Check()
+        {
+            try
+            {
+                int.Parse(MaxIter.Text);
+                return true;
+            }
+            catch
+            {
+                MessageBox.Show("请输入整数");
+                return false;
+            }
+        }
     }
 
-    //颜色控制
+    //按钮控制
     public class StartCalVisualConverter : IValueConverter
     {
 
@@ -197,7 +275,7 @@ namespace TPIS.Views
         }
     }
 
-    //颜色控制
+    //按钮控制
     public class EndCalVisualConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -213,4 +291,5 @@ namespace TPIS.Views
             return null;
         }
     }
+    
 }

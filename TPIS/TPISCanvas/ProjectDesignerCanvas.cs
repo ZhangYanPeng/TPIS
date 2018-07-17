@@ -144,19 +144,20 @@ namespace TPIS.TPISCanvas
                 flag = false;
                 pline.Points.Clear();
                 mainwin.GetCurrentProject().Canvas.CanLink = false;//右键取消画线问题
-            }
-
-            if (mainwin.GetCurrentProject().Canvas.Operation != OperationType.SELECT)
+            }else if (mainwin.GetCurrentProject().Canvas.Operation != OperationType.SELECT)
             {
                 this.Cursor = Cursors.Arrow;
                 mainwin.ToSelectMode();
                 this.Children.Remove(AddComponentImage);
                 return;
             }
-            mainwin.GetCurrentProject().Select();
-            TPISContextMenu contextMenu = new TPISContextMenu(2);
-            contextMenu.SetPos(e.GetPosition(this));
-            ContextMenu = contextMenu;
+            else
+            {
+                mainwin.GetCurrentProject().Select();
+                TPISContextMenu contextMenu = new TPISContextMenu(2);
+                contextMenu.SetPos(e.GetPosition(this));
+                ContextMenu = contextMenu;
+            }
             e.Handled = true;
         }
     }

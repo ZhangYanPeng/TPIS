@@ -116,6 +116,10 @@ namespace TPIS.Project
             }
         }
 
+        public int MaxIter { get; set; }
+        public int WaterStand { get; set; }
+        public int GasStand { get; set; }
+
         public String Name { get; set; }
         public long Num { get; set; }
         public String Path { get; set; }
@@ -129,6 +133,9 @@ namespace TPIS.Project
         public ProjectItem(string name, ProjectCanvas pCanvas, long num, string p)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            MaxIter = 60;
+            GasStand = 0;
+            WaterStand = 0;
             this.Name = name + ".tpis";
             this.Num = num;
             this.Canvas = pCanvas;
@@ -147,8 +154,15 @@ namespace TPIS.Project
             ResultGroup = new ObservableCollection<PropertyGroup>();
             Logs = new ObservableCollection<string>();
             IsViewWindowsOpen = false;
+            InitBackEnd();
             SaveProject();
-            return;
+        }
+        
+        public TPISNet.Net BackEnd { get; set; }
+
+        private void InitBackEnd()
+        {
+            BackEnd = new TPISNet.Net();
         }
 
         #region 存储工程
@@ -217,11 +231,18 @@ namespace TPIS.Project
             info.AddValue("path", Path);
             info.AddValue("properties", PropertyGroup);
             info.AddValue("result", ResultGroup);
+            info.AddValue("LResultCal", BackEnd.LResultCal);
+            info.AddValue("gasstand", GasStand);
+            info.AddValue("waterstand", WaterStand);
+            info.AddValue("maxiter", MaxIter);
         }
 
         public ProjectItem(SerializationInfo info, StreamingContext context)
         {
             this.Name = info.GetString("name");
+            GasStand = info.GetInt32("gasstand");
+            WaterStand = info.GetInt32("waterstand");
+            MaxIter = info.GetInt32("maxiter");
             //this.Num = 2;
             this.Path = info.GetString("path");
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));
@@ -229,6 +250,8 @@ namespace TPIS.Project
             //this.SelectedObjects = (ObservableCollection<ObjectBase>)info.GetValue("selectedObjects", typeof(Object));
             this.PropertyGroup = (ObservableCollection<PropertyGroup>)info.GetValue("properties", typeof(Object));
             this.ResultGroup = (ObservableCollection<PropertyGroup>)info.GetValue("result", typeof(Object));
+            InitBackEnd();
+            BackEnd.LResultCal = (System.Collections.Generic.List<TPISNet.Calculator>)info.GetValue("LResultCal", typeof(Object));
             this.clipBoard = new ClipBoard();
             this.Records = new RecordStack();
             this.Rate = 1;
@@ -240,8 +263,7 @@ namespace TPIS.Project
 
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
-
-
+            
             return;
         }
 
