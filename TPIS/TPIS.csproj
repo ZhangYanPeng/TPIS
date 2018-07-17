@@ -168,6 +168,9 @@
     <Compile Include="Views\Tool\GasWin.xaml.cs">
       <DependentUpon>GasWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tool\PortLocation.xaml.cs">
+      <DependentUpon>PortLocation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Page Include="Views\CalWindow.xaml">
       <SubType>Designer</SubType>
@@ -222,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tool\GasWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tool\PortLocation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

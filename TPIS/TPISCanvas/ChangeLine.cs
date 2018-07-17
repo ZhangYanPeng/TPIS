@@ -58,6 +58,10 @@ namespace TPIS.TPISCanvas
                     PortContext pcontext = new PortContext(port);
                     uIElement.ContextMenu = pcontext;
                 }
+                if (mainwin.GetCurrentProject().IsViewWindowsOpen)
+                {//Can only be changed in the view.
+                    mainwin.GetCurrentProject().MovePort(port);//change port x,y move port
+                }
                 e.Handled = true;
             }
         }
