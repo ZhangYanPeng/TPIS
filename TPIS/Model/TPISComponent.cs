@@ -206,7 +206,7 @@ namespace TPIS.Model
         /// <summary>
         /// 在改变大小、反转后，重新定位Port
         /// </summary>
-        private void RePosPort()
+        public void RePosPort()
         {
             
             foreach (Port p in this.Ports)

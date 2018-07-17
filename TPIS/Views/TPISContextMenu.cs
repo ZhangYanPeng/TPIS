@@ -89,6 +89,9 @@ namespace TPIS.Views
             MenuItem gridMenuItem = new MenuItem();
             gridMenuItem.Header = "网格 Ctrl+G";
 
+            MenuItem portMenuItem = new MenuItem();
+            portMenuItem.Header = "PortMovre";
+
             copyMenuItem.Click += btCopy_Click;
             pasteMenuItem.Click += btPaste_Click;
             deleteMenuItem.Click += btDel_Click;
@@ -97,7 +100,8 @@ namespace TPIS.Views
             redoMenuItem.Click += btRedo_Click;
             selectAllMenuItem.Click += btSelectAll_Click;
             gridMenuItem.Click += btGrid_Click;
-            
+            portMenuItem.Click += btPort_Click;
+
             selectAllMenuItem.IsEnabled = true;
             gridMenuItem.IsEnabled = true;
             if (type != 2)
@@ -108,12 +112,14 @@ namespace TPIS.Views
                 cutMenuItem.IsEnabled = true;
                 undoMenuItem.IsEnabled = false;
                 redoMenuItem.IsEnabled = false;
+                portMenuItem.IsEnabled = true;
             }
             if (type != 1)
             {
                 copyMenuItem.IsEnabled = false;
                 deleteMenuItem.IsEnabled = false;
                 cutMenuItem.IsEnabled = false;
+                portMenuItem.IsEnabled = false;
 
                 if (mainwin.GetCurrentProject().Records.UndoStack.Count > 0)
                     undoMenuItem.IsEnabled = true;
@@ -147,6 +153,8 @@ namespace TPIS.Views
             Items.Add(selectAllMenuItem);
             Items.Add(new Separator());
             Items.Add(gridMenuItem);
+            Items.Add(new Separator());
+            Items.Add(portMenuItem);
 
         }
 
@@ -198,11 +206,25 @@ namespace TPIS.Views
             mainwin.GetCurrentProject().DrawGridSelection();
         }
 
-        private void btMovePort_Click(object sender, RoutedEventArgs e)
+        private void btPort_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
-            Port p = (Port)sender;
-            mainwin.GetCurrentProject().MovePort(p);
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                if (!mainwin.GetCurrentProject().IsViewWindowsOpen)
+                {
+                    mainwin.GetCurrentProject().GetSelectedObjects();
+                    ViewWindow viewwin = new ViewWindow();
+                    viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    viewwin.Show();
+                    if (mainwin.GetCurrentProject().SelectedObjects != null)
+                    {
+                        viewwin.ViewCenter();
+                        viewwin.RemoveAllAnchorPoints();
+                        mainwin.GetCurrentProject().IsViewWindowsOpen = true;
+                    }
+                }
+            }
         }
     }
 }
