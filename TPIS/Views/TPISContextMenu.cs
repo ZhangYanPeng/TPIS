@@ -22,7 +22,7 @@ namespace TPIS.Views
         {
             line = l;
             MenuItem addCross = new MenuItem();
-            addCross.Header = "添加CROSS";
+            addCross.Header = "插入数据选项";
 
             addCross.Click += btAddCross_Click;
 

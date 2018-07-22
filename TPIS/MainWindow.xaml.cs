@@ -82,15 +82,9 @@ namespace TPIS
 
         public Boolean AddProject(string pName, string path, int width, int height)
         {
-            string directoryPath = @".\WorkSpace\" + pName;
-            if (!Directory.Exists(directoryPath))//如果路径不存在
-            {
-                Directory.CreateDirectory(directoryPath);//创建一个路径的文件夹
-            }
-            else
-            {
+            string directoryPath = path+"\\" + pName + ".tpis";
+            if (File.Exists(directoryPath))//如果路径不存在
                 return false;
-            }
             ProjectCanvas pCanvas = new ProjectCanvas(width, height);
             ProjectItem project = new ProjectItem(pName, pCanvas, ProjectNum, System.IO.Path.GetFullPath(directoryPath));
             //TPISconfig.LoadCfg(project);

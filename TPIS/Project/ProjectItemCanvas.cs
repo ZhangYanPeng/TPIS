@@ -44,12 +44,17 @@ namespace TPIS.Project
                 gridThickness = value;
                 foreach (ObjectBase obj in Objects)
                 {
-                    if (value != 0)
-                        obj.isGrid = true;
-                    else { 
-                        if(obj != null)
-                            obj.isGrid = false;
+                    if(obj != null)
+                    {
+                        if (value != 0)
+                            obj.isGrid = true;
+                        else
+                        {
+                            if (obj != null)
+                                obj.isGrid = false;
+                        }
                     }
+                    
                     if (obj is TPISComponent)
                         ((TPISComponent)obj).GridForm();
                     if (obj is TPISLine)

@@ -78,7 +78,7 @@ namespace TPIS.TPISCanvas
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             ProjectItem item = mainwin.GetCurrentProject();
             //Ctrl+滚轮横纵等大小改变工作区大小
-            if (Key.Control.ModifierKeys == Key.Keys.Control)
+            if (Key.Control.ModifierKeys == Key.Keys.Shift)
             {
                 ScrollViewer scrollViewer = new ScrollViewer();
                 scrollViewer = (ScrollViewer)this.Parent;
@@ -111,9 +111,27 @@ namespace TPIS.TPISCanvas
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             ProjectItem item = mainwin.GetCurrentProject();
-            //Ctrl+滚轮缩放
-            if (Key.Control.ModifierKeys == Key.Keys.Shift)
+            Point p = e.GetPosition(this);
+            //Control+滚轮缩放
+            if (Key.Control.ModifierKeys == Key.Keys.Control)
             {
+                //记录原点
+                if (p.X < 0)
+                    p.X = 0;
+                if (p.Y < 0)
+                    p.Y = 0;
+                if (p.X > mainwin.GetCurrentProject().Canvas.V_width)
+                    p.X = mainwin.GetCurrentProject().Canvas.V_width;
+                if (p.Y > mainwin.GetCurrentProject().Canvas.V_height)
+                    p.Y = mainwin.GetCurrentProject().Canvas.V_height;
+                p.X = p.X / mainwin.GetCurrentProject().Rate;
+                p.Y = p.Y / mainwin.GetCurrentProject().Rate;
+                ScrollContentPresenter scp = (ScrollContentPresenter)VisualTreeHelper.GetParent(this);
+                Grid g = (Grid)VisualTreeHelper.GetParent(scp);
+                ScrollViewer sv = (ScrollViewer)VisualTreeHelper.GetParent(g);
+                Point lup = e.GetPosition(sv);
+
+                //缩放
                 if (e.Delta > 0)
                     try
                     {
@@ -132,6 +150,13 @@ namespace TPIS.TPISCanvas
                     {
                         return;
                     }
+
+                //重新计算点
+                p.X = p.X * mainwin.GetCurrentProject().Rate - lup.X;
+                p.Y = p.Y * mainwin.GetCurrentProject().Rate - lup.Y;
+                sv.ScrollToHorizontalOffset(p.X);
+                sv.ScrollToVerticalOffset(p.Y);
+
                 mainwin.CurWorkspaceSizeShow(item.Canvas.Width.ToString(), item.Canvas.Height.ToString());//状态栏显示工作区大小
             }
         }

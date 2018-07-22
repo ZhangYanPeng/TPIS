@@ -205,7 +205,7 @@ namespace TPIS.Command
                     ((ProjectItem)obj).Num = mainwin.ProjectNum;
                     ((ProjectItem)obj).RebuildLink();
                     {//解决在无新建工程时打开已有项目，出现的透明背景
-                        ((ProjectItem)obj).GridThickness = 0;//赋初值0，使初始画布为隐藏网格
+                        ((ProjectItem)obj).GridThickness = 1;//赋初值0，使初始画布为隐藏网格
                         ((ProjectItem)obj).GridUintLength = 20;//赋初值20，使初始网格单元为20×20
                         ((ProjectItem)obj).BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
                         //((ProjectItem)obj).BackGroundColor = Brushes.White;

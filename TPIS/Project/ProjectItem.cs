@@ -145,7 +145,7 @@ namespace TPIS.Project
             this.clipBoard = new ClipBoard();
             Records = new RecordStack();
             this.CalculateState = false;
-            this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
+            this.GridThickness = 1;//赋初值0，使初始画布为隐藏网格
             this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
             //this.BackGroundColor = Brushes.White;
             this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
@@ -176,7 +176,7 @@ namespace TPIS.Project
                     ((TPISLine)obj).ReSetRate(this.Rate);
                 }
             }
-            string path = Path + "\\" + Name;
+            string path = Path;
             FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
             byte[] data = CommonFunction.SerializeToBinary(this);
             BinaryWriter bw = new BinaryWriter(fs);
@@ -258,7 +258,7 @@ namespace TPIS.Project
             this.CalculateState = false;
             Logs = new ObservableCollection<string>();
 
-            this.GridThickness = 0;//赋初值0，使初始画布为隐藏网格
+            this.GridThickness = 1;//赋初值0，使初始画布为隐藏网格
             this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
 
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;

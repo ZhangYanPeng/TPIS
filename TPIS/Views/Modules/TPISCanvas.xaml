@@ -91,7 +91,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Ellipse Width="10" Height="10" Fill="{Binding PortColor}" MouseEnter="Port_MouseEnter" MouseLeftButtonDown="Port_MouseLeftButtonDown" MouseRightButtonDown="Port_MouseRightButtonDown" MouseLeftButtonUp="Port_MouseLeftButtonUp">
+                    <Ellipse Width="6" Height="6" Fill="{Binding PortColor}" MouseEnter="Port_MouseEnter" MouseLeftButtonDown="Port_MouseLeftButtonDown" MouseRightButtonDown="Port_MouseRightButtonDown" MouseLeftButtonUp="Port_MouseLeftButtonUp">
                         <Ellipse.ToolTip>
                             <DockPanel>
                                 <Grid DockPanel.Dock="Top" Margin="5 0 0 5">
@@ -214,7 +214,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="template_cross">
-        <s:DesignerComponent >
+        <s:DesignerComponent Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
             <Viewbox Width="{Binding Position.V_width}" Height="{Binding Position.V_height}">
                 <Grid Width="{Binding Position.Width}" Height="{Binding Position.Height}">
                     <Grid.RowDefinitions>
@@ -226,13 +226,13 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border BorderBrush="Black" BorderThickness="0 0 1 1" Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Stretch">
-                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding LinkPort.Results[0].ShowValue}" Margin="1 1 1 1"></TextBlock>
+                        <TextBlock HorizontalAlignment="left" VerticalAlignment="Bottom" Text="{Binding LinkPort.Results[0].ShowValue}" Margin="1 1 1 1"></TextBlock>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1 0 0 1" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="left" VerticalAlignment="Bottom" Text="{Binding LinkPort.Results[1].ShowValue}" Margin="1 1 1 1"></TextBlock>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0 1 1 0" Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Stretch">
-                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding LinkPort.Results[2].ShowValue}" Margin="1 1 1 1"></TextBlock>
+                        <TextBlock HorizontalAlignment="left" VerticalAlignment="Top" Text="{Binding LinkPort.Results[2].ShowValue}" Margin="1 1 1 1"></TextBlock>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1 1 0 0" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch">
                         <TextBlock HorizontalAlignment="left" VerticalAlignment="Top" Text="{Binding LinkPort.Results[3].ShowValue}" Margin="1 1 1 1"></TextBlock>
@@ -255,7 +255,7 @@
         <!--<Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
         </Polyline>-->
         <s:DesignerLine>
-            <Polyline Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="6" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
+            <Polyline Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="4" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
                 <Polyline.ToolTip>
                     <DockPanel>
                         <Grid DockPanel.Dock="Top" Margin="5 0 0 5">

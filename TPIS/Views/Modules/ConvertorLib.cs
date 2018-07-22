@@ -151,7 +151,7 @@ namespace TPIS.Views.Modules
             {
                 bool s = (bool)value;
                 if (s)
-                    return new DoubleCollection() { 2, 3 };
+                    return new DoubleCollection() { 1, 0.5 };
                 else
                     return new DoubleCollection() { 1, 0 };
             }

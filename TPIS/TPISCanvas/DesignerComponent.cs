@@ -35,10 +35,36 @@ namespace TPIS.TPISCanvas
             base.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
             base.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
             base.MouseRightButtonDown += new MouseButtonEventHandler(Element_MouseRightButtonDown);
+            base.MouseEnter += new MouseEventHandler(Element_MouseEnter);
+            base.MouseLeave += new MouseEventHandler(Element_MouseLeave);
             base.Loaded += new RoutedEventHandler(InitAnchorPoints);
             base.Loaded += new RoutedEventHandler(InitCrossIndicator);
 
             Focusable = true;
+        }
+
+        private void Element_MouseLeave(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject().Canvas.Operation != OperationType.SELECT)
+                return;
+            if (DataContext is ResultCross)
+            {
+                Cursor = Cursors.Arrow;
+            }
+            e.Handled = true;
+        }
+
+        private void Element_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject().Canvas.Operation != OperationType.SELECT)
+                return;
+            if (DataContext is ResultCross)
+            {
+                Cursor = Cursors.Hand;
+            }
+            e.Handled = true;
         }
 
         /// <summary>
@@ -69,30 +95,18 @@ namespace TPIS.TPISCanvas
                     MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                     if (currEle.DataContext is TPISComponent)
                     {
-                        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl) && currEle.DataContext is TPISComponent)
+                        if (currEle.DataContext is TPISComponent)
                         {
-                            if(sizeType == AnchorPointType.L || sizeType == AnchorPointType.DL || sizeType == AnchorPointType.UL) {
+                            if(sizeType == AnchorPointType.DL || sizeType == AnchorPointType.UL) {
                                 double r = x / ((TPISComponent)currEle.DataContext).Position.V_width;
                                 y = r * ((TPISComponent)currEle.DataContext).Position.V_height;
                             }
-                            else if (sizeType == AnchorPointType.R || sizeType == AnchorPointType.DR || sizeType == AnchorPointType.UR)
+                            else if (sizeType == AnchorPointType.DR || sizeType == AnchorPointType.UR)
                             {
                                 double r = x / ((TPISComponent)currEle.DataContext).Position.V_width;
                                 y = r * ((TPISComponent)currEle.DataContext).Position.V_height;
                             }
-                            else if (sizeType == AnchorPointType.U)
-                            {
-                                double r = y / ((TPISComponent)currEle.DataContext).Position.V_height;
-                                x = r * ((TPISComponent)currEle.DataContext).Position.V_width;
-
-                            }
-                            else
-                            {
-                                double r = y / ((TPISComponent)currEle.DataContext).Position.V_height;
-                                x = r * ((TPISComponent)currEle.DataContext).Position.V_width;
-
-                            }
-                            if (this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.R || this.sizeType == AnchorPointType.DR)
+                            if (this.sizeType == AnchorPointType.DR)
                             {
                                 mainwin.GetCurrentProject().SizeChange(no, x, y, null, null);
                             }
@@ -110,7 +124,7 @@ namespace TPIS.TPISCanvas
                                 y = -y;
                                 mainwin.GetCurrentProject().SizeChange(no, x, -y, null, y);
                             }
-                            if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.U || this.sizeType == AnchorPointType.L)
+                            if (this.sizeType == AnchorPointType.UL )
                             {
                                 if (((TPISComponent)currEle.DataContext).Position.V_height - y < 1)
                                 {
@@ -122,18 +136,16 @@ namespace TPIS.TPISCanvas
                                 }
                                 mainwin.GetCurrentProject().SizeChange(no, -x, -y, x, y);
                             }
-                        }
-                        else
-                        {
-                            if (this.sizeType == AnchorPointType.D || this.sizeType == AnchorPointType.DL || this.sizeType == AnchorPointType.DR)
+
+                            if (this.sizeType == AnchorPointType.D )
                             {
                                 mainwin.GetCurrentProject().SizeChange(no, null, y, null, null);
                             }
-                            if (this.sizeType == AnchorPointType.UR || this.sizeType == AnchorPointType.R || this.sizeType == AnchorPointType.DR)
+                            if (this.sizeType == AnchorPointType.R )
                             {
                                 mainwin.GetCurrentProject().SizeChange(no, x, null, null, null);
                             }
-                            if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.L || this.sizeType == AnchorPointType.DL)
+                            if (this.sizeType == AnchorPointType.L)
                             {
                                 if (((TPISComponent)currEle.DataContext).Position.V_width - x < 1)
                                 {
@@ -141,7 +153,7 @@ namespace TPIS.TPISCanvas
                                 }
                                 mainwin.GetCurrentProject().SizeChange(no, -x, null, x, null);
                             }
-                            if (this.sizeType == AnchorPointType.UL || this.sizeType == AnchorPointType.U || this.sizeType == AnchorPointType.UR)
+                            if (this.sizeType == AnchorPointType.U)
                             {
                                 if (((TPISComponent)currEle.DataContext).Position.V_height - y < 1)
                                 {
@@ -343,5 +355,6 @@ namespace TPIS.TPISCanvas
                 ele.Cursor = Cursors.Arrow;
             }
         }
+        
     }
 }

@@ -260,8 +260,8 @@ namespace TPIS.Model
                     tx = tx - tx % gw;
                     ty = ty - ty % gw;
                 }
-                p.P_x = tx - 5;
-                p.P_y = ty - 5;
+                p.P_x = tx - 3;
+                p.P_y = ty - 3;
             }
         }
         #endregion
