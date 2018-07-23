@@ -19,6 +19,7 @@ namespace TPIS.Project
         #region 视图标志
         public bool IsViewsMouseEnter { get; set; }
         public bool IsViewWindowsOpen { get; set; }
+        public bool IsPortSetWindowOpen { get; set; }
         #endregion
 
         #region 画布网格缩放

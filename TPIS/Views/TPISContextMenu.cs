@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using TPIS.Model;
+using TPIS.Views.ViewWindows;
 
 namespace TPIS.Views
 {
@@ -90,7 +91,7 @@ namespace TPIS.Views
             gridMenuItem.Header = "网格 Ctrl+G";
 
             MenuItem portMenuItem = new MenuItem();
-            portMenuItem.Header = "PortMovre";
+            portMenuItem.Header = "Port调整";
 
             copyMenuItem.Click += btCopy_Click;
             pasteMenuItem.Click += btPaste_Click;
@@ -209,22 +210,11 @@ namespace TPIS.Views
         private void btPort_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            if (mainwin.GetCurrentProject() != null)
-            {
-                if (!mainwin.GetCurrentProject().IsViewWindowsOpen)
-                {
-                    mainwin.GetCurrentProject().GetSelectedObjects();
-                    ViewWindow viewwin = new ViewWindow();
-                    viewwin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    viewwin.Show();
-                    if (mainwin.GetCurrentProject().SelectedObjects != null)
-                    {
-                        viewwin.ViewCenter();
-                        viewwin.RemoveAllAnchorPoints();
-                        mainwin.GetCurrentProject().IsViewWindowsOpen = true;
-                    }
-                }
-            }
+            mainwin.GetCurrentProject().GetSelectedObjects();
+            PortSetWindow portSetWin = new PortSetWindow();
+            portSetWin.Owner = Application.Current.MainWindow;
+            portSetWin.Show();
+            mainwin.GetCurrentProject().IsPortSetWindowOpen = true;
         }
     }
 }

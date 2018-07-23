@@ -145,6 +145,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TPISCanvas\ViewDesingerComponent.cs" />
     <Compile Include="Views\CalWindow.xaml.cs">
       <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
@@ -170,9 +171,6 @@
     </Compile>
     <Compile Include="Views\Tool\GasWin.xaml.cs">
       <DependentUpon>GasWin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tool\PortLocation.xaml.cs">
-      <DependentUpon>PortLocation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Page Include="Views\CalWindow.xaml">
@@ -235,11 +233,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Tool\PortLocation.xaml">
+    <Page Include="Views\ViewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewWindow.xaml">
+    <Page Include="Views\ViewWindows\PortSetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -264,6 +262,9 @@
     </Compile>
     <Compile Include="Views\ViewWindow.xaml.cs">
       <DependentUpon>ViewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewWindows\PortSetWindow.xaml.cs">
+      <DependentUpon>PortSetWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkspaceSize.xaml.cs">
       <DependentUpon>WorkspaceSize.xaml</DependentUpon>

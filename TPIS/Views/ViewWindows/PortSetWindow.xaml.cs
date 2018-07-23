@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,23 +12,41 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TPIS.Model;
+using TPIS.Model.Common;
 using TPIS.Project;
 
-namespace TPIS.Views.Tool
+namespace TPIS.Views.ViewWindows
 {
     /// <summary>
-    /// PortLocation.xaml 的交互逻辑
+    /// PortSetWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class PortLocation : Window
+    public partial class PortSetWindow : Window
     {
         public Port port;
         public TPISComponent component;
+        public ObjectBase ViewObjects;
+        //public ProjectSpace ProjectList { get; set; } //工程列表
 
-        public PortLocation(Port p)
+        public PortSetWindow()
         {
             InitializeComponent();
-            SetText(p);
-            port = p;
+            InitilView();
+
+        }
+
+        public void InitilView()
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            this.Owner = (MainWindow)Application.Current.MainWindow;
+            foreach (ObjectBase obj in mainwin.GetCurrentProject().SelectedObjects)
+            {
+                if (obj is TPISComponent)
+                {
+                    ViewObjects = obj;
+                    view_Item.Content = ViewObjects;
+                    break;
+                }
+            }
         }
 
         public void SetText(Port p)
@@ -110,28 +126,40 @@ namespace TPIS.Views.Tool
                 port.y = 1;
             }
         }
+
+        public void ViewPort_MouseLeftButtonDown(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT)
+            {
+                Ellipse uIElement = new Ellipse();
+                uIElement = (Ellipse)sender;
+                Port p = (Port)(uIElement.DataContext);
+                if (p.type == NodType.DefIn || p.type == NodType.Undef || p.type == NodType.DefOut && p.link == null)
+                {
+                    PortContext pcontext = new PortContext(p);
+                    uIElement.ContextMenu = pcontext;
+                }
+                if (mainwin.GetCurrentProject().IsPortSetWindowOpen)
+                {//Can only be changed in the view.
+                    port = p;
+                    SetText(p);
+                }
+                e.Handled = true;
+            }
+        }
+
+        public void ViewPort_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            FrameworkElement frameworkElement = new FrameworkElement();
+            frameworkElement = (FrameworkElement)sender;
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT)
+            {
+
+                frameworkElement.Cursor = Cursors.Hand;
+                Mouse.OverrideCursor = null;
+            }
+        }
     }
-
-    //public class PositionConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-    //    {
-    //        int data = (int)value;
-    //        string name = parameter.ToString();
-    //        switch (name)
-    //        {
-    //            case "0":
-    //                return data == 0;
-    //            case "1":
-    //                return data == 1;
-    //            default:
-    //                return false;
-    //        }
-    //    }
-
-    //    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-    //    {
-    //        return null;
-    //    }
-    //}
 }
