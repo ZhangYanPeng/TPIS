@@ -90,6 +90,7 @@ namespace TPIS.Model.Common
                     PropertyGroups.Add(baseGroup);
                 }
             }
+            project.ResultGroup = PropertyGroups;
         }
 
         private ProjectItem GetResult(ProjectItem project)

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\App.xaml
-17-1387111353
+18-1646366248
 
-87-2109071923
+88-2102768812
 201001354396
-Views\CalWindow.xaml;Views\Modules\PortResultTemplate.xaml;Views\Modules\PropertyTemplate.xaml;Views\Modules\ResultTemplate.xaml;Views\Modules\TPISCanvas.xaml;Views\Modules\TPISTextToolBar.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\Tool\CoalWin.xaml;Views\Tool\GasWin.xaml;Views\Tool\PortLocation.xaml;Views\ViewWindow.xaml;Views\WorkspaceSize.xaml;
+Views\CalWindow.xaml;Views\Modules\PortResultTemplate.xaml;Views\Modules\PropertyTemplate.xaml;Views\Modules\ResultTemplate.xaml;Views\Modules\TPISCanvas.xaml;Views\Modules\TPISTextToolBar.xaml;Views\NewProject.xaml;Views\Modules\TPISMenu.xaml;Views\Modules\TPISResManagementBox.xaml;Views\Modules\TPISToolBar.xaml;MainWindow.xaml;Views\QuickModeSelect.xaml;Views\Setting.xaml;Views\Tool\CoalWin.xaml;Views\Tool\GasWin.xaml;Views\Tool\PortLocation.xaml;Views\ViewWindow.xaml;Views\WorkspaceSize.xaml;
 
 False
 

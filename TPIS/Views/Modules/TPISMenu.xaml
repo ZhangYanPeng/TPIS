@@ -28,6 +28,7 @@
             <CommandBinding Command="s:TPISCommand.View" Executed="View_Excuted"/>
             <CommandBinding Command="s:TPISCommand.Helper" Executed="Helper_Excuted"/>
             <CommandBinding Command="s:TPISCommand.ResultAnalyse" Executed="ResultAnalyse_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.Setting" Executed="Setting_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -158,10 +159,15 @@
                 <MenuItem Tag="LightGray" Header="淡灰底" Background="LightGray" Command="{x:Static s:TPISCommand.BackGroundColor}"></MenuItem>
                 </MenuItem>
             <Separator />
+            <MenuItem Header="默认设置" Command="{x:Static s:TPISCommand.Setting}"/>
+            <Separator />
         </MenuItem>
 
         <!--帮助-->
-        <MenuItem Header="帮助(H)" Command="{x:Static s:TPISCommand.Helper}"/>
-        
+        <MenuItem Header="帮助(H)" Command="{x:Static s:TPISCommand.Helper}">
+            <MenuItem Header="帮助文档" Command="{x:Static s:TPISCommand.Helper}"/>
+            <Separator />
+        </MenuItem>
+
     </Menu>
 </ResourceDictionary>

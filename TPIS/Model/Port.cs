@@ -63,7 +63,15 @@ namespace TPIS.Model
         }
         #endregion
 
-        public ObservableCollection<Property> Results { get; set; } //该类属性字典
+        public ObservableCollection<Property> results;
+        public ObservableCollection<Property> Results {
+            get=>results;
+            set
+            {
+                results = value;
+                OnPropertyChanged("Results");
+            }
+        }
 
         public double x;
         public double p_x;

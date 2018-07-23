@@ -119,23 +119,46 @@ namespace TPIS.Project
         public int MaxIter { get; set; }
         public int WaterStand { get; set; }
         public int GasStand { get; set; }
+        public int LineThickness { get; set; }
 
         public String Name { get; set; }
         public long Num { get; set; }
         public String Path { get; set; }
 
         public ObservableCollection<ObjectBase> Objects { get; set; }
-        public ObservableCollection<PropertyGroup> PropertyGroup { get; set; }
-        public ObservableCollection<PropertyGroup> ResultGroup { get; set; }
-        
+        public ObservableCollection<PropertyGroup> propertyGroup;
+        public ObservableCollection<PropertyGroup> PropertyGroup {
+            get => propertyGroup;
+            set {
+                propertyGroup = value;
+                OnPropertyChanged("PropertyGroup");
+            }
+        }
+        public ObservableCollection<PropertyGroup> resultGroup;
+        public ObservableCollection<PropertyGroup> ResultGroup
+        {
+            get => resultGroup;
+            set
+            {
+                resultGroup = value;
+                OnPropertyChanged("ResultGroup");
+            }
+        }
+
+        public void OnCaculateFinished()
+        {
+            OnPropertyChanged("PropertyGroup");
+            OnPropertyChanged("ResultGroup");
+        }
+
         public ProjectCanvas Canvas { get; set; }
 
         public ProjectItem(string name, ProjectCanvas pCanvas, long num, string p)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            MaxIter = 60;
-            GasStand = 0;
-            WaterStand = 0;
+            MaxIter = mainwin.TPISconfig.MAX_ITER;
+            GasStand = mainwin.TPISconfig.GAS_STAND;
+            WaterStand = mainwin.TPISconfig.WATER_STAND;
             this.Name = name + ".tpis";
             this.Num = num;
             this.Canvas = pCanvas;
@@ -145,13 +168,14 @@ namespace TPIS.Project
             this.clipBoard = new ClipBoard();
             Records = new RecordStack();
             this.CalculateState = false;
-            this.GridThickness = 1;//赋初值0，使初始画布为隐藏网格
+            this.GridThickness = mainwin.TPISconfig.CANVAS_GRID;//赋初值0，使初始画布为隐藏网格
             this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
             //this.BackGroundColor = Brushes.White;
             this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
             Path = p;
             PropertyGroup = CommonTypeService.InitProjectProperty();
             ResultGroup = new ObservableCollection<PropertyGroup>();
+            LineThickness = mainwin.TPISconfig.LINE_THICKNESS;
             Logs = new ObservableCollection<string>();
             IsViewWindowsOpen = false;
             InitBackEnd();
@@ -235,6 +259,7 @@ namespace TPIS.Project
             info.AddValue("gasstand", GasStand);
             info.AddValue("waterstand", WaterStand);
             info.AddValue("maxiter", MaxIter);
+            info.AddValue("LineThickness", LineThickness);
         }
 
         public ProjectItem(SerializationInfo info, StreamingContext context)
@@ -243,6 +268,7 @@ namespace TPIS.Project
             GasStand = info.GetInt32("gasstand");
             WaterStand = info.GetInt32("waterstand");
             MaxIter = info.GetInt32("maxiter");
+            LineThickness = info.GetInt32("LineThickness");
             //this.Num = 2;
             this.Path = info.GetString("path");
             this.Canvas = (ProjectCanvas)info.GetValue("canvas", typeof(Object));

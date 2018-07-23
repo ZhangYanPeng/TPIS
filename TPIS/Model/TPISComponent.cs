@@ -89,7 +89,14 @@ namespace TPIS.Model
         #endregion
 
         public Position Position { get; set; }//控件左上角位置
-        public ObservableCollection<Port> Ports { get; set; }
+        public ObservableCollection<Port> ports;
+        public ObservableCollection<Port> Ports {
+            get =>ports;
+            set {
+                ports = value;
+                OnPropertyChanged("Ports");
+            }
+        }
         public string Pic { get; set; }
         public string Name { get; set; }
         public string pairName;
@@ -277,8 +284,34 @@ namespace TPIS.Model
             return obj;
         }
 
-        public ObservableCollection<PropertyGroup> PropertyGroups { get; set; }
-        public ObservableCollection<PropertyGroup> ResultGroups { get; set; }
+        public ObservableCollection<PropertyGroup> propertyGroups;
+        public ObservableCollection<PropertyGroup> PropertyGroups
+        {
+            get => propertyGroups;
+            set
+            {
+                propertyGroups = value;
+                OnPropertyChanged("PropertyGroups");
+            }
+        }
+        public ObservableCollection<PropertyGroup> resultGroups;
+        public ObservableCollection<PropertyGroup> ResultGroups
+        {
+            get => resultGroups;
+            set
+            {
+                resultGroups = value;
+                OnPropertyChanged("ResultGroups");
+            }
+        }
+
+        public void OnCaculateFinished()
+        {
+            OnPropertyChanged("PropertyGroups");
+            OnPropertyChanged("ResultGroups");
+            OnPropertyChanged("Ports");
+        }
+
         public EleType eleType { get; set; }
 
         public ObservableCollection<Common.SelMode> Mode { get; set; }

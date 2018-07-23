@@ -112,6 +112,8 @@ namespace TPIS.Project
         //粘贴
         public void PasteSelection(double x, double y, bool record = true)
         {
+            if (clipBoard.Objects.Count <= 0)
+                return;
             Record rec = new Record();
             rec.Param.Add("Operation", "Paste");
             double offset_x = x - this.WorkSpaceSize_LU(CopyObjects).X;

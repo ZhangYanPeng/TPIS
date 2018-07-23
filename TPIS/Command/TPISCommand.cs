@@ -143,6 +143,7 @@ namespace TPIS.Command
         public static RoutedCommand View = new RoutedCommand();
         public static RoutedCommand Helper = new RoutedCommand();
         public static RoutedCommand ResultAnalyse = new RoutedCommand();
+        public static RoutedCommand Setting = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -605,6 +606,15 @@ namespace TPIS.Command
         public void Helper_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("Helper\\chm.CHM");
+        }
+        #endregion
+
+        #region 设置窗口
+        public void Setting_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Setting setting = new Setting();
+            setting.Owner = Application.Current.MainWindow;
+            setting.Show();
         }
         #endregion
     }

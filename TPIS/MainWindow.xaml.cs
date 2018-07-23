@@ -92,7 +92,6 @@ namespace TPIS
             this.projectTab.ItemsSource = ProjectList.projects;
             this.projectTab.Items.Refresh();
 
-
             //设置当前工程为激活工程
             this.projectTab.SelectedItem = project;
             ProjectNum++;

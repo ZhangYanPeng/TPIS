@@ -185,32 +185,58 @@ namespace TPIS.Project
             if (component == null)
             {
                 mainwin.PropertyMode.DataContext = null;
-                mainwin.PropertyContent.ItemsSource = PropertyGroup;
-                mainwin.PropertyContent.Items.Refresh();
-                mainwin.ResultWindow.ItemsSource = null;
+
+                Binding PropertyBinding = new Binding();
+                PropertyBinding.Source = this;
+                PropertyBinding.Path = new PropertyPath("PropertyGroup");
+                mainwin.PropertyContent.SetBinding(ListBox.ItemsSourceProperty, PropertyBinding);
+
+                Binding ResultBinding = new Binding();
+                ResultBinding.Source = this;
+                ResultBinding.Path = new PropertyPath("ResultGroup");
+                mainwin.ResultWindow.SetBinding(ListBox.ItemsSourceProperty, ResultBinding);
+
                 mainwin.PortResults.ItemsSource = null;
                 mainwin.PortResults.Items.Refresh();
                 return;
             }
-            BindingOperations.ClearBinding(mainwin.PropertyMode, ComboBox.SelectedIndexProperty);
+            else { 
+                BindingOperations.ClearBinding(mainwin.PropertyMode, ComboBox.SelectedIndexProperty);
 
-            mainwin.PropertyMode.ItemsSource = component.Mode;
-            mainwin.PropertyMode.Items.Refresh();
+                mainwin.PropertyMode.ItemsSource = component.Mode;
+                mainwin.PropertyMode.Items.Refresh();
 
-            mainwin.PropertyContent.ItemsSource = component.PropertyGroups;
-            mainwin.PropertyContent.Items.Refresh();
+                //mainwin.PropertyContent.ItemsSource = component.PropertyGroups;
+                //mainwin.PropertyContent.Items.Refresh();
 
-            mainwin.PropertyMode.SelectedIndex = component.selectedMode;
-            Binding modeBinding = new Binding();
-            modeBinding.Source = component;
-            modeBinding.Path = new PropertyPath("SelectedMode");
-            mainwin.PropertyMode.SetBinding(ComboBox.SelectedIndexProperty, modeBinding);
+                Binding PropertyBinding = new Binding();
+                PropertyBinding.Source = component;
+                PropertyBinding.Path = new PropertyPath("PropertyGroups");
+                mainwin.PropertyContent.SetBinding(ListBox.ItemsSourceProperty, PropertyBinding);
 
-            mainwin.ResultWindow.ItemsSource = component.ResultGroups;
-            mainwin.ResultWindow.Items.Refresh();
-            mainwin.PortResults.ItemsSource = component.Ports;
-            mainwin.PortResults.Items.Refresh();
-            UpdateText();
+                mainwin.PropertyMode.SelectedIndex = component.selectedMode;
+                Binding modeBinding = new Binding();
+                modeBinding.Source = component;
+                modeBinding.Path = new PropertyPath("SelectedMode");
+                mainwin.PropertyMode.SetBinding(ComboBox.SelectedIndexProperty, modeBinding);
+
+
+                Binding ResultBinding = new Binding();
+                ResultBinding.Source = component;
+                ResultBinding.Path = new PropertyPath("ResultGroups");
+                mainwin.ResultWindow.SetBinding(ListBox.ItemsSourceProperty, ResultBinding);
+
+                Binding PortBinding = new Binding();
+                PortBinding.Source = component;
+                PortBinding.Path = new PropertyPath("Ports");
+                mainwin.PortResults.SetBinding(ItemsControl.ItemsSourceProperty, PortBinding);
+
+                //mainwin.ResultWindow.ItemsSource = component.ResultGroups;
+                //mainwin.ResultWindow.Items.Refresh();
+                //mainwin.PortResults.ItemsSource = component.Ports;
+                //mainwin.PortResults.Items.Refresh();
+                UpdateText();
+            }
         }
 
         internal void Select(ObjectBase objectBase)

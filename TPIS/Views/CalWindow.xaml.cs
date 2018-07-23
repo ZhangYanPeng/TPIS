@@ -163,6 +163,7 @@ namespace TPIS.Views
                                                 port.Results = portr.Results;
                                         }
                                     }
+                                    ((TPISComponent)obj).OnCaculateFinished();
                                 }
                             }
                         }
@@ -170,6 +171,7 @@ namespace TPIS.Views
                         project.ResultGroup = pi.ResultGroup;
                         project.Logs = pi.logs;
                         project.CalculateState = false;
+                        project.OnCaculateFinished();
                     }
                 });
             }

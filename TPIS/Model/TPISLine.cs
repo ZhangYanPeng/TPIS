@@ -108,6 +108,17 @@ namespace TPIS.Model
             return Brushes.LimeGreen;
         }
 
+        public int lineThickness;
+        public int LineThickness
+        {
+            get => lineThickness;
+            set
+            {
+                lineThickness = value;
+                OnPropertyChanged("LineThickness");
+            }
+        }
+
         public Brush lineColor;
         public Brush LineColor {
             get=>lineColor;
@@ -121,6 +132,7 @@ namespace TPIS.Model
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("no", No);
+            info.AddValue("LineThickness", LineThickness);
             info.AddValue("isCompleted", IsCompleted);
             info.AddValue("lineType", LType);
             info.AddValue("lNum", LNum);
@@ -131,6 +143,7 @@ namespace TPIS.Model
         public TPISLine(SerializationInfo info, StreamingContext context)
         {
             this.No = info.GetInt32("no");
+            this.LineThickness = info.GetInt32("LineThickness");
             this.IsCompleted = info.GetBoolean("isCompleted");
             this.LType = (LineType)info.GetValue("lineType", typeof(LineType));
             this.LNum = (long)info.GetValue("lNum", typeof(long));

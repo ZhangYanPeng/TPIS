@@ -145,9 +145,9 @@ namespace TPIS.Model
                 if (!IsStrOrNum)
                 {
                     if (!IsKnown)
-                        showValue = "";
+                        ShowValue = "";
                     else
-                        showValue = ValueConvert(valNum, Units[0], Units[unitNum]);
+                        ShowValue = ValueConvert(valNum, Units[0], Units[unitNum]);
                 }
                 OnPropertyChanged("ShowValue");
             }
@@ -181,11 +181,11 @@ namespace TPIS.Model
                         else if (valNum < 0)
                             showValue = "过冷水";
                         else
-                            showValue = value;
+                            showValue = valNum.ToString();
                     }
                     catch
                     {
-                        showValue = value;
+                        showValue = valNum.ToString();
                     }
                 }
                 else
