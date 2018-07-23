@@ -41,6 +41,10 @@ namespace TPIS.Project
                     {
                         ((ResultCross)obj).SetRate(rate);
                     }
+                    if (obj is TPISText)
+                    {
+                        ((TPISText)obj).SetRate(rate);
+                    }
                 }
                 OnPropertyChanged("Rate");
             }

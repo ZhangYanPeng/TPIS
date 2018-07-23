@@ -137,6 +137,23 @@ namespace TPIS.Views
         {
             try
             {
+                //设置结果
+                bool RTextExist = false;
+                for (int i = 0; i < project.Objects.Count; i++)
+                {
+                    if (project.Objects[i] is TPISText)
+                    {
+                        TPISText rtext = (TPISText)project.Objects[i];
+                        if (rtext.IsResult == true)
+                        {
+                            RTextExist = true;
+                        }
+                    }
+                }
+                if(!RTextExist){
+                    project.AddResultText((int)(project.Canvas.V_width-200), 20, 20, "");
+                }
+
                 SetCalState(true);
                 cancellationTokenSource = new CancellationTokenSource();
                 ProjectItem pi = (ProjectItem)project.Clone();
@@ -171,6 +188,36 @@ namespace TPIS.Views
                         project.ResultGroup = pi.ResultGroup;
                         project.Logs = pi.logs;
                         project.CalculateState = false;
+                        //展示结果
+                        for(int i=0; i < project.Objects.Count; i++)
+                        {
+                            if (project.Objects[i] is TPISText)
+                            {
+                                TPISText rtext = (TPISText)project.Objects[i];
+                                if (rtext.IsResult == true)
+                                {
+                                    RTextExist = true;
+                                    String result = "";
+                                    int rw = 0, rh = 0;
+                                    foreach (PropertyGroup pg in project.resultGroup)
+                                    {
+                                        foreach(Property p in pg.Properties)
+                                        {
+                                            if (p.ShowValue == "")
+                                               continue;
+                                            rh = rh + 25;
+                                            rw = Math.Max(rw, (p.Name.Length + p.ShowValue.Length + 1) * 20);
+                                            result += p.Name + ":" + p.ShowValue + "\r\n";
+                                        }
+                                    }
+                                    rtext.Text = result;
+                                    rtext.Position.V_width = rw;
+                                    rtext.Position.V_height = rh;
+                                    if (rtext.Position.V_x + rtext.Position.V_width > project.Canvas.V_width)
+                                        rtext.Position.V_x = project.Canvas.V_width - rtext.Position.V_width;
+                                }
+                            }
+                        }
                         project.OnCaculateFinished();
                     }
                 });

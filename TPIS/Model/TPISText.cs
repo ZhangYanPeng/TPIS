@@ -37,10 +37,15 @@ namespace TPIS.Model
             }
         }
 
+        public bool IsResult { get; set; }
+
         public double fontSize;
         public double FontSize
         {
-            get => fontSize;
+            get
+            {
+                return fontSize*Position.Rate;
+            }
             set
             {
                 fontSize = value;
@@ -87,11 +92,13 @@ namespace TPIS.Model
             info.AddValue("position", Position);
             info.AddValue("text", Text);
             info.AddValue("fontSize", FontSize);
+            info.AddValue("IsResult", IsResult);
         }
 
         public TPISText(SerializationInfo info, StreamingContext context)
         {
             this.No = info.GetInt32("no");
+            this.IsResult = info.GetBoolean("IsResult");
             this.Position = (Position)info.GetValue("position", typeof(Object));
             this.FontSize = info.GetInt32("fontSize");
             this.Text = info.GetString("text");
@@ -116,6 +123,7 @@ namespace TPIS.Model
         internal void SetRate(double rate)
         {
             Position.Rate = rate;
+            OnPropertyChanged("FontSize");
         }
     }
 }

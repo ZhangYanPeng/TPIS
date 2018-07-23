@@ -380,7 +380,25 @@ namespace TPIS.Project
                     no = obj.No - 1;
                 }
             }
-            Objects.Add(new TPISText(fontsize, no, Rate, vx, vy));
+            TPISText text = new TPISText(fontsize, no, Rate, vx, vy);
+            text.IsResult = false;
+            Objects.Add(text);
+        }
+
+        public void AddResultText(int vx, int vy, double fontsize, string text)
+        {
+            int no = 0;
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj.No <= no)
+                {
+                    no = obj.No - 1;
+                }
+            }
+            TPISText rtext = new TPISText(fontsize, no, Rate, vx, vy);
+            rtext.IsResult = true;
+            rtext.text = text;
+            Objects.Add(rtext);
         }
 
         public bool CoverOrNot(double x, double y, double w, double h)
