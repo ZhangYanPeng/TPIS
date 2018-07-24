@@ -45,32 +45,46 @@ namespace TPIS.Project
 
         public static double GetSupRate(double cr)
         {
-            switch (cr)
-            {
-                case 0.1: return 0.25;
-                case 0.25: return 0.5;
-                case 0.5: return 0.75;
-                case 0.75: return 1;
-                case 1: return 1.25;
-                case 1.25: return 1.5;
-                case 1.5: return 2;
-                default: return cr + 1;
-            }
+            if (cr < 0.1)
+                return 0.1;
+            else if (cr < 0.25)
+                return 0.25;
+            else if (cr < 0.5)
+                return 0.5;
+            else if (cr < 0.75)
+                return 0.75;
+            else if (cr < 1)
+                return 1;
+            else if (cr < 1.25)
+                return 1.25;
+            else if (cr < 1.5)
+                return 1.5;
+            else
+                return Math.Floor(cr) + 1;
         }
 
         public static double GetSubRate(double cr)
         {
-            switch (cr)
+            if (cr <= 0.25)
+                return 0.1;
+            else if (cr <= 0.5)
+                return 0.25;
+            else if (cr <= 0.75)
+                return 0.5;
+            else if (cr <= 1)
+                return 0.75;
+            else if (cr <= 1.25)
+                return 1;
+            else if (cr <= 1.5)
+                return 1.25;
+            else if (cr <= 2)
+                return 1.5;
+            else
             {
-                case 0.1: return 0.1;
-                case 0.25: return 0.1;
-                case 0.5: return 0.25;
-                case 0.75: return 0.5;
-                case 1: return 0.75;
-                case 1.25: return 1;
-                case 1.5: return 1.25;
-                case 2: return 1.5;
-                default: return cr - 1;
+                if (Math.Floor(cr) == cr)
+                    return cr - 1;
+                else
+                    return Math.Floor(cr);
             }
         }
     }

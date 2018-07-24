@@ -160,6 +160,18 @@ namespace TPIS
         }
         #endregion
 
+        #region 缩放
+        public void SupRate_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.SupRate_Excuted(sender, e);
+        }
+
+        public void SubRate_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            tPISCommand.SubRate_Excuted(sender, e);
+        }
+        #endregion
+
         #region 改变工作区大小
         public void WorkspaceSize_Excuted(object sender, ExecutedRoutedEventArgs e)
         {

@@ -7,6 +7,7 @@ using TPIS.Command;
 using Key = System.Windows.Forms;
 using TPIS.Project;
 using TPIS.Views;
+using System;
 
 namespace TPIS.TPISCanvas
 {
@@ -135,7 +136,7 @@ namespace TPIS.TPISCanvas
                 if (e.Delta > 0)
                     try
                     {
-                        mainwin.GetCurrentProject().SupRate();
+                        mainwin.GetCurrentProject().SupRate(0.01);
                     }
                     catch
                     {
@@ -144,7 +145,7 @@ namespace TPIS.TPISCanvas
                 else if (e.Delta < 0)
                     try
                     {
-                        mainwin.GetCurrentProject().SubRate();
+                        mainwin.GetCurrentProject().SubRate(0.01);
                     }
                     catch
                     {

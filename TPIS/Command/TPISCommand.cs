@@ -144,6 +144,8 @@ namespace TPIS.Command
         public static RoutedCommand Helper = new RoutedCommand();
         public static RoutedCommand ResultAnalyse = new RoutedCommand();
         public static RoutedCommand Setting = new RoutedCommand();
+        public static RoutedCommand SupRate = new RoutedCommand();
+        public static RoutedCommand SubRate = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -489,7 +491,6 @@ namespace TPIS.Command
         #endregion
 
         #region 改变工作区大小
-
         public void WorkspaceSize_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
@@ -500,11 +501,29 @@ namespace TPIS.Command
                 workspaceSize.ShowDialog();
             }
         }
+        #endregion
 
+        #region 缩放
+        public void SupRate_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().SupRate(0.25);
+            }
+        }
+
+        public void SubRate_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() != null)
+            {
+                mainwin.GetCurrentProject().SubRate(0.25);
+            }
+        }
         #endregion
 
         #region 背景色
-
         public void BackGroundColor_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
@@ -527,7 +546,6 @@ namespace TPIS.Command
                 }
             }
         }
-
         #endregion
 
         #region 计算模式快速选择

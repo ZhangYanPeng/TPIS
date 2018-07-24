@@ -106,6 +106,8 @@
         <CommandBinding Command="c:TPISCommand.Undo" Executed="Undo_Excuted"/>
         <CommandBinding Command="c:TPISCommand.SeltAll" Executed="SeltAll_Excuted"/>
         <CommandBinding Command="c:TPISCommand.WorkspaceSize" Executed="WorkspaceSize_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.SupRate" Executed="SupRate_Excuted"/>
+        <CommandBinding Command="c:TPISCommand.SubRate" Executed="SubRate_Excuted"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+N" Command="{x:Static c:TPISCommand.NewProject}" />
@@ -127,6 +129,10 @@
         <KeyBinding Gesture="F2" Command="{x:Static c:TPISCommand.WorkspaceSize}" />
         <KeyBinding Gesture="Ctrl+Z" Command="{x:Static c:TPISCommand.Undo}" />
         <KeyBinding Gesture="Ctrl+Y" Command="{x:Static c:TPISCommand.Redo}" />
+        <KeyBinding Gesture="OemPlus" Command="{x:Static c:TPISCommand.SupRate}" />
+        <KeyBinding Gesture="OemMinus" Command="{x:Static c:TPISCommand.SubRate}" />
+        <KeyBinding Gesture="Add" Command="{x:Static c:TPISCommand.SupRate}" />
+        <KeyBinding Gesture="Subtract" Command="{x:Static c:TPISCommand.SubRate}" />
     </Window.InputBindings>
 
     <DockPanel>

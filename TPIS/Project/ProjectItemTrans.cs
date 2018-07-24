@@ -58,11 +58,26 @@ namespace TPIS.Project
             Rate = RateService.GetSupRate(Rate);
             GridUintLength = 20 * Rate;
         }
+
+        internal void SupRate(double r)
+        {
+            Rate = Rate + r;
+            GridUintLength = 20 * Rate;
+        }
         
         /// 缩小
         internal void SubRate()
         {
             Rate = RateService.GetSubRate(Rate);
+            GridUintLength = 20 * Rate;
+        }
+
+        internal void SubRate(double r)
+        {
+            if (Rate - r >= 0.01)
+                Rate = Rate - r;
+            else
+                Rate = 0.01;
             GridUintLength = 20 * Rate;
         }
         #endregion
