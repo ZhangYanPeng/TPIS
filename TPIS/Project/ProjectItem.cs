@@ -192,6 +192,7 @@ namespace TPIS.Project
             LineThickness = mainwin.TPISconfig.LINE_THICKNESS;
             Logs = new ObservableCollection<string>();
             IsViewWindowsOpen = false;
+            IsPortSetWindowOpen = false;
             InitBackEnd();
             SaveProject();
         }

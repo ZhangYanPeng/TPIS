@@ -122,14 +122,6 @@ namespace TPIS.Project
             }
             ChangeWorkSpaceSize();//移动控件时，超过边界自动改变画布大小
         }
-
-        //MovePort
-        public void MovePort(Port p)
-        {
-            PortLocation plw = new PortLocation(p);
-            plw.Owner = Application.Current.MainWindow;
-            plw.Show();
-        }
         #endregion
 
         #region 线条操作
