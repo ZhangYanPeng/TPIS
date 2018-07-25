@@ -49,8 +49,8 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompi
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CopyComplete
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Tool\PortLocation.g.cs
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Tool\PortLocation.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Setting.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Setting.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojAssemblyReference.cache
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\ViewWindows\PortSetWindow.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\ViewWindows\PortSetWindow.baml

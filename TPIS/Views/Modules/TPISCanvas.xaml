@@ -298,6 +298,8 @@
                     </DockPanel>
                 </Polyline.ToolTip>
             </Polyline>
+            <Polyline Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" Opacity="0" StrokeThickness="10" MouseLeftButtonDown="LineSelect">
+            </Polyline>
         </s:DesignerLine>
     </DataTemplate>
 

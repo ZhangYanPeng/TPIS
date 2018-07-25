@@ -49,28 +49,6 @@ namespace TPIS.Views.ViewWindows
             }
         }
 
-        public void SetText(Port p)
-        {
-            Port_X.Text = p.x.ToString();
-            Port_Y.Text = p.y.ToString();
-        }
-
-        public void PortMove(object sender, RoutedEventArgs e)
-        {
-            if ((bool)Text.IsChecked)
-            {//按文本框改变
-                port.x = Convert.ToDouble(Port_X.Text);
-                port.y = Convert.ToDouble(Port_Y.Text);
-            }
-
-            if ((bool)Position.IsChecked)
-            {
-                Position_PortSet();
-                SetText(port);
-            }
-            ViewRePosPort();
-        }
-
         public void ViewRePosPort()
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
@@ -80,50 +58,6 @@ namespace TPIS.Views.ViewWindows
                 {
                     ((TPISComponent)obj).RePosPort();
                 }
-            }
-        }
-
-        public void Position_PortSet()
-        {
-            if ((bool)LU.IsChecked)
-            {
-                port.x = 0;
-                port.y = 0;
-            }
-            if ((bool)MU.IsChecked)
-            {
-                port.x = 0.5;
-                port.y = 0;
-            }
-            if ((bool)RU.IsChecked)
-            {
-                port.x = 1;
-                port.y = 0;
-            }
-            if ((bool)LM.IsChecked)
-            {
-                port.x = 0;
-                port.y = 0.5;
-            }
-            if ((bool)RM.IsChecked)
-            {
-                port.x = 1;
-                port.y = 0.5;
-            }
-            if ((bool)LD.IsChecked)
-            {
-                port.x = 0;
-                port.y = 1;
-            }
-            if ((bool)MD.IsChecked)
-            {
-                port.x = 0.5;
-                port.y = 1;
-            }
-            if ((bool)RD.IsChecked)
-            {
-                port.x = 1;
-                port.y = 1;
             }
         }
 
@@ -143,11 +77,21 @@ namespace TPIS.Views.ViewWindows
                 if (mainwin.GetCurrentProject().IsPortSetWindowOpen)
                 {//Can only be changed in the view.
                     port = p;
-                    SetText(p);
+                    PortBinding(port);
                 }
                 e.Handled = true;
             }
         }
+
+        //节点binding
+        public void PortBinding(Port p)
+        {
+            if (p != null && p is Port)
+                PortEdited.DataContext = p;
+            else
+                PortEdited.DataContext = null;
+        }
+
 
         public void ViewPort_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -159,6 +103,96 @@ namespace TPIS.Views.ViewWindows
 
                 frameworkElement.Cursor = Cursors.Hand;
                 Mouse.OverrideCursor = null;
+            }
+        }
+
+        #region 贴紧
+        private void LU_Click(object sender, RoutedEventArgs e)
+        {
+            port.X = 0;
+            port.Y = 0;
+            ViewRePosPort();
+        }
+
+        private void LM_Click(object sender, RoutedEventArgs e)
+        {
+            port.X = 0;
+            ViewRePosPort();
+        }
+
+        private void MU_Click(object sender, RoutedEventArgs e)
+        {
+            port.Y = 0;
+            ViewRePosPort();
+        }
+
+        private void RU_Click(object sender, RoutedEventArgs e)
+        {
+            port.X = 1;
+            port.Y = 0;
+            ViewRePosPort();
+        }
+
+        private void RM_Click(object sender, RoutedEventArgs e)
+        {
+            port.X = 1;
+            ViewRePosPort();
+        }
+
+        private void LD_Click(object sender, RoutedEventArgs e)
+        {
+            port.X = 0;
+            port.Y = 1;
+            ViewRePosPort();
+        }
+
+        private void MD_Click(object sender, RoutedEventArgs e)
+        {
+            port.Y = 1;
+            ViewRePosPort();
+        }
+
+        private void RD_Click(object sender, RoutedEventArgs e)
+        {
+            port.X = 1;
+            port.Y = 1;
+            ViewRePosPort();
+        }
+        #endregion
+
+        private void Port_X_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            try
+            {
+                double x = double.Parse(textBox.Text);
+                if (x > 1)
+                    x = 1;
+                if(port.X != x)
+                    port.X = x;
+                ViewRePosPort();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void Port_Y_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            try
+            {
+                double y = double.Parse(textBox.Text);
+                if (y > 1)
+                    y = 1;
+                if (port.Y != y)
+                    port.Y = y;
+                ViewRePosPort();
+            }
+            catch
+            {
+                return;
             }
         }
     }

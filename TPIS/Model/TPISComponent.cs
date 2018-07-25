@@ -220,6 +220,8 @@ namespace TPIS.Model
             {
                 double tx = 0;
                 double ty = 0;
+                double ax = 0;
+                double ay = 0;
                 //考虑旋转
                 switch (Position.Angle)
                 {
@@ -227,25 +229,32 @@ namespace TPIS.Model
                         {
                             tx = Position.V_width * p.x;
                             ty = Position.V_height * p.y;
+                            ax = Position.Width * p.x;
+                            ay = Position.Height * p.y;
                         }
                         break;
                     case 90:
                         {
                             ty = Position.V_height * p.x;
                             tx = Position.V_width * (1 - p.y);
+                            ay = Position.Height * p.x;
+                            ax = Position.Width * (1 - p.y);
                         }
                         break;
                     case 180:
                         {
                             ty = Position.V_height * (1 - p.y);
                             tx = Position.V_width * (1 - p.x);
+                            ay = Position.Height * (1 - p.y);
+                            ax = Position.Width * (1 - p.x);
                         }
                         break;
                     case 270:
                         {
-                            double t = ty;
                             ty = Position.V_height * (1 - p.x);
                             tx = Position.V_width * p.y;
+                            ay = Position.Height * (1 - p.x);
+                            ax = Position.Width * p.y;
                         }
                         break;
                     default: break;
@@ -254,10 +263,12 @@ namespace TPIS.Model
                 if (Position.IsHorizentalReversed == -1)
                 {
                     tx = Position.V_width - tx;
+                    ax = Position.Width - ax;
                 }
                 if (Position.isVerticalReversed == -1)
                 {
                     ty = Position.V_height - ty;
+                    ay = Position.Height - ay;
                 }
 
                 int gw = MainWindow.GRID_WIDTH;
@@ -269,6 +280,8 @@ namespace TPIS.Model
                 }
                 p.P_x = tx - 3;
                 p.P_y = ty - 3;
+                p.A_x = ax - 3;
+                p.A_y = ay - 3;
             }
         }
         #endregion

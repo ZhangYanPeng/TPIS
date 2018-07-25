@@ -73,7 +73,16 @@ namespace TPIS.Model
             }
         }
 
-        public double x;
+        public double x;//横坐标比例（0~1）
+        public double X
+        {
+            get => x;
+            set
+            {
+                x = value;
+                OnPropertyChanged("X");
+            }
+        }
         public double p_x;
         public double P_x
         {
@@ -83,9 +92,28 @@ namespace TPIS.Model
                 p_x = value;
                 OnPropertyChanged("P_x");
             }
-        }//横坐标比例（0~1）
+        }
+        public double a_x;
+        public double A_x
+        {
+            get => a_x;
+            set
+            {
+                a_x = value;
+                OnPropertyChanged("A_x");
+            }
+        }
 
-        public double y;
+        public double y;//纵坐标比例（0~1)
+        public double Y
+        {
+            get => y;
+            set
+            {
+                y = value;
+                OnPropertyChanged("Y");
+            }
+        }
         public double p_y;
         public double P_y
         {
@@ -95,7 +123,17 @@ namespace TPIS.Model
                 p_y = value;
                 OnPropertyChanged("P_y");
             }
-        }//纵坐标比例（0~1)
+        }
+        public double a_y;
+        public double A_y
+        {
+            get => a_y;
+            set
+            {
+                a_y = value;
+                OnPropertyChanged("A_y");
+            }
+        }
 
         public Node node;
         public TPISLine link;

@@ -91,7 +91,7 @@ namespace TPIS.Views
             gridMenuItem.Header = "网格 Ctrl+G";
 
             MenuItem portMenuItem = new MenuItem();
-            portMenuItem.Header = "Port调整";
+            portMenuItem.Header = "元件调整";
 
             copyMenuItem.Click += btCopy_Click;
             pasteMenuItem.Click += btPaste_Click;
