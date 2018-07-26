@@ -244,6 +244,8 @@ namespace TPIS.Model
             }
             OnPropertyChanged("V_width");
             OnPropertyChanged("V_height");
+            OnPropertyChanged("Width");
+            OnPropertyChanged("Height");
         }
 
         /// <summary>

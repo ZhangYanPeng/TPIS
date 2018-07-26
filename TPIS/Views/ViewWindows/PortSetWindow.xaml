@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TPIS.Views.ViewWindows"
         mc:Ignorable="d"
         xmlns:s="clr-namespace:TPIS.TPISCanvas"
-        Title="节点调整" Height="297" Width="504.747" WindowStartupLocation="CenterScreen">
+        Title="节点调整" Height="297" Width="800" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="PortItemsControlStyle" TargetType="ItemsControl">
@@ -58,9 +58,10 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="178*"></ColumnDefinition>
+            <ColumnDefinition Width="178*"></ColumnDefinition>
             <ColumnDefinition Width="319*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border BorderThickness="2" BorderBrush="DarkGray" Margin="2">
+        <Border BorderThickness="2" BorderBrush="DarkGray" Margin="2" Grid.Column="0">
             <DockPanel>
                 <UserControl x:Name="view_Item" Content="{Binding ViewObjects}" ContentTemplate="{StaticResource template_component}">
                 </UserControl>
@@ -82,9 +83,9 @@
                 <TextBlock Text="节点名称" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="X轴坐标(0-1)" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Text="Y轴坐标(0-1)" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center"></TextBlock>
-                <TextBox Name="Port_X" Grid.Row="1" Grid.Column="2" Text="{Binding X}" Height="30" Width="60" TextChanged="Port_X_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBox>
-                <TextBox Name="Port_Y" Grid.Row="2" Grid.Column="2" Text="{Binding Y}" Height="30" Width="60" TextChanged="Port_Y_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBox>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left"></TextBlock>
+                <TextBox Name="Port_X" Grid.Row="1" Grid.Column="2" Text="{Binding X}" Height="30" Width="60" TextChanged="Port_X_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center"></TextBox>
+                <TextBox Name="Port_Y" Grid.Row="2" Grid.Column="2" Text="{Binding Y}" Height="30" Width="60" TextChanged="Port_Y_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center"></TextBox>
                 <GroupBox Grid.Row="3" Grid.ColumnSpan="3" Grid.Column="0" Header="快捷操作">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -107,6 +108,29 @@
                         <Button Name="RD" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RD_Click">贴紧右下</Button>
                     </Grid>
                 </GroupBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="元件参数" Grid.Column="1">
+            <Grid Name="Component">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Text="元件名称" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="元件高度" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="元件宽度" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Name}"></TextBlock>
+                <TextBox Name="C_width" Grid.Row="1" Grid.Column="2"  Height="30" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" Text="{Binding Position.Width}" TextChanged="C_width_TextChanged"></TextBox>
+                <TextBox Name="C_height" Grid.Row="2" Grid.Column="2"  Height="30" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" Text="{Binding Position.Height}" TextChanged="C_height_TextChanged"></TextBox>
+                <TextBlock Text="图片" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                <Button Content="浏览" Name="PicEdit" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" Height="30" Click="PicEdit_Click"></Button>
             </Grid>
         </GroupBox>
     </Grid>

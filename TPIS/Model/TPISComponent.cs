@@ -97,7 +97,14 @@ namespace TPIS.Model
                 OnPropertyChanged("Ports");
             }
         }
-        public string Pic { get; set; }
+        public string pic;
+        public string Pic {
+            get=>pic;
+            set {
+                pic = value;
+                OnPropertyChanged("Pic");
+            }
+        }
         public string Name { get; set; }
         public string pairName;
         public String PairName {

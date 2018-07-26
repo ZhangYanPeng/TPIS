@@ -24,14 +24,13 @@ namespace TPIS.Views.ViewWindows
     {
         public Port port;
         public TPISComponent component;
-        public ObjectBase ViewObjects;
         //public ProjectSpace ProjectList { get; set; } //工程列表
 
         public PortSetWindow()
         {
             InitializeComponent();
             InitilView();
-
+            Component.DataContext = component;
         }
 
         public void InitilView()
@@ -42,8 +41,8 @@ namespace TPIS.Views.ViewWindows
             {
                 if (obj is TPISComponent)
                 {
-                    ViewObjects = obj;
-                    view_Item.Content = ViewObjects;
+                    component = obj as TPISComponent;
+                    view_Item.Content = component;
                     break;
                 }
             }
@@ -51,14 +50,7 @@ namespace TPIS.Views.ViewWindows
 
         public void ViewRePosPort()
         {
-            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            foreach (ObjectBase obj in mainwin.GetCurrentProject().SelectedObjects)
-            {
-                if (obj is TPISComponent)
-                {
-                    ((TPISComponent)obj).RePosPort();
-                }
-            }
+            component.RePosPort();
         }
 
         public void ViewPort_MouseLeftButtonDown(object sender, MouseEventArgs e)
@@ -160,6 +152,7 @@ namespace TPIS.Views.ViewWindows
         }
         #endregion
 
+        #region 编辑节点位置
         private void Port_X_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -195,5 +188,66 @@ namespace TPIS.Views.ViewWindows
                 return;
             }
         }
+        #endregion
+
+        #region 编辑元件信息
+        private void C_width_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            try
+            {
+                int w = int.Parse(textBox.Text);
+                if (w < 5)
+                    w = 5;
+                component.Position.Width = w;
+                ViewRePosPort();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void C_height_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            try
+            {
+                int h = int.Parse(textBox.Text);
+                if (h < 5)
+                    h = 5;
+                component.Position.Height = h;
+                ViewRePosPort();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void PicEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Title = "选择图片文件";
+            openFileDialog.Filter = "图片工程项目(*.jpg)|*.jpg";
+            openFileDialog.InitialDirectory = System.IO.Path.GetFullPath(@".\WorkSpace");
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.ValidateNames = false;
+            openFileDialog.CheckFileExists = false;
+            openFileDialog.CheckPathExists = true;
+            openFileDialog.Multiselect = false;
+            bool? result = openFileDialog.ShowDialog();
+            if (result != true)
+            {
+                return;
+            }
+            else
+            {
+                string path = openFileDialog.FileName;
+                component.Pic = path;
+            }
+        }
+        #endregion
+
     }
 }
