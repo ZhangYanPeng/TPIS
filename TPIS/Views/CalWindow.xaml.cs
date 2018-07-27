@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,7 @@ namespace TPIS.Views
     /// </summary>
     public partial class CalWindow : Window
     {
-        public ProjectItem project { get; set; }
-        Task<ProjectItem> task;
-        CancellationTokenSource cancellationTokenSource;
+        ObservableCollection<MonitorData> LMonitors;
 
         public CalWindow(ProjectItem pi)
         {
@@ -37,6 +36,7 @@ namespace TPIS.Views
             CalProject.DataContext = project;
             this.Owner = (MainWindow)Application.Current.MainWindow;
             InitComponentType();
+            LMonitors = new ObservableCollection<MonitorData>();
         }
 
         #region 选择属性
@@ -132,145 +132,55 @@ namespace TPIS.Views
                 e.Cancel = true;
         }
 
-        #region 计算
-        public void CalculateResult()
+        #region 更新监视
+        private void AddMonitor(object sender, RoutedEventArgs e)
         {
-            try
+            Property p = (PropSel.SelectedItem as ComboBoxItem).DataContext as Property;
+            TPISComponent c = (ComponentSel.SelectedItem as ComboBoxItem).DataContext as TPISComponent;
+
+            MonitorData data = new MonitorData(c, p);
+            Expander expander = new Expander();
+            TextBlock title = new TextBlock();
+            title.Text = data.Name;
+            expander.Header = title;
+            DynamicPolyline fig = new DynamicPolyline();
+            fig.Height = 200;
+            fig.Width = 500;
+            fig.Name = "Monitor" + LMonitors.Count;
+            expander.Content = fig;
+
+            Monitor.Items.Add(expander);
+            Monitor.RegisterName(fig.Name, fig);
+            Monitor.Items.Refresh();
+            LMonitors.Add(data);
+        }
+
+        public void UpdateMonitorData(List<double> datum)
+        {
+            for (int i = 0; i < LMonitors.Count; i++)
             {
-                //设置结果
-                bool RTextExist = false;
-                for (int i = 0; i < project.Objects.Count; i++)
+                LMonitors[i].AddNewData(datum[i]);
+            }
+            Dispatcher.InvokeAsync(ReDrawFig);
+        }
+
+        private void ReDrawFig()
+        {
+            for (int i = 0; i < LMonitors.Count; i++)
+            {
+                try
                 {
-                    if (project.Objects[i] is TPISText)
-                    {
-                        TPISText rtext = (TPISText)project.Objects[i];
-                        if (rtext.IsResult == true)
-                        {
-                            RTextExist = true;
-                        }
-                    }
+                    DynamicPolyline Fig = Monitor.FindName("Monitor" + i) as DynamicPolyline;
+                    Fig.Data = LMonitors[i].Data;
                 }
-                if(!RTextExist){
-                    project.AddResultText((int)(project.Canvas.V_width-200), 20, 20, "");
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
-
-                SetCalState(true);
-                cancellationTokenSource = new CancellationTokenSource();
-                ProjectItem pi = (ProjectItem)project.Clone();
-                task = new Task<ProjectItem>(() => CalculateCurrent(pi, cancellationTokenSource.Token), cancellationTokenSource.Token);
-                task.Start();
-                Task cwt = task.ContinueWith(t => {
-                    pi = t.Result;
-                    if (pi != null)
-                    {
-                        //获取元件结果
-                        foreach (ObjectBase obj in project.Objects)
-                        {
-                            foreach (ObjectBase objr in pi.Objects)
-                            {
-                                if (obj is TPISComponent && objr is TPISComponent && obj.No == objr.No)
-                                {
-                                    ((TPISComponent)obj).ResultGroups = ((TPISComponent)objr).ResultGroups;
-                                    //获取接口计算结果
-                                    foreach (Port port in ((TPISComponent)obj).Ports)
-                                    {
-                                        foreach (Port portr in ((TPISComponent)objr).Ports)
-                                        {
-                                            if (port.DicName == portr.DicName)
-                                                port.Results = portr.Results;
-                                        }
-                                    }
-                                    ((TPISComponent)obj).OnCaculateFinished();
-                                }
-                            }
-                        }
-                        //获取系统结果
-                        project.ResultGroup = pi.ResultGroup;
-                        project.Logs = pi.logs;
-                        project.CalculateState = false;
-                        //展示结果
-                        for(int i=0; i < project.Objects.Count; i++)
-                        {
-                            if (project.Objects[i] is TPISText)
-                            {
-                                TPISText rtext = (TPISText)project.Objects[i];
-                                if (rtext.IsResult == true)
-                                {
-                                    RTextExist = true;
-                                    String result = "";
-                                    int rw = 0, rh = 0;
-                                    foreach (PropertyGroup pg in project.resultGroup)
-                                    {
-                                        foreach(Property p in pg.Properties)
-                                        {
-                                            if (p.ShowValue == "")
-                                               continue;
-                                            rh = rh + 25;
-                                            rw = Math.Max(rw, (p.Name.Length + p.ShowValue.Length + 1) * 20);
-                                            result += p.Name + ":" + p.ShowValue + "\r\n";
-                                        }
-                                    }
-                                    rtext.Text = result;
-                                    rtext.Position.V_width = rw;
-                                    rtext.Position.V_height = rh;
-                                    if (rtext.Position.V_x + rtext.Position.V_width > project.Canvas.V_width)
-                                        rtext.Position.V_x = project.Canvas.V_width - rtext.Position.V_width;
-                                }
-                            }
-                        }
-                        project.OnCaculateFinished();
-                    }
-                });
-            }
-            catch
-            {
-                return;
             }
         }
-
-        private void SetCalState(bool v)
-        {
-            if (v)
-            {
-                project.CalculateState = true;
-            }
-            else
-            {
-                project.CalculateState = false;
-            }
-        }
-
-        public ProjectItem CalculateCurrent(object data, CancellationToken token)
-        {
-            try {
-
-                ProjectItem pi = data as ProjectItem;
-                pi.RebuildLink();
-                CalculateInBackEnd  cal = new CalculateInBackEnd(pi.BackEnd);
-                pi = cal.Calculate(pi);
-                token.ThrowIfCancellationRequested();
-                return pi;
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        
         #endregion
-
-        private void StartCalBtn(object sender, RoutedEventArgs e)
-        {
-            if (!MaxIter_Check())
-                return;
-            CalculateResult();
-        }
-
-        private void EndCalBtn(object sender, RoutedEventArgs e)
-        {
-            cancellationTokenSource.Cancel();
-            task = null;
-            project.CalculateState = false;
-        }
 
         protected override void OnClosed(EventArgs e)
         {
@@ -303,6 +213,34 @@ namespace TPIS.Views
                 MessageBox.Show("请输入整数");
                 return false;
             }
+        }
+
+    }
+
+
+    public class MonitorData
+    {
+        public string Name { get; set; }
+        public List<double> Data { get; set; }
+        public int CNo { get; set; }
+        public string PName { get; set; }
+
+        public MonitorData(TPISComponent c,Property p)
+        {
+            Name = "#" + c.No + " " + c.Name + " " + p.Name;
+            CNo = c.No;
+            PName = p.DicName;
+            Data = new List<double>();
+        }
+
+        public void AddNewData(double v)
+        {
+            Data.Add(v);
+        }
+
+        internal void ClearData()
+        {
+            Data = new List<double>();
         }
     }
 

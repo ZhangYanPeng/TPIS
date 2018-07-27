@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using System.Windows.Threading;
 using TPIS.Project;
+using TPIS.Views;
 using TPISNet;
 
 namespace TPIS.Model.Common
@@ -25,15 +26,28 @@ namespace TPIS.Model.Common
             BackEnd = backend;
         }
 
-        public ProjectItem Calculate(ProjectItem project)
+        public ProjectItem Calculate(ProjectItem project, Action<List<double>> updateMonitorData, CancellationToken token)
         {
             //传入参数
             BackEnd.MaxIter = project.MaxIter;
             BackEnd.WaterStand = project.WaterStand;
             BackEnd.GasStand = project.GasStand;
+
+            Random rd = new Random();
+            for (int i = 1; i < 120; i++)
+            {
+                double t = ((double)rd.Next(100)) / 10 - 5;
+                updateMonitorData(new List<double>(){t});
+                token.ThrowIfCancellationRequested();
+                Thread.Sleep(1000);
+            }
+
             Init(project);
+            token.ThrowIfCancellationRequested();
             BackEnd.Solve();
+            token.ThrowIfCancellationRequested();
             GetGlobalResult(project);
+            token.ThrowIfCancellationRequested();
             return GetResult(project);
         }
 

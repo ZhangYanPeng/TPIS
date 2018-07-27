@@ -146,8 +146,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TPISCanvas\ViewDesingerComponent.cs" />
+    <Compile Include="Views\CalTask.cs" >
+      <DependentUpon>CalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CalWindow.xaml.cs">
       <DependentUpon>CalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DynamicPolyline.xaml.cs">
+      <DependentUpon>DynamicPolyline.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Modules\ConvertorLib.cs" />
     <Compile Include="Views\Modules\PropertyTemplate.xaml.cs">
@@ -174,6 +180,10 @@
     </Compile>
     <Compile Include="Views\TPISContextMenu.cs" />
     <Page Include="Views\CalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DynamicPolyline.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

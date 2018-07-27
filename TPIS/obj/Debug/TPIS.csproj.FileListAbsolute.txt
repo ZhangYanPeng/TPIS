@@ -53,3 +53,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Setting.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Setting.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\ViewWindows\PortSetWindow.g.cs
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\ViewWindows\PortSetWindow.baml
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojAssemblyReference.cache
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\DynamicPolyline.g.cs
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\DynamicPolyline.baml

@@ -91,20 +91,13 @@
                                         <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
                                     </ComboBox>
                                 </StackPanel>
-                                <Button Grid.Column="3">添加监视</Button>
+                                <Button Grid.Column="3" Click="AddMonitor">添加监视</Button>
                             </Grid>
                         </Border>
                     </DockPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView>
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="属性" Width="300" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                                    <GridViewColumn Header="值"  >
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                    <ScrollViewer VerticalScrollBarVisibility="Visible">
+                        <ListBox Name="Monitor">
+                        </ListBox>
                     </ScrollViewer>
                 </DockPanel>
             </GroupBox>

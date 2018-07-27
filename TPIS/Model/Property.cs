@@ -67,7 +67,7 @@ namespace TPIS.Model
             info.AddValue("visible", visible);
             info.AddValue("color", Color);
             info.AddValue("isLine", IsLine);
-            if(IsLine)
+            if (IsLine)
             {
                 CurveDatas curveDatas = new CurveDatas(Curve);
                 info.AddValue("curve", curveDatas);
