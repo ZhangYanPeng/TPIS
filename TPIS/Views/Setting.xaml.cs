@@ -56,12 +56,12 @@ namespace TPIS.Views
             mainwin.TPISconfig.GAS_STAND = gs.SelectedIndex;
             mainwin.TPISconfig.WATER_STAND = ws.SelectedIndex;
             mainwin.TPISconfig.SaveCfg();
-            this.Close();
+            Close();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

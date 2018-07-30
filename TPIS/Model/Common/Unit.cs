@@ -6,30 +6,6 @@ using System.Threading.Tasks;
 
 namespace TPIS.Model.Common
 {
-    public enum UnitEnum
-    {
-        /// <summary>
-        /// "℃", "K"
-        /// </summary>
-        Temperate,
-        /// <summary>
-        /// "MPa", "kPa", "Pa", "Pa(g)"
-        /// </summary>
-        Pressure,
-        /// <summary>
-        /// "t/h", "kg/s"
-        /// </summary>
-        WaterQ,
-        /// <summary>
-        /// "t/h", "kg/s", "Nm3/h" 
-        /// </summary>
-        GasQ,
-        /// <summary>
-        /// "%", "1"
-        /// </summary>
-        Percent
-    }
-
     public static class Units
     {
         public static string[] Kg_Nm3 = { "Kg/Nm3" };
@@ -136,7 +112,6 @@ namespace TPIS.Model.Common
             UnitsEnum.Add(Percents);
             return UnitsEnum;
         }
-        
     }
 
     public enum P_Type

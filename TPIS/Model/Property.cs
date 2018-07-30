@@ -1,6 +1,7 @@
 ﻿
 using CurvesData;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -336,7 +337,7 @@ namespace TPIS.Model
             try
             {
                 if (unit_src != unit_desc)
-                    return UnitValueCal(double.Parse(value), unit_desc, unit_src);
+                    return UnitValueCal(double.Parse(value),unit_src, unit_desc);
                 else return double.Parse(value);
             }
             catch
@@ -347,113 +348,27 @@ namespace TPIS.Model
 
         private double UnitValueCal(double value, string unit_src, string unit_desc)
         {
+            foreach(TPISNet.UnitEnum ue in Enum.GetValues(typeof(TPISNet.UnitEnum)))
+            {
+                List<string> us = TPISNet.UnitAll.Read(ue);
+                bool check = true;
+                if(us.Count == Units.Length)
+                {
+                    foreach(string u in Units)
+                    {
+                        if (!us.Contains(u))
+                        {
+                            check = false;
+                            break;
+                        }
+                    }
+                    if (check)
+                    {
+                        return TPISNet.UnitAll.UnitConvert(ue, value, us.IndexOf(unit_src), us.IndexOf(unit_desc));
+                    }
+                }
+            }
             return value;
-            //switch (unit_src)
-            //{
-            //    //温度
-            //    case "℃":
-            //        {
-            //            if (unit_desc == "K")
-            //                return value * 1.8 + 32;
-            //            else
-            //                return value;
-            //        }
-            //    case "K":
-            //        {
-            //            if (unit_desc == "℃")
-            //                return (value - 32) / 1.8;
-            //            else
-            //                return value;
-            //        }
-
-            //    //压力
-            //    case "MPa":
-            //        {
-            //            if (unit_desc == "kPa")
-            //                return 1000 * value;
-            //            else if(unit_desc == "Pa")
-            //                return 1000000 * value;
-            //            else if(unit_desc == "Pa(g)")
-            //                return value;
-            //            else
-            //                return value;
-            //        }
-            //    case "kPa":
-            //        {
-
-            //            if (unit_desc == "MPa")
-            //                return 0.001 * value;
-            //            else if (unit_desc == "Pa")
-            //                return 1000 * value;
-            //            else if(unit_desc == "Pa(g)")
-            //                return value;
-            //            else
-            //                return value;
-            //        }
-            //    case "Pa":
-            //        {
-            //            if (unit_desc == "MPa")
-            //                return 0.000001 * value;
-            //            else if(unit_desc == "kPa")
-            //                return 0.001 * value;
-            //            else if(unit_desc == "Pa(g)")
-            //                return value;
-            //            else
-            //                return value;
-            //        }
-            //    case "Pa(g)":
-            //        {
-            //            if (unit_desc == "MPa")
-            //                return value;
-            //            else if(unit_desc == "kPa")
-            //                return value;
-            //            else if(unit_desc == "Pa")
-            //                return value;
-            //            else
-            //                return value;
-            //        }
-
-            //    //WaterQ Gas Q
-            //    case "t/h":
-            //        {
-            //            if (unit_desc == "kg/s")
-            //                return value;
-            //            else
-            //                return value;
-            //        }
-            //    case "kg/s":
-            //        {
-            //            if (unit_desc == "t/h")
-            //                return value;
-            //            else
-            //                return value;
-            //        }
-            //    case "Nm3/h":
-            //        {
-            //            if (unit_desc == "t/h")
-            //                return value;
-            //            else if (unit_desc == "kg/s")
-            //                return value;
-            //            else
-            //                return value;
-            //        }
-
-            //    //百分比
-            //    case "%":
-            //        {
-            //            if (unit_desc == "1")
-            //                return value/100;
-            //            else
-            //                return value;
-            //        }
-            //    case "1":
-            //        {
-            //            if (unit_desc == "%")
-            //                return value*100;
-            //            else
-            //                return value;
-            //        }
-            //}
         }
         #endregion
     }
