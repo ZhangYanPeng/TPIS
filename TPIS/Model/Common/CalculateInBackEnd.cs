@@ -34,12 +34,12 @@ namespace TPIS.Model.Common
             BackEnd.GasStand = project.GasStand;
 
             Random rd = new Random();
-            for (int i = 1; i < 120; i++)
+            for (int i = 1; i < 70; i++)
             {
                 double t = ((double)rd.Next(100)) / 10 - 5;
                 updateMonitorData(new List<double>(){t});
                 token.ThrowIfCancellationRequested();
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             }
 
             Init(project);
