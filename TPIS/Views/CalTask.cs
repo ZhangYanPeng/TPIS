@@ -148,6 +148,7 @@ namespace TPIS.Views
                 pi.RebuildLink();
                 token.ThrowIfCancellationRequested();
                 CalculateInBackEnd cal = new CalculateInBackEnd(pi.BackEnd);
+                cal.InitMonitors(LMonitors);
                 token.ThrowIfCancellationRequested();
                 pi = cal.Calculate(pi, UpdateMonitorData, token);
                 token.ThrowIfCancellationRequested();

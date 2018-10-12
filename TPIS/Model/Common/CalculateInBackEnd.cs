@@ -13,12 +13,18 @@ namespace TPIS.Model.Common
     public class CalculateInBackEnd
     {
         public Net BackEnd;
+        ObservableCollection<MonitorData> LMonitors;
 
         public CalculateInBackEnd(ProjectItem project)
         {
             BackEnd = new Net(null);
             //传入参数
             Init(project);
+        }
+
+        public void InitMonitors(ObservableCollection<MonitorData> monitors)
+        {
+            LMonitors = monitors;
         }
 
         public CalculateInBackEnd(Net backend)
@@ -293,11 +299,15 @@ namespace TPIS.Model.Common
 
         public void InitMonitors()
         {
-            foreach (Element ele in BackEnd.elements.Values)
+            foreach(MonitorData md in LMonitors)
             {
-                if (ele.eleType == EleType.PumpSteam)
+                foreach(Element ele in BackEnd.elements.Values)
                 {
-                    BackEnd.LMonitors.Add(ele.DPResult["Eff"]);
+                    if(ele.ID == md.CNo)
+                    {
+                        BackEnd.LMonitors.Add(ele.DPResult[md.PName]);
+                        break;
+                    }
                 }
             }
         }

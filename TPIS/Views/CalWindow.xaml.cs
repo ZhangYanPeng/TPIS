@@ -124,7 +124,9 @@ namespace TPIS.Views
         {
             try
             {
-                if(PropertyType.SelectedIndex == 0)
+                ComboBoxItem si = ComponentSel.SelectedItem as ComboBoxItem;
+
+                if (PropertyType.SelectedIndex == 0)
                 {
                     PortSection.Visibility = Visibility.Collapsed;
                     PropSection.Visibility = Visibility.Collapsed;
@@ -135,6 +137,26 @@ namespace TPIS.Views
                     PortSection.Visibility = Visibility.Collapsed;
                     PropSection.Visibility = Visibility.Visible;
                     btn_Mon.Visibility = Visibility.Visible;
+
+                    PropSel.Items.Clear();
+                    ComboBoxItem def = new ComboBoxItem();
+                    def.Content = "--请选择--";
+                    def.DataContext = null;
+                    def.IsSelected = true;
+                    PropSel.Items.Add(def);
+                    if (si.DataContext != null)
+                    {
+                        foreach (PropertyGroup pg in ((TPISComponent)si.DataContext).ResultGroups)
+                        {
+                            foreach (Property p in pg.Properties)
+                            {
+                                ComboBoxItem cbi = new ComboBoxItem();
+                                cbi.Content = p.Name;
+                                cbi.DataContext = p;
+                                PropSel.Items.Add(cbi);
+                            }
+                        }
+                    }
                 }
                 else
                 {
