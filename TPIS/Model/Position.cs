@@ -136,10 +136,6 @@ namespace TPIS.Model
             get => rate; set
             {
                 rate = value;
-                this.v_x = (int)(value * this.x);
-                this.v_y = (int)(value * this.y);
-                OnPropertyChanged("V_x");
-                OnPropertyChanged("V_y");
                 ReSizeAll();
             }
         }
@@ -227,6 +223,10 @@ namespace TPIS.Model
         /// </summary>
         private void ReSizeAll()
         {
+
+            v_x = (int)(X * Rate);
+            v_y = (int)(Y * Rate);
+
             if (Angle == 90 || Angle == 270)
             {
                 v_width = (int)(Height * Rate);
@@ -241,7 +241,12 @@ namespace TPIS.Model
             if (IsGrid) {
                 this.v_width = this.v_width - this.v_width % MainWindow.GRID_WIDTH;
                 this.v_height = this.v_height - this.v_height % MainWindow.GRID_WIDTH;
+                this.v_x = this.v_x - this.v_x % MainWindow.GRID_WIDTH;
+                this.v_y = this.v_y - this.v_y % MainWindow.GRID_WIDTH;
             }
+
+            OnPropertyChanged("V_x");
+            OnPropertyChanged("V_y");
             OnPropertyChanged("V_width");
             OnPropertyChanged("V_height");
             OnPropertyChanged("Width");

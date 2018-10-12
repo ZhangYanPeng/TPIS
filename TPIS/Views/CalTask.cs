@@ -149,7 +149,7 @@ namespace TPIS.Views
                 token.ThrowIfCancellationRequested();
                 CalculateInBackEnd cal = new CalculateInBackEnd(pi.BackEnd);
                 token.ThrowIfCancellationRequested();
-                pi = cal.Calculate(pi, UpdateMonitorData,token);
+                pi = cal.Calculate(pi, UpdateMonitorData, token);
                 token.ThrowIfCancellationRequested();
                 return pi;
             }

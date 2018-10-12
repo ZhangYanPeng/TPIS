@@ -146,7 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TPISCanvas\ViewDesingerComponent.cs" />
-    <Compile Include="Views\CalTask.cs" >
+    <Compile Include="Views\CalTask.cs">
       <DependentUpon>CalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CalWindow.xaml.cs">
@@ -168,6 +168,9 @@
     <Compile Include="Views\PortContext.cs" />
     <Compile Include="Views\QuickModeSelect.xaml.cs">
       <DependentUpon>QuickModeSelect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CurrentSetting.xaml.cs">
+      <DependentUpon>CurrentSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
@@ -230,6 +233,10 @@
     <Page Include="Views\QuickModeSelect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CurrentSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Setting.xaml">
       <SubType>Designer</SubType>

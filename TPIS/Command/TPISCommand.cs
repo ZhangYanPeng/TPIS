@@ -146,6 +146,7 @@ namespace TPIS.Command
         public static RoutedCommand Setting = new RoutedCommand();
         public static RoutedCommand SupRate = new RoutedCommand();
         public static RoutedCommand SubRate = new RoutedCommand();
+        public static RoutedCommand CurrentSetting = new RoutedCommand();
         #endregion
 
         #region 新建工程
@@ -631,6 +632,18 @@ namespace TPIS.Command
         public void Setting_Excuted(object sender, ExecutedRoutedEventArgs e)
         {
             Setting setting = new Setting();
+            setting.Owner = Application.Current.MainWindow;
+            setting.Show();
+        }
+        #endregion
+
+        #region 设置当前窗口
+        public void CurrentSetting_Excuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
+            if (mainwin.GetCurrentProject() == null)
+                return;
+            CurrentSetting setting = new CurrentSetting(mainwin.GetCurrentProject());
             setting.Owner = Application.Current.MainWindow;
             setting.Show();
         }

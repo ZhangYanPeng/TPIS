@@ -183,7 +183,7 @@ namespace TPIS.Project
             Records = new RecordStack();
             this.CalculateState = false;
             this.GridThickness = mainwin.TPISconfig.CANVAS_GRID;//赋初值0，使初始画布为隐藏网格
-            this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
+            this.GridUintLength = 40;//赋初值40，使初始网格单元为40×40
             //this.BackGroundColor = Brushes.White;
             this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;
             Path = p;
@@ -201,7 +201,7 @@ namespace TPIS.Project
 
         private void InitBackEnd()
         {
-            BackEnd = new TPISNet.Net();
+            BackEnd = new TPISNet.Net(null);
         }
 
         #region 存储工程
@@ -300,7 +300,7 @@ namespace TPIS.Project
             Logs = new ObservableCollection<string>();
 
             this.GridThickness = 1;//赋初值0，使初始画布为隐藏网格
-            this.GridUintLength = 20;//赋初值20，使初始网格单元为20×20
+            this.GridUintLength = 40;//赋初值40，使初始网格单元为40×40
 
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
             this.BackGroundColor = mainwin.TPISconfig.CANVAS_BACKGROUNDCOLOR;

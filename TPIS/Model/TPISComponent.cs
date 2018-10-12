@@ -215,6 +215,7 @@ namespace TPIS.Model
                 Position.X += x.Value / Position.Rate;
             if (y.HasValue)
                 Position.Y += y.Value / Position.Rate;
+            RePosPort();
         }
 
         /// <summary>
@@ -222,7 +223,6 @@ namespace TPIS.Model
         /// </summary>
         public void RePosPort()
         {
-            
             foreach (Port p in this.Ports)
             {
                 double tx = 0;
@@ -289,6 +289,23 @@ namespace TPIS.Model
                 p.P_y = ty - 3;
                 p.A_x = ax - 3;
                 p.A_y = ay - 3;
+            }
+
+            foreach (Port p in this.Ports) {
+                if (p.link != null)
+                {
+                    Point pi = new Point();
+                    pi.X = Position.V_x + p.P_x + 3;
+                    pi.Y = Position.V_y + p.P_y + 3;
+                    if (p.Type == Model.Common.NodType.DefOut || p.Type == Model.Common.NodType.Outlet)
+                    {
+                        p.link.PointTo(0, pi);
+                    }
+                    else
+                    {
+                        p.link.PointTo(p.link.Points.Count - 1, pi);
+                    }
+                }
             }
         }
         #endregion

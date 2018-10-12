@@ -248,8 +248,8 @@ namespace TPIS.Model
                 for (int i = 0; i < points.Count; i++)
                 {
                     Point p = new Point(points[i].X, points[i].Y);
-                    p.X = p.X - p.X % MainWindow.GRID_WIDTH;
-                    p.Y = p.Y - p.Y % MainWindow.GRID_WIDTH;
+                    p.X = p.X - ((int)p.X) % MainWindow.GRID_WIDTH;
+                    p.Y = p.Y - ((int)p.Y) % MainWindow.GRID_WIDTH;
                     V_points[i] = p;
                 }
             }

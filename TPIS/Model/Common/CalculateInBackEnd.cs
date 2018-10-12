@@ -16,7 +16,7 @@ namespace TPIS.Model.Common
 
         public CalculateInBackEnd(ProjectItem project)
         {
-            BackEnd = new Net();
+            BackEnd = new Net(null);
             //传入参数
             Init(project);
         }
@@ -32,17 +32,10 @@ namespace TPIS.Model.Common
             BackEnd.MaxIter = project.MaxIter;
             BackEnd.WaterStand = project.WaterStand;
             BackEnd.GasStand = project.GasStand;
-
-            Random rd = new Random();
-            for (int i = 1; i < 70; i++)
-            {
-                double t = ((double)rd.Next(100)) / 10 - 5;
-                updateMonitorData(new List<double>(){t});
-                token.ThrowIfCancellationRequested();
-                Thread.Sleep(100);
-            }
+            BackEnd.moniter = updateMonitorData;
 
             Init(project);
+            InitMonitors();
             token.ThrowIfCancellationRequested();
             BackEnd.Solve();
             token.ThrowIfCancellationRequested();
@@ -294,6 +287,17 @@ namespace TPIS.Model.Common
                             }
                         }
                     }
+                }
+            }
+        }
+
+        public void InitMonitors()
+        {
+            foreach (Element ele in BackEnd.elements.Values)
+            {
+                if (ele.eleType == EleType.PumpSteam)
+                {
+                    BackEnd.LMonitors.Add(ele.DPResult["Eff"]);
                 }
             }
         }

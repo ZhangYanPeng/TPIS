@@ -29,6 +29,7 @@
             <CommandBinding Command="s:TPISCommand.Helper" Executed="Helper_Excuted"/>
             <CommandBinding Command="s:TPISCommand.ResultAnalyse" Executed="ResultAnalyse_Excuted"/>
             <CommandBinding Command="s:TPISCommand.Setting" Executed="Setting_Excuted"/>
+            <CommandBinding Command="s:TPISCommand.CurrentSetting" Executed="CurrentSetting_Excuted"/>
         </Menu.CommandBindings>
         
         <!--文件管理-->
@@ -160,6 +161,7 @@
                 </MenuItem>
             <Separator />
             <MenuItem Header="默认设置" Command="{x:Static s:TPISCommand.Setting}"/>
+            <MenuItem Header="当前工程设置" Command="{x:Static s:TPISCommand.CurrentSetting}"/>
             <Separator />
         </MenuItem>
 

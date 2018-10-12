@@ -73,9 +73,13 @@ namespace TPIS.Views
                 def.DataContext = null;
                 def.IsSelected = true;
                 ComponentSel.Items.Add(def);
+                PropertyType.SelectedIndex = 0;
+                TypeSection.Visibility = Visibility.Collapsed;
 
                 if (si.DataContext == null)
+                {
                     return;
+                }
                 foreach (ObjectBase obj in project.Objects)
                 {
                     if(obj is TPISComponent && ((TPISComponent)obj).eleType == (TPISNet.EleType)si.DataContext)
@@ -98,25 +102,45 @@ namespace TPIS.Views
             try
             {
                 ComboBoxItem si = ComponentSel.SelectedItem as ComboBoxItem;
-                PropSel.Items.Clear();
-
-                ComboBoxItem def = new ComboBoxItem();
-                def.Content = "--请选择--";
-                def.DataContext = null;
-                def.IsSelected = true;
-                PropSel.Items.Add(def);
-
                 if (si.DataContext == null)
-                    return;
-                foreach (PropertyGroup pg in ((TPISComponent)si.DataContext).PropertyGroups)
                 {
-                    foreach(Property p in pg.Properties)
-                    {
-                        ComboBoxItem cbi = new ComboBoxItem();
-                        cbi.Content = p.Name;
-                        cbi.DataContext = p;
-                        PropSel.Items.Add(cbi);
-                    }
+                    PropertyType.SelectedIndex = 0;
+                    TypeSection.Visibility = Visibility.Collapsed;
+                    return;
+                }
+                TypeSection.Visibility = Visibility.Visible;
+                PropertyType.SelectedIndex = 0;
+                PortSection.Visibility = Visibility.Collapsed;
+                PropSection.Visibility = Visibility.Collapsed;
+                btn_Mon.Visibility = Visibility.Collapsed;
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void PropertyType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if(PropertyType.SelectedIndex == 0)
+                {
+                    PortSection.Visibility = Visibility.Collapsed;
+                    PropSection.Visibility = Visibility.Collapsed;
+                    btn_Mon.Visibility = Visibility.Collapsed;
+                }
+                else if (PropertyType.SelectedIndex == 1)
+                {
+                    PortSection.Visibility = Visibility.Collapsed;
+                    PropSection.Visibility = Visibility.Visible;
+                    btn_Mon.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    PortSection.Visibility = Visibility.Visible;
+                    PropSection.Visibility = Visibility.Visible;
+                    btn_Mon.Visibility = Visibility.Visible;
                 }
             }
             catch
@@ -214,7 +238,7 @@ namespace TPIS.Views
                 return false;
             }
         }
-
+        
     }
 
 

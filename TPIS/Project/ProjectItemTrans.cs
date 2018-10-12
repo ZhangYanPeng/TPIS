@@ -27,15 +27,18 @@ namespace TPIS.Project
                 Canvas.Rate = rate;
                 foreach (ObjectBase obj in Objects)
                 {
-
+                    //元件缩放
+                    if (obj is TPISLine)
+                    {
+                        ((TPISLine)obj).SetRate(lrate);
+                    }
+                }
+                foreach (ObjectBase obj in Objects)
+                {
                     //元件缩放
                     if (obj is TPISComponent)
                     {
                         ((TPISComponent)obj).SetRate(rate);
-                    }
-                    if (obj is TPISLine)
-                    {
-                        ((TPISLine)obj).SetRate(lrate);
                     }
                     if (obj is ResultCross)
                     {
@@ -240,24 +243,6 @@ namespace TPIS.Project
                         flag = true;
                         ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
                         rec.ObjectsNo.Add(Objects[i].No);
-                        foreach (Port port in ((TPISComponent)obj).Ports)
-                        {
-                            if (port.link != null && !port.link.IsSelected)
-                            {
-                                if (port.Type == Model.Common.NodType.DefOut || port.Type == Model.Common.NodType.Outlet)
-                                {
-                                    port.link.PointTo(0, new Point(port.link.Points[0].X + d_vx, port.link.Points[0].Y + d_vy));
-                                }
-                                else
-                                {
-                                    //port.link.PointTo(port.link.Points.Count - 1, new Point(port.link.Points[port.link.Points.Count - 1].X + d_vx, port.link.Points[port.link.Points.Count - 1].Y + d_vy));
-                                    Point p = new Point();
-                                    p.X = ((TPISComponent)obj).Position.V_x + port.P_x+5;
-                                    p.Y = ((TPISComponent)obj).Position.V_y + port.P_y+5;
-                                    port.link.PointTo(port.link.Points.Count - 1, p);
-                                }
-                            }
-                        }
                     }
                 }
                 if (obj is TPISLine)

@@ -54,7 +54,7 @@ namespace TPIS.Model.Common
         public static string[] Pressure = { "MPa", "kPa", "Pa", "Pa(g)" };
         public static string[] WaterQ = { "t/h", "kg/s" };
         public static string[] GasQ = { "t/h", "kg/s", "Nm3/h" };
-        public static string[] Percents = { "%", "1" };
+        public static string[] Percents = { "1", "%" };
 
         public static List<string[]> ListAllUnits()
         {

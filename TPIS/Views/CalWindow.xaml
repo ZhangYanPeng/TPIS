@@ -68,30 +68,50 @@
                         <Border Margin="2">
                             <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"></ColumnDefinition>
                                     <ColumnDefinition Width="170"></ColumnDefinition>
                                     <ColumnDefinition Width="170"></ColumnDefinition>
                                     <ColumnDefinition Width="170"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                     <TextBlock Text="元件类型：" VerticalAlignment="Center"></TextBlock>
-                                    <ComboBox Name="ComponentType" Width="100" Height="21" VerticalAlignment="Top" SelectionChanged="ComponentType_SelectionChanged">
+                                    <ComboBox Name="ComponentType" Width="100" Height="21" SelectionChanged="ComponentType_SelectionChanged" VerticalAlignment="Center">
                                         <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
                                     </ComboBox>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
                                     <TextBlock Text="元件名称：" VerticalAlignment="Center"></TextBlock>
-                                    <ComboBox Width="100" Name="ComponentSel" SelectionChanged="Component_SelectionChanged">
+                                    <ComboBox Width="100" Name="ComponentSel" SelectionChanged="Component_SelectionChanged" VerticalAlignment="Center">
                                         <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
                                     </ComboBox>
                                 </StackPanel>
-                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <StackPanel Grid.Column="3" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Visibility="Collapsed" Name="TypeSection">
+                                    <TextBlock Text="属性归属：" VerticalAlignment="Center"></TextBlock>
+                                    <ComboBox Name="PropertyType" Width="100" Height="21"  SelectionChanged="PropertyType_SelectionChanged" VerticalAlignment="Center" >
+                                        <ComboBoxItem Content="--请选择--" IsSelected="True"></ComboBoxItem>
+                                        <ComboBoxItem Content="自身属性" ></ComboBoxItem>
+                                        <ComboBoxItem Content="节点属性" ></ComboBoxItem>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Name="PortSection" Visibility="Collapsed">
+                                    <TextBlock Text="节点选择：" VerticalAlignment="Center"></TextBlock>
+                                    <ComboBox Width="100" Name="PortSel" VerticalAlignment="Center">
+                                        <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Name="PropSection"  Visibility="Collapsed">
                                     <TextBlock Text="属性名称：" VerticalAlignment="Center"></TextBlock>
-                                    <ComboBox Width="100" Name="PropSel" >
+                                    <ComboBox Width="100" Name="PropSel" VerticalAlignment="Center">
                                         <ComboBoxItem Content="--请选择--" DataContext="null" IsSelected="True"></ComboBoxItem>
                                     </ComboBox>
                                 </StackPanel>
-                                <Button Grid.Column="3" Click="AddMonitor">添加监视</Button>
+                                <Button Name="btn_Mon" Grid.Column="3" Grid.Row="1" Click="AddMonitor" Width="160" Height="22" HorizontalAlignment="Left" VerticalAlignment="Center"  Visibility="Collapsed">添加监视</Button>
                             </Grid>
                         </Border>
                     </DockPanel>
