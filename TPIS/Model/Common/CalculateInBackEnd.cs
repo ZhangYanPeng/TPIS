@@ -305,7 +305,12 @@ namespace TPIS.Model.Common
                 {
                     if(ele.ID == md.CNo)
                     {
-                        BackEnd.LMonitors.Add(ele.DPResult[md.PName]);
+                        if(md.PortName == null)
+                            BackEnd.LMonitors.Add(ele.DPResult[md.PName]);
+                        else
+                        {
+                            BackEnd.LMonitors.Add(ele.IOPoints[md.PortName].DProperty[md.PName]);
+                        }
                         break;
                     }
                 }

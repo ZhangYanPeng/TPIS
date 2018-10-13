@@ -62,6 +62,7 @@ namespace TPIS.Views
             ComponentType.Items.Refresh();
         }
 
+        //选择元件类型
         private void ComponentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try {
@@ -97,6 +98,7 @@ namespace TPIS.Views
             }
         }
 
+        //选择元件
         private void Component_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -120,6 +122,7 @@ namespace TPIS.Views
             }
         }
 
+        //选择属性类型
         private void PropertyType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -161,8 +164,56 @@ namespace TPIS.Views
                 else
                 {
                     PortSection.Visibility = Visibility.Visible;
-                    PropSection.Visibility = Visibility.Visible;
-                    btn_Mon.Visibility = Visibility.Visible;
+                    if (si.DataContext != null)
+                    {
+                        foreach (Port port in ((TPISComponent)si.DataContext).Ports)
+                        {
+                            ComboBoxItem cbi = new ComboBoxItem();
+                            cbi.Content = port.Name;
+                            cbi.DataContext = port;
+                            PortSel.Items.Add(cbi);
+                        }
+                    }
+                    PropSection.Visibility = Visibility.Collapsed;
+                    btn_Mon.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        //节点变更
+        private void Port_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem si = PortSel.SelectedItem as ComboBoxItem;
+            try
+            {
+                if (si.DataContext == null)
+                {
+                    PropSection.Visibility = Visibility.Collapsed;
+                    btn_Mon.Visibility = Visibility.Collapsed;
+                    return;
+                }
+                PropSection.Visibility = Visibility.Visible;
+                btn_Mon.Visibility = Visibility.Visible;
+
+                PropSel.Items.Clear();
+                ComboBoxItem def = new ComboBoxItem();
+                def.Content = "--请选择--";
+                def.DataContext = null;
+                def.IsSelected = true;
+                PropSel.Items.Add(def);
+                if (si.DataContext != null)
+                {
+                    foreach (Property p in ((Port)si.DataContext).Results)
+                    {
+                        ComboBoxItem cbi = new ComboBoxItem();
+                        cbi.Content = p.Name;
+                        cbi.DataContext = p;
+                        PropSel.Items.Add(cbi);
+                    }
                 }
             }
             catch
@@ -184,7 +235,15 @@ namespace TPIS.Views
             Property p = (PropSel.SelectedItem as ComboBoxItem).DataContext as Property;
             TPISComponent c = (ComponentSel.SelectedItem as ComboBoxItem).DataContext as TPISComponent;
 
-            MonitorData data = new MonitorData(c, p);
+            MonitorData data;
+            if (PropertyType.SelectedIndex == 1) {
+                data = new MonitorData(c, null, p);
+            }
+            else
+            {
+                Port port = (PortSel.SelectedItem as ComboBoxItem).DataContext as Port;
+                data = new MonitorData(c,port, p);
+            }
             Expander expander = new Expander();
             TextBlock title = new TextBlock();
             title.Text = data.Name;
@@ -270,12 +329,17 @@ namespace TPIS.Views
         public List<double> Data { get; set; }
         public int CNo { get; set; }
         public string PName { get; set; }
+        public string PortName { get; set; }
 
-        public MonitorData(TPISComponent c,Property p)
+        public MonitorData(TPISComponent c,Port port, Property p)
         {
             Name = "#" + c.No + " " + c.Name + " " + p.Name;
             CNo = c.No;
             PName = p.DicName;
+            if (port == null)
+                PortName = null;
+            else
+                PortName = port.DicName;
             Data = new List<double>();
         }
 
