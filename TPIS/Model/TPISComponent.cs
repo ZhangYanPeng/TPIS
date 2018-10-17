@@ -43,12 +43,12 @@ namespace TPIS.Model
             this.No = info.GetInt32("no");
             this.Position = (Position)info.GetValue("position", typeof(Object));
             this.Pic = info.GetString("pic");
-            this.PairName = info.GetString("pairName");
             this.Name = info.GetString("name");
             this.eleType = (EleType)info.GetValue("eleType", typeof(Object));
             Ports = (ObservableCollection<Port>)info.GetValue("ports", typeof(Object));
             PropertyGroups = (ObservableCollection<PropertyGroup>)info.GetValue("propertyGroups", typeof(Object));
             ResultGroups = (ObservableCollection<PropertyGroup>)info.GetValue("resultGroups", typeof(Object));
+            this.PairName = info.GetString("pairName");
 
             Mode = (ObservableCollection<Common.SelMode>)info.GetValue("mode", typeof(Object));
             SelectedMode = info.GetInt32("selectMode");

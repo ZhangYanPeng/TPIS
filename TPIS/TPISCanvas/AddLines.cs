@@ -53,13 +53,29 @@ namespace TPIS.TPISCanvas
                 {
                     if (IsStraight || Forms.Control.ModifierKeys == Forms.Keys.Shift)
                     {
-                        Point tmp = p2;
-                        if (p1.X == p2.X)
-                            tmp.Y = mainwin.GetCurrentProject().Canvas.endPoint.Y;
+                        //如果直连终点
+                        if(pline.Points.Count == 2)
+                        {
+                            Point tmp = pline.Points[pline.Points.Count - 1];
+                            if (pline.Points[pline.Points.Count - 1].X == pline.Points[pline.Points.Count - 2].X)
+                                tmp.Y = mainwin.GetCurrentProject().Canvas.endPoint.Y;
+                            else
+                                tmp.X = mainwin.GetCurrentProject().Canvas.endPoint.X;
+                            pline.Points[pline.Points.Count - 1] = tmp;
+                            pline.Points.Add(mainwin.GetCurrentProject().Canvas.endPoint);//终点
+                        }
                         else
-                            tmp.X = mainwin.GetCurrentProject().Canvas.endPoint.X;
-                        pline.Points[pline.Points.Count - 1] = tmp;//保证最后拐点为直角，保证终点和后端点所在直线为坐标线
-                        pline.Points.Add(mainwin.GetCurrentProject().Canvas.endPoint);//终点
+                        {
+                            Point tmp = pline.Points[pline.Points.Count - 2];
+                            //延长一截并连上
+                            if ( pline.Points[pline.Points.Count - 2].X == pline.Points[pline.Points.Count - 3].X)
+                                tmp.Y = mainwin.GetCurrentProject().Canvas.endPoint.Y;
+                            else
+                                tmp.X = mainwin.GetCurrentProject().Canvas.endPoint.X;
+                            pline.Points[pline.Points.Count - 2] = tmp;
+                            pline.Points.RemoveAt(pline.Points.Count - 1);
+                            pline.Points.Add(mainwin.GetCurrentProject().Canvas.endPoint);//终点
+                        }
                     }
                     else if (!IsStraight)
                     {

@@ -258,6 +258,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Warning\Opening.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WorkspaceSize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -282,6 +286,9 @@
     </Compile>
     <Compile Include="Views\ViewWindows\PortSetWindow.xaml.cs">
       <DependentUpon>PortSetWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Warning\Opening.xaml.cs">
+      <DependentUpon>Opening.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkspaceSize.xaml.cs">
       <DependentUpon>WorkspaceSize.xaml</DependentUpon>

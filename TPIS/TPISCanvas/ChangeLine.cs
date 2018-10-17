@@ -43,6 +43,7 @@ namespace TPIS.TPISCanvas
                 frameworkElement.Cursor = Cursors.Hand;
                 Mouse.OverrideCursor = null;
             }
+            e.Handled = true;
         }
 
         public void Port_MouseRightButtonDown(object sender, MouseEventArgs e)
@@ -79,8 +80,8 @@ namespace TPIS.TPISCanvas
                 ProjectDesignerCanvas designer = obj as ProjectDesignerCanvas;
 
                 Point point = uIElement.TranslatePoint(new Point(), designer);//控件左上点
-                point.X = point.X + 5;//求中心点
-                point.Y = point.Y + 5;
+                point.X = point.X + 3;//求中心点
+                point.Y = point.Y + 3;
                 if (port.link == null && mainwin.GetCurrentProject().Canvas.CanLink == false)
                 {
                     mainwin.GetCurrentProject().Canvas.statrPoint = point;//折线起点

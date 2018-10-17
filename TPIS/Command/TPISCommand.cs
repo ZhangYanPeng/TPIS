@@ -10,6 +10,7 @@ using TPIS.Model.Common;
 using TPIS.Project;
 using TPIS.Views;
 using TPIS.Views.Tool;
+using TPIS.Views.Warning;
 
 namespace TPIS.Command
 {
@@ -200,6 +201,13 @@ namespace TPIS.Command
                                 return;
                         }
                     }
+
+                    //打开提示框
+                    Opening opening = new Opening();
+                    opening.Topmost = true;
+                    opening.Owner = mainwin;
+                    opening.ShowDialog();
+
                     FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     byte[] data = new byte[fileStream.Length];
                     fileStream.Read(data, 0, data.Length);
@@ -219,6 +227,9 @@ namespace TPIS.Command
                     mainwin.projectTab.Items.Refresh();
                     mainwin.projectTab.SelectedItem = obj;
                     mainwin.ProjectNum++;
+
+                    //关闭
+                    opening.Close();
                 }
                 catch
                 {
