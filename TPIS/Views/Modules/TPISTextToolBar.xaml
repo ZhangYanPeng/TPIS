@@ -39,5 +39,8 @@
         <Button ToolTip="缩小字号" HorizontalAlignment="Left" Click="TPISTextShk" >
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeTextShrink.png"/>
         </Button>
+
+        <ComboBox></ComboBox>
+        
     </ToolBar>
 </ResourceDictionary>
