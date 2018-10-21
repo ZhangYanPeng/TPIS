@@ -42,10 +42,10 @@ namespace TPIS.Views.Tool
             if (File.Exists("CoalLib"))
             {
                 FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-                byte[] data = new byte[fileStream.Length];
-                fileStream.Read(data, 0, data.Length);
-                fileStream.Close();
-                object obj = CommonFunction.DeserializeWithBinary(data);
+                //byte[] data = new byte[fileStream.Length];
+                //fileStream.Read(data, 0, data.Length);
+                //fileStream.Close();
+                object obj = CommonFunction.DeserializeWithBinary(fileStream);
                 return (ObservableCollection < Coal > )obj;
             }
             else

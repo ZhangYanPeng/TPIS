@@ -153,15 +153,12 @@ namespace TPIS
 
 
 
-        public static object DeserializeWithBinary(byte[] data)
+        public static object DeserializeWithBinary(FileStream fileStream)
         {
-            MemoryStream stream = new MemoryStream();
-            stream.Write(data, 0, data.Length);
-            stream.Position = 0;
             BinaryFormatter bf = new BinaryFormatter();
-            object obj = bf.Deserialize(stream);
+            object obj = bf.Deserialize(fileStream);
 
-            stream.Close();
+            fileStream.Close();
 
             return obj;
         }

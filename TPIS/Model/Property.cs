@@ -68,6 +68,7 @@ namespace TPIS.Model
             info.AddValue("visible", visible);
             info.AddValue("color", Color);
             info.AddValue("isLine", IsLine);
+            info.AddValue("IsMonitor", IsMonitor);
             if (IsLine)
             {
                 CurveDatas curveDatas = new CurveDatas(Curve);
@@ -93,8 +94,15 @@ namespace TPIS.Model
             valStr = info.GetString("valStr");
             valNum = info.GetDouble("valNum");
 
-
             IsLine = info.GetBoolean("isLine");
+            try
+            {
+                IsMonitor = info.GetBoolean("IsMonitor");
+            }
+            catch
+            {
+                IsMonitor = false;
+            }
             if (IsLine)
             {
                 Curve = new Curves(Name, Units[0], Units[1]);
@@ -207,6 +215,7 @@ namespace TPIS.Model
 
         public Boolean IsKnown { get; set; }
         public Boolean IsLine { get; set; }
+        public Boolean IsMonitor { get; set; }
 
         //属性可见性
         #region
@@ -262,6 +271,7 @@ namespace TPIS.Model
             UnitNum = 0;
             IsStrOrNum = true;
             Color = pcolor;
+            IsMonitor = false;
 
             valStr = value;
             showValue = value;
@@ -285,6 +295,7 @@ namespace TPIS.Model
             UnitNum = 0;
             IsStrOrNum = false;
             Color = pcolor;
+            IsMonitor = false;
 
             valNum = value;
             if (IsKnown)
@@ -314,6 +325,7 @@ namespace TPIS.Model
             Modes = new ObservableCollection<SelMode>() { SelMode.InterMode };
             Curve = new Curves(name, units[0], units[1]);
             Curve.Lx1x2.Add(new XYDataLine());
+            IsMonitor = false;
         }
 
         internal void SetKnown(string str)

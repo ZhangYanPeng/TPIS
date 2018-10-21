@@ -204,5 +204,26 @@ namespace TPIS.Views.Modules
             }
         }
         #endregion
+
+        #region 网格
+        private void ChangeGrid(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+            ProjectItem project = mainwin.GetCurrentProject();
+            if (project != null)
+            {
+                if(project.GridThickness == 1)
+                {
+                    project.GridThickness = 0;
+                    tsbGrid.IsChecked = false;
+                }
+                else
+                {
+                    project.GridThickness = 1;
+                    tsbGrid.IsChecked = true;
+                }
+            }
+        }
+        #endregion
     }
 }

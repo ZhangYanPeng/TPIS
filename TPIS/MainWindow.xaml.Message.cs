@@ -292,6 +292,33 @@ namespace TPIS
             }
         }
 
+        /// <summary>
+        /// binding 工具栏网格
+        /// </summary>
+        private void UpdateGrid()
+        {
+            ToolBar toolBar = Resources["TPISToolBar"] as ToolBar;
+            foreach (object item in toolBar.Items)
+            {
+                if (item is ToggleButton)
+                {
+                    if (((ToggleButton)item).Name == "tsbGrid")
+                    {
+                        try
+                        {
+                            if (GetCurrentProject().GridThickness == 1)
+                                ((ToggleButton)item).IsChecked = true;
+                            else
+                                ((ToggleButton)item).IsChecked = false;
+                        } catch
+                        {
+                            ((ToggleButton)item).IsChecked = false;
+                        }
+                    }
+                }
+            }
+        }
+
         public class RateStrConverter : IValueConverter
         {
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

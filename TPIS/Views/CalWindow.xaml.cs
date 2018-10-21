@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,109 @@ namespace TPIS.Views
             this.Owner = (MainWindow)Application.Current.MainWindow;
             InitComponentType();
             LMonitors = new ObservableCollection<MonitorData>();
+            InitMonitors();
+        }
+
+        private void InitMonitors()
+        {
+            foreach(ObjectBase obj in project.Objects)
+            {
+                if(obj is TPISComponent)
+                {
+                    foreach(PropertyGroup pg in (obj as TPISComponent).ResultGroups)
+                    {
+                        foreach (Property p in pg.Properties)
+                        {
+                            if (p.IsMonitor)
+                            {
+                                MonitorData data;
+                                data = new MonitorData(obj as TPISComponent, null, p);
+                                InitViewOfMonitor(data);
+                            }
+                        }
+                    }
+                    foreach (Port port in (obj as TPISComponent).Ports)
+                    {
+                        foreach(Property p in port.Results)
+                        {
+                            if (p.IsMonitor)
+                            {
+                                MonitorData data;
+                                data = new MonitorData(obj as TPISComponent, port, p);
+                                InitViewOfMonitor(data);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //生成监视视图
+        private void InitViewOfMonitor(MonitorData data)
+        {
+            Expander expander = new Expander();
+
+            TextBlock title = new TextBlock();
+            title.Text = data.Name;
+            title.HorizontalAlignment = HorizontalAlignment.Left;
+            DockPanel header = new DockPanel();
+            header.Width = 500;
+            Button close = new Button();
+            Image btn_close = new Image();
+            btn_close.Source = new BitmapImage(new Uri("\\Images\\icon\\tab_close.png", UriKind.RelativeOrAbsolute));
+            close.Content = btn_close;
+            close.Height = 15;
+            close.Click += DeleteMonitors;
+            close.Name = "Del_Monitor" + LMonitors.Count;
+            DockPanel.SetDock(close, Dock.Right);
+            header.Children.Add(close);
+            header.Children.Add(title);
+            expander.Header = header;
+
+            DynamicPolyline fig = new DynamicPolyline();
+            fig.Height = 200;
+            fig.Width = 500;
+            fig.Name = "Monitor" + LMonitors.Count;
+            expander.Content = fig;
+            Monitor.Items.Add(expander);
+            Monitor.RegisterName(close.Name, close);
+            Monitor.RegisterName(fig.Name, fig);
+            Monitor.Items.Refresh();
+            LMonitors.Add(data);
+        }
+        //删除监视属性
+        private void DeleteMonitors(object sender, RoutedEventArgs e)
+        {
+            int delete_num = int.Parse(((sender as Button).Name as string).Replace("Del_Monitor", ""));
+            Monitor.Items.RemoveAt(delete_num);
+            Monitor.UnregisterName("Del_Monitor" + delete_num);
+            Monitor.UnregisterName("Monitor"+ delete_num);
+
+            for (int i = 0; i < LMonitors.Count; i++)
+            {
+                Expander del_fig = Monitor.FindName("Fig" + i) as Expander;
+                try
+                {
+                    if (i > delete_num)
+                    {
+                        DynamicPolyline fig = Monitor.FindName("Monitor" + i) as DynamicPolyline;
+                        fig.Name = "Monitor" + (i - 1);
+                        Button btn = Monitor.FindName("Del_Monitor" + i) as Button;
+                        btn.Name = "Del_Monitor" + (i - 1);
+                        Monitor.UnregisterName("Del_Monitor" + i);
+                        Monitor.UnregisterName("Monitor" + i);
+                        Monitor.RegisterName(btn.Name, btn);
+                        Monitor.RegisterName(fig.Name, fig);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            LMonitors[delete_num].property.IsMonitor = false;
+            LMonitors.RemoveAt(delete_num);
+            Monitor.Items.Refresh();
         }
 
         #region 选择属性
@@ -233,6 +337,8 @@ namespace TPIS.Views
         private void AddMonitor(object sender, RoutedEventArgs e)
         {
             Property p = (PropSel.SelectedItem as ComboBoxItem).DataContext as Property;
+            if (p == null)
+                return;
             TPISComponent c = (ComponentSel.SelectedItem as ComboBoxItem).DataContext as TPISComponent;
 
             MonitorData data;
@@ -244,20 +350,8 @@ namespace TPIS.Views
                 Port port = (PortSel.SelectedItem as ComboBoxItem).DataContext as Port;
                 data = new MonitorData(c,port, p);
             }
-            Expander expander = new Expander();
-            TextBlock title = new TextBlock();
-            title.Text = data.Name;
-            expander.Header = title;
-            DynamicPolyline fig = new DynamicPolyline();
-            fig.Height = 200;
-            fig.Width = 500;
-            fig.Name = "Monitor" + LMonitors.Count;
-            expander.Content = fig;
-
-            Monitor.Items.Add(expander);
-            Monitor.RegisterName(fig.Name, fig);
-            Monitor.Items.Refresh();
-            LMonitors.Add(data);
+            p.IsMonitor = true;
+            InitViewOfMonitor(data);
         }
 
         public void UpdateMonitorData(List<double> datum)
@@ -322,14 +416,14 @@ namespace TPIS.Views
         
     }
 
-
-    public class MonitorData
+    public class MonitorData 
     {
         public string Name { get; set; }
         public List<double> Data { get; set; }
         public int CNo { get; set; }
         public string PName { get; set; }
         public string PortName { get; set; }
+        public Property property { get; set; }
 
         public MonitorData(TPISComponent c,Port port, Property p)
         {
@@ -340,6 +434,7 @@ namespace TPIS.Views
                 PortName = null;
             else
                 PortName = port.DicName;
+            property = p;
             Data = new List<double>();
         }
 
@@ -352,6 +447,7 @@ namespace TPIS.Views
         {
             Data = new List<double>();
         }
+        
     }
 
     //按钮控制

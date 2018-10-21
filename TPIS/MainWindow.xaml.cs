@@ -113,6 +113,7 @@ namespace TPIS
                 {
                     CurrentPojectIndex = ProjectList.projects.IndexOf((ProjectItem)projectTab.Items[index]);
                     UpdateRate();
+                    UpdateGrid();
                     ProjectItem item = GetCurrentProject();
                     CurWorkspaceSizeShow(item.Canvas.Width.ToString(), GetCurrentProject().Canvas.Height.ToString());//状态栏显示工作区大小
                     CurProjectShow(item.Name.Split('.')[0]);//状态栏显示当前工程

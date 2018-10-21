@@ -493,5 +493,8 @@
   <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_activeTextShrink.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon\activeIcon\icon_grid.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -39,10 +39,10 @@ namespace TPIS.ConfigFile
             InitCfg();
             string path = @".\ConfigFile\" + "\\Config";
             FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-            byte[] data = new byte[fileStream.Length];
-            fileStream.Read(data, 0, data.Length);
-            fileStream.Close();
-            object obj = CommonFunction.DeserializeWithBinary(data);
+            //byte[] data = new byte[fileStream.Length];
+            //fileStream.Read(data, 0, data.Length);
+            //fileStream.Close();
+            object obj = CommonFunction.DeserializeWithBinary(fileStream);
             this.CANVAS_BACKGROUNDCOLOR = ((TPISConfig)obj).CANVAS_BACKGROUNDCOLOR;
             this.CANVAS_WIDTH = ((TPISConfig)obj).CANVAS_WIDTH;
             this.CANVAS_HEIGHT = ((TPISConfig)obj).CANVAS_HEIGHT;
