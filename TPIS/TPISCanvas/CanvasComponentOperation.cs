@@ -79,7 +79,7 @@ namespace TPIS.TPISCanvas
             Children.Remove(AddComponentImage);
         }
 
-        public void ComponentMouseLButtonDown(object sender, MouseEventArgs e)
+        public void ComponentMouseLButtonDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
             if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.ADD_COMPONENT)
@@ -121,10 +121,11 @@ namespace TPIS.TPISCanvas
                 }
             }
 
-            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT)
+            if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT && e.ClickCount == 2)
             {
                 this.Focus();
             }
+            e.Handled = true;
         }
 
         protected void ComponentMouseMove(object sender, MouseEventArgs e)

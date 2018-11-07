@@ -54,8 +54,9 @@ namespace TPIS.Views.Warning
                 mainwin.projectTab.SelectedItem = obj;
                 mainwin.ProjectNum++;
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 this.Close();
             }
             //关闭

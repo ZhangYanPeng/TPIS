@@ -71,6 +71,10 @@ namespace TPIS.Project
                             p.link.IsSelected = true;
                     }
                 }
+                if (obj is HiddenLink && ( (obj as HiddenLink).WT1.IsSelected || (obj as HiddenLink).WT2.IsSelected))
+                {
+                    obj .isSelected = true;
+                }
             }
             for (int i = 0; i < Objects.Count;)
             {

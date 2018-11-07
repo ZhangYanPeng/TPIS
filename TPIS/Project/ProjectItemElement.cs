@@ -45,6 +45,14 @@ namespace TPIS.Project
                     }
                     if (sum < 2)
                     {
+                        foreach (ObjectBase obj in Objects)
+                        {
+                            if (obj is TPISComponent && ((TPISComponent)obj).eleType == TPISNet.EleType.WaterTag && ((TPISComponent)obj).PairName == pn)
+                            {
+                                Objects.Add(new HiddenLink(component, (TPISComponent)obj));
+                                break;
+                            }
+                        }
                         component.PairName = pn;
                         break;
                     }
@@ -316,7 +324,7 @@ namespace TPIS.Project
             mainwin.SetToolBarFontSize(-1);
         }
         #endregion
-
+        
         #region cross操作 
         public void AddCross(Port port, Point? point = null)
         {
@@ -360,7 +368,6 @@ namespace TPIS.Project
                 }
             }
         }
-
 
         public void AddText(int vx, int vy, double fontsize)
         {
@@ -431,6 +438,35 @@ namespace TPIS.Project
                 {
                     Objects.Remove(obj);
                     return;
+                }
+            }
+        }
+        #endregion
+
+        #region hiddenlink
+        public void ShowHiddenLink(TPISComponent component)
+        {
+            foreach(ObjectBase obj in Objects)
+            {
+                if(obj is HiddenLink)
+                {
+                    HiddenLink hl = obj as HiddenLink;
+                    if (hl.wt1_no == component.No || hl.wt2_no == component.No)
+                        hl.IsSelected = true;
+                }
+            }
+        }
+
+        public void HideHiddenLink(TPISComponent component)
+        {
+
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is HiddenLink)
+                {
+                    HiddenLink hl = obj as HiddenLink;
+                    if (hl.wt1_no == component.No || hl.wt2_no == component.No)
+                        hl.IsSelected = false;
                 }
             }
         }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using TPIS.Model;
 using TPIS.Model.Common;
 
 namespace TPIS.Views.Modules
@@ -163,7 +164,6 @@ namespace TPIS.Views.Modules
         }
     }
 
-
     public class SelectConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -189,4 +189,5 @@ namespace TPIS.Views.Modules
             return DependencyProperty.UnsetValue;
         }
     }
+
 }

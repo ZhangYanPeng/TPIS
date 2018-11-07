@@ -52,6 +52,16 @@ namespace TPIS.TPISCanvas
             {
                 Cursor = Cursors.Arrow;
             }
+
+            if (DataContext is TPISComponent)
+            {
+                TPISComponent component = DataContext as TPISComponent;
+                if (component.eleType == TPISNet.EleType.WaterTag)
+                {
+                    mainwin.GetCurrentProject().HideHiddenLink(component);
+                }
+
+            }
             e.Handled = true;
         }
 
@@ -63,6 +73,14 @@ namespace TPIS.TPISCanvas
             if (DataContext is ResultCross)
             {
                 Cursor = Cursors.Hand;
+            }
+            if (DataContext is TPISComponent)
+            {
+                TPISComponent component = DataContext as TPISComponent;
+                if(component.eleType == TPISNet.EleType.WaterTag)
+                {
+                    mainwin.GetCurrentProject().ShowHiddenLink(component);
+                }
             }
             e.Handled = true;
         }

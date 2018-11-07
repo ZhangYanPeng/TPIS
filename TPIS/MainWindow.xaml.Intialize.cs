@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using TPIS.Model;
 using TPIS.Model.Common;
 using TPIS.Project;
+using TPIS.Views.Modules;
 using TPISNet;
 
 namespace TPIS
@@ -73,7 +75,33 @@ namespace TPIS
             }
             return null;
         }
+        #endregion
 
+        #region 初始化工具栏数值
+        //字号
+        ObservableCollection<double> FontSize = new ObservableCollection<double> {5, 5.5, 6.5, 7.5, 8, 9, 10, 10.5,
+            11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
+
+        public ObservableCollection<double> LineTicknessType = new ObservableCollection<double> { 1, 2, 3, 4, 5, 6 };
+
+        private void InitTextCombox()
+        {
+            ToolBar toolBar = Resources["TPISTextToolBar"] as ToolBar;
+            foreach (object item in toolBar.Items)
+            {
+                if (item is ComboBox)
+                {
+                    if (((ComboBox)item).Name == "Fonsize")
+                    {
+                        ((ComboBox)item).ItemsSource = FontSize;
+                    }
+                    if (((ComboBox)item).Name == "LineTickness")
+                    {
+                        ((ComboBox)item).ItemsSource = LineTicknessType;
+                    }
+                }
+            }
+        }
         #endregion
     }
 

@@ -38,6 +38,7 @@ namespace TPIS.TPISCanvas
             for (int i = 0; i < line.Points.Count - 2; i++)
             {
                 laps.Add(new LineAnchorPoint(lID, i));
+                Panel.SetZIndex(laps[i], 2);
                 this.Children.Add(laps[i]);
             }
             RePosLineAnchorPoints(line);
@@ -51,11 +52,11 @@ namespace TPIS.TPISCanvas
                 ObjectBase obj = mainwin.GetCurrentProject().Objects[i];
                 if (obj is TPISLine)
                 {
-                    if (!((TPISLine)obj).IsInitiAnchorPoints)
-                    {
-                        ((TPISLine)obj).IsInitiAnchorPoints = true;
-                        InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
-                    }
+                    //if (!((TPISLine)obj).IsInitiAnchorPoints)
+                    // {
+                    //    ((TPISLine)obj).IsInitiAnchorPoints = true;
+                    InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
+                    //}
                 }
             }
         }

@@ -69,6 +69,7 @@ namespace TPIS
             TPISconfig = new TPISConfig();
             CalWins = new List<CalWindow>();
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
+            InitTextCombox();
         }
 
         /// <summary>
@@ -306,6 +307,13 @@ namespace TPIS
             set { _textTemplate = value; }
         }
 
+        private DataTemplate _hiddenLinkTemplate = null;
+        public DataTemplate HiddenLinkTemplate
+        {
+            get { return _hiddenLinkTemplate; }
+            set { _hiddenLinkTemplate = value; }
+        }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is TPISComponent)
@@ -323,6 +331,10 @@ namespace TPIS
             if (item is TPISText)
             {
                 return _textTemplate;
+            }
+            if (item is HiddenLink)
+            {
+                return _hiddenLinkTemplate;
             }
             else
             {

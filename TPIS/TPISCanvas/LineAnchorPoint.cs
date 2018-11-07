@@ -67,6 +67,7 @@ namespace TPIS.TPISCanvas
                 Stroke = Brushes.Black,
                 StrokeThickness = 1,
             };
+            Panel.SetZIndex(this, 2);
             this.Width = 8;
             this.Height = 8;
             this.Content = rect;
@@ -90,6 +91,7 @@ namespace TPIS.TPISCanvas
                 Stroke = Brushes.Black,
                 StrokeThickness = 1,
             };
+            Panel.SetZIndex(this, 2);
             this.Width = 8;
             this.Height = 8;
             this.Content = rect;
@@ -104,11 +106,13 @@ namespace TPIS.TPISCanvas
         {
             this.Cursor = Cursors.SizeAll;
             Mouse.OverrideCursor = null;
+            e.Handled = true;
         }
 
         public void Element_MouseLeave(object sender, MouseEventArgs e)
         {
             this.Cursor = Cursors.Arrow;
+            e.Handled = true;
         }
 
         void Anchor_MouseLeftDown(object sender, MouseButtonEventArgs e)

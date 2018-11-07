@@ -96,8 +96,8 @@ namespace TPIS.Project
             Point p = new Point(0, 0);//无控件，边界为0×0
             for (int i = 0; i < SelectObjects.Count; i++)
             {
-                int x = (int)this.Canvas.Width;
-                int y = (int)this.Canvas.Height;
+                int x = 0;
+                int y = 0;
                 ObjectBase obj = SelectObjects[i];
                 if (obj is TPISComponent)
                 {

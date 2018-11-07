@@ -142,6 +142,7 @@ namespace TPIS.Model
 
         public TPISLine(SerializationInfo info, StreamingContext context)
         {
+           // IsInitiAnchorPoints = false;
             this.No = info.GetInt32("no");
             this.LineThickness = info.GetInt32("LineThickness");
             this.IsCompleted = info.GetBoolean("isCompleted");
@@ -154,7 +155,7 @@ namespace TPIS.Model
         #endregion
 
         public bool IsCompleted { get; set; }
-        public bool IsInitiAnchorPoints { get; set; }
+       // public bool IsInitiAnchorPoints { get; set; }
 
         public enum LineType
         {

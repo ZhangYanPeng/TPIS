@@ -358,6 +358,36 @@ namespace TPIS.Project
                     }
                 }
             }
+            for (int i = 0; i < Objects.Count;)
+            {
+                ObjectBase obj = Objects[i];
+                if (obj is HiddenLink)
+                {
+                    Objects.Remove(obj);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            List<HiddenLink> tmphls = new List<HiddenLink>();
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISComponent && (obj as TPISComponent).eleType == TPISNet.EleType.WaterTag)
+                {
+                    foreach (ObjectBase objt in Objects)
+                    {
+                        if (objt is TPISComponent && (objt as TPISComponent).eleType == TPISNet.EleType.WaterTag && (objt as TPISComponent).PairName == (obj as TPISComponent).PairName)
+                        {
+                            tmphls.Add(new HiddenLink(obj as TPISComponent, objt as TPISComponent));
+                        }
+                    }
+                }
+            }
+            foreach (HiddenLink hl in tmphls)
+            {
+                Objects.Add(hl);
+            }
         }
 
         public object Clone()

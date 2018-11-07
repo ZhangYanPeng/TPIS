@@ -10,27 +10,11 @@
         </ToggleButton>
 
         <ComboBox ToolTip="字号" HorizontalAlignment="Left" x:Name="Fonsize" Width="50" SelectionChanged="ToFontSize">
-            <ComboBoxItem>5</ComboBoxItem>
-            <ComboBoxItem>5.5</ComboBoxItem>
-            <ComboBoxItem>6.5</ComboBoxItem>
-            <ComboBoxItem>7.5</ComboBoxItem>
-            <ComboBoxItem>8</ComboBoxItem>
-            <ComboBoxItem>9</ComboBoxItem>
-            <ComboBoxItem>10</ComboBoxItem>
-            <ComboBoxItem>10.5</ComboBoxItem>
-            <ComboBoxItem>11</ComboBoxItem>
-            <ComboBoxItem>12</ComboBoxItem>
-            <ComboBoxItem>14</ComboBoxItem>
-            <ComboBoxItem>16</ComboBoxItem>
-            <ComboBoxItem>18</ComboBoxItem>
-            <ComboBoxItem>20</ComboBoxItem>
-            <ComboBoxItem>22</ComboBoxItem>
-            <ComboBoxItem>24</ComboBoxItem>
-            <ComboBoxItem>26</ComboBoxItem>
-            <ComboBoxItem>28</ComboBoxItem>
-            <ComboBoxItem>36</ComboBoxItem>
-            <ComboBoxItem>48</ComboBoxItem>
-            <ComboBoxItem>72</ComboBoxItem>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding }"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
         
         <Button ToolTip="放大字号" HorizontalAlignment="Left" Click="TPISTextAmp" >
@@ -39,8 +23,24 @@
         <Button ToolTip="缩小字号" HorizontalAlignment="Left" Click="TPISTextShk" >
             <Image Source="pack://application:,,,/Images/icon/activeIcon/icon_activeTextShrink.png"/>
         </Button>
-
-        <ComboBox></ComboBox>
+        
+        <Separator/>
+        <ComboBox Name="LineTickness" Width="170">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel VerticalAlignment="Stretch">
+                        <Canvas Width="100" Height="20" DockPanel.Dock="Left">
+                            <Line X1="5" Y1="10" X2="95" Y2="10" StrokeThickness="{Binding }" Stroke="Black">
+                            </Line>
+                        </Canvas>
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding }" Height="20" VerticalAlignment="Center">
+                        </TextBlock>
+                        <TextBlock  Text="像素"  Height="20" VerticalAlignment="Center" >
+                        </TextBlock>
+                    </DockPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         
     </ToolBar>
 </ResourceDictionary>

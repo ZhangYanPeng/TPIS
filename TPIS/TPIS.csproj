@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>tpis.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CurvesData">
       <HintPath>link\CurvesData.exe</HintPath>
@@ -114,6 +117,7 @@
     <Compile Include="Model\ComponentType.cs" />
     <Compile Include="Model\Coal.cs" />
     <Compile Include="Model\Gas.cs" />
+    <Compile Include="Model\HiddenLink.cs" />
     <Compile Include="Model\Port.cs" />
     <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Property.cs" />
@@ -495,6 +499,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon\activeIcon\icon_grid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tpis.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

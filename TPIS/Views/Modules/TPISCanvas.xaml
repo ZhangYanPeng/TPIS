@@ -255,7 +255,7 @@
         <!--<Polyline Uid="{Binding LNum}" Points="{Binding Points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="Black" StrokeThickness="4" MouseLeftButtonDown="LineSelect">
         </Polyline>-->
         <s:DesignerLine>
-            <Polyline Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="{Binding LineThickness}" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
+            <Polyline Panel.ZIndex="1" Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" StrokeThickness="{Binding LineThickness}" MouseLeftButtonDown="LineSelect" StrokeDashArray="{Binding IsSelected, Converter={StaticResource LineTypeConverter}}">
                 <Polyline.ToolTip>
                     <DockPanel>
                         <Grid DockPanel.Dock="Top" Margin="5 0 0 5">
@@ -298,9 +298,14 @@
                     </DockPanel>
                 </Polyline.ToolTip>
             </Polyline>
-            <Polyline Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" Opacity="0" StrokeThickness="10" MouseLeftButtonDown="LineSelect">
+            <Polyline Panel.ZIndex="0" Uid="{Binding LNum}" Points="{Binding V_points, Mode=OneWay, Converter={StaticResource myPointsConverter}}" Stroke="{Binding LineColor}" Opacity="0" StrokeThickness="10" MouseLeftButtonDown="LineSelect">
             </Polyline>
         </s:DesignerLine>
+    </DataTemplate>
+
+    <DataTemplate x:Key="template_hiddenlink">
+        <Line X1="{Binding WT1.Position.V_x}" X2="{Binding WT2.Position.V_x}" Y1="{Binding WT1.Position.V_y}" Y2="{Binding WT2.Position.V_y}" 
+            Visibility="{Binding IsSelected, Converter={StaticResource SelectConverter}}" Stroke="Purple" StrokeThickness="5"></Line>
     </DataTemplate>
 
     <DataTemplate x:Key="template_selection">
@@ -319,5 +324,6 @@
                 LineTemplate="{StaticResource template_line}"
                 CrossTemplate="{StaticResource template_cross}"
                 TextTemplate="{StaticResource template_text}"
+                HiddenLinkTemplate="{StaticResource template_hiddenlink}"
                 />
 </ResourceDictionary>

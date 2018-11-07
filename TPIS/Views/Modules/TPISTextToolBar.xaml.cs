@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace TPIS.Views.Modules
 {
     partial class TPISTextToolBar : ResourceDictionary
     {
+
         /// <summary>
         /// 插入文本
         /// </summary>
@@ -24,7 +26,7 @@ namespace TPIS.Views.Modules
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 if (mainwin.GetCurrentProject() != null)
                 {
-                    mainwin.TPISTextSelected(sender,e) ;
+                    mainwin.TPISTextSelected(sender, e);
                     AddText.IsChecked = true;
                 }
                 else
@@ -58,7 +60,7 @@ namespace TPIS.Views.Modules
                 return;
             }
         }
-        
+
         private void TPISTextShk(object sender, RoutedEventArgs e)
         {
             try
@@ -91,7 +93,7 @@ namespace TPIS.Views.Modules
                     if (Fonsize.SelectedIndex == -1)
                         return;
                     ComboBoxItem si = (ComboBoxItem)Fonsize.SelectedItem;
-                    mainwin.GetCurrentProject().ToSizeText(double.Parse(si.Content.ToString()),true);
+                    mainwin.GetCurrentProject().ToSizeText(double.Parse(si.Content.ToString()), true);
                 }
                 else
                 {
