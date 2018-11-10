@@ -17,7 +17,7 @@ namespace TPIS.Model.Common
 
         public CalculateInBackEnd(ProjectItem project)
         {
-            BackEnd = new Net(null);
+            BackEnd = new Net();
             //传入参数
             Init(project);
         }

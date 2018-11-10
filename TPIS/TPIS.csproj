@@ -63,8 +63,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TPISNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="TPISNet">
       <HintPath>link\TPISNet.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />

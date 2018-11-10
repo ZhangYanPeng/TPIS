@@ -202,7 +202,7 @@ namespace TPIS.Project
 
         private void InitBackEnd()
         {
-            BackEnd = new TPISNet.Net(null);
+            BackEnd = new TPISNet.Net();
         }
 
         #region 存储工程

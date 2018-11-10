@@ -239,7 +239,7 @@ namespace TPIS.Model
             g.Pv["LHV"].Data = LHV_KJ_Nm3;
             g.Pv["HHV"].Data = HHV_KJ_Nm3;
             string warning = "";
-            g.IsHundred(out warning);
+            g.IsHundred(warning);
             Gas_EvalResult = warning;
         }
 

@@ -59,3 +59,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompi
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CopyComplete
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.pdb
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\CurvesData.pdb
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\PhysicalPro.pdb
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.pdb

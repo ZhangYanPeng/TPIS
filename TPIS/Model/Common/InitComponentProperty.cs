@@ -128,7 +128,7 @@ namespace TPIS.Model.Common
         //初始化 Project 的属性
         public static ObservableCollection<PropertyGroup> InitProjectProperty()
         {
-            Net BackEnd = new Net(null);
+            Net BackEnd = new Net();
             ObservableCollection<PropertyGroup> PropertyGroups = new ObservableCollection<PropertyGroup>();
             foreach (string key in BackEnd.DProperty.Keys)
             {
