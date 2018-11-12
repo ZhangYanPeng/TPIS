@@ -119,13 +119,13 @@ namespace TPIS.TPISCanvas
                         break;
                     }
                 }
+                e.Handled = true;
             }
 
             if (mainwin.GetCurrentProject().Canvas.Operation == Project.OperationType.SELECT && e.ClickCount == 2)
             {
                 this.Focus();
             }
-            e.Handled = true;
         }
 
         protected void ComponentMouseMove(object sender, MouseEventArgs e)

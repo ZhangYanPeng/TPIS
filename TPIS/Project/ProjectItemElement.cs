@@ -324,7 +324,38 @@ namespace TPIS.Project
             mainwin.SetToolBarFontSize(-1);
         }
         #endregion
-        
+
+        #region 线宽操作
+        internal void ToLineTickness(int tickness, bool record = true)
+        {
+            System.Console.WriteLine(tickness);
+            Record rec = new Record();
+            String origin = "";
+            String current = "";
+
+            foreach (ObjectBase obj in Objects)
+            {
+                if (obj is TPISLine)
+                {
+                    TPISLine line = obj as TPISLine;
+                    if (line.IsSelected)
+                    {
+                        origin += line.LineThickness + "||";
+                        line.LineThickness = tickness;
+                        rec.ObjectsNo.Add(line.No);
+                        current += line.LineThickness + "||";
+                    }
+                }
+            }
+            if (record && rec.Objects.Count != 0)
+            {
+                rec.Param.Add("origin", origin);
+                rec.Param.Add("current", current);
+                Records.Push(rec);
+            }
+        }
+        #endregion
+
         #region cross操作 
         public void AddCross(Port port, Point? point = null)
         {

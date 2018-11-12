@@ -62,3 +62,4 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\CurvesData.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\PhysicalPro.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.pdb
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojAssemblyReference.cache

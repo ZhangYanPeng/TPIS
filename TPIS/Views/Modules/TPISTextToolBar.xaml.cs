@@ -44,15 +44,10 @@ namespace TPIS.Views.Modules
         {
             try
             {
-                ToggleButton currEle = sender as ToggleButton;
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 if (mainwin.GetCurrentProject() != null)
                 {
                     mainwin.GetCurrentProject().AmpText(true);
-                }
-                else
-                {
-                    currEle.IsChecked = false;
                 }
             }
             catch
@@ -65,15 +60,10 @@ namespace TPIS.Views.Modules
         {
             try
             {
-                ToggleButton currEle = sender as ToggleButton;
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 if (mainwin.GetCurrentProject() != null)
                 {
                     mainwin.GetCurrentProject().ShkText(true);
-                }
-                else
-                {
-                    currEle.IsChecked = false;
                 }
             }
             catch
@@ -86,7 +76,6 @@ namespace TPIS.Views.Modules
         {
             try
             {
-                ToggleButton currEle = sender as ToggleButton;
                 MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
                 if (mainwin.GetCurrentProject() != null)
                 {
@@ -95,9 +84,22 @@ namespace TPIS.Views.Modules
                     ComboBoxItem si = (ComboBoxItem)Fonsize.SelectedItem;
                     mainwin.GetCurrentProject().ToSizeText(double.Parse(si.Content.ToString()), true);
                 }
-                else
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void LineTickness_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                MainWindow mainwin = (MainWindow)Application.Current.MainWindow;
+                if (mainwin.GetCurrentProject() != null)
                 {
-                    currEle.IsChecked = false;
+                    double si = (double)LineTickness.SelectedItem;
+                    mainwin.GetCurrentProject().ToLineTickness((int)si, true);
                 }
             }
             catch

@@ -79,7 +79,7 @@ namespace TPIS
 
         #region 初始化工具栏数值
         //字号
-        ObservableCollection<double> FontSize = new ObservableCollection<double> {5, 5.5, 6.5, 7.5, 8, 9, 10, 10.5,
+        public ObservableCollection<double> FontSizeType = new ObservableCollection<double> {5, 5.5, 6.5, 7.5, 8, 9, 10, 10.5,
             11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
 
         public ObservableCollection<double> LineTicknessType = new ObservableCollection<double> { 1, 2, 3, 4, 5, 6 };
@@ -93,7 +93,7 @@ namespace TPIS
                 {
                     if (((ComboBox)item).Name == "Fonsize")
                     {
-                        ((ComboBox)item).ItemsSource = FontSize;
+                        ((ComboBox)item).ItemsSource = FontSizeType;
                     }
                     if (((ComboBox)item).Name == "LineTickness")
                     {

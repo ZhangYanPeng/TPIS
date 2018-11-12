@@ -25,7 +25,7 @@
         </Button>
         
         <Separator/>
-        <ComboBox Name="LineTickness" Width="170">
+        <ComboBox Name="LineTickness" Width="170" SelectionChanged="LineTickness_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel VerticalAlignment="Stretch">
