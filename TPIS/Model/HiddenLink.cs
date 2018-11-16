@@ -16,6 +16,7 @@ namespace TPIS.Model
         public TPISComponent WT2 { get; set; }
         public int wt1_no { get; set; }
         public int wt2_no { get; set; }
+        public Position Position { get; set; }//控件左上角位置
 
         #region binding通知
         public event PropertyChangedEventHandler PropertyChanged;

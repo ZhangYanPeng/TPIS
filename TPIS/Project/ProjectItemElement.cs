@@ -150,6 +150,7 @@ namespace TPIS.Project
                 line.isGrid = true;
             else
                 line.isGrid = false;
+            line.Rate = Rate;
             line.LineThickness = LineThickness;
             Objects.Add(line);
             rec.ObjectsNo.Add(n);

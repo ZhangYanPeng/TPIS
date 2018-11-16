@@ -82,10 +82,6 @@ namespace TPIS.Project
                 }
             }
             Select(components, texts);
-            //GetSelectedObjects();
-            //bool flag = mainwin.GetCurrentProject().IsViewWindowsOpen;
-            //if (!flag)
-            //    mainwin.GetCurrentProject().GetSelectedObjects();
             UpdateText();
         }
 
@@ -103,17 +99,7 @@ namespace TPIS.Project
             {
                 BindingPropertyWindow(null);
             }
-
-            foreach (ObjectBase obj in Objects)
-            {
-                if (obj is TPISComponent)
-                    ((TPISComponent)obj).IsSelected = false;
-                if (obj is TPISLine)
-                    ((TPISLine)obj).IsSelected = false;
-                if (obj is TPISText)
-                    ((TPISText)obj).IsSelected = false;
-                obj.isSelected = false;
-            }
+            Select();
 
             foreach (ObjectBase obj in Objects)
             {
@@ -142,10 +128,7 @@ namespace TPIS.Project
                 {
                     if (texts.Contains(obj as TPISText))
                     {
-                        if (!((TPISText)obj).IsSelected)
-                        {
-                            ((TPISText)obj).IsSelected = true;
-                        }
+                        ((TPISText)obj).IsSelected = true;
                     }
                 }
                 else if (obj is TPISLine)

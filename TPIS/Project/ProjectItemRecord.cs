@@ -62,7 +62,6 @@ namespace TPIS.Project
                 case "Move":
                     {
                         SelectByNo(record.ObjectsNo);
-                        int np = record.ObjectsNo[0];
                         double x = -ParseDouble(record.Param["x"]) * Rate;
                         double y = -ParseDouble(record.Param["y"]) * Rate;
                         MoveSelection(x, y, false);
@@ -122,6 +121,7 @@ namespace TPIS.Project
 
         private void SelectByNo(List<int> objectsNo)
         {
+            Select();
             if (objectsNo.Count > 1)
             {
                 List<TPISComponent> cl = new List<TPISComponent>();

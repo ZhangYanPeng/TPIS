@@ -1,0 +1,650 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TPIS</name>
+    </assembly>
+    <members>
+        <member name="M:TPIS.CommonFunction.NewOriginElement(TPISNet.EleType,System.Int32)">
+            <summary>
+            新建原有模型元件
+            </summary>
+            <param name="s"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TPIS.MainWindow">
+            <summary>
+            Window2.xaml 的交互逻辑
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:TPIS.MainWindow.loadComponentType">
+            <summary>
+            加载所有元件类型
+            </summary>
+        </member>
+        <member name="F:TPIS.MainWindow.tPISCommand">
+            <summary>
+            Window快捷键
+            </summary>
+        </member>
+        <member name="M:TPIS.MainWindow.TPISComponentTypeSelected(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            选中添加元件类型
+            无当前工程则不设定
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.MainWindow.TPISComponentTypeUnSelected(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>mainwin.ProjectList.projects[mainwin.CurrentPojectIndex]
+            取消添加元件
+            改为选中操作
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.MainWindow.TPISLineTypeSelected(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            画线
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.MainWindow.UpdateRate">
+            <summary>
+            binding 工具栏rate显示
+            </summary>
+        </member>
+        <member name="M:TPIS.MainWindow.UpdateGrid">
+            <summary>
+            binding 工具栏网格
+            </summary>
+        </member>
+        <member name="M:TPIS.MainWindow.Window_Loaded">
+            <summary>
+            窗体自适应电脑工作区大小
+            </summary>
+        </member>
+        <member name="M:TPIS.MainWindow.ProjectTab_SelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            获取当前工程(工程切换)
+            </summary>
+        </member>
+        <member name="M:TPIS.MainWindow.ProjectItem_Close(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            关闭工程（当前或其他工程）
+            </summary>
+        </member>
+        <member name="M:TPIS.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Command.TPISCommand">
+            <summary>
+            TPISCommand
+            </summary>
+        </member>
+        <member name="M:TPIS.Command.TPISCommand.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:TPIS.Model.ComponentType.isChecked">
+            <summary>
+            判定按钮是否按下
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.Port.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            序列化与反序列化
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.Position.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            序列化与反序列化
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.Position.ReSizeAll">
+            <summary>
+            更改宽高后，转化为视觉宽高更改
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.Position.ReSizeAllBack">
+            <summary>
+            更改视觉宽高后，改写真实宽高
+            </summary>
+        </member>
+        <member name="T:TPIS.Model.ValueRange">
+            <summary>
+            Range定义
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.Property.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            序列化与反序列化
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.PropertyGroup.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            序列化与反序列化
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.TPISComponent.VerticalReverse">
+            <summary>
+            水平和垂直翻转\旋转
+            </summary>
+        </member>
+        <member name="M:TPIS.Model.TPISComponent.SizeChange(System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            大小改变
+            </summary>
+            <param name="cwidth">原有实际高度</param>
+            <param name="width">视觉宽度变量</param>
+            <param name="cheight">原有实际宽度</param>
+            <param name="height">视觉高度增量</param>
+        </member>
+        <member name="M:TPIS.Model.TPISComponent.PosChange(System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            图片水平垂直方向移动
+            </summary>
+            <param name="d_vx"></param>
+            <param name="d_vy"></param>
+        </member>
+        <member name="M:TPIS.Model.TPISComponent.RePosPort">
+            <summary>
+            在改变大小、反转后，重新定位Port
+            </summary>
+        </member>
+        <member name="T:TPIS.Model.LinePosConverter">
+            <summary>
+            polyline更改
+            </summary>
+        </member>
+        <member name="M:TPIS.Project.ProjectItem.SupRate">
+            放大
+        </member>
+        <member name="M:TPIS.Project.ProjectItem.SubRate">
+            缩小
+        </member>
+        <member name="M:TPIS.Project.ProjectItem.VerticalReversedSelection(System.Boolean)">
+            翻转选中
+        </member>
+        <member name="M:TPIS.Project.ProjectItem.HorizentalReversedSelection(System.Boolean)">
+            翻转选中
+        </member>
+        <member name="M:TPIS.Project.ProjectItem.RotateSelection(System.Int32,System.Boolean)">
+            旋转选中
+            <param name="n">n*90 为顺时针旋转角度</param>
+        </member>
+        <member name="M:TPIS.Project.ProjectItem.SizeChange(System.Int32,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double},System.Boolean)">
+            改变大小
+        </member>
+        <member name="M:TPIS.Project.ProjectItem.MoveSelection(System.Double,System.Double,System.Boolean)">
+            水平和垂直方向移动
+        </member>
+        <member name="M:TPIS.Project.ProjectCanvas.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            序列化与反序列化
+            </summary>
+        </member>
+        <member name="T:TPIS.TPISCanvas.ChangeLine">
+            <summary>
+            ChangeLine
+            </summary>
+        </member>
+        <member name="M:TPIS.TPISCanvas.ChangeLine.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:TPIS.TPISCanvas.DesignerComponent.Element_MouseMove(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移动
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:TPIS.TPISCanvas.AnchorPosConverter">
+            <summary>
+            自定义事件转换
+            </summary>
+        </member>
+        <member name="F:TPIS.TPISCanvas.ProjectDesignerCanvas.flag">
+            <summary>
+            画折线
+            </summary>
+            
+        </member>
+        <member name="M:TPIS.TPISCanvas.ProjectDesignerCanvas.CanvasMouseEnter(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            判定画布内鼠标形状
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.TPISCanvas.ProjectDesignerCanvas.CanvasMouseLeave(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            离开画布恢复形状
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:TPIS.TPISCanvas.ProjectDesignerCanvas.gridIsCheck">
+            <summary>  
+            画布背景  
+            </summary>  
+        </member>
+        <member name="M:TPIS.TPISCanvas.ProjectDesignerCanvas.#ctor">
+            <summary>
+            初始化函数，添加画布事件
+            进入离开画布形状事件
+            </summary>
+        </member>
+        <member name="T:TPIS.TPISCanvas.SelectConverter">
+            <summary>
+            自定义事件转换
+            </summary>
+        </member>
+        <member name="T:TPIS.SelectionOrComponentSelector">
+            <summary>
+            模板选择器
+            </summary>
+        </member>
+        <member name="T:TPIS.App">
+            <summary>
+            App.xaml 的交互逻辑
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:TPIS.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:TPIS.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.CalWindow">
+            <summary>
+            CalWindow.xaml 的交互逻辑
+            </summary>
+            <summary>
+            CalWindow
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.CalWindow.MaxIter_Check">
+            <summary>
+            检查最大迭代次数输入合法性
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TPIS.Views.CalWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.DynamicPolyline">
+            <summary>
+            DynamicPolyline.xaml 的交互逻辑
+            </summary>
+            <summary>
+            DynamicPolyline
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.DynamicPolyline.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Modules.PropertyTemplate">
+            <summary>
+            PropertyTemplate
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Modules.PropertyTemplate.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Modules.ResultTemplate">
+            <summary>
+            ResultTemplate
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Modules.ResultTemplate.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Modules.TPISTextToolBar">
+            <summary>
+            TPISTextToolBar
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISTextToolBar.TPISTextSelected(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            插入文本
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISTextToolBar.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Modules.TPISToolBar">
+            <summary>
+            TPISToolBar
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISToolBar.TPISVerReversed(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            垂直翻转
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISToolBar.TPISHorReversed(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            水平翻转
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISToolBar.TPISRotate(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            旋转
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISToolBar.SupRate(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            放大
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISToolBar.SubRate(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            缩小
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISToolBar.TPISLineTypeSelected(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            画线
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Modules.TPISToolBar.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.QuickModeSelect">
+            <summary>
+            QuickModeSelect.xaml 的交互逻辑
+            </summary>
+            <summary>
+            QuickModeSelect
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.QuickModeSelect.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.CurrentSetting">
+            <summary>
+            Setting.xaml 的交互逻辑
+            </summary>
+            <summary>
+            CurrentSetting
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.CurrentSetting.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Setting">
+            <summary>
+            Setting.xaml 的交互逻辑
+            </summary>
+            <summary>
+            Setting
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Setting.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Tool.CoalWin">
+            <summary>
+            GasWin.xaml 的交互逻辑
+            </summary>
+            <summary>
+            CoalWin
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.CoalWin.LoadData">
+            <summary>
+            加载气体库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TPIS.Views.Tool.CoalWin.SaveCoalLib(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            保存煤种库
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.CoalWin.AddCoal(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            新增煤种
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.CoalWin.DeleteCoal(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            删除煤种
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.CoalWin.ChooseCoal(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            选中退出
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Tool.CoalWin.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Tool.GasWin">
+            <summary>
+            GasWin.xaml 的交互逻辑
+            </summary>
+            <summary>
+            GasWin
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.GasWin.LoadData">
+            <summary>
+            加载气体库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TPIS.Views.Tool.GasWin.SaveGasLib(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            保存气体种类库
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.GasWin.AddGas(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            新增气体种类
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.GasWin.DeleteGas(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            删除气体种类
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Tool.GasWin.ChooseGas(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            选中退出
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TPIS.Views.Tool.GasWin.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.TPISContextMenu.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="type"> 1: 控件右键 2：画布右键</param>
+        </member>
+        <member name="T:TPIS.Views.ViewWindow">
+            <summary>
+            ViewWindow.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ViewWindow
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.ViewWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.ViewWindows.PortSetWindow">
+            <summary>
+            PortSetWindow.xaml 的交互逻辑
+            </summary>
+            <summary>
+            PortSetWindow
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.ViewWindows.PortSetWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.Warning.Opening">
+            <summary>
+            Opening.xaml 的交互逻辑
+            </summary>
+            <summary>
+            Opening
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.Warning.Opening.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Views.WorkspaceSize">
+            <summary>
+            WorkspaceSize.xaml 的交互逻辑
+            </summary>
+            <summary>
+            WorkspaceSize
+            </summary>
+        </member>
+        <member name="M:TPIS.Views.WorkspaceSize.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.NewProject">
+            <summary>
+            NewProject.xaml 的交互逻辑
+            </summary>
+            <summary>
+            NewProject
+            </summary>
+        </member>
+        <member name="M:TPIS.NewProject.Create(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            新建
+            </summary>
+        </member>
+        <member name="M:TPIS.NewProject.Cancel(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            取消
+            </summary>
+        </member>
+        <member name="M:TPIS.NewProject.FolderBrowse(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            浏览文件夹
+            </summary>
+        </member>
+        <member name="M:TPIS.NewProject.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TPIS.Properties.Resources">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:TPIS.Properties.Resources.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:TPIS.Properties.Resources.Culture">
+            <summary>
+              使用此强类型资源类，为所有资源查找
+              重写当前线程的 CurrentUICulture 属性。
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -31,7 +31,11 @@ namespace TPIS.Project
                     UndoStack[UndoStack.Count - 1].Param["height"] = MergeValue(record.Param["height"], UndoStack[UndoStack.Count - 1].Param["height"]);
                     UndoStack[UndoStack.Count - 1].Param["x"] = MergeValue(record.Param["x"], UndoStack[UndoStack.Count - 1].Param["x"]);
                     UndoStack[UndoStack.Count - 1].Param["y"] = MergeValue(record.Param["y"], UndoStack[UndoStack.Count - 1].Param["y"]);
-
+                }
+                else
+                {
+                    UndoStack.Add(record);
+                    RedoStack.Clear();
                 }
             }
             else if (UndoStack.Count > 0 && record.Param["Operation"] == "Move" && UndoStack[UndoStack.Count - 1].Param["Operation"] == "Move")
@@ -50,6 +54,11 @@ namespace TPIS.Project
                     UndoStack[UndoStack.Count - 1].Param["x"] = MergeValue(record.Param["x"], UndoStack[UndoStack.Count - 1].Param["x"]);
                     UndoStack[UndoStack.Count - 1].Param["y"] = MergeValue(record.Param["y"], UndoStack[UndoStack.Count - 1].Param["y"]);
                 }
+                else
+                {
+                    UndoStack.Add(record);
+                    RedoStack.Clear();
+                }
             }
             else if (UndoStack.Count > 0 && record.Param["Operation"] == "MoveLine" && UndoStack[UndoStack.Count - 1].Param["Operation"] == "MoveLine" )
             {
@@ -63,6 +72,11 @@ namespace TPIS.Project
                     }
                     UndoStack[UndoStack.Count - 1].Param["x"] = record.Param["x"];
                     UndoStack[UndoStack.Count - 1].Param["y"] = record.Param["y"];
+                }
+                else
+                {
+                    UndoStack.Add(record);
+                    RedoStack.Clear();
                 }
             }
             else

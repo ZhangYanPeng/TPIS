@@ -119,6 +119,9 @@ namespace TPIS.Model
             }
         }
 
+        public double Rate { get; set; }
+        public Position Position { get; set; }//控件左上角位置
+
         public Brush lineColor;
         public Brush LineColor {
             get=>lineColor;
@@ -150,6 +153,7 @@ namespace TPIS.Model
             this.LNum = (long)info.GetValue("lNum", typeof(long));
             this.Points = (ObservableCollection<Point>)info.GetValue("points", typeof(ObservableCollection<Point>));
             this.VorH = (List<Boolean>)info.GetValue("vorH", typeof(List<Boolean>));
+            Rate = 1;
             GridForm();
         }
         #endregion
@@ -403,11 +407,21 @@ namespace TPIS.Model
             return false;
         }
 
-        internal void SetRate(double lrate)
+        internal void SetRate(double rate)
         {
             for (int i=0;i<Points.Count;i++)
             {
-                points[i] = new Point(points[i].X * lrate, points[i].Y * lrate);
+                points[i] = new Point(points[i].X / Rate * rate, points[i].Y / Rate * rate);
+            }
+            Rate = rate;
+            GridForm();
+        }
+
+        internal void SetORate(double rate)
+        {
+            for (int i = 0; i < Points.Count; i++)
+            {
+                points[i] = new Point(points[i].X * rate, points[i].Y * rate);
             }
             GridForm();
         }
@@ -459,10 +473,6 @@ namespace TPIS.Model
             stream.Close();
             return obj;
         }
-
-        public static implicit operator TPISLine(System.Windows.Shapes.Line v)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

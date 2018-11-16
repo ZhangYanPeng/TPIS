@@ -95,3 +95,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Release\TPIS.csproj.CopyCom
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Release\TPIS.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Release\TPIS.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Release\TPIS.csprojAssemblyReference.cache
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Release\CurvesData.pdb
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Release\PhysicalPro.pdb
+C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Release\TPISNet.pdb

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using TPIS.Model;
@@ -16,41 +17,55 @@ namespace TPIS.Project
     {
         #region 缩放比率
         public double rate;
+        
+        protected CancellationTokenSource cts = new CancellationTokenSource();
         public double Rate
         {
             get => rate;
             set
             {
-                double lrate = value / rate;
                 rate = value;
                 //画布缩放
                 Canvas.Rate = rate;
-                foreach (ObjectBase obj in Objects)
-                {
-                    //元件缩放
-                    if (obj is TPISLine)
-                    {
-                        ((TPISLine)obj).SetRate(lrate);
-                    }
-                }
-                foreach (ObjectBase obj in Objects)
-                {
-                    //元件缩放
-                    if (obj is TPISComponent)
-                    {
-                        ((TPISComponent)obj).SetRate(rate);
-                    }
-                    if (obj is ResultCross)
-                    {
-                        ((ResultCross)obj).SetRate(rate);
-                    }
-                    if (obj is TPISText)
-                    {
-                        ((TPISText)obj).SetRate(rate);
-                    }
-                }
-                OnPropertyChanged("Rate");
+                cts.Cancel();
+                cts = new CancellationTokenSource();
+                var ct = cts.Token;
+                Task taskUpadateRate = new Task(() => { UpdateRate(rate, ct); }, ct);
+                taskUpadateRate.Start();
             }
+        }
+
+        private void UpdateRate(double r, CancellationToken ct)
+        {
+            foreach (ObjectBase obj in Objects)
+            {
+                //元件缩放
+                if (obj is TPISLine)
+                {
+                    ((TPISLine)obj).SetRate(r);
+                    ct.ThrowIfCancellationRequested();
+                }
+            }
+            foreach (ObjectBase obj in Objects)
+            {
+                //元件缩放
+                if (obj is TPISComponent)
+                {
+                    ((TPISComponent)obj).SetRate(r);
+                    ct.ThrowIfCancellationRequested();
+                }
+                if (obj is ResultCross)
+                {
+                    ((ResultCross)obj).SetRate(r);
+                    ct.ThrowIfCancellationRequested();
+                }
+                if (obj is TPISText)
+                {
+                    ((TPISText)obj).SetRate(r);
+                    ct.ThrowIfCancellationRequested();
+                }
+            }
+            OnPropertyChanged("Rate");
         }
         #endregion
 
@@ -67,7 +82,7 @@ namespace TPIS.Project
             Rate = Rate + r;
             GridUintLength = 20 * Rate;
         }
-        
+
         /// 缩小
         internal void SubRate()
         {
@@ -99,7 +114,7 @@ namespace TPIS.Project
             }
             return true;
         }
-        
+
         /// 翻转选中
         public void VerticalReversedSelection(bool record = true)
         {
@@ -125,7 +140,7 @@ namespace TPIS.Project
                 Records.Push(rec);
             }
         }
-        
+
         /// 翻转选中
         public void HorizentalReversedSelection(bool record = true)
         {
@@ -151,7 +166,7 @@ namespace TPIS.Project
                 Records.Push(rec);
             }
         }
-        
+
         /// 旋转选中
         /// <param name="n">n*90 为顺时针旋转角度</param>
         public void RotateSelection(int n, bool record = true)
@@ -188,7 +203,7 @@ namespace TPIS.Project
                 return "null";
             }
         }
-        
+
         /// 改变大小
         public void SizeChange(int np, double? width, double? height, double? x, double? y, bool record = true)
         {
@@ -222,7 +237,7 @@ namespace TPIS.Project
                 Records.Push(rec);
             }
         }
-        
+
         /// 水平和垂直方向移动
         public void MoveSelection(double d_vx, double d_vy, bool record = true)
         {
@@ -233,41 +248,42 @@ namespace TPIS.Project
             rec.Param.Add("x", (d_vx / Rate).ToString());
             rec.Param.Add("y", (d_vy / Rate).ToString());
             bool flag = false;//解决选中线时，方向键只移动线
+            List<ObjectBase> selection = new List<ObjectBase>();
             for (int i = 0; i < Objects.Count; i++)
             {
-                ObjectBase obj = Objects[i];
-                if (obj is TPISComponent)
+                if (Objects[i].isSelected)//选中
                 {
-                    if (((TPISComponent)obj).IsSelected)//选中
-                    {
+                    if(Objects[i] is TPISComponent)
                         flag = true;
-                        ((TPISComponent)Objects[i]).PosChange(d_vx, d_vy);
-                        rec.ObjectsNo.Add(Objects[i].No);
-                    }
+                    selection.Add(Objects[i]);
                 }
-                if (obj is TPISLine)
+            }
+
+            for (int i = 0; i < selection.Count; i++)
+            {
+                if (selection[i] is TPISLine && flag)
                 {
-                    if (((TPISLine)obj).IsSelected && flag)//选中
-                    {
-                        ((TPISLine)Objects[i]).PosChange(d_vx, d_vy);
-                        rec.ObjectsNo.Add(Objects[i].No);
-                    }
+                    ((TPISLine)selection[i]).PosChange(d_vx, d_vy);
+                    rec.ObjectsNo.Add(Objects[i].No);
                 }
-                if (obj is ResultCross)
+            }
+
+            for (int i = 0; i < selection.Count; i++)
+            {
+                if (selection[i] is TPISComponent)
                 {
-                    if (((ResultCross)obj).isSelected)//选中
-                    {
-                        ((ResultCross)Objects[i]).PosChange(d_vx, d_vy);
-                        rec.ObjectsNo.Add(Objects[i].No);
-                    }
+                    ((TPISComponent)selection[i]).PosChange(d_vx, d_vy);
+                    rec.ObjectsNo.Add(Objects[i].No);
                 }
-                if (obj is TPISText)
+                if (selection[i] is ResultCross)
                 {
-                    if (((TPISText)obj).isSelected)//选中
-                    {
-                        ((TPISText)Objects[i]).PosChange(d_vx, d_vy);
-                        rec.ObjectsNo.Add(Objects[i].No);
-                    }
+                    ((ResultCross)selection[i]).PosChange(d_vx, d_vy);
+                    rec.ObjectsNo.Add(Objects[i].No);
+                }
+                if (selection[i] is TPISText)
+                {
+                    ((TPISText)selection[i]).PosChange(d_vx, d_vy);
+                    rec.ObjectsNo.Add(Objects[i].No);
                 }
             }
             if (record && rec.ObjectsNo.Count > 0)
