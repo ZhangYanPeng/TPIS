@@ -47,17 +47,10 @@ namespace TPIS.TPISCanvas
         public void ReInitLineAnchorPoints(object sender, RoutedEventArgs e)
         {
             MainWindow mainwin = (MainWindow)System.Windows.Application.Current.MainWindow;
-            for (int i = 0; i < mainwin.GetCurrentProject().Objects.Count; i++)
+            if (!((TPISLine)DataContext).IsInitiAnchorPoints)
             {
-                ObjectBase obj = mainwin.GetCurrentProject().Objects[i];
-                if (obj is TPISLine)
-                {
-                    //if (!((TPISLine)obj).IsInitiAnchorPoints)
-                    // {
-                    //    ((TPISLine)obj).IsInitiAnchorPoints = true;
-                    InitLineAnchorPoints(((TPISLine)obj).No, ((TPISLine)obj));
-                    //}
-                }
+                ((TPISLine)DataContext).IsInitiAnchorPoints = true;
+                InitLineAnchorPoints(((TPISLine)DataContext).No, ((TPISLine)DataContext));
             }
         }
         public void RePosLineAnchorPoints(TPISLine line)

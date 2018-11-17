@@ -8,9 +8,6 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\Database.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\PhysicalPro.dll
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\ResultAnalysis.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.dll
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\CurvesData.pdb
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\PhysicalPro.pdb
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\bin\Debug\TPISNet.pdb
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\NewProject.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\Modules\TPISResManagementBox.baml
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\Views\CalWindow.g.cs
@@ -63,4 +60,3 @@ C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CoreCompi
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csproj.CopyComplete
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.exe
 C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.pdb
-C:\Users\yanpengzhang\Documents\GitHub\TPIS\TPIS\obj\Debug\TPIS.csprojAssemblyReference.cache

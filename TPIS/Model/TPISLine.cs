@@ -145,7 +145,7 @@ namespace TPIS.Model
 
         public TPISLine(SerializationInfo info, StreamingContext context)
         {
-           // IsInitiAnchorPoints = false;
+            IsInitiAnchorPoints = false;
             this.No = info.GetInt32("no");
             this.LineThickness = info.GetInt32("LineThickness");
             this.IsCompleted = info.GetBoolean("isCompleted");
@@ -277,6 +277,8 @@ namespace TPIS.Model
                 GridForm();
             }
         }
+
+        public bool IsInitiAnchorPoints { get;set; }
 
         public Boolean PointTo(int pn, Point p)
         {
@@ -447,6 +449,7 @@ namespace TPIS.Model
 
         public TPISLine()
         {
+            IsInitiAnchorPoints = false;
             points = new ObservableCollection<Point>();
             V_points = new ObservableCollection<Point>();
             LineColor = Brushes.LimeGreen;
