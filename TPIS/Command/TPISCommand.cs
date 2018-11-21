@@ -328,7 +328,7 @@ namespace TPIS.Command
                     else
                     {
                         saveFileDialog.RestoreDirectory = true;
-                        mainwin.GetCurrentProject().Path = saveFileDialog.FileName.Substring(0, saveFileDialog.FileName.LastIndexOf("\\"));
+                        mainwin.GetCurrentProject().Path = saveFileDialog.FileName;
                         mainwin.GetCurrentProject().Name = saveFileDialog.FileName.Substring(saveFileDialog.FileName.LastIndexOf("\\") + 1);
                         mainwin.GetCurrentProject().SaveProject();
                     }

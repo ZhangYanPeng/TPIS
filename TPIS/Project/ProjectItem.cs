@@ -135,8 +135,18 @@ namespace TPIS.Project
         public int WaterStand { get; set; }
         public int GasStand { get; set; }
         public int LineThickness { get; set; }
-
-        public String Name { get; set; }
+        public String name;
+        public String Name {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
         public long Num { get; set; }
         public String Path { get; set; }
 

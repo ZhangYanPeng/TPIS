@@ -372,9 +372,9 @@ namespace TPIS.Model
                 {
                     foreach (Property p in pg.Properties)
                     {
-                        p.SelectProperty(Mode[selectedMode],true);
+                        p.SelectProperty(Mode[selectedMode], false);
                     }
-                    pg.SelectProperty(true);
+                    pg.SelectProperty(false);
                 }
                 OnPropertyChanged("SelectedMode");
             }
